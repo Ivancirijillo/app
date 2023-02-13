@@ -1,0 +1,88 @@
+.contenedor{
+    position: absolute;
+    margin-top: 1%;
+    margin-left: 8%;
+    width: 84%;
+  
+    font-weight: normal;
+    font-size: 40px;
+    font-family: Arial;
+    text-align: center;
+  }
+  .boton{
+    position: absolute;
+    margin-top: 35%;
+    margin-left: 8%;
+    width: 84%;  
+    font-weight: normal;
+    font-size: 20px;
+    font-family: Arial;
+    text-align: center;
+  }
+  
+  .filtro{
+      position: absolute;
+      margin-top: 5%;
+      margin-left: 8%;
+      width: 84%;
+      height: 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      flex-wrap: wrap;
+      color: black;
+      gap: 3%;
+     /*background-color: #6495ed;*/
+  }
+  
+  .tabla{
+      position: absolute;
+      margin-top: 40%;
+      margin-left: 10%;
+      text-align: center;
+  }
+  
+  thead th{
+    background-color: #6495ed;
+    color: #fff;
+    text-align: center;
+  }
+  
+  tbody td{
+    background-color: #e9e8ef;
+    color:rgb(0, 0, 0);
+  }
+  
+  label {
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 2px;
+    width: 18%;
+    float: left;
+    cursor: pointer;
+    padding: 0 0.6em;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #e6e6e6;
+    transition: all 0.5s ease 0s;
+    display: inline-flex;
+    align-items: center;
+  }
+
+ 
+footer {
+  position: absolute;
+  top:150%;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
+  
+  

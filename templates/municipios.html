@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,700|Roboto+Slab:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Add Material CSS, replace Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/material.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/municipios.css') }}">
+    <link rel="stylesheet" href="assets/css/filtro.css">
+    <title> ANALIZADOR</title>
+    <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='imgs/excel.png') }}"/>
+    <style>
+    img{
+     width: 100%;
+     width: 200px;
+    }
+    section{
+      top: 0;
+      margin-top: -16px;
+      width: 100%;
+      color: #fff;
+      background-color: #27b05c;
+    }
+    </style>
+  </head>
+  <body>
+      <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="{{ url_for('static', filename ='js/material.min.js') }}">
+<div class='texto'>
+<h1>Seleccione el municipio deseado</h1>
+</div>
+<div class='contenedor'>
+
+<div class='boton'>
+  <button type='button' class='filtrar'>Enviar</button>
+</div>
+
+<label class='archivo' id='c:\Users\ivanc\OneDrive\Documentos\Interfaz\filtro\app/static/archivos/1.xlsx'></label>
+<i><input type='radio' id='Acambay' name='group1' value='Acambay'><label for='radio'>Acambay</label></i>
+<i><input type='radio' id='Acolman' name='group1' value='Acolman'><label for='radio'>Acolman</label></i>
+<i><input type='radio' id='Aculco' name='group1' value='Aculco'><label for='radio'>Aculco</label></i>
+<i><input type='radio' id='Almoloya de Alquisiras' name='group1' value='Almoloya de Alquisiras'><label for='radio'>Almoloya de Alquisiras</label></i>
+<i><input type='radio' id='Almoloya de Juárez' name='group1' value='Almoloya de Juárez'><label for='radio'>Almoloya de Juárez</label></i>
+<i><input type='radio' id='Almoloya del Río' name='group1' value='Almoloya del Río'><label for='radio'>Almoloya del Río</label></i>
+<i><input type='radio' id='Amanalco' name='group1' value='Amanalco'><label for='radio'>Amanalco</label></i>
+<i><input type='radio' id='Amatepec' name='group1' value='Amatepec'><label for='radio'>Amatepec</label></i>
+<i><input type='radio' id='Amecameca' name='group1' value='Amecameca'><label for='radio'>Amecameca</label></i>
+<i><input type='radio' id='Apaxco' name='group1' value='Apaxco'><label for='radio'>Apaxco</label></i>
+<i><input type='radio' id='Atenco' name='group1' value='Atenco'><label for='radio'>Atenco</label></i>
+<i><input type='radio' id='Atizapán' name='group1' value='Atizapán'><label for='radio'>Atizapán</label></i>
+<i><input type='radio' id='Atizapán de Zaragoza' name='group1' value='Atizapán de Zaragoza'><label for='radio'>Atizapán de Zaragoza</label></i>
+<i><input type='radio' id='Atlacomulco' name='group1' value='Atlacomulco'><label for='radio'>Atlacomulco</label></i>
+<i><input type='radio' id='Atlautla' name='group1' value='Atlautla'><label for='radio'>Atlautla</label></i>
+<i><input type='radio' id='Axapusco' name='group1' value='Axapusco'><label for='radio'>Axapusco</label></i>
+<i><input type='radio' id='Ayapango' name='group1' value='Ayapango'><label for='radio'>Ayapango</label></i>
+<i><input type='radio' id='Calimaya' name='group1' value='Calimaya'><label for='radio'>Calimaya</label></i>
+<i><input type='radio' id='Capulhuac' name='group1' value='Capulhuac'><label for='radio'>Capulhuac</label></i>
+<i><input type='radio' id='Coacalco de Berriozábal' name='group1' value='Coacalco de Berriozábal'><label for='radio'>Coacalco de Berriozábal</label></i>
+<i><input type='radio' id='Coatepec Harinas' name='group1' value='Coatepec Harinas'><label for='radio'>Coatepec Harinas</label></i>
+<i><input type='radio' id='Cocotitlán' name='group1' value='Cocotitlán'><label for='radio'>Cocotitlán</label></i>
+<i><input type='radio' id='Coyotepec' name='group1' value='Coyotepec'><label for='radio'>Coyotepec</label></i>
+<i><input type='radio' id='Cuautitlán' name='group1' value='Cuautitlán'><label for='radio'>Cuautitlán</label></i>
+<i><input type='radio' id='Chalco' name='group1' value='Chalco'><label for='radio'>Chalco</label></i>
+<i><input type='radio' id='Chapa de Mota' name='group1' value='Chapa de Mota'><label for='radio'>Chapa de Mota</label></i>
+<i><input type='radio' id='Chapultepec' name='group1' value='Chapultepec'><label for='radio'>Chapultepec</label></i>
+<i><input type='radio' id='Chiautla' name='group1' value='Chiautla'><label for='radio'>Chiautla</label></i>
+<i><input type='radio' id='Chicoloapan' name='group1' value='Chicoloapan'><label for='radio'>Chicoloapan</label></i>
+<i><input type='radio' id='Chiconcuac' name='group1' value='Chiconcuac'><label for='radio'>Chiconcuac</label></i>
+<i><input type='radio' id='Chimalhuacán' name='group1' value='Chimalhuacán'><label for='radio'>Chimalhuacán</label></i>
+<i><input type='radio' id='Donato Guerra' name='group1' value='Donato Guerra'><label for='radio'>Donato Guerra</label></i>
+<i><input type='radio' id='Ecatepec de Morelos' name='group1' value='Ecatepec de Morelos'><label for='radio'>Ecatepec de Morelos</label></i>
+<i><input type='radio' id='Ecatzingo' name='group1' value='Ecatzingo'><label for='radio'>Ecatzingo</label></i>
+<i><input type='radio' id='Huehuetoca' name='group1' value='Huehuetoca'><label for='radio'>Huehuetoca</label></i>
+<i><input type='radio' id='Hueypoxtla' name='group1' value='Hueypoxtla'><label for='radio'>Hueypoxtla</label></i>
+<i><input type='radio' id='Huixquilucan' name='group1' value='Huixquilucan'><label for='radio'>Huixquilucan</label></i>
+<i><input type='radio' id='Isidro Fabela' name='group1' value='Isidro Fabela'><label for='radio'>Isidro Fabela</label></i>
+<i><input type='radio' id='Ixtapaluca' name='group1' value='Ixtapaluca'><label for='radio'>Ixtapaluca</label></i>
+<i><input type='radio' id='Ixtapan de la Sal' name='group1' value='Ixtapan de la Sal'><label for='radio'>Ixtapan de la Sal</label></i>
+<i><input type='radio' id='Ixtapan del Oro' name='group1' value='Ixtapan del Oro'><label for='radio'>Ixtapan del Oro</label></i>
+<i><input type='radio' id='Ixtlahuaca' name='group1' value='Ixtlahuaca'><label for='radio'>Ixtlahuaca</label></i>
+<i><input type='radio' id='Xalatlaco' name='group1' value='Xalatlaco'><label for='radio'>Xalatlaco</label></i>
+<i><input type='radio' id='Jaltenco' name='group1' value='Jaltenco'><label for='radio'>Jaltenco</label></i>
+<i><input type='radio' id='Jilotepec' name='group1' value='Jilotepec'><label for='radio'>Jilotepec</label></i>
+<i><input type='radio' id='Jilotzingo' name='group1' value='Jilotzingo'><label for='radio'>Jilotzingo</label></i>
+<i><input type='radio' id='Jiquipilco' name='group1' value='Jiquipilco'><label for='radio'>Jiquipilco</label></i>
+<i><input type='radio' id='Jocotitlán' name='group1' value='Jocotitlán'><label for='radio'>Jocotitlán</label></i>
+<i><input type='radio' id='Joquicingo' name='group1' value='Joquicingo'><label for='radio'>Joquicingo</label></i>
+<i><input type='radio' id='Juchitepec' name='group1' value='Juchitepec'><label for='radio'>Juchitepec</label></i>
+<i><input type='radio' id='Lerma' name='group1' value='Lerma'><label for='radio'>Lerma</label></i>
+<i><input type='radio' id='Malinalco' name='group1' value='Malinalco'><label for='radio'>Malinalco</label></i>
+<i><input type='radio' id='Melchor Ocampo' name='group1' value='Melchor Ocampo'><label for='radio'>Melchor Ocampo</label></i>
+<i><input type='radio' id='Metepec' name='group1' value='Metepec'><label for='radio'>Metepec</label></i>
+<i><input type='radio' id='Mexicaltzingo' name='group1' value='Mexicaltzingo'><label for='radio'>Mexicaltzingo</label></i>
+<i><input type='radio' id='Morelos' name='group1' value='Morelos'><label for='radio'>Morelos</label></i>
+<i><input type='radio' id='Naucalpan de Juárez' name='group1' value='Naucalpan de Juárez'><label for='radio'>Naucalpan de Juárez</label></i>
+<i><input type='radio' id='Nezahualcóyotl' name='group1' value='Nezahualcóyotl'><label for='radio'>Nezahualcóyotl</label></i>
+<i><input type='radio' id='Nextlalpan' name='group1' value='Nextlalpan'><label for='radio'>Nextlalpan</label></i>
+<i><input type='radio' id='Nicolás Romero' name='group1' value='Nicolás Romero'><label for='radio'>Nicolás Romero</label></i>
+<i><input type='radio' id='Nopaltepec' name='group1' value='Nopaltepec'><label for='radio'>Nopaltepec</label></i>
+<i><input type='radio' id='Ocoyoacac' name='group1' value='Ocoyoacac'><label for='radio'>Ocoyoacac</label></i>
+<i><input type='radio' id='Ocuilan' name='group1' value='Ocuilan'><label for='radio'>Ocuilan</label></i>
+<i><input type='radio' id='El Oro' name='group1' value='El Oro'><label for='radio'>El Oro</label></i>
+<i><input type='radio' id='Otumba' name='group1' value='Otumba'><label for='radio'>Otumba</label></i>
+<i><input type='radio' id='Otzoloapan' name='group1' value='Otzoloapan'><label for='radio'>Otzoloapan</label></i>
+<i><input type='radio' id='Otzolotepec' name='group1' value='Otzolotepec'><label for='radio'>Otzolotepec</label></i>
+<i><input type='radio' id='Ozumba' name='group1' value='Ozumba'><label for='radio'>Ozumba</label></i>
+<i><input type='radio' id='Papalotla' name='group1' value='Papalotla'><label for='radio'>Papalotla</label></i>
+<i><input type='radio' id='La Paz' name='group1' value='La Paz'><label for='radio'>La Paz</label></i>
+<i><input type='radio' id='Polotitlán' name='group1' value='Polotitlán'><label for='radio'>Polotitlán</label></i>
+<i><input type='radio' id='Rayón' name='group1' value='Rayón'><label for='radio'>Rayón</label></i>
+<i><input type='radio' id='San Antonio la Isla' name='group1' value='San Antonio la Isla'><label for='radio'>San Antonio la Isla</label></i>
+<i><input type='radio' id='San Felipe del Progreso' name='group1' value='San Felipe del Progreso'><label for='radio'>San Felipe del Progreso</label></i>
+<i><input type='radio' id='San Martín de las Pirámides' name='group1' value='San Martín de las Pirámides'><label for='radio'>San Martín de las Pirámides</label></i>
+<i><input type='radio' id='San Mateo Atenco' name='group1' value='San Mateo Atenco'><label for='radio'>San Mateo Atenco</label></i>
+<i><input type='radio' id='San Simón de Guerrero' name='group1' value='San Simón de Guerrero'><label for='radio'>San Simón de Guerrero</label></i>
+<i><input type='radio' id='Santo Tomás' name='group1' value='Santo Tomás'><label for='radio'>Santo Tomás</label></i>
+<i><input type='radio' id='Soyaniquilpan de Juárez' name='group1' value='Soyaniquilpan de Juárez'><label for='radio'>Soyaniquilpan de Juárez</label></i>
+<i><input type='radio' id='Sultepec' name='group1' value='Sultepec'><label for='radio'>Sultepec</label></i>
+<i><input type='radio' id='Tecámac' name='group1' value='Tecámac'><label for='radio'>Tecámac</label></i>
+<i><input type='radio' id='Tejupilco' name='group1' value='Tejupilco'><label for='radio'>Tejupilco</label></i>
+<i><input type='radio' id='Temamatla' name='group1' value='Temamatla'><label for='radio'>Temamatla</label></i>
+<i><input type='radio' id='Temascalapa' name='group1' value='Temascalapa'><label for='radio'>Temascalapa</label></i>
+<i><input type='radio' id='Temascalcingo' name='group1' value='Temascalcingo'><label for='radio'>Temascalcingo</label></i>
+<i><input type='radio' id='Temascaltepec' name='group1' value='Temascaltepec'><label for='radio'>Temascaltepec</label></i>
+<i><input type='radio' id='Temoaya' name='group1' value='Temoaya'><label for='radio'>Temoaya</label></i>
+<i><input type='radio' id='Tenancingo' name='group1' value='Tenancingo'><label for='radio'>Tenancingo</label></i>
+<i><input type='radio' id='Tenango del Aire' name='group1' value='Tenango del Aire'><label for='radio'>Tenango del Aire</label></i>
+<i><input type='radio' id='Tenango del Valle' name='group1' value='Tenango del Valle'><label for='radio'>Tenango del Valle</label></i>
+<i><input type='radio' id='Teoloyucan' name='group1' value='Teoloyucan'><label for='radio'>Teoloyucan</label></i>
+<i><input type='radio' id='Teotihuacán' name='group1' value='Teotihuacán'><label for='radio'>Teotihuacán</label></i>
+<i><input type='radio' id='Tepetlaoxtoc' name='group1' value='Tepetlaoxtoc'><label for='radio'>Tepetlaoxtoc</label></i>
+<i><input type='radio' id='Tepetlixpa' name='group1' value='Tepetlixpa'><label for='radio'>Tepetlixpa</label></i>
+<i><input type='radio' id='Tepotzotlán' name='group1' value='Tepotzotlán'><label for='radio'>Tepotzotlán</label></i>
+<i><input type='radio' id='Tequixquiac' name='group1' value='Tequixquiac'><label for='radio'>Tequixquiac</label></i>
+<i><input type='radio' id='Texcaltitlán' name='group1' value='Texcaltitlán'><label for='radio'>Texcaltitlán</label></i>
+<i><input type='radio' id='Texcalyacac' name='group1' value='Texcalyacac'><label for='radio'>Texcalyacac</label></i>
+<i><input type='radio' id='Texcoco' name='group1' value='Texcoco'><label for='radio'>Texcoco</label></i>
+<i><input type='radio' id='Tezoyuca' name='group1' value='Tezoyuca'><label for='radio'>Tezoyuca</label></i>
+<i><input type='radio' id='Tianguistenco' name='group1' value='Tianguistenco'><label for='radio'>Tianguistenco</label></i>
+<i><input type='radio' id='Timilpan' name='group1' value='Timilpan'><label for='radio'>Timilpan</label></i>
+<i><input type='radio' id='Tlalmanalco' name='group1' value='Tlalmanalco'><label for='radio'>Tlalmanalco</label></i>
+<i><input type='radio' id='Tlalnepantla de Baz' name='group1' value='Tlalnepantla de Baz'><label for='radio'>Tlalnepantla de Baz</label></i>
+<i><input type='radio' id='Tlatlaya' name='group1' value='Tlatlaya'><label for='radio'>Tlatlaya</label></i>
+<i><input type='radio' id='Toluca' name='group1' value='Toluca'><label for='radio'>Toluca</label></i>
+<i><input type='radio' id='Tonatico' name='group1' value='Tonatico'><label for='radio'>Tonatico</label></i>
+<i><input type='radio' id='Tultepec' name='group1' value='Tultepec'><label for='radio'>Tultepec</label></i>
+<i><input type='radio' id='Tultitlán' name='group1' value='Tultitlán'><label for='radio'>Tultitlán</label></i>
+<i><input type='radio' id='Valle de Bravo' name='group1' value='Valle de Bravo'><label for='radio'>Valle de Bravo</label></i>
+<i><input type='radio' id='Villa de Allende' name='group1' value='Villa de Allende'><label for='radio'>Villa de Allende</label></i>
+<i><input type='radio' id='Villa del Carbón' name='group1' value='Villa del Carbón'><label for='radio'>Villa del Carbón</label></i>
+<i><input type='radio' id='Villa Guerrero' name='group1' value='Villa Guerrero'><label for='radio'>Villa Guerrero</label></i>
+<i><input type='radio' id='Villa Victoria' name='group1' value='Villa Victoria'><label for='radio'>Villa Victoria</label></i>
+<i><input type='radio' id='Xonacatlán' name='group1' value='Xonacatlán'><label for='radio'>Xonacatlán</label></i>
+<i><input type='radio' id='Zacazonapan' name='group1' value='Zacazonapan'><label for='radio'>Zacazonapan</label></i>
+<i><input type='radio' id='Zacualpan' name='group1' value='Zacualpan'><label for='radio'>Zacualpan</label></i>
+<i><input type='radio' id='Zinacantepec' name='group1' value='Zinacantepec'><label for='radio'>Zinacantepec</label></i>
+<i><input type='radio' id='Zumpahuacán' name='group1' value='Zumpahuacán'><label for='radio'>Zumpahuacán</label></i>
+<i><input type='radio' id='Zumpango' name='group1' value='Zumpango'><label for='radio'>Zumpango</label></i>
+<i><input type='radio' id='Cuautitlán Izcalli' name='group1' value='Cuautitlán Izcalli'><label for='radio'>Cuautitlán Izcalli</label></i>
+<i><input type='radio' id='Valle de Chalco Solidaridad' name='group1' value='Valle de Chalco Solidaridad'><label for='radio'>Valle de Chalco Solidaridad</label></i>
+<i><input type='radio' id='Luvianos' name='group1' value='Luvianos'><label for='radio'>Luvianos</label></i>
+<i><input type='radio' id='San José del Rincón' name='group1' value='San José del Rincón'><label for='radio'>San José del Rincón</label></i>
+<i><input type='radio' id='Tonanitla' name='group1' value='Tonanitla'><label for='radio'>Tonanitla</label></i>
+</div>
+<div class='tabla'>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PRI_NVA_ALIANZA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<footer></footer>
+<script src="{{ url_for('static', filename ='js/municipios.js') }}"></script></body>
+</html>
