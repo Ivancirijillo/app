@@ -1,5 +1,5 @@
 let botones = document.querySelectorAll("input[name=group1]");
-let archivo = document.querySelector(".archivo");
+let archivo = document.querySelector(".archivo2");
 let data = [archivo.getAttribute("id")];
 let municipio = "";
 botones.forEach(item=>{

@@ -1,88 +1,133 @@
+/*TITULO Seleccione las columnas deseadas*/
 .contenedor{
-    position: absolute;
-    margin-top: 1%;
-    margin-left: 8%;
-    width: 84%;
-  
-    font-weight: normal;
-    font-size: 40px;
-    font-family: Arial;
-    text-align: center;
-  }
-  .boton{
-    position: absolute;
-    margin-top: 35%;
-    margin-left: 8%;
-    width: 84%;  
-    font-weight: normal;
-    font-size: 20px;
-    font-family: Arial;
-    text-align: center;
-  }
-  
-  .filtro{
-      position: absolute;
-      margin-top: 5%;
-      margin-left: 8%;
-      width: 84%;
-      height: 60%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      flex-wrap: wrap;
-      color: black;
-      gap: 3%;
-     /*background-color: #6495ed;*/
-  }
-  
-  .tabla{
-      position: absolute;
-      margin-top: 40%;
-      margin-left: 10%;
-      text-align: center;
-  }
-  
-  thead th{
-    background-color: #6495ed;
-    color: #fff;
-    text-align: center;
-  }
-  
-  tbody td{
-    background-color: #e9e8ef;
-    color:rgb(0, 0, 0);
-  }
-  
-  label {
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 2px;
-    width: 18%;
-    float: left;
-    cursor: pointer;
-    padding: 0 0.6em;
-    box-sizing: border-box;
-    border-radius: 10px;
-    background: #e6e6e6;
-    transition: all 0.5s ease 0s;
-    display: inline-flex;
-    align-items: center;
-  }
-
- 
-footer {
   position: absolute;
-  top:150%;
-  left: 0;
-  right: 0;
-  padding: 2rem;
-  color: white;
-  font-weight: 500;
+  margin-top: 1%;
+  margin-left: 8%;
+  width: 84%;  
+  height: 8%;
+  font-weight: normal;
+  font-size: 40px;
+  font-family: Arial;
+  text-align: center;
+}
+/*CheckBox*/  
+.filtro{
+  position: absolute;
+  margin-top: 5%;
+  margin-left: 8%;
+  width: 84%;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.2rem;
+  flex-direction: column;
+  flex-wrap: wrap;
+  color: black;
+  gap: 3%;
 }
-  
-  
+/*label checkbox*/
+.chbox {
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 2px;
+  width: 18%;
+  float: left;
+  cursor: pointer;
+  padding: 0 0.6em;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #e6e6e6;
+  transition: all 0.5s ease 0s;
+  display: inline-flex;
+  align-items: center;
+}
+/*Primer boton*/
+.boton{
+  position: absolute;
+  margin-top: 35%;
+  margin-left: 8%;
+  width: 84%;  
+  font-weight: normal;
+  font-size: 20px;
+  font-family: Arial;
+  text-align: center;
+}
+/*priemra tabla*/
+.tabla{
+  position: absolute;
+  margin-top: 40%;
+  margin-left: 5%;
+  width: 90%;  
+  text-align: center;
+}
+/*Seleccione el municipio deseado*/
+.contenedor2{
+  position: absolute;
+  margin-top: 78%;
+  margin-left: 8%;
+  width: 84%;    
+  font-weight: normal;
+  font-size: 40px;
+  font-family: Arial;
+  text-align: center;
+}
+/*RadioButton*/  
+.filtro2{
+  position: absolute;
+  margin-top: 82%;
+  margin-left: 8%;
+  width: 84%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  color: black;
+  gap: 1%;
+}
+/*label RadioButton*/  
+.rad {
+  font-weight: 600;
+  color: #000000;
+  background: #e6e6e6;
+  margin-bottom: 2px;
+  padding: 0 0.6em;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+/*boton 2*/ 
+.boton2{
+  position: absolute;
+  margin-top: 124%;
+  margin-left: 8%;
+  width: 84%;  
+  font-weight: normal;
+  font-size: 20px;
+  font-family: Arial;
+  text-align: center;
+}
+/*tabla 2*/ 
+.tabla2{
+  position: absolute;
+  margin-left: 5%;
+  margin-top: 128%;
+  width: 90%;    
+  text-align: center;
+}
+thead th{
+  background-color: #6495ed;
+  color: #fff;
+  text-align: center;
+}
+
+tbody td{
+  background-color: #e9e8ef;
+  color:rgb(0, 0, 0);
+}
+
+
+
+
+
+

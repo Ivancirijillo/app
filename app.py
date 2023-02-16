@@ -26,7 +26,7 @@ def mapa():
 
 @app.route('/municipios', methods=['GET', 'POST'])
 def municipio():
-    return render_template("municipios.html")
+    return render_template("filtro.html")
      
 #Creando un Decorador
 @app.route('/', methods=['GET', 'POST'])
@@ -105,7 +105,7 @@ def analizar(archivo, nombre):
     #crear cojunto de checkbox
     for valor in valores_columnas:
         contador += 1
-        checkbox += "<label><input type='checkbox' class='cbox' id='cbox"
+        checkbox += "<label class='chbox'><input type='checkbox' class='cbox' id='cbox"
         checkbox += str(contador)+"'"
         checkbox += "value='"
         checkbox += str(valor)+"'> "
@@ -122,6 +122,7 @@ def analizar(archivo, nombre):
     nuevo += checkbox
 
     doc2 = open(basepath+"/templates/filtro.html","w")
+    doctxt = open(basepath+"/templates/filtro.txt","w")
     ######
     #creamos tablas
 
@@ -136,11 +137,12 @@ def analizar(archivo, nombre):
 
     nuevo += nuevo2
     nuevo += "\n<div class='aux'>{{ tabla }}</div>\n"
-    nuevo += "\n</div>\n"
-    nuevo += "<footer>easteregg</footer>\n<script src=\"{{ url_for('static', filename ='js/filtro.js') }}\"></script>"
+    nuevo += "\n</div><div class='contenedor2'>\n</div>\n\n</div>\n"
+    nuevo += "<script src=\"{{ url_for('static', filename ='js/filtro.js') }}\"></script>"
     nuevo += "</body>\n</html>\n"
 
     doc2.write(nuevo)
+    doctxt.write(nuevo)
 
     documento.write("nombre:"+nombre+"\n")
     documento.write("columnas:"+str(valores_columnas)+"\n")
@@ -151,28 +153,31 @@ def analizar(archivo, nombre):
 
 def filtroMunicipio(tabla, nombre):
     basepath = os.path.dirname (__file__)
-    cabecera = basepath+"/static/temp/cabecera2.txt"
+    cabecera = basepath+"/templates/filtro.txt"
     muni = basepath+"/static/temp/municipios.txt"
-    nombreArchivo = tabla.replace(".html",".xlsx")
     rutaArchivo = basepath+"/static/archivos/"+nombre
 
     municipios = open(muni,"r")
     doc1 = open(cabecera,"r")
-    dochtml = open(basepath+"/templates/municipios.html", "w")
+    dochtml = open(basepath+"/templates/filtro.html", "w")
 
     final = ""
     for linea in doc1:
         final += linea
+        if 'contenedor2' in linea:
+            print("coincidencia")
+            break
+            
     #creamos div contenedor
-    final += "<div class='texto'>\n<h1>Seleccione el municipio deseado</h1>\n</div>\n<div class='contenedor'>\n"  
-    final += "\n<div class='boton'>\n  <button type='button' class='filtrar'>Enviar</button>\n</div>\n"  
-    final += f"\n<label class='archivo' id='{rutaArchivo}'></label>\n"
+    final += "\n<h1>Seleccione el municipio deseado</h1>\n</div>\n"  
+    final += "\n<div class='boton2'>\n  <button type='button' class='filtrar'>Enviar</button>\n</div>\n"  
+    final += f"\n<label class='archivo2' id='{rutaArchivo}'></label>\n<div class='filtro2'>\n"
 
     #creamos botones radio
     botones = ""
     for linea in municipios:
         aux = linea.replace("\n", "")
-        botones += f"<i><input type='radio' id='{aux}' name='group1' value='{aux}'><label for='radio'>{aux}</label></i>\n"
+        botones += f"<i><input type='radio' id='{aux}' name='group1' value='{aux}'><label class='rad' for='radio'>{aux}</label></i>\n"
     #agregamos botones a contenedor
     final += botones
     final += "</div>\n"
@@ -183,13 +188,13 @@ def filtroMunicipio(tabla, nombre):
         filas += linea
 
     #creamos div tabla
-    final += "<div class='tabla'>\n"
+    final += "<div class='tabla2'>\n"
     #agregamos la tabla
     final += filas
     #cerramos div tabla
     final += "\n</div>\n"
     #agregamos acciones con js
-    final += "<footer></footer>\n<script src=\"{{ url_for('static', filename ='js/municipios.js') }}\"></script>"
+    final += "\n<script src=\"{{ url_for('static', filename ='js/municipios.js') }}\"></script>\n<script src=\"{{ url_for('static', filename ='js/filtro.js') }}\"></script>"
     #cerramos el cuerpo y el html
     final += "</body>\n</html>\n"
     #creamos el documento final
