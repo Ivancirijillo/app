@@ -1,3 +1,7 @@
+body{
+  display: flex;
+  gap: 2%;
+}
 /*TITULO Seleccione las columnas deseadas*/
 .contenedor{
   position: absolute;
@@ -13,8 +17,8 @@
 /*CheckBox*/  
 .filtro{
   position: absolute;
-  margin-top: 5%;
-  margin-left: 8%;
+  top: 45%;
+  left: 50%;
   width: 84%;
   height: 60%;
   display: flex;
@@ -23,6 +27,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   color: black;
+  transform: translate(-50%, -50%);
   gap: 3%;
 }
 /*label checkbox*/
@@ -44,37 +49,41 @@
 /*Primer boton*/
 .boton{
   position: absolute;
-  margin-top: 35%;
-  margin-left: 8%;
-  width: 84%;  
+  top: 80%;
+  left: 8%;
+  width: 50%;
   font-weight: normal;
   font-size: 20px;
   font-family: Arial;
   text-align: center;
+  z-index: 1;
+  transform: translate(35%, -20%);
 }
 /*priemra tabla*/
 .tabla{
   position: absolute;
-  margin-top: 40%;
-  margin-left: 5%;
+  top: 87%;
+  left: 5%;
   width: 90%;  
   text-align: center;
+  transform: translate(5%, 5%);
 }
 /*Seleccione el municipio deseado*/
 .contenedor2{
   position: absolute;
-  margin-top: 78%;
-  margin-left: 8%;
-  width: 84%;    
+  top: 148%;
+  left: 8%;
+  width: 80%;
   font-weight: normal;
   font-size: 40px;
   font-family: Arial;
   text-align: center;
+  transform: translate(0%, 105%);
 }
 /*RadioButton*/  
 .filtro2{
   position: absolute;
-  margin-top: 82%;
+  margin-top: 90%;
   margin-left: 8%;
   width: 84%;
   height: 80%;
@@ -85,6 +94,7 @@
   flex-wrap: wrap;
   color: black;
   gap: 1%;
+  transform: translate(1%, -1%);
 }
 /*label RadioButton*/  
 .rad {
@@ -99,21 +109,24 @@
 /*boton 2*/ 
 .boton2{
   position: absolute;
-  margin-top: 124%;
-  margin-left: 8%;
-  width: 84%;  
+  top: 250%;
+  left: 50%;
+  width: 9%;  
   font-weight: normal;
   font-size: 20px;
   font-family: Arial;
   text-align: center;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 /*tabla 2*/ 
 .tabla2{
   position: absolute;
-  margin-left: 5%;
-  margin-top: 128%;
+  left: 50%;
+  top: 250%;
   width: 90%;    
   text-align: center;
+  transform: translate(-15%, 15%);
 }
 thead th{
   background-color: #6495ed;

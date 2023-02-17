@@ -3,7 +3,7 @@ from random import sample
 import pandas as pd
 import json
 import matplotlib.pyplot as plt
- 
+#variables globales 
 columnas = []
 
 #Para subir archivo tipo foto al servidor
@@ -48,8 +48,10 @@ def registarArchivo():
             nuevoNombreFile     = nombre + extension
 
             upload_path = os.path.join (basepath, 'static/archivos', nuevoNombreFile) 
-            
+            #guardamos el documento actual
+  
             file.save(upload_path)
+            crear_nuevo_archivo(upload_path)
             fil=analizar(upload_path, nombre)
             
             return render_template(f'filtro.html')
@@ -61,7 +63,6 @@ def filtrar():
 
 @app.route('/test',methods=['POST', 'GET'])
 def test():
-   
     #variables datos
     basepath = os.path.dirname (__file__)
     recibido = request.get_json()
@@ -205,17 +206,38 @@ def filtrofila():
     global columnas
     datos = request.get_json()
     data = json.loads(datos)
-    par = ["MUNICIPIO", "PRI", "PAN", "PRD"]
     documento = pd.read_excel(data[0])
-    resultado = documento[documento["MUNICIPIO"].str.contains(str(data[1]).upper())]
-    if(columnas[0]=="MUNICIPIO"):
-        columnas.pop(0)
+    resultado = documento[documento[columnas[0]].str.contains(str(data[1]).upper())]
     
-    for x in columnas:
-        plt.bar(x,resultado[x])
-    plt.show()
+    for x in columnas[1:]:
+        #plt.bar(x,resultado[x])
+        print(x)
+    #plt.show()
     print(resultado[columnas])
     return render_template("filtro.html")
+
+#funcion para crea nuevo archivo sin cabecera
+def crear_nuevo_archivo(documento):
+    incompleto = True
+    fila = 1
+    filas_a_eliminar = 0
+    eliminar = False
+    archivo = pd.read_excel(documento, header=None)
+    while(incompleto):
+        if(str(archivo.iloc[fila,0]) == "nan"):
+            incompleto = True
+            fila += 1 
+            filas_a_eliminar += 1
+            eliminar = True
+        else :
+            incompleto = False
+            print(filas_a_eliminar)
+
+    if(eliminar):
+        filas_a_eliminar += 1
+        archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
+    else:
+        archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
 
 
 if __name__ == '__main__':
