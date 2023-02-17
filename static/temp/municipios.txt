@@ -2,15 +2,15 @@ Acambay
 Acolman
 Aculco
 Almoloya de Alquisiras
-Almoloya de Juárez
-Almoloya del Río
+Almoloya de Juarez
+Almoloya del Rio
 Amanalco
 Amatepec
 Amecameca
 Apaxco
 Atenco
-Atizapán
-Atizapán de Zaragoza
+Atizapan
+Atizapan de Zaragoza
 Atlacomulco
 Atlautla
 Axapusco
@@ -19,16 +19,16 @@ Calimaya
 Capulhuac
 Coacalco de Berriozábal
 Coatepec Harinas
-Cocotitlán
+Cocotitlan
 Coyotepec
-Cuautitlán
+Cuautitlan
 Chalco
 Chapa de Mota
 Chapultepec
 Chiautla
 Chicoloapan
 Chiconcuac
-Chimalhuacán
+Chimalhuacan
 Donato Guerra
 Ecatepec de Morelos
 Ecatzingo
@@ -78,7 +78,7 @@ San Simón de Guerrero
 Santo Tomás
 Soyaniquilpan de Juárez
 Sultepec
-Tecámac
+Tecamac
 Tejupilco
 Temamatla
 Temascalapa
@@ -109,17 +109,17 @@ Tultepec
 Tultitlán
 Valle de Bravo
 Villa de Allende
-Villa del Carbón
+Villa del Carbon
 Villa Guerrero
 Villa Victoria
-Xonacatlán
+Xonacatlan
 Zacazonapan
 Zacualpan
 Zinacantepec
-Zumpahuacán
+Zumpahuacan
 Zumpango
-Cuautitlán Izcalli
+Cuautitlan Izcalli
 Valle de Chalco Solidaridad
 Luvianos
-San José del Rincón
+San Jose del Rincón
 Tonanitla

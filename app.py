@@ -14,7 +14,6 @@ import os
 #Declarando nombre de la aplicación e inicializando
 app = Flask(__name__)
 
-
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
 def not_found(error):
@@ -210,9 +209,9 @@ def filtrofila():
     resultado = documento[documento[columnas[0]].str.contains(str(data[1]).upper())]
     
     for x in columnas[1:]:
-        #plt.bar(x,resultado[x])
+        plt.bar(x,resultado[x])
         print(x)
-    #plt.show()
+    plt.show()
     print(resultado[columnas])
     return render_template("filtro.html")
 
@@ -238,7 +237,6 @@ def crear_nuevo_archivo(documento):
         archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
     else:
         archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

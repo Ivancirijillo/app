@@ -28,4 +28,7 @@ document.querySelector(".filtrar").addEventListener("click",(e)=>{
         contentType: "application/json",
         data: JSON.stringify(jaison)
     });
+
+    data = [];
+    data = [archivo.getAttribute("id")];
 });

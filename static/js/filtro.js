@@ -44,5 +44,11 @@
         valores = [nombreArchivo.getAttribute("id")];
             
         window.open("/municipios","_self");
+        setInterval(()=>{
+            location.reload();
+            window.addEventListener("click",(e)=>{
+                return false;
+            });
+        },2000);
     }); 
     
