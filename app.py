@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+import threading, multiprocessing, time
 from random import sample
 import pandas as pd
 import json
@@ -202,18 +203,35 @@ def filtroMunicipio(tabla, nombre):
 
 @app.route("/resultado", methods=['POST', 'GET'])
 def filtrofila():
+    #datos globales
     global columnas
+    #creacion de json
     datos = request.get_json()
     data = json.loads(datos)
-    documento = pd.read_excel(data[0])
-    resultado = documento[documento[columnas[0]].str.contains(str(data[1]).upper())]
-    
-    for x in columnas[1:]:
-        plt.bar(x,resultado[x])
-        print(x)
-    plt.show()
-    print(resultado[columnas])
+    #data desglosada
+    archivo = data[0]
+    municipio = data[1]
+    #creacion de documento
+    documento = pd.read_excel(archivo)
+    documentofiltrado = documento[documento[columnas[0]].str.contains(str(municipio).upper())]
+    #creacion de un hilo
+    hilo1 = multiprocessing.Process(target=crear_grafica, args=(columnas, documentofiltrado, municipio ))
+    hilo1.start()
+    hilo1.join()#unimos el hilo principal con hilo1
+
+    # print(documentofiltrado[columnas])
     return render_template("filtro.html")
+
+def crear_grafica(columnas, documentofiltrado, municipio):
+    for partido in columnas[1:]:
+        plt.bar(partido, int(documentofiltrado[partido].sum()))#creacion de cada barra de los partidos
+   
+    #creacion de etiquetas
+    plt.title("Votos por partido de "+ municipio)
+    plt.ylabel("N° Votos")
+    plt.xlabel("Partido")
+    #mostramos la grafica
+    plt.show()
 
 #funcion para crea nuevo archivo sin cabecera
 def crear_nuevo_archivo(documento):
