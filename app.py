@@ -51,10 +51,18 @@ def registarArchivo():
             #guardamos el documento actual
   
             file.save(upload_path)
-            crear_nuevo_archivo(upload_path)
-            fil=analizar(upload_path, nombre)
+            #crear hilo para la creacion del nuevo archivo
+            nuevo_hilo1 = threading.Thread(target=crear_nuevo_archivo, args=(upload_path, ))
+            nuevo_hilo1.start()
+            #nuevo_hilo1.join()
+            # crear_nuevo_archivo(upload_path)
+            # analizar(upload_path, nombre)
+            #crear hilo para el analisis del nuevo archivo
+            nuevo_hilo2 = threading.Thread(target=analizar, args=(upload_path, nombre))
+            nuevo_hilo2.start()
+            nuevo_hilo2.join()
             
-            return render_template(f'filtro.html')
+            return render_template('filtro.html')
         return render_template('index.html')
 
 @app.route('/filtro',methods=['GET', 'POST'])
@@ -150,7 +158,6 @@ def analizar(archivo, nombre):
     documento.write("numero de columnas:"+numero_columnas+"\n")
     
     print(captura)
-    return res
 
 def filtroMunicipio(tabla, nombre):
     basepath = os.path.dirname (__file__)
