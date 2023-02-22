@@ -54,6 +54,9 @@ def registarArchivo():
             #crear hilo para la creacion del nuevo archivo
             nuevo_hilo1 = threading.Thread(target=crear_nuevo_archivo, args=(upload_path, ))
             nuevo_hilo1.start()
+            #crear hilo para filtro de columnas
+            nuevo_hiloc = threading.Thread(target=eliminar_col, args=(upload_path, ))
+            nuevo_hiloc.start()
             #nuevo_hilo1.join()
             # crear_nuevo_archivo(upload_path)
             # analizar(upload_path, nombre)
@@ -262,6 +265,16 @@ def crear_nuevo_archivo(documento):
         archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
     else:
         archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
+
+ #funcion para eliminar columnas
+def eliminar_col(documento):
+    archivo = pd.read_excel(documento)
+    columnas = archivo.columns
+    textos = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
+    indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in col for texto in textos)]
+    archivo = archivo.drop(archivo.columns[indices_eliminar], axis=1)
+    archivo.to_excel(documento, index=False)
+    print("Cambios listos 1")
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
