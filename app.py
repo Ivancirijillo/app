@@ -4,6 +4,9 @@ from random import sample
 import pandas as pd
 import json
 import matplotlib.pyplot as plt
+#constantes 
+COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
+
 #variables globales 
 columnas = []
 
@@ -54,13 +57,8 @@ def registarArchivo():
             #crear hilo para la creacion del nuevo archivo
             nuevo_hilo1 = threading.Thread(target=crear_nuevo_archivo, args=(upload_path, ))
             nuevo_hilo1.start()
-            #crear hilo para filtro de columnas
-            nuevo_hiloc = threading.Thread(target=eliminar_col, args=(upload_path, ))
-            nuevo_hiloc.start()
-            #nuevo_hilo1.join()
-            # crear_nuevo_archivo(upload_path)
-            # analizar(upload_path, nombre)
-            #crear hilo para el analisis del nuevo archivo
+            nuevo_hilo1.join()
+            #crear hilo para analizar el archivo
             nuevo_hilo2 = threading.Thread(target=analizar, args=(upload_path, nombre))
             nuevo_hilo2.start()
             nuevo_hilo2.join()
@@ -245,28 +243,54 @@ def crear_grafica(columnas, documentofiltrado, municipio):
 
 #funcion para crea nuevo archivo sin cabecera
 def crear_nuevo_archivo(documento):
+    #variables de analizis
     incompleto = True
-    fila = 1
-    filas_a_eliminar = 0
-    eliminar = False
-    archivo = pd.read_excel(documento, header=None)
+    fila = 1 # primer celda del documento
+    filas_a_eliminar = 0 # filas por eliminar
+    eliminar = False # determina si hay que eliminar la fila por defecto del documento
+    archivo = pd.read_excel(documento, header=None) # leemos el archivo sin encabezado
     while(incompleto):
-        if(str(archivo.iloc[fila,0]) == "nan"):
-            incompleto = True
-            fila += 1 
-            filas_a_eliminar += 1
-            eliminar = True
+        if(str(archivo.iloc[fila,0]) == "nan"):#analizamos celda por celda
+            incompleto = True # si encuentra una celda vacia sigue en el bucle
+            fila += 1 # filas recorridas
+            filas_a_eliminar += 1 # filas a eliminar
+            eliminar = True # eliminar la fila por defecto
         else :
-            incompleto = False
+            incompleto = False # salimos del bucle
             print(filas_a_eliminar)
 
     if(eliminar):
+        #aumentamos una fila mas a eliminar, se hace para eliminar la fila que trae el documento por defecto
         filas_a_eliminar += 1
-        archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
+        #guardamos el archivo sin encabezados
+        archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False) #cambios temporales
+        #creamos el archivo sin encabezado
+        archivo_sin_encabezados = pd.read_excel(documento)
+        #leemos el valor de las columnas
+        columnas = archivo_sin_encabezados.columns
+        #filtramos las columnas a eliminar
+        indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in str(col) for texto in COLUMNAS_A_ELIMINAR)]
+        #eliminamos la columnas encontradas
+        nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
+        #exportamos el nuevo archivo
+        nuevo_archivo.to_excel(documento, index=False)
+        
     else:
-        archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False)
+        #guardamos el archivo sin encabezados
+        archivo.iloc[filas_a_eliminar:,:].to_excel(documento,index=False, header=False)
+        #creamos el archivo sin encabezado
+        archivo_sin_encabezados = pd.read_excel(documento)
+        #leemos el valor de las columnas
+        columnas = archivo_sin_encabezados.columns
+        #filtramos las columnas a eliminar
+        indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in str(col) for texto in COLUMNAS_A_ELIMINAR)]
+        #eliminamos la columnas encontradas
+        nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
+        #exportamos el nuevo archivo
+        nuevo_archivo.to_excel(documento, index=False)
 
- #funcion para eliminar columnas
+####### POR ELIMINAR ########
+#funcion para eliminar columnas
 def eliminar_col(documento):
     archivo = pd.read_excel(documento)
     columnas = archivo.columns

@@ -32,46 +32,54 @@
       <link rel="stylesheet" href="{{ url_for('static', filename ='js/material.min.js') }}">
 <div class='contenedor'>
   <h1>Seleccione las columnas deseadas</h1>
- <label class='archivo' id='Res_Definitivos_Gobernador_2017_por_seccion.xlsx'></label>
+ <label class='archivo' id='RESULTADOS_POR_SECCION_ELECION_AYUNTAMIENTOS_2021.xlsx'></label>
 </div>
 <div class='boton'>
   <button type='button' class='enviar'>Enviar</button>
 </div>
 <div class='filtro'>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox1'value='CIRCUNSCRIPCION'> CIRCUNSCRIPCION</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox2'value='ID_ESTADO'> ID_ESTADO</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox3'value='NOMBRE_ESTADO'> NOMBRE_ESTADO</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox4'value='ID_DISTRITO'> ID_DISTRITO</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox5'value='CABECERA_DISTRITAL'> CABECERA_DISTRITAL</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox6'value='ID_MUNICIPIO'> ID_MUNICIPIO</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox7'value='MUNICIPIO'> MUNICIPIO</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox8'value='SECCION'> SECCION</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox9'value='CASILLAS'> CASILLAS</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox10'value='PAN'> PAN</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox11'value='PRI'> PRI</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox12'value='PRD'> PRD</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox13'value='PT'> PT</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox14'value='PVEM'> PVEM</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox15'value='NVA_ALIANZA'> NVA_ALIANZA</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox16'value='MORENA'> MORENA</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox17'value='ES'> ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox18'value='PRI_PVEM_NVA_ALIANZA_ES'> PRI_PVEM_NVA_ALIANZA_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox19'value='PRI_PVEM_NVA_ALIANZA'> PRI_PVEM_NVA_ALIANZA</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox20'value='PRI_PVEM_ES'> PRI_PVEM_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox21'value='PRI_NVA_ALIANZA_ES'> PRI_NVA_ALIANZA_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox22'value='PRI_PVEM'> PRI_PVEM</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox23'value='PRI_NVA_ALIANZA'> PRI_NVA_ALIANZA</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox24'value='PRI_ES'> PRI_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox25'value='PVEM_NVA_ALIANZA_ES'> PVEM_NVA_ALIANZA_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox26'value='PVEM_NVA_ALIANZA'> PVEM_NVA_ALIANZA</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox27'value='PVEM_ES'> PVEM_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox28'value='NVA_ALIANZA_ES'> NVA_ALIANZA_ES</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox29'value='CAND_IND1'> CAND_IND1</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox30'value='NUM_VOTOS_CAN_NREG'> NUM_VOTOS_CAN_NREG</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox31'value='NUM_VOTOS_VALIDOS'> NUM_VOTOS_VALIDOS</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox32'value='NUM_VOTOS_NULOS'> NUM_VOTOS_NULOS</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox33'value='TOTAL_VOTOS'> TOTAL_VOTOS</label>
-<label class='chbox'><input type='checkbox' class='cbox' id='cbox34'value='LISTA_NOMINAL'> LISTA_NOMINAL</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox1'value='MUNICIPIO'> MUNICIPIO</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox2'value='SECCION'> SECCION</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox3'value='PAN'> PAN</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox4'value='PRI'> PRI</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox5'value='PRD'> PRD</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox6'value='PVEM'> PVEM</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox7'value='PT'> PT</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox8'value='MC'> MC</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox9'value='MORENA'> MORENA</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox10'value='PES'> PES</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox11'value='RSP'> RSP</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox12'value='FXM'> FXM</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox13'value='NAEM'> NAEM</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox14'value='PAN_PRI_PRD'> PAN_PRI_PRD</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox15'value='PAN_PRI'> PAN_PRI</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox16'value='PAN_PRD'> PAN_PRD</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox17'value='PRI_PRD'> PRI_PRD</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox18'value='PT_MORENA_NAEM'> PT_MORENA_NAEM</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox19'value='PT_MORENA'> PT_MORENA</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox20'value='PT_NAEM'> PT_NAEM</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox21'value='MORENA_NAEM'> MORENA_NAEM</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox22'value='PT_MORENA_NAEM_CC'> PT_MORENA_NAEM_CC</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox23'value='CAND_IND1'> CAND_IND1</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox24'value='CAND_IND2'> CAND_IND2</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox25'value='CAND_IND3'> CAND_IND3</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox26'value='CAND_IND4'> CAND_IND4</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox27'value='CAND_IND5'> CAND_IND5</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox28'value='CAND_IND6'> CAND_IND6</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox29'value='CAND_IND7'> CAND_IND7</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox30'value='CAND_IND8'> CAND_IND8</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox31'value='CAND_IND9'> CAND_IND9</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox32'value='CAND_IND10'> CAND_IND10</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox33'value='CAND_IND11'> CAND_IND11</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox34'value='CAND_IND12'> CAND_IND12</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox35'value='CAND_IND13'> CAND_IND13</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox36'value='CAND_IND14'> CAND_IND14</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox37'value='CAND_IND15'> CAND_IND15</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox38'value='NUM_VOTOS_VALIDOS'> NUM_VOTOS_VALIDOS</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox39'value='NUM_VOTOS_CAN_NREG'> NUM_VOTOS_CAN_NREG</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox40'value='NUM_VOTOS_NULOS'> NUM_VOTOS_NULOS</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox41'value='TOTAL_VOTOS'> TOTAL_VOTOS</label>
+<label class='chbox'><input type='checkbox' class='cbox' id='cbox42'value='LISTA_NOMINAL'> LISTA_NOMINAL</label>
 </div>
 
 
@@ -79,258 +87,258 @@
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th>CIRCUNSCRIPCION</th>
-      <th>ID_ESTADO</th>
-      <th>NOMBRE_ESTADO</th>
-      <th>ID_DISTRITO</th>
-      <th>CABECERA_DISTRITAL</th>
-      <th>ID_MUNICIPIO</th>
       <th>MUNICIPIO</th>
       <th>SECCION</th>
-      <th>CASILLAS</th>
       <th>PAN</th>
+      <th>PRI</th>
+      <th>PRD</th>
+      <th>PVEM</th>
+      <th>PT</th>
+      <th>MC</th>
+      <th>MORENA</th>
+      <th>PES</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>1</td>
-      <td>3</td>
-      <td>170.0</td>
+      <td>556</td>
+      <td>355</td>
+      <td>0</td>
+      <td>60</td>
+      <td>4</td>
+      <td>4</td>
+      <td>173</td>
+      <td>98</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>2</td>
+      <td>505</td>
+      <td>349</td>
       <td>3</td>
-      <td>146.0</td>
+      <td>57</td>
+      <td>5</td>
+      <td>3</td>
+      <td>170</td>
+      <td>117</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>3</td>
+      <td>758</td>
+      <td>399</td>
+      <td>1</td>
+      <td>55</td>
+      <td>9</td>
       <td>3</td>
-      <td>164.0</td>
+      <td>273</td>
+      <td>78</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>4</td>
+      <td>471</td>
+      <td>473</td>
+      <td>7</td>
+      <td>27</td>
       <td>3</td>
-      <td>155.0</td>
+      <td>3</td>
+      <td>99</td>
+      <td>136</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>5</td>
+      <td>142</td>
+      <td>337</td>
       <td>2</td>
-      <td>61.0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
-      <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
-      <td>6</td>
-      <td>2</td>
-      <td>130.0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
-      <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
-      <td>7</td>
-      <td>2</td>
-      <td>120.0</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
-      <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
+      <td>3</td>
       <td>8</td>
       <td>1</td>
-      <td>63.0</td>
+      <td>40</td>
+      <td>7</td>
     </tr>
     <tr>
-      <td>1</td>
+      <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
+      <td>6</td>
+      <td>206</td>
+      <td>201</td>
+      <td>0</td>
+      <td>16</td>
+      <td>5</td>
+      <td>3</td>
+      <td>63</td>
       <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
+    </tr>
+    <tr>
+      <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
+      <td>7</td>
+      <td>67</td>
+      <td>192</td>
+      <td>2</td>
+      <td>13</td>
+      <td>6</td>
+      <td>6</td>
+      <td>110</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
+      <td>8</td>
+      <td>55</td>
+      <td>96</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>37</td>
+      <td>16</td>
+    </tr>
+    <tr>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>9</td>
+      <td>73</td>
+      <td>149</td>
       <td>2</td>
-      <td>83.0</td>
+      <td>9</td>
+      <td>4</td>
+      <td>2</td>
+      <td>45</td>
+      <td>7</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>10</td>
+      <td>239</td>
+      <td>294</td>
+      <td>1</td>
+      <td>43</td>
+      <td>8</td>
       <td>2</td>
-      <td>101.0</td>
+      <td>159</td>
+      <td>34</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>11</td>
-      <td>3</td>
-      <td>101.0</td>
+      <td>112</td>
+      <td>212</td>
+      <td>0</td>
+      <td>172</td>
+      <td>2</td>
+      <td>0</td>
+      <td>76</td>
+      <td>45</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>12</td>
-      <td>2</td>
-      <td>98.0</td>
+      <td>182</td>
+      <td>308</td>
+      <td>3</td>
+      <td>21</td>
+      <td>1</td>
+      <td>3</td>
+      <td>79</td>
+      <td>41</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>13</td>
-      <td>3</td>
-      <td>188.0</td>
+      <td>310</td>
+      <td>346</td>
+      <td>1</td>
+      <td>17</td>
+      <td>5</td>
+      <td>1</td>
+      <td>113</td>
+      <td>151</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>14</td>
-      <td>4</td>
-      <td>200.0</td>
+      <td>379</td>
+      <td>431</td>
+      <td>8</td>
+      <td>27</td>
+      <td>2</td>
+      <td>3</td>
+      <td>236</td>
+      <td>206</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>15</td>
-      <td>3</td>
-      <td>124.0</td>
+      <td>263</td>
+      <td>359</td>
+      <td>2</td>
+      <td>17</td>
+      <td>1</td>
+      <td>2</td>
+      <td>80</td>
+      <td>77</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>16</td>
+      <td>318</td>
+      <td>267</td>
       <td>3</td>
-      <td>176.0</td>
+      <td>40</td>
+      <td>1</td>
+      <td>3</td>
+      <td>155</td>
+      <td>258</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>17</td>
-      <td>3</td>
-      <td>196.0</td>
+      <td>300</td>
+      <td>321</td>
+      <td>2</td>
+      <td>24</td>
+      <td>4</td>
+      <td>5</td>
+      <td>212</td>
+      <td>151</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>18</td>
+      <td>190</td>
+      <td>201</td>
+      <td>4</td>
+      <td>18</td>
       <td>2</td>
-      <td>89.0</td>
+      <td>1</td>
+      <td>108</td>
+      <td>48</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>19</td>
-      <td>3</td>
-      <td>179.0</td>
+      <td>247</td>
+      <td>376</td>
+      <td>8</td>
+      <td>66</td>
+      <td>11</td>
+      <td>2</td>
+      <td>213</td>
+      <td>198</td>
     </tr>
     <tr>
-      <td>1</td>
-      <td>15</td>
-      <td>MEXICO</td>
-      <td>14</td>
-      <td>JILOTEPEC DE ANDRES MOLINA ENRIQUEZ</td>
-      <td>1</td>
       <td>ACAMBAY DE RUIZ CASTAÑEDA</td>
       <td>20</td>
-      <td>3</td>
-      <td>159.0</td>
+      <td>245</td>
+      <td>356</td>
+      <td>14</td>
+      <td>19</td>
+      <td>14</td>
+      <td>2</td>
+      <td>386</td>
+      <td>307</td>
     </tr>
   </tbody>
 </table>
