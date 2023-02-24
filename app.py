@@ -286,6 +286,7 @@ def crear_nuevo_archivo(documento):
             #print(indep)
         print ('lista:',candid)
         print (len(candid))
+        #Sin el if crea la columna independientes con valores random
         if len(candid) != 1 or len(candid) != 0:
             #creando nueva columna con los valores de independientes sumados    
             archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
@@ -329,6 +330,7 @@ def crear_nuevo_archivo(documento):
             #print(indep)
         print ('lista:',candid)
         print (len(candid))
+        #Sin el if crea la columna independientes con valores random
         if len(candid) != 1 or len(candid) != 0:
             #creando nueva columna con los valores de independientes sumados    
             archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
