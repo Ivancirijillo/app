@@ -287,7 +287,9 @@ def crear_nuevo_archivo(documento):
         print ('lista:',candid)
         print (len(candid))
         #Sin el if crea la columna independientes con valores random
-        if len(candid) != 1 or len(candid) != 0:
+        #Si solo hay un candidato aun asi se crea la nueva columna, se puede cambiar a >1 para que no se crea una nueva columna
+        #En caso de no haber candidatos no se crea la columna
+        if len(candid) > 0:
             #creando nueva columna con los valores de independientes sumados    
             archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
             #leemos el valor de las columnas
@@ -331,7 +333,9 @@ def crear_nuevo_archivo(documento):
         print ('lista:',candid)
         print (len(candid))
         #Sin el if crea la columna independientes con valores random
-        if len(candid) != 1 or len(candid) != 0:
+        #Si solo hay un candidato aun asi se crea la nueva columna, se puede cambiar a >1 para que no se crea una nueva columna
+        #En caso de no haber candidatos no se crea la columna
+        if len(candid) > 0:
             #creando nueva columna con los valores de independientes sumados    
             archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
             #leemos el valor de las columnas
@@ -342,7 +346,7 @@ def crear_nuevo_archivo(documento):
             nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
             #exportamos el nuevo archivo
             nuevo_archivo.to_excel(documento, index=False)
-        ######FIN INDEPENDIETES######   
+        ######FIN INDEPENDIETES######          
         archivo_sin_encabezados = pd.read_excel(documento)      
         #leemos el valor de las columnas
         columnas = archivo_sin_encabezados.columns

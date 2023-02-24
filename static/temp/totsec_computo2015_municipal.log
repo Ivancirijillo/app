@@ -2,6 +2,5 @@ nombre:totsec_computo2015_municipal
 columnas:['Municipio' 'Cabecera Municipal' 'Sección' 'PAN' 'PRI' 'PRD' 'PT' 'PVEM'
  'MC' 'Unnamed: 9' 'MORENA' 'PH' 'PES' 'PFD' 'PRI PVEM NA' 'PRI PVEM'
  'PRI NA' 'PVEM NA' 'PAN PT' 'Candidato Independiente'
- 'Candidato Independiente.1' 'No Registrados' 'Nulos' 'Total'
- 'CANDIDATOS_INDEPENDIENTES']
-numero de columnas:25
+ 'Candidato Independiente.1' 'No Registrados' 'Nulos' 'Total']
+numero de columnas:24
