@@ -289,7 +289,7 @@ def crear_nuevo_archivo(documento):
         #Sin el if crea la columna independientes con valores random
         #Si solo hay un candidato aun asi se crea la nueva columna, se puede cambiar a >1 para que no se crea una nueva columna
         #En caso de no haber candidatos no se crea la columna
-        if len(candid) > 0:
+        if len(candid) > 1:
             #creando nueva columna con los valores de independientes sumados    
             archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
             #leemos el valor de las columnas
@@ -335,7 +335,7 @@ def crear_nuevo_archivo(documento):
         #Sin el if crea la columna independientes con valores random
         #Si solo hay un candidato aun asi se crea la nueva columna, se puede cambiar a >1 para que no se crea una nueva columna
         #En caso de no haber candidatos no se crea la columna
-        if len(candid) > 0:
+        if len(candid) > 1:
             #creando nueva columna con los valores de independientes sumados    
             archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
             #leemos el valor de las columnas
