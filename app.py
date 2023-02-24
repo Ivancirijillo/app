@@ -299,9 +299,9 @@ def crear_nuevo_archivo(documento):
             #eliminamos la columnas encontradas candidatos indep
             nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
             #exportamos el nuevo archivo
-            nuevo_archivo.to_excel(documento, index=False)
-        ######FIN INDEPENDIETES######          
-        archivo_sin_encabezados = pd.read_excel(documento)      
+            nuevo_archivo.to_excel(documento, index=False)          
+            archivo_sin_encabezados = pd.read_excel(documento)  
+        ######FIN INDEPENDIETES######    
         #leemos el valor de las columnas
         columnas = archivo_sin_encabezados.columns  
         #filtramos las columnas a eliminar
@@ -345,9 +345,9 @@ def crear_nuevo_archivo(documento):
             #eliminamos la columnas encontradas candidatos indep
             nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
             #exportamos el nuevo archivo
-            nuevo_archivo.to_excel(documento, index=False)
-        ######FIN INDEPENDIETES######          
-        archivo_sin_encabezados = pd.read_excel(documento)      
+            nuevo_archivo.to_excel(documento, index=False)          
+            archivo_sin_encabezados = pd.read_excel(documento)  
+        ######FIN INDEPENDIETES######                
         #leemos el valor de las columnas
         columnas = archivo_sin_encabezados.columns
         #filtramos las columnas a eliminar
