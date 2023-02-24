@@ -249,6 +249,10 @@ def crear_nuevo_archivo(documento):
     filas_a_eliminar = 0 # filas por eliminar
     eliminar = False # determina si hay que eliminar la fila por defecto del documento
     archivo = pd.read_excel(documento, header=None) # leemos el archivo sin encabezado
+    candid = []
+    indep = []
+    aux=1
+
     while(incompleto):
         if(str(archivo.iloc[fila,0]) == "nan"):#analizamos celda por celda
             incompleto = True # si encuentra una celda vacia sigue en el bucle
@@ -266,8 +270,37 @@ def crear_nuevo_archivo(documento):
         archivo.iloc[filas_a_eliminar:,:].to_excel(documento, index=False, header=False) #cambios temporales
         #creamos el archivo sin encabezado
         archivo_sin_encabezados = pd.read_excel(documento)
+        ######INCIO INDEPENDIETES######
+        #Comparacion de columnas con candidatos independientes
+        for colu in archivo_sin_encabezados:
+            indep='CAND_IND' + str(aux)
+            if colu==indep:
+                aux+=1
+                #agregando a columnas por eliminar
+                candid.append(indep)
+            #hay uno que empiexa en el dos
+            elif colu=='CAND_IND2':
+                aux+=2
+                #agregando a columnas por eliminar
+                candid.append('CAND_IND2')
+            #print(indep)
+        print ('lista:',candid)
+        print (len(candid))
+        if len(candid) != 1 or len(candid) != 0:
+            #creando nueva columna con los valores de independientes sumados    
+            archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
+            #leemos el valor de las columnas
+            columnas = archivo_sin_encabezados.columns
+            #filtramos las columnas a eliminar candidatos indep
+            indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in str(col) for texto in candid)]
+            #eliminamos la columnas encontradas candidatos indep
+            nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
+            #exportamos el nuevo archivo
+            nuevo_archivo.to_excel(documento, index=False)
+        ######FIN INDEPENDIETES######          
+        archivo_sin_encabezados = pd.read_excel(documento)      
         #leemos el valor de las columnas
-        columnas = archivo_sin_encabezados.columns
+        columnas = archivo_sin_encabezados.columns  
         #filtramos las columnas a eliminar
         indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in str(col) for texto in COLUMNAS_A_ELIMINAR)]
         #eliminamos la columnas encontradas
@@ -280,6 +313,35 @@ def crear_nuevo_archivo(documento):
         archivo.iloc[filas_a_eliminar:,:].to_excel(documento,index=False, header=False)
         #creamos el archivo sin encabezado
         archivo_sin_encabezados = pd.read_excel(documento)
+        ######INCIO INDEPENDIETES######
+        #Comparacion de columnas con candidatos independientes
+        for colu in archivo_sin_encabezados:
+            indep='CAND_IND' + str(aux)
+            if colu==indep:
+                aux+=1
+                #agregando a columnas por eliminar
+                candid.append(indep)
+            #hay uno que empiexa en el dos
+            elif colu=='CAND_IND2':
+                aux+=2
+                #agregando a columnas por eliminar
+                candid.append('CAND_IND2')
+            #print(indep)
+        print ('lista:',candid)
+        print (len(candid))
+        if len(candid) != 1 or len(candid) != 0:
+            #creando nueva columna con los valores de independientes sumados    
+            archivo_sin_encabezados['CANDIDATOS_INDEPENDIENTES'] = archivo_sin_encabezados[candid].sum(axis=1)
+            #leemos el valor de las columnas
+            columnas = archivo_sin_encabezados.columns
+            #filtramos las columnas a eliminar candidatos indep
+            indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in str(col) for texto in candid)]
+            #eliminamos la columnas encontradas candidatos indep
+            nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
+            #exportamos el nuevo archivo
+            nuevo_archivo.to_excel(documento, index=False)
+        ######FIN INDEPENDIETES######   
+        archivo_sin_encabezados = pd.read_excel(documento)      
         #leemos el valor de las columnas
         columnas = archivo_sin_encabezados.columns
         #filtramos las columnas a eliminar
@@ -288,17 +350,6 @@ def crear_nuevo_archivo(documento):
         nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
         #exportamos el nuevo archivo
         nuevo_archivo.to_excel(documento, index=False)
-
-####### POR ELIMINAR ########
-#funcion para eliminar columnas
-def eliminar_col(documento):
-    archivo = pd.read_excel(documento)
-    columnas = archivo.columns
-    textos = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
-    indices_eliminar = [i for i, col in enumerate(columnas) if any(texto in col for texto in textos)]
-    archivo = archivo.drop(archivo.columns[indices_eliminar], axis=1)
-    archivo.to_excel(documento, index=False)
-    print("Cambios listos 1")
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
