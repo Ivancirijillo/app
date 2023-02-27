@@ -1,4 +1,4 @@
-var url = "Res_Definitivos_Gobernador_2017_por_sección.xlsx";
+var url = "../archivos/Res_Definitivos_Gobernador_2017_por_sección.xlsx";
 var oReq = new XMLHttpRequest();
 oReq.open("GET", url, true);
 oReq.responseType = "arraybuffer";
