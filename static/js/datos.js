@@ -1,3 +1,49 @@
+/* SELECCION DEL MUNICIPIO DE LA BARRA SUPERIOR */
+var click_btn_selec = true;
+
+document.getElementById('btn_selec').addEventListener('click', function() {
+    if(click_btn_selec == true){
+        document.querySelector(".selec_municipios").style.height = '70%';
+        document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.90)';
+        document.querySelector(".barra_des").style.transform = 'rotate(-90deg)';
+        document.querySelector(".opc_municipios").style = 'position: relative; height: 100%;'
+            + 'display: flex; justify-content: center; align-items: center; flex-direction: column;'
+        click_btn_selec = false;
+    }else if(click_btn_selec == false){
+        document.querySelector(".selec_municipios").style.height = '22px';
+        document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.55)';
+        document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+        document.querySelector(".opc_municipios").style.display = 'none';
+        click_btn_selec = true;
+    }
+})
+
+document.getElementById('opc_acambay').addEventListener('click', function() {
+    document.getElementById('path16').style.fill = 'lightgreen';
+    document.querySelector(".selec_municipios").style.height = '22px';
+    document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.55)';
+    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+    document.querySelector(".opc_municipios").style.display = 'none';
+    click_btn_selec = true;
+    setTimeout(() => {
+        //funcion de espera
+    document.getElementById('path16').style = '/*fill: lightgreen;*/';
+    }, 5500);
+})
+
+document.getElementById('opc_atlaco').addEventListener('click', function() {
+    document.getElementById('path42').style.fill = 'lightgreen';
+    document.querySelector(".selec_municipios").style.height = '22px';
+    document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.55)';
+    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+    document.querySelector(".opc_municipios").style.display = 'none';
+    click_btn_selec = true;
+    setTimeout(() => {
+        //funcion de espera
+    document.getElementById('path42').style = '/*fill: lightgreen;*/';
+    }, 5500);
+})
+
 /* ENTRADA DE LA TARJETA EN "INFO" DE TITULO A SUBCONTENEDOR  */
 document.getElementById('Map').addEventListener('click', function() {
     document.getElementById('enc').classList.remove('active');
@@ -26,11 +72,15 @@ document.getElementById('btnAcercar').addEventListener('click', function() {
 
 document.getElementById('btnAlejar').addEventListener('click', function() {
     aumento -= 0.1;
-    document.getElementById('Map').style.transform = 'scale('+aumento+')';
-    posicion -= 30;
-    if(posicion>=0){
-        document.getElementById('Map').style.top = posicion+'px';
-        document.getElementById('Map').style.left = posicion+'px';
+    if(aumento>=1.0){
+        document.getElementById('Map').style.transform = 'scale('+aumento+')';
+        posicion -= 30;
+        if(posicion>=0){
+            document.getElementById('Map').style.top = posicion+'px';
+            document.getElementById('Map').style.left = posicion+'px';
+        }
+    }else{
+        aumento = 1.0;
     }
 })
 /* BOTON DE IMPRESION DE LA TARJETA DEL SUBCONTENEDOR */

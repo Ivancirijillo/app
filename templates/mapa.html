@@ -6,11 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename ='css/estilos.css') }}">
     <script src="{{ url_for('static', filename ='sheetjs/xlsx.full.min.js') }}"></script>
-    <script src="{{ url_for('static', filename ='js/tablaMapa.js') }}"></script>
+    <!--script src="{{ url_for('static', filename ='js/tablaMapa.js') }}"></script-->
     <title>Map</title>
 </head>
 <body>
     <div class="contenedor">
+        <div class="selec_municipios">
+            <div type="button" class="btn_selec" id="btn_selec">
+                <h3 style="margin-right: 5px;">Municipios</h3>
+                <h3 class="barra_des">>></h3>
+            </div>
+            <div class="opc_municipios">
+                <p>
+                    <button class="opc_acambay" id="opc_acambay">Acambay</button>
+                    <button class="opc_atlaco" id="opc_atlaco">Atlacomulco</button>
+                    <button class="opc_" id="opc_">Mun1</button>
+                    <button class="opc_" id="opc_">Mun2</button>
+                    <button class="opc_" id="opc_">Mun2</button>
+                    <button class="opc_" id="opc_">Mun3</button>
+                    <button class="opc_" id="opc_">Mun4</button>
+                    <button class="opc_" id="opc_">Mun5</button>
+                    <button class="opc_" id="opc_">Mun4</button>
+                    <button class="opc_" id="opc_">Mun5</button>
+                </p>
+            </div>
+        </div>
         <div class="info">
             <div class="titulo">
                 <h2>Estado de México</h2>
@@ -36,8 +56,10 @@
         </div>
         <div class="mapdiv">
             <div class="escala">
-                <div type="submit" class="btnAcercar" id="btnAcercar"><h2>+</h2></div>
-                <div type="submit" class="btnAlejar" id="btnAlejar"><h2>-</h2></div>
+                <button class="btnAcercar" id="btnAcercar"><h2>+</h2></button>
+                <button class="btnAlejar" id="btnAlejar"><h2>-</h2></button>
+                <!--div type="submit" class="btnAcercar" id="btnAcercar"><h2>+</h2></div>
+                <div type="submit" class="btnAlejar" id="btnAlejar"><h2>-</h2></div-->
             </div>
             <svg
             xmlns:svg="http://www.w3.org/2000/svg"

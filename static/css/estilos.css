@@ -14,9 +14,48 @@ body{
     position: absolute;
     display: flex;
     align-items: center;
-    margin: 0 8%;
+    margin: 1% 4% 0 4%;
     width: 100%;
     height: 100%;
+}
+
+.selec_municipios{
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.55); 
+	top: 0;
+	right: 8%;
+	width: 92%;
+	height: 22px;
+    border-radius: 7px;
+	transition: 1s ease all;
+	z-index: 3;
+}
+
+.btn_selec{
+	display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.barra_des{
+	transform: rotate(90deg);
+}
+
+.opc_municipios{
+	display: none;
+}
+
+.opc_municipios button{
+	position: relative;
+	display: flex;
+    flex-direction: column;
+	margin: 0 auto 10px auto;
+}
+
+.opc_municipios p{
+    column-count: 5;
+/*    column-gap: 15px; */
+    list-style: none;
 }
 
 .info{
@@ -25,9 +64,9 @@ body{
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 35%;
     height: 10%;
-	margin: 0 15px;
+	margin-right: 15px;
     border-radius: 10px;
 	transition: 1s ease all;
 }
@@ -121,20 +160,25 @@ body{
 
 /* Boton de impresion de tarjeta */
 
-.btnImprimir{
+.btnImprimir,
+.opc_municipios button{
 	background-color: rgba(255, 255, 255, 0.75); 
 	color: black; 
 	border: 2px solid #0099CC;
 	border-radius: 5px;
 	padding: 4px 32px;
 	font-size: 16px;
-	margin-top: 30px;
 	transition-duration: 0.4s;
 	cursor: pointer;
 	text-transform: uppercase;
 }
 
-.btnImprimir:hover {
+.btnImprimir{
+	margin-top: 30px;
+}
+
+.btnImprimir:hover,
+.opc_municipios button:hover {
 	background-color: #008CBA;
 	color: white;
 }
@@ -172,6 +216,7 @@ body{
     fill: rgba(220, 130, 15, 0.85);
     stroke: rgb(110, 65, 5);
     stroke-width: 5px;
+	transition: .25s ease all;
 }
 
 .mapdiv path:hover{
@@ -191,13 +236,12 @@ svg{
 
 .escala{
 	position: absolute;
-    bottom: 8%;
+    bottom: 12%;
     z-index: 2;
 }
 
 .btnAcercar,
 .btnAlejar{
-	background-color: rgba(255, 255, 255, 0.75);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,12 +249,10 @@ svg{
 	height: 30px;
 	margin: 3px 10px;
 	border-radius: 8px;
-	color: black;
-    cursor: pointer;
 }
 
 .btnAcercar:hover,
 .btnAlejar:hover{
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: rgba(46, 46, 140, 0.85);
 	color: white;
 }
