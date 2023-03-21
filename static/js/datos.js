@@ -51,12 +51,20 @@ document.getElementById('Map').addEventListener('click', function() {
     document.querySelector(".titulo").style.display = 'none';
     document.querySelector(".subcontenedor").style.display = 'block';
     document.querySelector(".info").style.height = '85%';
+    document.querySelector(".filtro_categoria").style.display = 'block';
+    document.querySelector(".filtrado").style.display = 'none';
     setTimeout(() => {
         //funcion de espera
         document.getElementById('enc').classList.add('active');
         document.getElementById('entrada').classList.add('active');
     }, 150);
 })
+
+document.getElementById('btnContinuar').addEventListener('click', function () {
+    document.querySelector(".filtro_categoria").style.display = 'none';
+    document.querySelector(".filtrado").style.display = 'block';
+})
+
 /* BOTON DE ACERCAMIENTO/ALEJAMIENTO DEL MAPA */
 var aumento = 1.0, posicion = 0;
 

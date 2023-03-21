@@ -101,7 +101,8 @@ body{
 	transform: scale(0.7);
 	opacity: 0;
 }
-.entrada h2 {
+.entrada h2,
+.entrada h1 {
 	font-size: 26px;
 	font-weight: 400;
 	margin-bottom: 8px;
@@ -114,7 +115,9 @@ body{
 	opacity: 0;
 }
 .entrada table,
-.entrada button {
+.entrada button,
+.entrada.active input,
+.entrada.active label {
 	opacity: 0;
 }
 /* Entradas - Animacion*/
@@ -122,14 +125,17 @@ body{
 	transform: scale(1); 
 	opacity: 1;
 }
-.entrada.active h2 { 
+.entrada.active h2,
+.entrada.active h1 { 
 	animation: entradaTitulo .5s ease .2s forwards; 
 }
 .entrada.active h3 { 
 	animation: entradaSubtitulo .5s ease .2s forwards; 
 }
 .entrada.active table,
-.entrada.active button {
+.entrada.active button,
+.entrada.active input,
+.entrada.active label {
 	animation: entradaTable .5s linear .5s forwards; 
 }
 
@@ -158,10 +164,28 @@ body{
 	to { opacity: 1; }
 }
 
+/* Div de categoria */
+.filtro_categoria{
+	display: block;
+}
+
+.filtro_categoria h1{
+	margin: 40px 0 15px 0;
+}
+
+.filtro_categoria input{
+	margin: 8px;
+}
+
+.filtrado{
+	display: none;
+}
+
 /* Boton de impresion de tarjeta */
 
 .btnImprimir,
-.opc_municipios button{
+.opc_municipios button,
+.btnContinuar{
 	background-color: rgba(255, 255, 255, 0.75); 
 	color: black; 
 	border: 2px solid #0099CC;
@@ -173,12 +197,14 @@ body{
 	text-transform: uppercase;
 }
 
-.btnImprimir{
+.btnImprimir,
+.btnContinuar{
 	margin-top: 30px;
 }
 
 .btnImprimir:hover,
-.opc_municipios button:hover {
+.opc_municipios button:hover,
+.btnContinuar:hover {
 	background-color: #008CBA;
 	color: white;
 }

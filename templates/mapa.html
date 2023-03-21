@@ -38,18 +38,41 @@
             <div class="subcontenedor">
                 <div class="enc" id="enc">
                     <div class="entrada" id="entrada">
-                        <div class="imprimible">
-                            <h2 id="Titulo1">Municipio: </h2> 
-                            <h3 id="municipio"></h3>
-                            <h2 id="Titulo2">Habitantes: </h2>
-                            <h3 id="habitantes"></h3>
-                            <div class="datos">
-                                <table class="tableDatos" id="tableDatos">
-                                    <tr><td></td><td></td></tr>
-                                </table>
+                        <div class="filtro_categoria" id="filtro_categoria">
+                            <div class="sel_anio">
+                                <h1>Año</h1>
+                                <input type="radio" id="fecha" name="fav_language" value="fecha">
+                                <label for="fecha">2022</label><br>
+                            </div>  
+                            <div class="sel_cat">
+                                <h1>Categoria</h1>
+                                <input type="radio" id="apoyo" name="fav_languag" value="apoyo">
+                                <label for="fecha">Apoyos</label><br> 
+                                <input type="radio" id="deli" name="fav_languag" value="deli">
+                                <label for="deli">Delincuencia</label><br>
+                                <input type="radio" id="padron" name="fav_languag" value="padron">
+                                <label for="padron">Padrón Electoral</label><br>
+                                <input type="radio" id="pobreza" name="fav_languag" value="pobreza">
+                                <label for="pobreza">Pobreza</label><br>
                             </div>
+                        
+                            <button class="btnContinuar" id="btnContinuar">Continuar</button>
+
                         </div>
-                        <button class="btnImprimir" id="btnImprimir">Imprimir</button>
+                        <div class="filtrado" id="filtrado">
+                            <div class="imprimible">
+                                <h2 id="Titulo1">Municipio: </h2> 
+                                <h3 id="municipio"></h3>
+                                <h2 id="Titulo2">Habitantes: </h2>
+                                <h3 id="habitantes"></h3>
+                                <div class="datos">
+                                    <table class="tableDatos" id="tableDatos">
+                                        <tr><td></td><td></td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="btnImprimir" id="btnImprimir">Imprimir</button>
+                        </div>
                     </div>
                 </div>
             </div>
