@@ -60,9 +60,19 @@ document.getElementById('Map').addEventListener('click', function() {
     }, 150);
 })
 
+/* VALIDACION DE LOS INPUT-BOTON CONTINUAR */
 document.getElementById('btnContinuar').addEventListener('click', function () {
-    document.querySelector(".filtro_categoria").style.display = 'none';
-    document.querySelector(".filtrado").style.display = 'block';
+    let entrada_categ = document.querySelectorAll("input[name=in_categ]");
+    entrada_categ.forEach(item=>{
+        if(item.checked){
+            document.querySelector(".filtro_categoria").style.display = 'none';
+            document.querySelector(".filtrado").style.display = 'block';
+        }
+        else{
+            
+        }
+    })
+    
 })
 
 /* BOTON DE ACERCAMIENTO/ALEJAMIENTO DEL MAPA */
@@ -91,6 +101,7 @@ document.getElementById('btnAlejar').addEventListener('click', function() {
         aumento = 1.0;
     }
 })
+
 /* BOTON DE IMPRESION DE LA TARJETA DEL SUBCONTENEDOR */
 function imprimirElemento(elemento) {
     var ventana = window.open('', '', 'height=1000,width=1000');
@@ -139,7 +150,7 @@ document.getElementById('path22').addEventListener('click', function() {
     document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
 })
 
-document.getElementById('path22').addEventListener('click', function() {
+document.getElementById('path24').addEventListener('click', function() {
     document.querySelector("#municipio").textContent = "Seleccion - Almoloya de Juárez"
     document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
 })

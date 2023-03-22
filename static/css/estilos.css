@@ -181,7 +181,7 @@ body{
 	display: none;
 }
 
-/* Boton de impresion de tarjeta */
+/* Estilo de Botones - botones general */
 
 .btnImprimir,
 .opc_municipios button,
@@ -208,7 +208,25 @@ body{
 	background-color: #008CBA;
 	color: white;
 }
-
+.v_emergen{
+	display: none;
+	transition: all 0.3s ease;
+}
+.v_emergen{
+	display: flex;
+		position: absolute;
+		top: 45%;
+		left: 25%;
+	width: 50%;
+	background-color: rgba(220, 130, 15, 0.85);
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-direction: row;
+	font-size: 20px;
+	color: white;
+	transition: all 0.3s ease;
+}
 /* MAPA ESTILOS */
 
 .mapdiv{
