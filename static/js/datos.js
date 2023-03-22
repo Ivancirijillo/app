@@ -16,47 +16,9 @@ document.getElementById('btn_selec').addEventListener('click', function() {
     }
 })
 
-document.getElementById('opc_acambay').addEventListener('click', function() {
-    document.getElementById('path16').style.fill = 'lightgreen';
-    document.querySelector(".selec_municipios").style.height = '22px';
-    document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.55)';
-    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
-    document.querySelector(".opc_municipios").style.display = 'none';
-    click_btn_selec = true;
-    setTimeout(() => {
-        //funcion de espera
-    document.getElementById('path16').style = '/*fill: lightgreen;*/';
-    }, 5500);
-})
-
-document.getElementById('opc_atlaco').addEventListener('click', function() {
-    document.getElementById('path42').style.fill = 'lightgreen';
-    document.querySelector(".selec_municipios").style.height = '22px';
-    document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.55)';
-    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
-    document.querySelector(".opc_municipios").style.display = 'none';
-    click_btn_selec = true;
-    setTimeout(() => {
-        //funcion de espera
-    document.getElementById('path42').style = '/*fill: lightgreen;*/';
-    }, 5500);
-})
-
 /* ENTRADA DE LA TARJETA EN "INFO" DE TITULO A SUBCONTENEDOR  */
 document.getElementById('Map').addEventListener('click', function() {
-    document.getElementById('enc').classList.remove('active');
-    document.getElementById('entrada').classList.remove('active');
-    document.querySelector(".titulo").style.display = 'none';
-    document.querySelector(".subcontenedor").style.display = 'block';
-    document.querySelector(".info").style.height = '85%';
-    document.querySelector(".filtro_categoria").style.display = 'block';
-    document.querySelector(".filtrado").style.display = 'none';
-    document.getElementById('v_emergen').classList.add('v_emergen');
-    setTimeout(() => {
-        //funcion de espera
-        document.getElementById('enc').classList.add('active');
-        document.getElementById('entrada').classList.add('active');
-    }, 150);
+    des_tarjeta();
 })
 
 /* VALIDACION DE LOS INPUT-BOTON CONTINUAR */
@@ -148,15 +110,57 @@ document.getElementById('btnImprimir').addEventListener("click", function() {
     imprimirElemento(div);
 });
 
+/* FUNCIONES PARA LOS MUNICIPIOS */
+function tarjeta_out (municipio, path_n){
+    document.getElementById(path_n).style.fill = 'lightgreen';
+    document.querySelector(".selec_municipios").style = 'height: 22px; rgba(255, 255, 255, 0.55)';
+    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+    document.querySelector(".opc_municipios").style.display = 'none';
+    click_btn_selec = true;
+    setTimeout(() => {
+        //funcion de espera
+    document.getElementById(path_n).style = '/*fill: lightgreen;*/';
+    }, 5500);
+    document.querySelector("#municipio").textContent = "Seleccion - " + municipio
+    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+}
+
+function des_tarjeta (){
+    document.getElementById('enc').classList.remove('active');
+    document.getElementById('entrada').classList.remove('active');
+    document.querySelector(".titulo").style.display = 'none';
+    document.querySelector(".subcontenedor").style.display = 'block';
+    document.querySelector(".info").style.height = '85%';
+    document.querySelector(".filtro_categoria").style.display = 'block';
+    document.querySelector(".filtrado").style.display = 'none';
+    document.getElementById('v_emergen').classList.add('v_emergen');
+    setTimeout(() => {
+        //funcion de espera
+        document.getElementById('enc').classList.add('active');
+        document.getElementById('entrada').classList.add('active');
+    }, 150);
+}
+
+/*BOTONES PARTE SUPERIOR - ENTRADA A TARJETA */
+document.getElementById('opc_acambay').addEventListener('click', function() {
+    tarjeta_out("Acambay", 'path16');
+    des_tarjeta();
+})
+
+document.getElementById('opc_atlaco').addEventListener('click', function() {
+    tarjeta_out("Atlacomulco", 'path42');
+    des_tarjeta();
+})
+
 /* PATH´S INDIVIDUALES DE SELECCION AL MUNICIPIO */
 document.getElementById('path42').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Atlacomulco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+    tarjeta_out("Atlacomulco", 'path42');
+    des_tarjeta();
 })
 
 document.getElementById('path16').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Acambay"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+    tarjeta_out("Acambay", 'path16');
+    des_tarjeta();
 })
 
 document.getElementById('path18').addEventListener('click', function() {
