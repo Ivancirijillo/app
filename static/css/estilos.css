@@ -4,6 +4,28 @@
     overflow: hidden;
 }
 
+/*Scroll*/
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-corner{
+	background-color:rgba(255, 255, 255, 0);
+}
+
+::-webkit-scrollbar-track {
+	background-color:rgba(255, 255, 255, 0.75);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(46, 46, 140, 0.75);
+	border-radius: 10px;
+}
+
+/* ESTRUCTURA PRINCIPAL */
+
 body{
     background: #0a9292;
     width: 100%;
@@ -19,6 +41,8 @@ body{
     height: 100%;
 }
 
+/* BARRA SUPERIOR*/
+
 .selec_municipios{
 	position: absolute;
 	background-color: rgba(255, 255, 255, 0.55); 
@@ -28,6 +52,7 @@ body{
 	height: 22px;
     border-radius: 7px;
 	transition: 1s ease all;
+	overflow-y: scroll;
 	z-index: 3;
 }
 
@@ -54,9 +79,12 @@ body{
 
 .opc_municipios p{
     column-count: 5;
-/*    column-gap: 15px; */
-    list-style: none;
+	column-gap: 8px;
+    margin-bottom: 10px;
+    /*list-style: none;*/
 }
+
+/* TARJETA */
 
 .info{
     background: #d0e4e4;
@@ -120,7 +148,9 @@ body{
 .entrada.active label {
 	opacity: 0;
 }
+
 /* Entradas - Animacion*/
+
 .entrada.active {
 	transform: scale(1); 
 	opacity: 1;
@@ -165,6 +195,7 @@ body{
 }
 
 /* Div de categoria */
+
 .filtro_categoria{
 	display: block;
 }
@@ -181,7 +212,7 @@ body{
 	display: none;
 }
 
-/* Estilo de Botones - botones general */
+/* ESTILO DE BOTONES - Botones general */
 
 .btnImprimir,
 .opc_municipios button,
@@ -208,25 +239,22 @@ body{
 	background-color: #008CBA;
 	color: white;
 }
-.v_emergen{
+
+/* MENSAJE DE VALIDACION - VENTANA EMERGENTE */
+
+.filtro_categoria .v_emergen{
 	display: none;
-	transition: all 0.3s ease;
 }
-.v_emergen{
-	display: flex;
-		position: absolute;
-		top: 45%;
-		left: 25%;
-	width: 50%;
-	background-color: rgba(220, 130, 15, 0.85);
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-	flex-direction: row;
-	font-size: 20px;
+
+.v_emergen_validado_R{
+	position: absolute;
+	top: 45%;
+	font-size: 22px;
 	color: white;
-	transition: all 0.3s ease;
+	background-color:rgba(203,50,52,0.8);
+    border: solid 1px #801313;
 }
+
 /* MAPA ESTILOS */
 
 .mapdiv{
@@ -234,25 +262,6 @@ body{
 	height: 610px;
 	overflow-y: scroll;
 	overflow-x: scroll;
-}
-/*Scroll*/
-::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
-
-::-webkit-scrollbar-corner{
-	background-color:rgba(255, 255, 255, 0);
-}
-
-::-webkit-scrollbar-track {
-	background-color:rgba(255, 255, 255, 0.75);
-	border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgba(46, 46, 140, 0.75);
-	border-radius: 10px;
 }
 
 .mapdiv path{

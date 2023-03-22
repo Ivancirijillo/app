@@ -3,15 +3,13 @@ var click_btn_selec = true;
 
 document.getElementById('btn_selec').addEventListener('click', function() {
     if(click_btn_selec == true){
-        document.querySelector(".selec_municipios").style.height = '70%';
-        document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.90)';
+        document.querySelector(".selec_municipios").style = 'height: 70%; background: rgba(255, 255, 255, 0.94)';
         document.querySelector(".barra_des").style.transform = 'rotate(-90deg)';
-        document.querySelector(".opc_municipios").style = 'position: relative; height: 100%;'
-            + 'display: flex; justify-content: center; align-items: center; flex-direction: column;'
+        document.querySelector(".opc_municipios").style = 'position: absolute;'
+                                +'display: flex; justify-content: center; align-items: center; flex-direction: column;'
         click_btn_selec = false;
     }else if(click_btn_selec == false){
-        document.querySelector(".selec_municipios").style.height = '22px';
-        document.querySelector(".selec_municipios").style.background = 'rgba(255, 255, 255, 0.55)';
+        document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.55)';
         document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
         document.querySelector(".opc_municipios").style.display = 'none';
         click_btn_selec = true;
@@ -53,6 +51,7 @@ document.getElementById('Map').addEventListener('click', function() {
     document.querySelector(".info").style.height = '85%';
     document.querySelector(".filtro_categoria").style.display = 'block';
     document.querySelector(".filtrado").style.display = 'none';
+    document.getElementById('v_emergen').classList.add('v_emergen');
     setTimeout(() => {
         //funcion de espera
         document.getElementById('enc').classList.add('active');
@@ -61,17 +60,42 @@ document.getElementById('Map').addEventListener('click', function() {
 })
 
 /* VALIDACION DE LOS INPUT-BOTON CONTINUAR */
+var in_filtro_anio = true;
 document.getElementById('btnContinuar').addEventListener('click', function () {
+    let entrada_anio = document.querySelectorAll("input[name=in_anio]");
+    entrada_anio.forEach(item=>{
+        if(item.checked){
+            in_filtro_anio = true;
+            console.log("Entro año verdad");
+        }else{
+            in_filtro_anio = false;
+            console.log("Entro año falso");
+        }
+    })
     let entrada_categ = document.querySelectorAll("input[name=in_categ]");
     entrada_categ.forEach(item=>{
         if(item.checked){
-            document.querySelector(".filtro_categoria").style.display = 'none';
-            document.querySelector(".filtrado").style.display = 'block';
-        }
-        else{
-            
+            if(in_filtro_anio == true){
+                document.querySelector(".filtro_categoria").style.display = 'none';
+                document.querySelector(".filtrado").style.display = 'block';
+            }else{
+                document.getElementById('v_emergen').classList.remove('v_emergen');
+                document.getElementById('v_emergen').classList.add('v_emergen_validado_R');
+                setTimeout(() => {
+                    document.getElementById('v_emergen').classList.remove('v_emergen_validado_R');
+                    document.getElementById('v_emergen').classList.add('v_emergen');
+                }, 3000);
+            }
+        }else{
+            document.getElementById('v_emergen').classList.remove('v_emergen');
+            document.getElementById('v_emergen').classList.add('v_emergen_validado_R');
+            setTimeout(() => {
+                document.getElementById('v_emergen').classList.remove('v_emergen_validado_R');
+                document.getElementById('v_emergen').classList.add('v_emergen');
+            }, 3000);
         }
     })
+    
     
 })
 
