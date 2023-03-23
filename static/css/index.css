@@ -1,0 +1,15 @@
+.filtro2{
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 8%;
+    width: 84%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: black;
+    gap: 1%;
+    transform: translate(1%, -1%);
+  }
