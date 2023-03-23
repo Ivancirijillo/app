@@ -4,8 +4,16 @@ from random import sample
 import pandas as pd
 import json
 import matplotlib.pyplot as plt
+from conexion import CONEXION
+import configparser
+import pymysql
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
+
+#configuracion de archivo ini
+configuracion = configparser.ConfigParser()
+configuracion.read("configuracion.ini")
+configuracion.sections()
 
 #variables globales 
 columnas = []

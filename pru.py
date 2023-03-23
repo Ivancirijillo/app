@@ -70,11 +70,13 @@ partidos = ["PAN","PRI","PRD", "PT", "PVEM", "NVA_ALIANZA", "MORENA", "ES"]
 
 ## suma de columnas
 
-nuevo = archivo[archivo["MUNICIPIO"].str.contains("ACAMBAY")]
-for partido in partidos:
-    plt.bar(partido, int(nuevo[partido].sum()))
-    print(f"partido:{partido} votos:{nuevo[partido].sum()}")
-plt.title("Votos por partido de "+ "acambay")
-plt.ylabel("N° Votos")
-plt.xlabel("Partido")
-plt.show()
+# nuevo = archivo[archivo["MUNICIPIO"].str.contains("ACAMBAY")]
+# for partido in partidos:
+#     plt.bar(partido, int(nuevo[partido].sum()))
+#     print(f"partido:{partido} votos:{nuevo[partido].sum()}")
+# plt.title("Votos por partido de "+ "acambay")
+# plt.ylabel("N° Votos")
+# plt.xlabel("Partido")
+# plt.show()
+
+
