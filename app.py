@@ -6,6 +6,7 @@ import json
 import matplotlib.pyplot as plt
 from conexion import CONEXION
 import configparser
+import pymysql
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
 
@@ -19,6 +20,10 @@ conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["user"],
                 configuracion["database1"]["passwd"],
                 configuracion["database1"]["db"])
+
+cursor = conn.cursor()
+cursor.execute("")
+resultado = cursor.fetchall()
 #variables globales 
 columnas = []
 
