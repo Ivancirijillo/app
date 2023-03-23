@@ -82,10 +82,8 @@ body{
 }
 
 .opc_municipios p{
-    column-count: 5;
-	column-gap: 8px;
-    margin-bottom: 10px;
-    /*list-style: none;*/
+    display: grid;
+	grid-template-columns: repeat(5, 1fr);
 }
 
 /* TARJETA */
