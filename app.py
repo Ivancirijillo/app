@@ -15,15 +15,6 @@ configuracion = configparser.ConfigParser()
 configuracion.read("configuracion.ini")
 configuracion.sections()
 
-conn = CONEXION(configuracion["database1"]["host"],
-                configuracion["database1"]["port"],
-                configuracion["database1"]["user"],
-                configuracion["database1"]["passwd"],
-                configuracion["database1"]["db"])
-
-cursor = conn.cursor()
-cursor.execute("")
-resultado = cursor.fetchall()
 #variables globales 
 columnas = []
 
