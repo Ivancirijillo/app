@@ -1,15 +1,49 @@
-.filtro2{
+.principal{
     position: absolute;
-    margin-top: 10%;
-    margin-left: 8%;
-    width: 84%;
+    width: 90%;
     height: 80%;
+    /* tamaños maximos */
+    max-width: 90%;
+    max-height: 80%;
+    /* definimos el display */
+    display: flex;
+    flex-direction: column;
+    
+    /* cantrar objetos */
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 1.5%;
+    /* centrado */
+    left: 50%;
+    transform: translatey(-50%);
+    transform: translateX(-50%); 
+    /* background-color: black; */
+}
+
+/* estilos titulo principal */
+/* .titulo1{
+    position: relative;
+    margin-left: 50%;
+    transform: translateX(-30%);
+} */
+
+.filtro2{
+    position: relative;
+    width: 100%;
+    max-width: 90%;
+    height: 80%;
+    max-height: 80%;
     display: flex;
     justify-content: center;
     align-items: start;
     flex-direction: column;
     flex-wrap: wrap;
     color: black;
-    gap: 1%;
-    transform: translate(1%, -1%);
+    background-color: blue;
+    gap: 1.5%;
+    /* left: 50%;
+    top: 10%;
+    transform: translatey(-50%);
+    transform: translateX(-50%); */
   }

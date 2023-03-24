@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 import threading, multiprocessing, time
 from random import sample
 import pandas as pd
@@ -9,7 +9,7 @@ import configparser
 import pymysql
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
-
+PARTIDOS = ["PRI", "PAN", "MORENA", "PRD", "IND"]
 #configuracion de archivo ini
 configuracion = configparser.ConfigParser()
 configuracion.read("configuracion.ini")
@@ -364,6 +364,44 @@ def crear_nuevo_archivo(documento):
         nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
         #exportamos el nuevo archivo
         nuevo_archivo.to_excel(documento, index=False)
+@app.route("/consulta-municipio", methods=['POST', 'GET'])
+def consultar_tablas():
+    js = request.get_json()
+    conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+    print(int(js["municipio"][0]))
+    seccion = int(js["municipio"][0])
+
+    consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
+    consulta_2 = conn.consultar_db(f"select  sum(p.PRI), sum(p.PAN), sum(p.MORENA), sum(p.PRD), sum(p.IND)  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
+    grafico = multiprocessing.Process(target=crear_grafico, args=(consulta_1, consulta_2))
+    grafico.start()
+    grafico.join()
+
+    
+    respuesta = {
+        'valor':'hola'
+    }
+    
+    return jsonify(respuesta)
+    
+def crear_grafico(consulta_1, consulta_2):
+    direccion_figura = os.path.dirname(__file__) + f"/static/imgs/{consulta_1[0][0]}.png"
+    aux = 0
+    for partido in PARTIDOS:
+        plt.bar(partido, consulta_2[0][aux])
+        altura = 0 if(consulta_2[0][aux] == 0)  else consulta_2[0][aux]/2
+        plt.text(aux, altura, str(consulta_2[0][aux]), ha='center', va='bottom')
+        aux += 1
+    
+    plt.title(f"Votos por partido de {consulta_1[0][0]}")
+    plt.xlabel("Partidos")
+    plt.ylabel("Nº votos")
+    plt.savefig(direccion_figura)
+    #plt.show()
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
