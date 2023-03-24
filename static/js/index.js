@@ -28,6 +28,10 @@ class Enviar{
     }
 }
 
+const VARIOS = "varios";
+const RANGO = "rangos";
+const NOMBRE = "nombre";
+const CONSULTA_BUSCAR_MUNICIPIO = "";
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
@@ -67,11 +71,35 @@ boton.addEventListener("click",(e)=>{
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value;
-    switch(){
-        
+    let datos_analizados = "";
+    let operacion = "";
+
+    if(datos.indexOf(",")> -1){
+        operacion = VARIOS;
+    } else if(datos.indexOf("-")> -1){
+        operacion = RANGO;
+    } else{
+        operacion = NOMBRE;
     }
-    let datos_analizados = datos.split("-") 
-    console.log(datos_analizados)
+
+    switch(operacion){
+        case VARIOS:
+            console.log(",");
+            datos_analizados = datos.split(",");
+            console.log(datos_analizados);
+            break;
+        case RANGO:
+            console.log("-");
+            datos_analizados = datos.split("-");
+            console.log(datos_analizados);
+            break;
+        case NOMBRE:
+            console.log("nombre");
+            break;
+    }
+
+    //let datos_analizados = datos.split("-") 
+    //console.log(datos_analizados)
     //let data = { consulta: ""+`${buscador.value}`};
 
     // fetch('/consultas', {
@@ -86,3 +114,15 @@ boton_buscador.addEventListener("click", (e)=>{
     //     console.log(data["consulta"]);
     // });
 });
+
+function set_varios(lista){
+    
+};
+
+function set_rango(lista){
+
+};
+
+function set_nombre(lista){
+
+}
