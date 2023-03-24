@@ -129,7 +129,7 @@ function tarjeta_out (municipio, path_n){
     document.getElementById(path_n).style = '/*fill: lightgreen;*/';
     }, 5500);
     document.querySelector("#municipio").textContent = "Seleccion - " + municipio
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+    //document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
 }
 
 function des_tarjeta (){
@@ -148,638 +148,635 @@ function des_tarjeta (){
     }, 150);
 }
 
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------*/
+
 /*BOTONES PARTE SUPERIOR - ENTRADA A TARJETA */
-document.getElementById('opc_acambay').addEventListener('click', function() {
+document.getElementById('opc_acambay' || 'path16').addEventListener('click', function() {
     tarjeta_out("Acambay", 'path16');
     des_tarjeta();
 })
 
-document.getElementById('opc_atlaco').addEventListener('click', function() {
+document.getElementById('opc_atlaco' || 'path42').addEventListener('click', function() {
     tarjeta_out("Atlacomulco", 'path42');
+    des_tarjeta();
+})
+
+document.getElementById('opc_Acol' || 'path18').addEventListener('click', function() {
+    tarjeta_out("Acolman", 'path18');
     des_tarjeta();
 })
 
 /* PATH´S INDIVIDUALES DE SELECCION AL MUNICIPIO */
-document.getElementById('path42').addEventListener('click', function() {
-    tarjeta_out("Atlacomulco", 'path42');
+
+
+document.getElementById('opc_Acul' || 'path20').addEventListener('click', function() {
+    tarjeta_out("Aculco", 'path20');
     des_tarjeta();
 })
 
-document.getElementById('path16').addEventListener('click', function() {
-    tarjeta_out("Acambay", 'path16');
+document.getElementById('opc_AlmodA' ||'path22').addEventListener('click', function() {
+    tarjeta_out("Almoloya de Alquisiras", 'path22');
     des_tarjeta();
 })
 
-document.getElementById('path18').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Acolman"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path20').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Aculco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path22').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Almoloya de Alquisiras"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path24').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Almoloya de Juárez"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path26').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Almoloya del Río"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path28').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Amanalco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path30').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Amatepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path32').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Amecameca"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path34').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Apaxco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path36').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Atenco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path38').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Atizapán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path40').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Atizapán de Zaragoza"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path44').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Atlautla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path46').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Axapusco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
-
-document.getElementById('path48').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ayapango"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_AlmodJ'||'path24').addEventListener('click', function() {
+    tarjeta_out("Almoloya de Juárez", 'path24');
+    des_tarjeta();
+   })
+
+document.getElementById('opc_AlmodR' || 'path26').addEventListener('click', function() {
+    tarjeta_out("Almoloya del Río", 'path26');
+    des_tarjeta();
+   })
+
+document.getElementById('opc_Amana' || 'path28').addEventListener('click', function() {
+    tarjeta_out("Amanalco", 'path28');
+    des_tarjeta();
+  })
+
+document.getElementById('opc_Amate' || 'path30').addEventListener('click', function() {
+    tarjeta_out("Amatepec", 'path30');
+    des_tarjeta();
+   })
+
+document.getElementById('opc_Amecame' || 'path32').addEventListener('click', function() {
+    tarjeta_out("Amecameca", 'path32');
+    des_tarjeta();
+    })
+
+document.getElementById('opc_Apaxco' || 'path34').addEventListener('click', function() {
+    tarjeta_out("Apaxco", 'path34');
+    des_tarjeta();
+    })
+
+document.getElementById('opc_Atenco' || 'path36').addEventListener('click', function() {
+    tarjeta_out("Atenco", 'path36');
+    des_tarjeta();
+  })
+
+document.getElementById( 'opc_Atiza' || 'path38').addEventListener('click', function() {
+    tarjeta_out("Atizapán", 'path38');
+    des_tarjeta();
+ })
+
+document.getElementById('opc_AtizadZ' || 'path40').addEventListener('click', function() {
+    tarjeta_out("Atizapán de Zaragoza", 'path40');
+    des_tarjeta();
+  })
+
+document.getElementById('opc_Atlau' || 'path44').addEventListener('click', function() {
+    tarjeta_out("Atlautla", 'path44');
+    des_tarjeta();
+ })
+
+document.getElementById('opc_Axapus' || 'path46').addEventListener('click', function() {
+    tarjeta_out("Axapusco", 'path46');
+    des_tarjeta();
+ })
+
+document.getElementById('opc_Ayapan' || 'path48').addEventListener('click', function() {
+    tarjeta_out("Ayapango", 'path48');
+    des_tarjeta();
+ })
+
+document.getElementById('opc_Calima' || 'path50').addEventListener('click', function() {
+    tarjeta_out("Calimaya", 'path50');
+    des_tarjeta();
+ })
 
-document.getElementById('path50').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Calimaya"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Capulhu' || 'path52').addEventListener('click', function() {
+    tarjeta_out("Capulhuac", 'path52');
+    des_tarjeta();
+ })
 
-document.getElementById('path52').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Capulhuac"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Chalco' || 'path54').addEventListener('click', function() {
+    tarjeta_out("Chalco", 'path54');
+    des_tarjeta();
+  })
 
-document.getElementById('path54').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chalco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Chap' || 'path56').addEventListener('click', function() {
+    tarjeta_out("Chapa de Mota", 'path56');
+    des_tarjeta();
+  })
 
-document.getElementById('path56').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chapa de Mota"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Chapul' || 'path58').addEventListener('click', function() {
+    tarjeta_out("Chapultepec", 'path58');
+    des_tarjeta();
+ })
 
-document.getElementById('path58').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chapultepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Chia' || 'path60').addEventListener('click', function() {
+    tarjeta_out("Chiautla", 'path60');
+    des_tarjeta();
+ })
 
-document.getElementById('path60').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chiautla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Chico' || 'path62').addEventListener('click', function() {
+    tarjeta_out("Chicoloapan", 'path62');
+    des_tarjeta();
 })
 
-document.getElementById('path62').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chicoloapan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Chin' || 'path64').addEventListener('click', function() {
+    tarjeta_out("Chiconcuac", 'path64');
+    des_tarjeta();
+ })
 
-document.getElementById('path64').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chiconcuac"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Chima' || 'path66').addEventListener('click', function() {
+    tarjeta_out("Chimalguacán", 'path66');
+    des_tarjeta();
 })
 
-document.getElementById('path66').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Chimalguacán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Coacal' ||'path68').addEventListener('click', function() {
+    tarjeta_out("Coacalco de Berriozábal", 'path68');
+    des_tarjeta();
+ })
 
-document.getElementById('path68').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Coacalco de Berriozábal"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Coate' || 'path70').addEventListener('click', function() {
+    tarjeta_out("Coatepec Harinas", 'path70');
+    des_tarjeta();
+ })
 
-document.getElementById('path70').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Coatepec Harinas"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Coco' || 'path72').addEventListener('click', function() {
+    tarjeta_out("Cocotitlán", 'path72');
+    des_tarjeta();
+ })
 
-document.getElementById('path72').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Cocotitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Coyo' || 'path74').addEventListener('click', function() {
+    tarjeta_out("Coyotepec", 'path74');
+    des_tarjeta();
 })
 
-document.getElementById('path74').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Coyotepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Cuau' || 'path76').addEventListener('click', function() {
+    tarjeta_out("Cuautitlán", 'path76');
+    des_tarjeta();
 })
 
-document.getElementById('path76').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Cuautitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Cuauti' || 'path78').addEventListener('click', function() {
+    tarjeta_out("Cuautitlán Izcalli", 'path78');
+    des_tarjeta();
+ })
 
-document.getElementById('path78').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Cuautitlán Izcalli"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_DondG' || 'path80').addEventListener('click', function() {
+    tarjeta_out("Donato Guerra", 'path80');
+    des_tarjeta();
 })
 
-document.getElementById('path80').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Donato Guerra"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Ecat' || 'path82').addEventListener('click', function() {
+    tarjeta_out("Ecatepec de Morelos", 'path82');
+    des_tarjeta();
 })
 
-document.getElementById('path82').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ecatepec de Morelos"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Ecatz' || 'path84').addEventListener('click', function() {
+    tarjeta_out("Ecatzingo", 'path84');
+    des_tarjeta();
+ })
 
-document.getElementById('path84').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ecatzingo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Huehue' || 'path86').addEventListener('click', function() {
+    tarjeta_out("Huehuetoca", 'path86');
+    des_tarjeta();
 })
 
-document.getElementById('path86').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Huehuetoca"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Huey' || 'path88').addEventListener('click', function() {
+    tarjeta_out("Hueypoxtla", 'path88');
+    des_tarjeta();
 })
 
-document.getElementById('path88').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Hueypoxtla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Huix' || 'path90').addEventListener('click', function() {
+    tarjeta_out("Huixquilucan", 'path90');
+    des_tarjeta();
 })
 
-document.getElementById('path90').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Huixquilucan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Isid' || 'path92').addEventListener('click', function() {
+    tarjeta_out("Isidro Fabela", 'path92');
+    des_tarjeta();
 })
 
-document.getElementById('path92').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Isidro Fabela"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Ixta' || 'path94').addEventListener('click', function() {
+    tarjeta_out("Ixtapaluca", 'path94');
+    des_tarjeta();
 })
 
-document.getElementById('path94').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ixtapaluca"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_IxtapanS' || 'path96').addEventListener('click', function() {
+    tarjeta_out("Ixtapan de la Sal", 'path96');
+    des_tarjeta();
 })
 
-document.getElementById('path96').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ixtapan de la Sal"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_IxtapanO' || 'path98').addEventListener('click', function() {
+    tarjeta_out("Ixtapan del Oro", 'path98');
+    des_tarjeta();
+ })
 
-document.getElementById('path98').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ixtapan del Oro"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_ixtla' || 'path100').addEventListener('click', function() {
+    tarjeta_out("Ixtlahuaca", 'path100');
+    des_tarjeta();
 })
 
-document.getElementById('path100').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ixtlahuaca"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Jalt' || 'path102').addEventListener('click', function() {
+    tarjeta_out("Jaltenco", 'path102');
+    des_tarjeta();
+ })
 
-document.getElementById('path102').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Jaltenco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tonan' || 'path104').addEventListener('click', function() {
+    tarjeta_out("Tonanitla", 'path104');
+    des_tarjeta();
 })
 
-document.getElementById('path104').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tonanitla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Jilo' || 'path106').addEventListener('click', function() {
+    tarjeta_out("Jilotepec", 'path106');
+    des_tarjeta();
+ })
 
-document.getElementById('path106').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Jilotepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Jilot' || 'path108').addEventListener('click', function() {
+    tarjeta_out("Jilotzingo", 'path108');
+    des_tarjeta();
 })
 
-document.getElementById('path108').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Jilotzingo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Jiqui' || 'path110').addEventListener('click', function() {
+    tarjeta_out("Jiquipilco", 'path110');
+    des_tarjeta();
 })
 
-document.getElementById('path110').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Jiquipilco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Joco' || 'path112').addEventListener('click', function() {
+    tarjeta_out("Jocotitlán", 'path112');
+    des_tarjeta();
 })
 
-document.getElementById('path112').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Jocotitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Joqui' || 'path114').addEventListener('click', function() {
+    tarjeta_out("Joquicingo", 'path114');
+    des_tarjeta();
 })
 
-document.getElementById('path114').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Joquicingo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Juchi' || 'path116').addEventListener('click', function() {
+    tarjeta_out("Juchitepec", 'path116');
+    des_tarjeta();
+ })
 
-document.getElementById('path116').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Juchitepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Lerma' || 'path118').addEventListener('click', function() {
+    tarjeta_out("Lerma", 'path118');
+    des_tarjeta();
 })
 
-document.getElementById('path118').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Lerma"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Mali' || 'path120').addEventListener('click', function() {
+    tarjeta_out("Malinalco", 'path120');
+    des_tarjeta();
 })
 
-document.getElementById('path120').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Malinalco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_MelchO' || 'path122').addEventListener('click', function() {
+    tarjeta_out("Melchor Ocampo", 'path122');
+    des_tarjeta();
 })
 
-document.getElementById('path122').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Melcor Ocampo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Metep' || 'path124').addEventListener('click', function() {
+    tarjeta_out("Metepec", 'path124');
+    des_tarjeta();
 })
 
-document.getElementById('path124').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Metepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Mexi' || 'path126').addEventListener('click', function() {
+    tarjeta_out("Mexicaltzingo", 'path126');
+    des_tarjeta();
 })
 
-document.getElementById('path126').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Mexicaltzingo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Mor' || 'path128').addEventListener('click', function() {
+    tarjeta_out("Morelos", 'path128');
+    des_tarjeta();
 })
 
-document.getElementById('path128').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Morelos"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_NauJ' || 'path130').addEventListener('click', function() {
+    tarjeta_out("Naucalpan de Juárez", 'path130');
+    des_tarjeta();
 })
 
-document.getElementById('path130').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Naucalpan de juarez"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Next' || 'path132').addEventListener('click', function() {
+    tarjeta_out("Nextlalpan", 'path132');
+    des_tarjeta();
 })
 
-document.getElementById('path132').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Nextlalpan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Neza' || 'path134').addEventListener('click', function() {
+    tarjeta_out("Nezahualcoyotl", 'path134');
+    des_tarjeta();
+ })
 
-document.getElementById('path134').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Nezahualcoyotl"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_NicoR' || 'path136').addEventListener('click', function() {
+    tarjeta_out("Nicolas Romero", 'path136');
+    des_tarjeta();
 })
 
-document.getElementById('path136').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Nicolas Romero"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Nopal' || 'path138').addEventListener('click', function() {
+    tarjeta_out("Nopaltepec", 'path138');
+    des_tarjeta();
+ })
 
-document.getElementById('path138').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Nopaltepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Ocoyoa' || 'path140').addEventListener('click', function() {
+    tarjeta_out("Ocoyoacac", 'path140');
+    des_tarjeta();
 })
 
-document.getElementById('path140').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ocoyocoac"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Ocuilan' || 'path142').addEventListener('click', function() {
+    tarjeta_out("Ocuilan", 'path142');
+    des_tarjeta();
 })
 
-document.getElementById('path142').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ocuilan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_ElO' || 'path144').addEventListener('click', function() {
+    tarjeta_out("El Oro", 'path144');
+    des_tarjeta();
 })
 
-document.getElementById('path144').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - El Oro"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Otumba' || 'path146').addEventListener('click', function() {
+    tarjeta_out("Otumba", 'path146');
+    des_tarjeta();
 })
 
-document.getElementById('path146').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Otumba"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Otzo' || 'path148').addEventListener('click', function() {
+    tarjeta_out("Otzoloapan", 'path148');
+    des_tarjeta();
+ })
 
-document.getElementById('path148').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Otzoloapan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Otzol' || 'path150').addEventListener('click', function() {
+    tarjeta_out("Otzolotepec", 'path150');
+    des_tarjeta();
 })
 
-document.getElementById('path150').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Otzolotepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Ozumba' || 'path152').addEventListener('click', function() {
+    tarjeta_out("Ozumba", 'path152');
+    des_tarjeta();
+ })
 
-document.getElementById('path152').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Ozumba"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Papal' || 'path154').addEventListener('click', function() {
+    tarjeta_out("Papalotla", 'path154');
+    des_tarjeta();
 })
 
-document.getElementById('path154').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Papalotla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_LaPaz' || 'path156').addEventListener('click', function() {
+    tarjeta_out("La Paz", 'path156');
+    des_tarjeta();
 })
 
-document.getElementById('path156').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - La Paz"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Polo' || 'path158').addEventListener('click', function() {
+    tarjeta_out("Polotitlán", 'path158');
+    des_tarjeta();
 })
 
-document.getElementById('path158').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Polotitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Rayon' || 'path160').addEventListener('click', function() {
+    tarjeta_out("Rayón", 'path160');
+    des_tarjeta();
 })
 
-document.getElementById('path160').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Rayón"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_SanAn' || 'path162').addEventListener('click', function() {
+    tarjeta_out("San Antonio la Isla", 'path162');
+    des_tarjeta();
 })
 
-document.getElementById('path162').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - San Antonio la Isla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_SanFe' || 'path164').addEventListener('click', function() {
+    tarjeta_out("San Felipe del Progreso", 'path164');
+    des_tarjeta();
 })
 
-document.getElementById('path164').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - San Felipe del Progreso"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_SanMar' || 'path166').addEventListener('click', function() {
+    tarjeta_out("San Martín de las Pirámides", 'path166');
+    des_tarjeta();
 })
 
-document.getElementById('path166').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - San Martín de las Pirámides"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_SanMateo' || 'path168').addEventListener('click', function() {
+    tarjeta_out("San Mateo Atenco", 'path168');
+    des_tarjeta();
 })
 
-document.getElementById('path168').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - San Mateo Atenco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_SanSim' || 'path170').addEventListener('click', function() {
+    tarjeta_out("San Simón de Guerrero", 'path170');
+    des_tarjeta();
 })
 
-document.getElementById('path170').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - San Simón de Guerrero"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_SantoTom' || 'path172').addEventListener('click', function() {
+    tarjeta_out("Santo Tomás", 'path172');
+    des_tarjeta();
 })
 
-document.getElementById('path172').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Santo Tomás"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Soya' || 'path174').addEventListener('click', function() {
+    tarjeta_out("Soyaniquilpan de Juárez", 'path174');
+    des_tarjeta();
+ })
 
-document.getElementById('path174').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Soyaniquilpan de Juárez"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Sulte' || 'path176').addEventListener('click', function() {
+    tarjeta_out("Sultepec", 'path176');
+    des_tarjeta();
 })
 
-document.getElementById('path176').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Sultepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Teca' || 'path178').addEventListener('click', function() {
+    tarjeta_out("Tecámac", 'path178');
+    des_tarjeta();
 })
 
-document.getElementById('path178').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tecámac"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Teju' || 'path180').addEventListener('click', function() {
+    tarjeta_out("Tejupilco", 'path180');
+    des_tarjeta();
 })
 
-document.getElementById('path180').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tejupilco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Temama' || 'path182').addEventListener('click', function() {
+    tarjeta_out("Temamatla", 'path182');
+    des_tarjeta();
 })
 
-document.getElementById('path182').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Temamatla"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Temas' || 'path184').addEventListener('click', function() {
+    tarjeta_out("Temascalapa", 'path184');
+    des_tarjeta();
 })
 
-document.getElementById('path184').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Temascalapa"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_TemasC' || 'path186').addEventListener('click', function() {
+    tarjeta_out("Temascalcingo", 'path186');
+    des_tarjeta();
+ })
 
-document.getElementById('path186').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Temascalcingo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_TemasCal' || 'path188').addEventListener('click', function() {
+    tarjeta_out("Temascaltepec", 'path188');
+    des_tarjeta();
+ })
 
-document.getElementById('path188').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Temascaltepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Temoaya' || 'path190').addEventListener('click', function() {
+    tarjeta_out("Temoaya", 'path190');
+    des_tarjeta();
 })
 
-document.getElementById('path190').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Temoaya"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tenan' || 'path192').addEventListener('click', function() {
+    tarjeta_out("Tenancingo", 'path192');
+    des_tarjeta();
 })
 
-document.getElementById('path192').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tenancingo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_TenanA' || 'path194').addEventListener('click', function() {
+    tarjeta_out("Tenancingo del Aire", 'path194');
+    des_tarjeta();
 })
 
-document.getElementById('path194').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tenango del Aire"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_TenanV' || 'path196').addEventListener('click', function() {
+    tarjeta_out("Tenango del Valle", 'path196');
+    des_tarjeta();
 })
 
-document.getElementById('path196').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tenango del Valle"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Teol' || 'path198').addEventListener('click', function() {
+    tarjeta_out("Teoloyucan", 'path198');
+    des_tarjeta();
 })
 
-document.getElementById('path198').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Teoloyucan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Teoti' || 'path200').addEventListener('click', function() {
+    tarjeta_out("Teotihuacán", 'path200');
+    des_tarjeta();
 })
 
-document.getElementById('path200').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Teotihuacán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Tepetla' || 'path202').addEventListener('click', function() {
+    tarjeta_out("Tepetlaoxtoc", 'path202');
+    des_tarjeta();
+ })
 
-document.getElementById('path202').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tepetlaoxtoc"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tepet' || 'path204').addEventListener('click', function() {
+    tarjeta_out("Tepetlixpa", 'path204');
+    des_tarjeta();
 })
 
-document.getElementById('path204').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tepetlixpa"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tepoz' || 'path206').addEventListener('click', function() {
+    tarjeta_out("Tepotzotlán", 'path206');
+    des_tarjeta();
 })
 
-document.getElementById('path206').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tepotzoplán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tequix' || 'path208').addEventListener('click', function() {
+    tarjeta_out("Tequixquiac", 'path208');
+    des_tarjeta();
 })
 
-document.getElementById('path208').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tequixquiac"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Texcal' || 'path210').addEventListener('click', function() {
+    tarjeta_out("Texcaltitlán", 'path210');
+    des_tarjeta();
 })
 
-document.getElementById('path210').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Texcaltitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Texcalya' || 'path212').addEventListener('click', function() {
+    tarjeta_out("Texcalyacac", 'path212');
+    des_tarjeta();
 })
 
-document.getElementById('path212').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Texcalyacac"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Texcoco' || 'path214').addEventListener('click', function() {
+    tarjeta_out("Texcoco", 'path214');
+    des_tarjeta();
 })
 
-document.getElementById('path214').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Texcoco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tezoy' || 'path216').addEventListener('click', function() {
+    tarjeta_out("Tezoyuca", 'path216');
+    des_tarjeta();
 })
 
-document.getElementById('path216').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tezoyuca"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tianguis' || 'path218').addEventListener('click', function() {
+    tarjeta_out("Tianguistenco", 'path218');
+    des_tarjeta();
 })
 
-document.getElementById('path218').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tianguistenco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Timilpan' || 'path220').addEventListener('click', function() {
+    tarjeta_out("Timilpan", 'path220');
+    des_tarjeta();
 })
 
-document.getElementById('path220').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Timilpan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tlalma' || 'path222').addEventListener('click', function() {
+    tarjeta_out("Tlalmanalco", 'path222');
+    des_tarjeta();
 })
 
-document.getElementById('path222').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tlalmanalco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tlalne' || 'path224').addEventListener('click', function() {
+    tarjeta_out("Tlalnepantla de Baz", 'path224');
+    des_tarjeta();
 })
 
-document.getElementById('path224').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tlalnepantla de Baz"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Tlalne' || 'path226').addEventListener('click', function() {
+    tarjeta_out("Tlalnepantla de Baz", 'path226');
+    des_tarjeta();
+ })
 
-document.getElementById('path226').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tlalnepantla de Baz"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_Tlatla' || 'path228').addEventListener('click', function() {
+    tarjeta_out("Tlatlaya", 'path228');
+    des_tarjeta();
+ })
 
-document.getElementById('path228').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tlatlaya"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Toluca' || 'path230').addEventListener('click', function() {
+    tarjeta_out("Toluca", 'path230');
+    des_tarjeta();
 })
 
-document.getElementById('path230').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion -Toluca"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tonatico' || 'path232').addEventListener('click', function() {
+    tarjeta_out("Tonatico", 'path232');
+    des_tarjeta();
 })
 
-document.getElementById('path232').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion -Tonatico"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tultepec' || 'path234').addEventListener('click', function() {
+    tarjeta_out("Tultepec", 'path234');
+    des_tarjeta();
 })
 
-document.getElementById('path234').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tultepec"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tulti' || 'path236').addEventListener('click', function() {
+    tarjeta_out("Tultitlán", 'path236');
+    des_tarjeta();
 })
 
-document.getElementById('path236').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tultitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Tulti' || 'path238').addEventListener('click', function() {
+    tarjeta_out("Tultitlán", 'path238');
+    des_tarjeta();
 })
 
-document.getElementById('path238').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Tultitlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_ValleB' || 'path240').addEventListener('click', function() {
+    tarjeta_out("Valle de Bravo", 'path240');
+    des_tarjeta();
 })
 
-document.getElementById('path240').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Valle de Bravo"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_ValleS' || 'path242').addEventListener('click', function() {
+    tarjeta_out("Valle de Chalco Solidaridad", 'path242');
+    des_tarjeta();
 })
 
-document.getElementById('path242').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Valle de Chalco Solidaridad"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_VillaA' || 'path244').addEventListener('click', function() {
+    tarjeta_out("Villa de Allende", 'path244');
+    des_tarjeta();
 })
 
-document.getElementById('path244').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Villa de Allende"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
-})
+document.getElementById('opc_VillaC' || 'path246').addEventListener('click', function() {
+    tarjeta_out("Villa del Carbón", 'path246');
+    des_tarjeta();
+ })
 
-document.getElementById('path246').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Villa del Carbón"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_VillaG' || 'path248').addEventListener('click', function() {
+    tarjeta_out("Villa Guerrero", 'path248');
+    des_tarjeta();
 })
 
-document.getElementById('path248').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Villa Guerrero"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_VillaV' || 'path250').addEventListener('click', function() {
+    tarjeta_out("Villa Victoria", 'path250');
+    des_tarjeta();
 })
 
-document.getElementById('path250').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Villa Victoria"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Xala' || 'path252').addEventListener('click', function() {
+    tarjeta_out("Xalatlaco", 'path252');
+    des_tarjeta();
 })
 
-document.getElementById('path252').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Xalatlaco"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Xona' || 'path254').addEventListener('click', function() {
+    tarjeta_out("Xonacatlán", 'path254');
+    des_tarjeta();
 })
 
-document.getElementById('path254').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Xonacatlán"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Zacanzo' || 'path254').addEventListener('click', function() {
+    tarjeta_out("Zacanzonapán", 'path256');
+    des_tarjeta();
 })
 
-document.getElementById('path256').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Zacazonapan"
-    document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+document.getElementById('opc_Zacua' || 'path258').addEventListener('click', function() {
+    tarjeta_out("Zacualpan", 'path258');
+    des_tarjeta();
 })
 
-document.getElementById('path258').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Zacualpan"
-    document.querySelector("#habitantes").textContent = "##"
+document.getElementById('opc_Zinacan' || 'path260').addEventListener('click', function() {
+    tarjeta_out("Zinacantepec", 'path260');
+    des_tarjeta();
 })
 
-document.getElementById('path260').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Zinacantepec"
-    document.querySelector("#habitantes").textContent = "##"
+document.getElementById('opc_Zumpa' || 'path262').addEventListener('click', function() {
+    tarjeta_out("Zumpahuacán", 'path262');
+    des_tarjeta();
 })
 
-document.getElementById('path262').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Zumpahuacán"
-    document.querySelector("#habitantes").textContent = "##"
-})
-document.getElementById('path264').addEventListener('click', function() {
-    document.querySelector("#municipio").textContent = "Seleccion - Zumpango"
-    document.querySelector("#habitantes").textContent = "##"
+document.getElementById('opc_Zumpan' || 'path264').addEventListener('click', function() {
+    tarjeta_out("Zumpango", 'path264');
+    des_tarjeta();
 })
