@@ -26,20 +26,27 @@ var in_filtro_anio = true;
 document.getElementById('btnContinuar').addEventListener('click', function () {
     let entrada_anio = document.querySelectorAll("input[name=in_anio]");
     entrada_anio.forEach(item=>{
-        if(item.checked){
-            in_filtro_anio = true;
-            console.log("Entro año verdad");
-        }else{
-            in_filtro_anio = false;
-            console.log("Entro año falso");
-        }
+        if(item.checked)in_filtro_anio=true;
+        if(!item.checked)in_filtro_anio=false;
     })
     let entrada_categ = document.querySelectorAll("input[name=in_categ]");
     entrada_categ.forEach(item=>{
         if(item.checked){
-            if(in_filtro_anio == true){
+            if(in_filtro_anio){
                 document.querySelector(".filtro_categoria").style.display = 'none';
                 document.querySelector(".filtrado").style.display = 'block';
+                if(item.value == 'apoyo'){
+                    
+                }
+                if(item.value == 'deli'){
+                    
+                }
+                if(item.value == 'padron'){
+                    
+                }
+                if(item.value == 'pobreza'){
+                    
+                }
             }else{
                 document.getElementById('v_emergen').classList.remove('v_emergen');
                 document.getElementById('v_emergen').classList.add('v_emergen_validado_R');
