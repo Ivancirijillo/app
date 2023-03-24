@@ -367,6 +367,7 @@ def crear_nuevo_archivo(documento):
 @app.route("/consulta-municipio", methods=['POST', 'GET'])
 def consultar_tablas():
     js = request.get_json()
+    
     conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["port"],
                     configuracion["database1"]["user"],
@@ -377,13 +378,16 @@ def consultar_tablas():
 
     consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
     consulta_2 = conn.consultar_db(f"select  sum(p.PRI), sum(p.PAN), sum(p.MORENA), sum(p.PRD), sum(p.IND)  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
+    nombre_figura = f"{consulta_1[0][0]}.png"
+    
     grafico = multiprocessing.Process(target=crear_grafico, args=(consulta_1, consulta_2))
     grafico.start()
     grafico.join()
 
     
     respuesta = {
-        'valor':'hola'
+        'nombre_grafica': nombre_figura,
+        'consulta1':consulta_1
     }
     
     return jsonify(respuesta)
