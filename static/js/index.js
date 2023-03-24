@@ -29,9 +29,9 @@ class Enviar{
 }
 
 
-
 let boton = document.querySelector(".buscar")
-const envio = new Enviar('/consulta-municipio','POST')
+let buscador = document.querySelector(".Ibuscar")
+let boton_buscador = document.querySelector(".Bbuscar")
 
 boton.addEventListener("click",(e)=>{
     e.preventDefault()
@@ -62,4 +62,27 @@ boton.addEventListener("click",(e)=>{
         grafica.appendChild(img)
         console.log(data["ruta"]);
     });
-})
+});
+
+boton_buscador.addEventListener("click", (e)=>{
+    e.preventDefault();
+    let datos = buscador.value;
+    switch(){
+        
+    }
+    let datos_analizados = datos.split("-") 
+    console.log(datos_analizados)
+    //let data = { consulta: ""+`${buscador.value}`};
+
+    // fetch('/consultas', {
+    // method: 'POST',
+    // headers: {
+    //     'Content-Type': 'application/json'
+    // },
+    // body: JSON.stringify(data)
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log(data["consulta"]);
+    // });
+});
