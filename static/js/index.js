@@ -1,4 +1,4 @@
-class Enviar{
+/*class Enviar{
     constructor(ruta, metodo){
         this.ruta = ruta;
         this.metodo = metodo;
@@ -26,7 +26,7 @@ class Enviar{
     set_datos(datos){
         this.datos = datos;
     }
-}
+}*/
 
 const VARIOS = "varios";
 const RANGO = "rangos";

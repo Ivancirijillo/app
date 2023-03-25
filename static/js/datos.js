@@ -16,13 +16,35 @@ document.getElementById('btn_selec').addEventListener('click', function() {
     }
 })
 
-/* ENTRADA DE LA TARJETA EN "INFO" DE TITULO A SUBCONTENEDOR  */
-document.getElementById('Map').addEventListener('click', function() {
-    des_tarjeta();
-})
+function enviar_json (in_consulta){
+    let data = {
+        consulta: in_consulta
+    }
+    fetch('/consultas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            let tablas = data["consulta"];
+            var template = '';
+            for(var i = 0; i < tablas.length ; i++){
+                template += '<tr>';
+                for (let j = 0; j < tablas[i].length; j++) {
+                    template += '<td>'+tablas[i][j]+'</td>';
+                }
+                template += '</tr>';
+            }
+            document.querySelector(".tableDatos").innerHTML = template;
+        });
+}
 
 /* VALIDACION DE LOS INPUT-BOTON CONTINUAR */
 var in_filtro_anio = true;
+var id_municipio = "";
 document.getElementById('btnContinuar').addEventListener('click', function () {
     let entrada_anio = document.querySelectorAll("input[name=in_anio]");
     entrada_anio.forEach(item=>{
@@ -35,11 +57,14 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
             if(in_filtro_anio){
                 document.querySelector(".filtro_categoria").style.display = 'none';
                 document.querySelector(".filtrado").style.display = 'block';
+                let in_consulta = ""
                 if(item.value == 'apoyo'){
-                    
+                    in_consulta = "select NombreA, NoApoyos from Apoyos where YearA='2022' and ClaveMunicipal='"+id_municipio+"'"
                 }
                 if(item.value == 'deli'){
-                    
+                    in_consulta = "select d.ClaveMunicipal, m.NombreM, d.YearD, d.DelitosAI, d.Homicidios, d.Feminicidios, " 
+                    + "d.Secuestros, d.DespT, (d.Robo + d.RoboT) as robtt from Delincuencia as d inner join Municipio as m on " 
+                    + "d.ClaveMunicipal = m.ClaveMunicipal where d.YearD='2022' and d.ClaveMunicipal='"+id_municipio+"'"
                 }
                 if(item.value == 'padron'){
                     
@@ -47,6 +72,7 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
                 if(item.value == 'pobreza'){
                     
                 }
+                enviar_json (in_consulta);
             }else{
                 document.getElementById('v_emergen').classList.remove('v_emergen');
                 document.getElementById('v_emergen').classList.add('v_emergen_validado_R');
@@ -118,18 +144,19 @@ document.getElementById('btnImprimir').addEventListener("click", function() {
 });
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
-function tarjeta_out (municipio, path_n){
-    document.getElementById(path_n).style.fill = 'lightgreen';
+var path_anterior = ' ';
+function tarjeta_out (nom_municipio, path_n){
     document.querySelector(".selec_municipios").style = 'height: 22px; rgba(255, 255, 255, 0.55)';
     document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
     document.querySelector(".opc_municipios").style.display = 'none';
     click_btn_selec = true;
-    setTimeout(() => {
-        //funcion de espera
-    document.getElementById(path_n).style = '/*fill: lightgreen;*/';
-    }, 5500);
-    document.querySelector("#municipio").textContent = "Seleccion - " + municipio
-    //document.querySelector("#habitantes").textContent = "93,718 habitantes, del Censo de Población 2010"
+
+    if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: green;*/';
+    document.getElementById(path_n).style.fill = 'green';
+
+    document.getElementById('municipio').textContent = "Seleccion - " + nom_municipio
+    des_tarjeta();
+    path_anterior = path_n;
 }
 
 function des_tarjeta (){
@@ -153,14 +180,27 @@ function des_tarjeta (){
 /* ---------------------------------------------------------------------------*/
 
 /*BOTONES PARTE SUPERIOR - ENTRADA A TARJETA */
-document.getElementById('opc_acambay' || 'path16').addEventListener('click', function() {
-    tarjeta_out("Acambay", 'path16');
-    des_tarjeta();
+
+document.getElementById('opc_atlaco').addEventListener('click', function() {
+    tarjeta_out("Atlacomulco", 'path42');
+    id_municipio = "15014";
 })
 
-document.getElementById('opc_atlaco' || 'path42').addEventListener('click', function() {
+document.getElementById('opc_acambay').addEventListener('click', function() {
+    tarjeta_out("Acambay", 'path16');
+    id_municipio = "15001";
+})
+
+/* PATH´S INDIVIDUALES DE SELECCION AL MUNICIPIO */ //opc_atlaco
+
+document.getElementById('path42').addEventListener('click', function() {
     tarjeta_out("Atlacomulco", 'path42');
-    des_tarjeta();
+    id_municipio = "15014";
+})
+
+document.getElementById('path16').addEventListener('click', function() {
+    tarjeta_out("Acambay", 'path16');
+    id_municipio = "15001";
 })
 
 document.getElementById('opc_Acol' || 'path18').addEventListener('click', function() {
@@ -168,20 +208,17 @@ document.getElementById('opc_Acol' || 'path18').addEventListener('click', functi
     des_tarjeta();
 })
 
-/* PATH´S INDIVIDUALES DE SELECCION AL MUNICIPIO */
-
-
 document.getElementById('opc_Acul' || 'path20').addEventListener('click', function() {
     tarjeta_out("Aculco", 'path20');
     des_tarjeta();
 })
 
-document.getElementById('opc_AlmodA' ||'path22').addEventListener('click', function() {
+document.getElementById('opc_AlmodA' || 'path22').addEventListener('click', function() {
     tarjeta_out("Almoloya de Alquisiras", 'path22');
     des_tarjeta();
 })
 
-document.getElementById('opc_AlmodJ'||'path24').addEventListener('click', function() {
+document.getElementById('opc_AlmodJ' || 'path24').addEventListener('click', function() {
     tarjeta_out("Almoloya de Juárez", 'path24');
     des_tarjeta();
    })
