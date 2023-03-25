@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, jsonify
-import threading, multiprocessing, time
+import threading, multiprocessing, time, signal, sys
 from random import sample
 import pandas as pd
 import json
@@ -437,5 +437,10 @@ def consultas_buscador():
     
     return jsonify(data)
 
+def interrupcion(sig, frame):
+    print("Se ha interrumpido el programa con Ctrl+C")
+    sys.exit(0)
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, interrupcion)
     app.run(debug=True, port=8000)
