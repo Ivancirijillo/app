@@ -36,6 +36,10 @@ body {
     transform: translateX(-30%);
 } */
 
+.titulo1{
+    position: fixed;
+}
+
 .filtro2{
     position: relative;
     width: 90%;

@@ -29,7 +29,7 @@
 }*/
 
 const VARIOS = "varios";
-const RANGO = "rangos";
+const RANGO = "rango";
 const NOMBRE = "nombre";
 const CONSULTA_BUSCAR_MUNICIPIO = "";
 
@@ -72,57 +72,62 @@ boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value;
     let datos_analizados = "";
-    let operacion = "";
+    let tipo = "";
+    let json = {};
 
     if(datos.indexOf(",")> -1){
-        operacion = VARIOS;
+        tipo = VARIOS;
     } else if(datos.indexOf("-")> -1){
-        operacion = RANGO;
+        tipo = RANGO;
     } else{
-        operacion = NOMBRE;
+        tipo = NOMBRE;
     }
 
-    switch(operacion){
+    switch(tipo){
         case VARIOS:
-            console.log(",");
             datos_analizados = datos.split(",");
-            console.log(datos_analizados);
+            json = {
+                tipo: VARIOS,
+                datos: datos_analizados
+            }
+            enviar_datos(json)
+            .then(data => {
+                console.log(data);
+            });
             break;
         case RANGO:
-            console.log("-");
             datos_analizados = datos.split("-");
-            console.log(datos_analizados);
+            json = {
+                tipo: RANGO,
+                datos: datos_analizados
+            }
+            enviar_datos(json)
+            .then(data => {
+                console.log(data);
+            });
             break;
         case NOMBRE:
-            console.log("nombre");
+            json = {
+                tipo: NOMBRE,
+                datos: datos
+            }
+            enviar_datos(json)
+            .then(data => {
+                console.log(data);
+            });
             break;
     }
-
-    //let datos_analizados = datos.split("-") 
-    //console.log(datos_analizados)
-    //let data = { consulta: ""+`${buscador.value}`};
-
-    // fetch('/consultas', {
-    // method: 'POST',
-    // headers: {
-    //     'Content-Type': 'application/json'
-    // },
-    // body: JSON.stringify(data)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log(data["consulta"]);
-    // });
 });
 
-function set_varios(lista){
-    
-};
-
-function set_rango(lista){
-
-};
-
-function set_nombre(lista){
-
+function enviar_datos(data){
+    return fetch('/consultas-buscador', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response =>{
+        return response.json()
+    });
 }
