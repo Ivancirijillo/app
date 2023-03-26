@@ -26,7 +26,7 @@ configuracion = configparser.ConfigParser()
 configuracion.read("configuracion.ini")
 configuracion.sections()
 #Documento generado
-doc = SimpleDocTemplate('static\pdf\generado\prueba.pdf', pagesize=A4)
+doc = SimpleDocTemplate('static\pdf\generado\Delincuencia.pdf', pagesize=A4)
 story = []
 estilo = getSampleStyleSheet()
 #conexion
@@ -169,4 +169,4 @@ story.append(dibujar)
 
 doc.build(story)
 #abre el documento creado
-os.system('static\pdf\generado\prueba.pdf')
+os.system('static\pdf\generado\Delincuencia.pdf')
