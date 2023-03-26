@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-import os
 #Esto es un buena forma de saber las propiedades de los elementos que usemos,
 #usaremos pprint que nos lo mostrará en el shell
 #import pprint
 #pprint.pprint(r.getProperties())
+import webbrowser
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import A4
@@ -46,7 +46,6 @@ lista = cadena.split(',')
 lista[0] = lista[0].replace("(", "").strip()
 lista[0] = lista[0].replace("'", "").strip()
 lista[10] = lista[10].replace(")", "").strip()
-print(cadena)
 #0: nombre  1: año  2: DelitosAI    3: Homicidios   4: Feminicidios 5: Secuestros   6: DespH    7: DespM    8: DespT    9: Robo 10:  roboT
 #Nombre del municipio
 estiloT = getSampleStyleSheet()
@@ -169,4 +168,4 @@ story.append(dibujar)
 
 doc.build(story)
 #abre el documento creado
-os.system('static\pdf\generado\Delincuencia.pdf')
+webbrowser.open_new('static\pdf\generado\Delincuencia.pdf')
