@@ -63,3 +63,18 @@ boton.addEventListener("click",(e)=>{
         console.log(data["ruta"]);
     });
 })
+
+
+//FUNCION DEL BOTON MOSTRAR Y OCULTAR
+const contenedordiv = document.querySelector('#mostrar')
+let isClicked = true
+
+let mostrarocultar = function(){
+    if(isClicked){
+        contenedordiv.style.display = 'flex'
+        isClicked = false
+    }else{
+        contenedordiv.style.display = 'none'
+        isClicked = true
+    }
+}

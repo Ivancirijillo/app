@@ -408,4 +408,4 @@ def crear_grafico(consulta_1, consulta_2):
     #plt.show()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=8000, host="192.168.31.194")
