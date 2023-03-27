@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, jsonify
-import threading, multiprocessing, time
+import threading, multiprocessing, time, signal, sys
 from random import sample
 import pandas as pd
 import json
@@ -8,7 +8,8 @@ from conexion import CONEXION
 import configparser
 import pymysql
 #constantes 
-COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO", "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
+COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
+                        "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
 PARTIDOS = ["PRI", "PAN", "MORENA", "PRD", "IND"]
 #configuracion de archivo ini
 configuracion = configparser.ConfigParser()
@@ -364,6 +365,7 @@ def crear_nuevo_archivo(documento):
         nuevo_archivo = archivo_sin_encabezados.drop(archivo_sin_encabezados.columns[indices_eliminar], axis=1)
         #exportamos el nuevo archivo
         nuevo_archivo.to_excel(documento, index=False)
+
 @app.route("/consulta-municipio", methods=['POST', 'GET'])
 def consultar_tablas():
     js = request.get_json()
@@ -373,11 +375,12 @@ def consultar_tablas():
                     configuracion["database1"]["user"],
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
+    
     print(int(js["municipio"][0]))
     seccion = int(js["municipio"][0])
 
-    consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
-    consulta_2 = conn.consultar_db(f"select  sum(p.PRI), sum(p.PAN), sum(p.MORENA), sum(p.PRD), sum(p.IND)  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
+    consulta_1 = conn.consultar_db(configuracion.get("consultas_graficaspy", "partidos").format(seccion=seccion))
+    consulta_2 = conn.consultar_db(configuracion.get("consultas_graficaspy", "sumaPartidos").format(seccion=seccion))
     nombre_figura = f"{consulta_1[0][0]}.png"
     
     grafico = multiprocessing.Process(target=crear_grafico, args=(consulta_1, consulta_2))
@@ -407,5 +410,41 @@ def crear_grafico(consulta_1, consulta_2):
     plt.savefig(direccion_figura)
     #plt.show()
 
+@app.route("/consultas-buscador", methods=['POST'])
+def consultas_buscador():
+    js = request.get_json()
+    print(js)
+    lista = []
+    conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+    
+    if(js["tipo"] ==  "varios"):
+        for dato in js["datos"]:
+            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=dato)
+            respuesta = conn.consultar_db(consulta)
+            lista.append(respuesta)
+
+    elif(js["tipo"] ==  "rango"):
+        for i in range(int(js["datos"][0]), int(js["datos"][1])+1):
+            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=i)
+            respuesta = conn.consultar_db(consulta)
+            lista.append(respuesta)
+
+    data = {'datos': lista}
+    
+    return jsonify(data)
+
+def interrupcion(sig, frame):
+    print("Se ha interrumpido el programa con Ctrl+C")
+    sys.exit(0)
+
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(debug=True, port=8000, host="192.168.31.194")
+=======
+    signal.signal(signal.SIGINT, interrupcion)
+    app.run(debug=True, port=8000)
+>>>>>>> 4256c33a9dd6987e0fd819dab7607fd035bac7a9

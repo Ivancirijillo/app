@@ -1,4 +1,4 @@
-class Enviar{
+/*class Enviar{
     constructor(ruta, metodo){
         this.ruta = ruta;
         this.metodo = metodo;
@@ -26,12 +26,16 @@ class Enviar{
     set_datos(datos){
         this.datos = datos;
     }
-}
+}*/
 
-
+const VARIOS = "varios";
+const RANGO = "rango";
+const NOMBRE = "nombre";
+const CONSULTA_BUSCAR_MUNICIPIO = "";
 
 let boton = document.querySelector(".buscar")
-const envio = new Enviar('/consulta-municipio','POST')
+let buscador = document.querySelector(".Ibuscar")
+let boton_buscador = document.querySelector(".Bbuscar")
 
 boton.addEventListener("click",(e)=>{
     e.preventDefault()
@@ -62,8 +66,7 @@ boton.addEventListener("click",(e)=>{
         grafica.appendChild(img)
         console.log(data["ruta"]);
     });
-})
-
+});
 
 //FUNCION DEL BOTON MOSTRAR Y OCULTAR
 const contenedordiv = document.querySelector('#mostrar')
@@ -77,4 +80,68 @@ let mostrarocultar = function(){
         contenedordiv.style.display = 'none'
         isClicked = true
     }
+}
+
+boton_buscador.addEventListener("click", (e)=>{
+    e.preventDefault();
+    let datos = buscador.value;
+    let datos_analizados = "";
+    let tipo = "";
+    let json = {};
+
+    if(datos.indexOf(",")> -1){
+        tipo = VARIOS;
+    } else if(datos.indexOf("-")> -1){
+        tipo = RANGO;
+    } else{
+        tipo = NOMBRE;
+    }
+
+    switch(tipo){
+        case VARIOS:
+            datos_analizados = datos.split(",");
+            json = {
+                tipo: VARIOS,
+                datos: datos_analizados
+            }
+            enviar_datos(json)
+            .then(data => {
+                console.log(data);
+            });
+            break;
+        case RANGO:
+            datos_analizados = datos.split("-");
+            json = {
+                tipo: RANGO,
+                datos: datos_analizados
+            }
+            enviar_datos(json)
+            .then(data => {
+                console.log(data);
+            });
+            break;
+        case NOMBRE:
+            json = {
+                tipo: NOMBRE,
+                datos: datos
+            }
+            enviar_datos(json)
+            .then(data => {
+                console.log(data);
+            });
+            break;
+    }
+});
+
+function enviar_datos(data){
+    return fetch('/consultas-buscador', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response =>{
+        return response.json()
+    });
 }
