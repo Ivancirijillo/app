@@ -68,6 +68,20 @@ boton.addEventListener("click",(e)=>{
     });
 });
 
+//FUNCION DEL BOTON MOSTRAR Y OCULTAR
+const contenedordiv = document.querySelector('#mostrar')
+let isClicked = true
+
+let mostrarocultar = function(){
+    if(isClicked){
+        contenedordiv.style.display = 'flex'
+        isClicked = false
+    }else{
+        contenedordiv.style.display = 'none'
+        isClicked = true
+    }
+}
+
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value;
