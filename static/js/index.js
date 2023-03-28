@@ -32,7 +32,7 @@ const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
 const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"];
-const COLORES = ["blue", "orange", "green", "red", "purpple", "ground", "pink", "gray", "yellow", "aqua", "black"]
+const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "yellow", "aqua", "black"]
 
 
 let boton = document.querySelector(".buscar")
@@ -89,6 +89,7 @@ boton_buscador.addEventListener("click", (e)=>{
     let datos = buscador.value;
     let datos_analizados = "";
     let lista = [];
+    let datasets = [];
     let tipo = "";
     let json = {};
     let graficas = {};
@@ -119,27 +120,40 @@ boton_buscador.addEventListener("click", (e)=>{
                 for(let i = 0 ;i<datos_analizados.length;i++){
                     lista.push(Object.keys(data_s.datos[`m_${i}`]));
                 }
-                for(let i = 0;i<PARTIDOS.length;i++){
-                    let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
-                    let arr = (data.reduce((total, num)=>total+num,0));
+                
+                let aux = 0;
+                let votos_suma = [];
+                while(lista.length > aux){
+                    votos_suma.push([]);
+                    for(let i = 0;i<PARTIDOS.length;i++){
+                        let label =  PARTIDOS[i];
+                        let votos = data_s.datos[`m_${aux}`][lista[aux]][PARTIDOS[i]];
+                        let data = (votos.reduce((total, num)=>total+num,0));
+                        let background =  COLORES[i];
+                        votos_suma[aux].push(data)
+
+                    }
+                    aux++;
                 }
+                console.log(votos_suma);
+                
+
                 for(let i = 0;i<lista.length;i++){
-                    let datasets = [];
                     graficas[lista[i]] = {};
                     for(let j = 0; j < PARTIDOS.length;j++){
 
-                        let label =  PARTIDOS[j];
-                        let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
+                        // let label =  PARTIDOS[j];
+                        // let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
                         //let data = parseInt(arr).reduce((total,num)=>total + num, 0)
-                        let arr = (data.reduce((total, num)=>total+num,0))
-                        let background =  "red";
-                        console.log(arr)
-                        datasets.push({label, data, background})
+                        // let arr = (data.reduce((total, num)=>total+num,0))
+                        // let background =  "red";
+                        // console.log(arr)
+                        //datasets.push({label, data, background})
 
                         graficas[lista[i]]["id"] = lista[i];
                         graficas[lista[i]]["tipo"] = "bar";
                         graficas[lista[i]]["etiquetas"] = PARTIDOS;
-                        graficas[lista[i]]["datasets"] = datasets;
+                        //graficas[lista[i]]["datasets"] = datasets;
                         graficas[lista[i]]["options"] = {}
                         graficas[lista[i]]["options"]["title"] = {} 
                         graficas[lista[i]]["options"]["title"]["display"] = "true";
@@ -148,6 +162,7 @@ boton_buscador.addEventListener("click", (e)=>{
                         //console.log(data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]])
                     }
                 }
+                console.log(datasets)
                 let fragmento = document.createDocumentFragment();
                 for(let i = 0; i < lista.length; i++){
                     let canvas = document.createElement("canvas");
@@ -158,7 +173,10 @@ boton_buscador.addEventListener("click", (e)=>{
                         data: {
                           labels: PARTIDOS,
                           datasets: [
-                              graficas[lista[i]]["datasets"][0]
+                              {
+                                data: votos_suma[i],
+                                backgroundColor:COLORES
+                            }
                           ]
                         },
                         options: graficas[lista[i]]["options"]["title"]
@@ -166,7 +184,7 @@ boton_buscador.addEventListener("click", (e)=>{
                     fragmento.appendChild(canvas)
                 }
                 document.querySelector(".graficas").appendChild(fragmento)
-                console.log(graficas[lista[0]]["datasets"][0]["data"])
+                //console.log(graficas[lista[0]]["datasets"][0]["data"])
             });
             break;
         case RANGO:

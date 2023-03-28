@@ -490,11 +490,6 @@ def consultas():
 @app.route("/impresiones", methods=['POST'])
 def impresiones():
     json = request.get_json()
-    conn = CONEXION(configuracion["database1"]["host"],
-                    configuracion["database1"]["port"],
-                    configuracion["database1"]["user"],
-                    configuracion["database1"]["passwd"],
-                    configuracion["database1"]["db"])
     tipo = json["tipo_c"]
     if(tipo=="apoyo"):
         Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
@@ -504,7 +499,6 @@ def impresiones():
         Padron.GenerarPadron(int(json["year"]), int(json["id"]))
     elif(tipo=="pobreza"):
         Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
-
 
     return jsonify({"hola":"hola"})
 

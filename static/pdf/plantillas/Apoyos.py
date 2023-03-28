@@ -25,8 +25,8 @@ class Apoyos():
             #seccion = int(js["municipio"][0])
             #consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
         #consultas
-        apoyos = conn.consultar_db(f"select m.NombreM, a.YearA, a.Periodo, a.NombreA, a.NoApoyos, TipoA from Apoyos as a inner join Municipio as m on a.ClaveMunicipal = m.ClaveMunicipal where a.YearA={yearA} and a.ClaveMunicipal={clave};")
-
+        apoyos = conn.consultar_db(f"select m.NombreM, a.YearA, a.Periodo, a.NombreA, a.NoApoyos, TipoA from Apoyos as a inner join Municipio as m on a.ClaveMunicipal = m.ClaveMunicipal where a.YearA='{yearA}' and a.ClaveMunicipal='{clave}'")
+        print(apoyos)
         cadena = ','.join(str(elem) for elem in apoyos)
         lista = cadena.split(',')
         for i in range(len(lista)):
