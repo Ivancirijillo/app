@@ -1,20 +1,28 @@
 /* SELECCION DEL MUNICIPIO DE LA BARRA SUPERIOR */
 var click_btn_selec = true;
 
+function ocultar_superior(){
+    document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.55)';
+    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+    document.querySelector(".opc_municipios").style.display = 'none';
+    document.getElementById('con_cortina').style.visibility = 'hidden';
+    click_btn_selec = true;
+}
+
 document.getElementById('btn_selec').addEventListener('click', function() {
     if(click_btn_selec == true){
         document.querySelector(".selec_municipios").style = 'height: 70%; background: rgba(255, 255, 255, 0.94)';
         document.querySelector(".barra_des").style.transform = 'rotate(-90deg)';
         document.querySelector(".opc_municipios").style = 'position: absolute;'
                                 +'display: flex; justify-content: center; align-items: center; flex-direction: column;'
+        document.getElementById('con_cortina').style.visibility = 'visible';
         click_btn_selec = false;
     }else if(click_btn_selec == false){
-        document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.55)';
-        document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
-        document.querySelector(".opc_municipios").style.display = 'none';
-        click_btn_selec = true;
+        ocultar_superior();
     }
 })
+
+//document.getElementById('conte_comple').addEventListener('click', function(){})
 
 function tabla_crear(template, tablas, cabecera){
     direccion = cabecera[cabecera.length-1];
@@ -75,6 +83,7 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
             if(anio_selec >= 2020 && anio_selec <= 2022){
                 document.querySelector(".filtro_categoria").style.display = 'none';
                 document.querySelector(".filtrado").style.display = 'block';
+                document.querySelector(".btn_regresar").style.visibility = 'visible';
 
                 const fil_consulta = {
                     'apoyo': "select NombreA, NoApoyos from Apoyos where YearA='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
@@ -116,8 +125,6 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
             }, 3000);
         }
     })
-    
-    
 })
 
 /* BOTON DE ACERCAMIENTO/ALEJAMIENTO DEL MAPA */
@@ -171,17 +178,16 @@ document.getElementById('btnImprimir').addEventListener("click", function() {
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
 var path_anterior = ' ';
+var nom_munic = ' ';
 function tarjeta_out (nom_municipio, path_n){
-    document.querySelector(".selec_municipios").style = 'height: 22px; rgba(255, 255, 255, 0.55)';
-    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
-    document.querySelector(".opc_municipios").style.display = 'none';
-    click_btn_selec = true;
+    ocultar_superior();
 
     if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: green;*/';
     document.getElementById(path_n).style.fill = 'green';
 
     document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();
+    nom_munic = nom_municipio;
     path_anterior = path_n;
 }
 
@@ -200,6 +206,12 @@ function des_tarjeta (){
         document.getElementById('entrada').classList.add('active');
     }, 150);
 }
+
+/* BOTON DE REGRESAR AL FILTRO INPUT */
+document.getElementById('btn_regresar').addEventListener('click', function(){
+    tarjeta_out(nom_munic, path_anterior);
+    document.querySelector(".btn_regresar").style.visibility = 'hidden';
+})
 
 /* ---------------------------------------------------------------------------*/
 /* ---------------------------------------------------------------------------*/
@@ -1427,7 +1439,7 @@ document.getElementById('path254').addEventListener('click', function() {
     id_municipio = "15115";
 })
 
-document.getElementById('path254').addEventListener('click', function() {
+document.getElementById('path256').addEventListener('click', function() {
     tarjeta_out("Zacanzonapán", 'path256');
     id_municipio = "15116";
 })

@@ -32,6 +32,15 @@ body{
     height: 100vh;
 }
 
+.con_cortina{
+	background: rgba(0, 0, 0, 0.25);
+	position: absolute;
+    width: 100%;
+    height: 100%;
+	visibility: hidden;
+	z-index: 4;
+}
+
 .contenedor{
     position: absolute;
     display: flex;
@@ -53,7 +62,7 @@ body{
     border-radius: 7px;
 	transition: 1s ease all;
 	overflow-y: scroll;
-	z-index: 3;
+	z-index: 5;
 }
 
 .btn_selec{
@@ -78,7 +87,7 @@ body{
     align-items: center;
 	margin: 0 auto 10px auto;
 	width: 80%;
-	height: 42px;
+	height: 54px;
 }
 
 .opc_municipios p{
@@ -89,6 +98,7 @@ body{
 /* TARJETA */
 
 .info{
+	position: relative;
     background: #d0e4e4;
     display: flex;
     justify-content: center;
@@ -247,9 +257,26 @@ body{
 
 .btnImprimir:hover,
 .opc_municipios button:hover,
-.btnContinuar:hover {
+.btnContinuar:hover,
+.btn_regresar:hover {
 	background-color: #008CBA;
 	color: white;
+}
+
+.btn_regresar{
+    position: absolute;
+	visibility: hidden;
+	background-color: rgba(255, 255, 255, 0.75);
+    top: 10px;
+    left: 10px;
+	width: 30px;
+	height: 30px;
+	font-size: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+    z-index: 3;
 }
 
 /* MENSAJE DE VALIDACION - VENTANA EMERGENTE */
