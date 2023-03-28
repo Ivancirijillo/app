@@ -149,10 +149,7 @@ boton_buscador.addEventListener("click", (e)=>{
                         data: {
                           labels: PARTIDOS,
                           datasets: [
-                            {
-                              label:graficas[lista[i]]["datasets"][0]["label"],
-                              data: graficas[lista[i]]["datasets"][0]["data"]
-                            }
+                              graficas[lista[i]]["datasets"][0]
                           ]
                         },
                         options: graficas[lista[i]]["options"]["title"]
