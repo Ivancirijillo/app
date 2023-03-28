@@ -490,5 +490,5 @@ def interrupcion(sig, frame):
     sys.exit(0)
 
 if __name__ == '__main__':
-    signal.signal(signal.SIGINT, interrupcion)
+    #signal.signal(signal.SIGINT, interrupcion)
     app.run(debug=True, port=8000)
