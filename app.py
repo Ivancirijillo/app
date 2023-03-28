@@ -10,7 +10,7 @@ import pymysql
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
-PARTIDOS = ["PRI", "PAN", "MORENA", "PRD", "IND"]
+PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"]
 #configuracion de archivo ini
 configuracion = configparser.ConfigParser()
 configuracion.read("configuracion.ini")
@@ -415,6 +415,9 @@ def consultas_buscador():
     js = request.get_json()
     print(js)
     lista = []
+    arreglo = []
+    contador = 1
+    diccionario = {}
     conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["port"],
                     configuracion["database1"]["user"],
@@ -427,14 +430,42 @@ def consultas_buscador():
             respuesta = conn.consultar_db(consulta)
             lista.append(respuesta)
 
+        for i in range(len(lista)):
+            arreglo.append(len(lista[i]))
+
+        for i in range(0,len(lista)):
+            diccionario[f"m_{i}"] = {
+                lista[i][0][0]:{}
+            }
+            while(contador <= 11):
+                diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
+                for j in range(0,arreglo[i]):
+                    diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
+                    
+                contador += 1
+            contador = 1
+
     elif(js["tipo"] ==  "rango"):
         for i in range(int(js["datos"][0]), int(js["datos"][1])+1):
             consulta = configuracion.get("consultas_buscador","variosVR").format(dato=i)
             respuesta = conn.consultar_db(consulta)
             lista.append(respuesta)
+        
+        for i in range(len(lista)):
+            arreglo.append(len(lista[i]))
 
-    data = {'datos': lista}
-    
+        for i in range(0,len(lista)):
+            diccionario[f"m_{i}"] = {
+                lista[i][0][0]:{}
+            }
+            while(contador <= 11):
+                diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
+                for j in range(0,arreglo[i]):
+                    diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
+                contador += 1
+            contador = 1
+
+    data = {'datos': diccionario}
     return jsonify(data)
 
 def interrupcion(sig, frame):

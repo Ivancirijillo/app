@@ -31,7 +31,7 @@
 const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
-const CONSULTA_BUSCAR_MUNICIPIO = "";
+const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"];
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
@@ -86,8 +86,10 @@ boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value;
     let datos_analizados = "";
+    let lista = [];
     let tipo = "";
     let json = {};
+    let graficas = {};
 
     if(datos.indexOf(",")> -1){
         tipo = VARIOS;
@@ -105,8 +107,60 @@ boton_buscador.addEventListener("click", (e)=>{
                 datos: datos_analizados
             }
             enviar_datos(json)
-            .then(data => {
-                console.log(data);
+            .then(data_s => {
+                // lista = longitud(data, "datos");
+                //console.log(datos_analizados)
+                //posicion ["datos"][0] el arreglo principal
+                //posicion ["datos"][0][0] primer fila del arreglo principal
+                //posicion ["datos"][0][0][0] primer valor de la fila
+                //console.log(data.datos[`m_0`]["ACAMBAY DE RUÍZ CASTAÑEDA"]["ES"])
+                for(let i = 0 ;i<datos_analizados.length;i++){
+                    lista.push(Object.keys(data_s.datos[`m_${i}`]));
+                }
+                for(let i = 0;i<lista.length;i++){
+                    let datasets = [];
+                    graficas[lista[i]] = {};
+                    for(let j = 0; j < PARTIDOS.length;j++){
+
+                        let label =  PARTIDOS[j];
+                        let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
+                        let background =  "red";
+                        datasets.push({label, data, background})
+
+                        graficas[lista[i]]["id"] = lista[i];
+                        graficas[lista[i]]["tipo"] = "bar";
+                        graficas[lista[i]]["etiquetas"] = PARTIDOS;
+                        graficas[lista[i]]["datasets"] = datasets;
+                        graficas[lista[i]]["options"] = {}
+                        graficas[lista[i]]["options"]["title"] = {} 
+                        graficas[lista[i]]["options"]["title"]["display"] = "true";
+                        graficas[lista[i]]["options"]["title"]["text"] = "Nº votos";
+                        graficas[lista[i]]["options"]["title"]["fontSize"] = 18;
+                        //console.log(data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]])
+                    }
+                }
+                let fragmento = document.createDocumentFragment();
+                for(let i = 0; i < lista.length; i++){
+                    let canvas = document.createElement("canvas");
+                    canvas.setAttribute("class", `grafica${i}`);
+                    let contexto = canvas.getContext("2d");
+                    let char = new Chart(contexto, {
+                        type: "bar",
+                        data: {
+                          labels: PARTIDOS,
+                          datasets: [
+                            {
+                              label:graficas[lista[i]]["datasets"][0]["label"],
+                              data: graficas[lista[i]]["datasets"][0]["data"]
+                            }
+                          ]
+                        },
+                        options: graficas[lista[i]]["options"]["title"]
+                      });
+                    fragmento.appendChild(canvas)
+                }
+                document.querySelector(".graficas").appendChild(fragmento)
+                console.log(graficas[lista[0]]["datasets"][0]["data"])
             });
             break;
         case RANGO:
@@ -144,4 +198,19 @@ function enviar_datos(data){
     .then(response =>{
         return response.json()
     });
+}
+
+/**
+ * funcion para determinar la longitud de objetos
+ */
+
+function longitud(objeto, valor_key){
+    let lista = [];
+    lista.push(Object.keys(objeto[valor_key]).length);
+
+    for (let i = 0; i < lista[0]; i++) {
+        lista.push(Object.keys(objeto[valor_key][i]).length);
+        
+    }
+    return lista;
 }

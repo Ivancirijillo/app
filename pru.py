@@ -2,22 +2,22 @@ import matplotlib.pyplot as plt
 #from mpldatacursor import datacursor
 import pandas as pd
 import os 
-nombre_archivo = ""
+# nombre_archivo = ""
 
-try:
-    rarchivo = "/Users/elias/Documents/app/static/archivos/Res_Definitivos_Gobernador_2017_por_seccion.xlsx"
-    nombre_archivo = os.path.splitext(rarchivo)[1]
-    print(nombre_archivo)
-    archivo = pd.read_excel(rarchivo)
-except Exception as e:
-    pass
+# try:
+#     rarchivo = "/Users/elias/Documents/app/static/archivos/Res_Definitivos_Gobernador_2017_por_seccion.xlsx"
+#     nombre_archivo = os.path.splitext(rarchivo)[1]
+#     print(nombre_archivo)
+#     archivo = pd.read_excel(rarchivo)
+# except Exception as e:
+#     pass
 
 
 # municipios = archivo[archivo["MUNICIPIO"].str.contains("ACAMBAY")]
 
 
 # valores = ["234","323","625"]
-partidos = ["PAN","PRI","PRD", "PT", "PVEM", "NVA_ALIANZA", "MORENA", "ES"]
+# partidos = ["PAN","PRI","PRD", "PT", "PVEM", "NVA_ALIANZA", "MORENA", "ES"]
 
 # print(municipios[partidos])
 
@@ -80,3 +80,11 @@ partidos = ["PAN","PRI","PRD", "PT", "PVEM", "NVA_ALIANZA", "MORENA", "ES"]
 # plt.show()
 
 
+diccionario = {}
+diccionario["hola"] = {}
+# diccionario["hola"]["valor"] = 1
+
+for i in range(0, 10):
+    diccionario["hola"][f"valor{i}"] = i
+
+print(diccionario)
