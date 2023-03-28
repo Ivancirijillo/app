@@ -17,7 +17,7 @@ from reportlab.graphics.charts.barcharts import HorizontalBarChart
 from reportlab.graphics.charts.piecharts import Pie
 
 class Padron():
-    def GenerarPadron(clave, yearA):
+    def GenerarPadron(yearA, clave):
 
         #configuracion de archivo ini
         configuracion = configparser.ConfigParser()

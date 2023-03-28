@@ -22,7 +22,7 @@ from reportlab.graphics.charts.barcharts import HorizontalBarChart
 from reportlab.graphics.charts.piecharts import Pie
 
 class Delincuencia():
-    def GenerarDelincuencia(clave, yearA):
+    def GenerarDelincuencia(yearA, clave):
         #configuracion de archivo ini
         configuracion = configparser.ConfigParser()
         configuracion.read("configuracion.ini")
