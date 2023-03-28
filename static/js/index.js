@@ -32,6 +32,8 @@ const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
 const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"];
+const COLORES = ["blue", "orange", "green", "red", "purpple", "ground", "pink", "gray", "yellow", "aqua", "black"]
+
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
@@ -117,6 +119,10 @@ boton_buscador.addEventListener("click", (e)=>{
                 for(let i = 0 ;i<datos_analizados.length;i++){
                     lista.push(Object.keys(data_s.datos[`m_${i}`]));
                 }
+                for(let i = 0;i<PARTIDOS.length;i++){
+                    let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
+                    let arr = (data.reduce((total, num)=>total+num,0));
+                }
                 for(let i = 0;i<lista.length;i++){
                     let datasets = [];
                     graficas[lista[i]] = {};
@@ -124,7 +130,10 @@ boton_buscador.addEventListener("click", (e)=>{
 
                         let label =  PARTIDOS[j];
                         let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
+                        //let data = parseInt(arr).reduce((total,num)=>total + num, 0)
+                        let arr = (data.reduce((total, num)=>total+num,0))
                         let background =  "red";
+                        console.log(arr)
                         datasets.push({label, data, background})
 
                         graficas[lista[i]]["id"] = lista[i];
@@ -145,7 +154,7 @@ boton_buscador.addEventListener("click", (e)=>{
                     canvas.setAttribute("class", `grafica${i}`);
                     let contexto = canvas.getContext("2d");
                     let char = new Chart(contexto, {
-                        type: "bar",
+                        type: graficas[lista[i]]["tipo"],
                         data: {
                           labels: PARTIDOS,
                           datasets: [

@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 from conexion import CONEXION
 import configparser
 import pymysql
+from static.pdf.plantillas.Apoyos import Apoyos
+from static.pdf.plantillas.Delincuencia import Delincuencia
+from static.pdf.plantillas.General import General
+from static.pdf.plantillas.PadronE import Padron
+from static.pdf.plantillas.Pobreza import Pobreza
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
@@ -482,13 +487,31 @@ def consultas():
     
     return jsonify(data)
 
-if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+@app.route("/impresiones", methods=['POST'])
+def impresiones():
+    json = request.get_json()
+    conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+    tipo = json["tipo_c"]
+    if(tipo=="apoyo"):
+        Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
+    elif(tipo=="deli"):
+        Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
+    elif(tipo=="padron"):
+        Padron.GenerarPadron(int(json["year"]), int(json["id"]))
+    elif(tipo=="pobreza"):
+        Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
+
+
+    return jsonify({"hola":"hola"})
 
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")
     sys.exit(0)
 
 if __name__ == '__main__':
-    #signal.signal(signal.SIGINT, interrupcion)
+    signal.signal(signal.SIGINT, interrupcion)
     app.run(debug=True, port=8000)

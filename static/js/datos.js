@@ -71,7 +71,7 @@ function enviar_json (in_consulta, cabecera){
 }
 
 /* VALIDACION DE LOS INPUT-BOTON CONTINUAR */
-var id_municipio = "", anio_selec;
+var id_municipio = "", anio_selec, tipo;
 document.getElementById('btnContinuar').addEventListener('click', function () {
     let entrada_anio = document.querySelectorAll("input[name=in_anio]");
     entrada_anio.forEach(item=>{
@@ -107,6 +107,7 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
                     'padron': cabecera_consul_Pa,
                     'pobreza': cabecera_consul_Po
                 }
+                tipo = item.value;
                 enviar_json(fil_consulta[item.value], fil_cabecera[item.value]);
             }else{
                 document.getElementById('v_emergen').classList.remove('v_emergen');
@@ -172,8 +173,24 @@ function imprimirElemento(elemento) {
 }
 
 document.getElementById('btnImprimir').addEventListener("click", function() {
-    var div = document.querySelector(".imprimible");
-    imprimirElemento(div);
+    //var div = document.querySelector(".imprimible");
+    //imprimirElemento(div);
+    let data = {
+        tipo_c: tipo,
+        year: anio_selec,
+        id: id_municipio
+    }
+    fetch('/impresiones', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    });
 });
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
