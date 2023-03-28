@@ -38,7 +38,7 @@ conn = CONEXION(configuracion["database1"]["host"],
     #seccion = int(js["municipio"][0])
     #consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
 #consultas
-delincuencia = conn.consultar_db("SELECT m.NombreM, d.YearD, d.DelitosAI, d.Homicidios,d.Feminicidios, d.Secuestros, d.DespH, d.DespM, d.DespT, d.Robo, d.RoboT from Delincuencia as d inner join Municipio as m on d.ClaveMunicipal = m.ClaveMunicipal where d.YearD='2022' and d.ClaveMunicipal='15002'")
+delincuencia = conn.consultar_db("SELECT m.NombreM, d.YearD, d.DelitosAI, d.Homicidios,d.Feminicidios, d.Secuestros, d.DespH, d.DespM, d.DespT, d.Robo, d.RoboT from Delincuencia as d inner join Municipio as m on d.ClaveMunicipal = m.ClaveMunicipal where d.YearD='2022' and d.ClaveMunicipal='15001'")
 #pasar a cadena
 cadena = ','.join(str(elem) for elem in delincuencia)
 #pasar a lista
@@ -92,79 +92,79 @@ for i, color in enumerate(coloree):
 
 dibujar.add(graficoBarras)
 story.append(dibujar)
+if int(lista[8]) != 0:
+    estiloT = getSampleStyleSheet()
+    estiloTitulo = estiloT['Heading2']
+    estiloTitulo.alignment = 1
+    estiloTitulo.spaceBefore = 0
+    estiloTitulo.spaceAfter = 10
+    titulo = Paragraph('Desapariciones', estiloTitulo)
+    story.append(titulo)
+    estiloT = getSampleStyleSheet()
+    estiloTitulo = estiloT['Heading2']
+    estiloTitulo.alignment = 1
+    estiloTitulo.spaceBefore = 0
+    estiloTitulo.spaceAfter = 10
+    estiloTitulo.fontSize=10
+    titulo = Paragraph('Desapariciones totales: ' + lista[8] , estiloTitulo)
+    story.append(titulo)
 
-estiloT = getSampleStyleSheet()
-estiloTitulo = estiloT['Heading2']
-estiloTitulo.alignment = 1
-estiloTitulo.spaceBefore = 0
-estiloTitulo.spaceAfter = 10
-titulo = Paragraph('Desapariciones', estiloTitulo)
-story.append(titulo)
-estiloT = getSampleStyleSheet()
-estiloTitulo = estiloT['Heading2']
-estiloTitulo.alignment = 1
-estiloTitulo.spaceBefore = 0
-estiloTitulo.spaceAfter = 10
-estiloTitulo.fontSize=10
-titulo = Paragraph('Desapariciones totales: ' + lista[8] , estiloTitulo)
-story.append(titulo)
+    #Gráfico pastel
+    dibujar = Drawing(300, 200)
+    graficoPastel = Pie()
+    graficoPastel.x = 125
+    graficoPastel.y = 30
+    graficoPastel.width = 170
+    graficoPastel.height = 170
+    listaDesp= (int(lista[6]), int(lista[7]))
+    graficoPastel.data = listaDesp
+    pDespH = (listaDesp[0]*100)/int(lista[8])
+    pDespM = 100-pDespH
+    graficoPastel.labels = [lista[6] + ' ('+str(pDespH)+'%)',lista[7] + ' ('+str(pDespM)+'%)']
+    graficoPastel.slices.strokeWidth=0.5
+    #remaracar barra
+    graficoPastel.slices[0].popout = 10
+    #graficoPastel.slices[0].strokeWidth = 2
+    #graficoPastel.slices[0].strokeDashArray = [2,2]
+    graficoPastel.slices[0].labelRadius = 1.75
+    #graficoPastel.slices[0].fontColor = colors.crimson
+    graficoPastel.sideLabels = 1  # Con 0 no se muestran líneas hacia las etiquetas
+    # graficoPastel.slices.labelRadius = 0.65  # Para mostrar el texto dentro de las tajadas
 
-#Gráfico pastel
-dibujar = Drawing(300, 200)
-graficoPastel = Pie()
-graficoPastel.x = 125
-graficoPastel.y = 30
-graficoPastel.width = 170
-graficoPastel.height = 170
-listaDesp= (int(lista[6]), int(lista[7]))
-graficoPastel.data = listaDesp
-pDespH = (listaDesp[0]*100)/int(lista[8])
-pDespM = 100-pDespH
-graficoPastel.labels = [lista[6] + ' ('+str(pDespH)+'%)',lista[7] + ' ('+str(pDespM)+'%)']
-graficoPastel.slices.strokeWidth=0.5
-#remaracar barra
-graficoPastel.slices[0].popout = 10
-#graficoPastel.slices[0].strokeWidth = 2
-#graficoPastel.slices[0].strokeDashArray = [2,2]
-graficoPastel.slices[0].labelRadius = 1.75
-#graficoPastel.slices[0].fontColor = colors.crimson
-graficoPastel.sideLabels = 1  # Con 0 no se muestran líneas hacia las etiquetas
-# graficoPastel.slices.labelRadius = 0.65  # Para mostrar el texto dentro de las tajadas
+    #leyenda
+    from reportlab.graphics.charts.legends import Legend
+    leyenda = Legend() 
+    leyenda.x               = 350 
+    leyenda.y               = 0 
+    leyenda.dx              = 8  
+    leyenda.dy              = 8  
+    leyenda.fontName        = 'Helvetica'  
+    leyenda.fontSize        = 10  
+    leyenda.boxAnchor       = 'n'  
+    leyenda.columnMaximum   = 10  
+    leyenda.strokeWidth     = 1  
+    leyenda.strokeColor     = colors.black  
+    leyenda.deltax          = 75  
+    leyenda.deltay          = 10  
+    leyenda.autoXPadding    = 5  
+    leyenda.yGap            = 0  
+    leyenda.dxTextSpace     = 5  
+    leyenda.alignment       = 'right'  
+    leyenda.dividerLines    = 1|2|4  
+    leyenda.dividerOffsY    = 5.5 
+    leyenda.subCols.rpad    = 30  
+    leyenda.colorNamePairs = [(colors.blue, "Desapariciones hombres"), 
+                            (colors.green, "Desapariciones mujeres")]
 
-#leyenda
-from reportlab.graphics.charts.legends import Legend
-leyenda = Legend() 
-leyenda.x               = 350 
-leyenda.y               = 0 
-leyenda.dx              = 8  
-leyenda.dy              = 8  
-leyenda.fontName        = 'Helvetica'  
-leyenda.fontSize        = 10  
-leyenda.boxAnchor       = 'n'  
-leyenda.columnMaximum   = 10  
-leyenda.strokeWidth     = 1  
-leyenda.strokeColor     = colors.black  
-leyenda.deltax          = 75  
-leyenda.deltay          = 10  
-leyenda.autoXPadding    = 5  
-leyenda.yGap            = 0  
-leyenda.dxTextSpace     = 5  
-leyenda.alignment       = 'right'  
-leyenda.dividerLines    = 1|2|4  
-leyenda.dividerOffsY    = 5.5 
-leyenda.subCols.rpad    = 30  
-leyenda.colorNamePairs = [(colors.blue, "Desapariciones hombres"), 
-                         (colors.green, "Desapariciones mujeres")]
+    #Insertemos nuestros propios colores
+    colores  = [colors.blue, colors.green]
+    for i, color in enumerate(colores): 
+        graficoPastel.slices[i].fillColor = color
 
-#Insertemos nuestros propios colores
-colores  = [colors.blue, colors.green]
-for i, color in enumerate(colores): 
-    graficoPastel.slices[i].fillColor = color
-
-#legend.fillColor = [colors.blue, colors.green]  
-dibujar.add(graficoPastel) 
-dibujar.add(leyenda)
-story.append(dibujar)
+    #legend.fillColor = [colors.blue, colors.green]  
+    dibujar.add(graficoPastel) 
+    dibujar.add(leyenda)
+    story.append(dibujar)
 
 doc.build(story)
 #abre el documento creado

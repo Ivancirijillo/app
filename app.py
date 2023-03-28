@@ -468,6 +468,23 @@ def consultas_buscador():
     data = {'datos': diccionario}
     return jsonify(data)
 
+@app.route("/consultas", methods=['POST'])
+def consultas():
+    js = request.get_json()
+    conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+    
+    respuesta = conn.consultar_db(js["consulta"])
+    data = {'consulta': respuesta}
+    
+    return jsonify(data)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)
+
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")
     sys.exit(0)

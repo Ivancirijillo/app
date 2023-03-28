@@ -107,6 +107,11 @@ body{
     display: none;
 }
 
+.tableDatos th{
+    padding: 5px;
+    border-bottom: solid 1px #2b0faa;
+}
+
 .tableDatos td{
     padding: 5px;
     border-bottom: solid 1px #2b0faa;
@@ -212,6 +217,11 @@ body{
 
 .filtrado{
 	display: none;
+}
+
+.filtro_info{
+    display: flex;
+    justify-content: center;
 }
 
 /* ESTILO DE BOTONES - Botones general */
