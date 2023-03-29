@@ -18,7 +18,7 @@ from reportlab.graphics.charts.barcharts import HorizontalBarChart
 from reportlab.graphics.charts.piecharts import Pie
 
 class Pobreza():
-    def GenerarPobreza(clave, yearA):
+    def GenerarPobreza(yearA, clave):
 
         #configuracion de archivo ini
         configuracion = configparser.ConfigParser()
