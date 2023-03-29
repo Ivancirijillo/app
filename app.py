@@ -504,7 +504,8 @@ def impresiones():
         Padron.GenerarPadron(int(json["year"]), int(json["id"]))
     elif(tipo=="pobreza"):
         Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
-
+    elif(tipo=="general"):
+        General.GenerarG(int(json["year"]), int(json["id"]))
 
     return jsonify({"hola":"hola"})
 
