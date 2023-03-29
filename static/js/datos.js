@@ -22,7 +22,9 @@ document.getElementById('btn_selec').addEventListener('click', function() {
     }
 })
 
-//document.getElementById('conte_comple').addEventListener('click', function(){})
+document.getElementById('con_cortina').addEventListener('click', function(){
+    ocultar_superior();
+})
 
 function tabla_crear(template, tablas, cabecera){
     direccion = cabecera[cabecera.length-1];
@@ -96,7 +98,7 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
                 }
                 var cabecera_consul_A = new Array ("NombreA", "NoApoyo", " ");
                 var cabecera_consul_D = new Array ("DelitosAI", "Homicidios", "Feminicidios", "Secuestros", 
-                                                    "DespT", "Robo", "RoboT", " ");
+                                                    "DespT", "Robo", "RoboT", "V");
                 var cabecera_consul_Pa = new Array ("PHombres", "PMujeres", "PTotal", "LNHombres", 
                                                     "LNMujeres", "LNTotal", "V");
                 var cabecera_consul_Po = new Array ("Pobreza", "PobExt", "PobMod", "RezagoEd", 
@@ -172,9 +174,10 @@ function imprimirElemento(elemento) {
     return true;
 }
 
-document.getElementById('btnImprimir').addEventListener("click", function() {
+document.getElementById('btnImprimir').addEventListener('click', function() {
     //var div = document.querySelector(".imprimible");
     //imprimirElemento(div);
+    console.log(tipo + " - " + anio_selec + " - " + id_municipio)
     let data = {
         tipo_c: tipo,
         year: anio_selec,
@@ -192,6 +195,27 @@ document.getElementById('btnImprimir').addEventListener("click", function() {
         console.log(data);
     });
 });
+
+document.getElementById('btn_repor_mun').addEventListener('click', function(){
+    tipo ='general';
+    console.log(tipo + " - " + anio_selec + " - " + id_municipio)
+    let data = {
+        tipo_c: tipo,
+        year: anio_selec,
+        id: id_municipio
+    }
+    fetch('/impresiones', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    });
+})
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
 var path_anterior = ' ';

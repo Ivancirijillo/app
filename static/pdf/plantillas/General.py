@@ -16,7 +16,7 @@ from reportlab.platypus.doctemplate import NextPageTemplate
 from reportlab.lib.pagesizes import letter, landscape
 
 class General():
-    def GenerarG(clave, yearA): 
+    def GenerarG(yearA, clave): 
 
         #configuracion de archivo ini
         configuracion = configparser.ConfigParser()

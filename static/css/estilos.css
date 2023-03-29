@@ -218,7 +218,7 @@ body{
 }
 
 .filtro_categoria h1{
-	margin: 30px 0 15px 0;
+	margin: 15px 0 8px 0;
 }
 
 .filtro_categoria input{
@@ -238,7 +238,8 @@ body{
 
 .btnImprimir,
 .opc_municipios button,
-.btnContinuar{
+.btnContinuar,
+.btn_repor_mun{
 	background-color: rgba(255, 255, 255, 0.75); 
 	color: black; 
 	border: 2px solid #0099CC;
@@ -255,11 +256,23 @@ body{
 	margin-top: 30px;
 }
 
+.btn_repor_mun{
+	background-color: rgba(255, 255, 255, 0.75); 
+	border: 2px solid #3BA100;
+	margin-top: 5px;
+}
+
 .btnImprimir:hover,
 .opc_municipios button:hover,
 .btnContinuar:hover,
-.btn_regresar:hover {
+.btn_regresar:hover,
+.btn_repor_mun:hover {
 	background-color: #008CBA;
+	color: white;
+}
+
+.btn_repor_mun:hover {
+	background-color: #3BA100;
 	color: white;
 }
 
