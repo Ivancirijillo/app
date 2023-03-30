@@ -46,6 +46,7 @@ function tabla_crear(template, tablas, cabecera){
                 template += '<td>'+tablas[i][j]+'</td>';
             }
             template += '</tr>';
+            if(i==8) i = tablas.length
         }
     }
     if(tablas.length == 0) template = '<tr><td><h2> Datos inexistentes </h2></td></tr>';
@@ -198,6 +199,10 @@ document.getElementById('btnImprimir').addEventListener('click', function() {
 
 document.getElementById('btn_repor_mun').addEventListener('click', function(){
     tipo ='general';
+    let entrada_anio = document.querySelectorAll("input[name=in_anio]");
+    entrada_anio.forEach(item=>{
+        if(item.checked) anio_selec = item.value;
+    })
     console.log(tipo + " - " + anio_selec + " - " + id_municipio)
     let data = {
         tipo_c: tipo,
