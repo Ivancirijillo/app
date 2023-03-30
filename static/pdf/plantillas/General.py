@@ -360,10 +360,10 @@ class General():
             estiloT = getSampleStyleSheet()
             estiloTitulo = estiloT['title']
             estiloTitulo.alignment = 1
-            titulo = Paragraph('Sin de Delincuencia del año ' + str(yearA), estiloTitulo)
+            titulo = Paragraph('Sin de datos de delincuencia del año ' + str(yearA), estiloTitulo)
             story.append(titulo)
             espacio= 10
-            espacio2 = 200
+            espacio2 = 500
 
         else: 
             #pasar a lista
@@ -379,6 +379,7 @@ class General():
             estiloT = getSampleStyleSheet()
             estiloTitulo = estiloT['Heading2']
             estiloTitulo.alignment = 1
+            estiloTitulo.spaceBefore = 200
             titulo = Paragraph('Delincuencia', estiloTitulo)
             story.append(titulo)
 
@@ -506,7 +507,7 @@ class General():
                 espacio2 = 10
             else:
                 espacio= 10
-                espacio2 = 200
+                espacio2 = 500
         
         ####################_POBREZA_####################
         #consultas
@@ -670,7 +671,7 @@ class General():
                 estiloT = getSampleStyleSheet()
                 estiloTitulo = estiloT['Heading2']
                 estiloTitulo.alignment = 1
-                estiloTitulo.spaceBefore = 160
+                estiloTitulo.spaceBefore = 60
                 titulo = Paragraph('Condición de pobreza', estiloTitulo)
                 story.append(titulo)
 
@@ -740,20 +741,6 @@ class General():
             estiloTitulo.alignment = 1
             estiloTitulo.spaceBefore = 100
             estiloTitulo.spaceAfter = 40
-            titulo = Paragraph('Apoyos: ' + lista[1], estiloTitulo)
-            story.append(titulo)
-
-            #Nombre del municipio
-            estiloT = getSampleStyleSheet()
-            estiloTitulo = estiloT['title']
-            estiloTitulo.alignment = 1
-            titulo = Paragraph(lista[0], estiloTitulo)
-            story.append(titulo)
-            #Subtitulo
-            estiloT = getSampleStyleSheet()
-            estiloTitulo = estiloT['Heading2']
-            estiloTitulo.alignment = 1
-            estiloTitulo.spaceAfter = 10
             titulo = Paragraph('Apoyos: ' + lista[1], estiloTitulo)
             story.append(titulo)
 
