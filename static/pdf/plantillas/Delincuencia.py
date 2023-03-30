@@ -23,26 +23,29 @@ from reportlab.graphics.charts.piecharts import Pie
 
 class Delincuencia():
     def GenerarDelincuencia(yearA, clave):
+        
+        #Documento generado
+        doc = SimpleDocTemplate('static\pdf\generado\Delincuencia.pdf', pagesize=A4)
+        story = []
+
         #configuracion de archivo ini
         configuracion = configparser.ConfigParser()
         configuracion.read("configuracion.ini")
         configuracion.sections()
-        #Documento generado
-        doc = SimpleDocTemplate('static\pdf\generado\Delincuencia.pdf', pagesize=A4)
-        story = []
-        estilo = getSampleStyleSheet()
+
         #conexion
         conn = CONEXION(configuracion["database1"]["host"],
                             configuracion["database1"]["port"],
                             configuracion["database1"]["user"],
                             configuracion["database1"]["passwd"],
                             configuracion["database1"]["db"])
-            #seccion = int(js["municipio"][0])
-            #consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
         #consultas
         delincuencia = conn.consultar_db(f"SELECT m.NombreM, d.YearD, d.DelitosAI, d.Homicidios,d.Feminicidios, d.Secuestros, d.DespH, d.DespM, d.DespT, d.Robo, d.RoboT from Delincuencia as d inner join Municipio as m on d.ClaveMunicipal = m.ClaveMunicipal where d.YearD={yearA} and d.ClaveMunicipal={clave}")
         #pasar a cadena
         cadena = ','.join(str(elem) for elem in delincuencia)
+        
+        
+        
         #pasar a lista
         lista = cadena.split(',')
         lista[0] = lista[0].replace("(", "").strip()

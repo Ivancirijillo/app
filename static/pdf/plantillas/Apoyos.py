@@ -25,13 +25,10 @@ class Apoyos():
                             configuracion["database1"]["user"],
                             configuracion["database1"]["passwd"],
                             configuracion["database1"]["db"])
-            #seccion = int(js["municipio"][0])
-            #consulta_1 = conn.consultar_db(f"select m.NombreM, p.SECCION, p.PRI, p.PAN, p.MORENA, p.PRD, p.IND, p.TOTAL_VOTOS, p.LISTA_NOMINAL  from prueba as p inner join Municipio as m  on p.ClaveMunicipal = m.ClaveMunicipal where m.ClaveMunicipal = {seccion} order by p.ClaveMunicipal")
         #consultas
         apoyos = conn.consultar_db(f"select m.NombreM, a.YearA, a.Periodo, a.NombreA, a.NoApoyos, TipoA from Apoyos as a inner join Municipio as m on a.ClaveMunicipal = m.ClaveMunicipal where a.YearA='{yearA}' and a.ClaveMunicipal='{clave}'")
 
         cadena = ','.join(str(elem) for elem in apoyos)
-        print (cadena)
 
         if cadena == '':
 
