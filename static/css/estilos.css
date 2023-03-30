@@ -139,7 +139,7 @@ body{
 	visibility: visible;
 }
 .entrada {
-	padding: 20px;
+	padding: 10px;
 	text-align: center;
 	width: 95%;
 	transition: .3s ease all;
@@ -156,7 +156,7 @@ body{
 .entrada h3 {
 	font-size: 16px;
 	font-weight: 200;
-	margin-bottom: 18px;
+	margin-bottom: 12px;
 	opacity: 0;
 }
 .entrada table,
@@ -218,7 +218,7 @@ body{
 }
 
 .filtro_categoria h1{
-	margin: 15px 0 8px 0;
+	margin: 12px 0 6px 0;
 }
 
 .filtro_categoria input{
@@ -253,7 +253,7 @@ body{
 
 .btnImprimir,
 .btnContinuar{
-	margin-top: 30px;
+	margin-top: 25px;
 }
 
 .btn_repor_mun{
