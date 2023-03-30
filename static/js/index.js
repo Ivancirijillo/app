@@ -86,7 +86,7 @@ let mostrarocultar = function(){
 
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
-    let datos = buscador.value;
+    let datos = buscador.value.toUpperCase();
     let datos_analizados = "";
     let lista = [];
     let datasets = [];
@@ -94,14 +94,12 @@ boton_buscador.addEventListener("click", (e)=>{
     let json = {};
     let graficas = {};
 
-    if(datos.indexOf(",")> -1){
+    if(datos.indexOf(",") != -1){
         tipo = VARIOS;
-    } else if(datos.indexOf("-")> -1){
+    } else if(datos.indexOf("-") != -1){
         tipo = RANGO;
-    } else{
-        tipo = NOMBRE;
-    }
-
+    } else tipo = NOMBRE;
+    
     switch(tipo){
         case VARIOS:
             datos_analizados = datos.split(",");
@@ -120,27 +118,26 @@ boton_buscador.addEventListener("click", (e)=>{
                 for(let i = 0 ;i<datos_analizados.length;i++){
                     lista.push(Object.keys(data_s.datos[`m_${i}`]));
                 }
-                
+        
                 let aux = 0;
                 let votos_suma = [];
+
                 while(lista.length > aux){
                     votos_suma.push([]);
                     for(let i = 0;i<PARTIDOS.length;i++){
-                        let label =  PARTIDOS[i];
+                        // let label =  PARTIDOS[i];
                         let votos = data_s.datos[`m_${aux}`][lista[aux]][PARTIDOS[i]];
                         let data = (votos.reduce((total, num)=>total+num,0));
-                        let background =  COLORES[i];
+                        // let background =  COLORES[i];
                         votos_suma[aux].push(data)
-
                     }
                     aux++;
                 }
                 console.log(votos_suma);
                 
-
-                for(let i = 0;i<lista.length;i++){
-                    graficas[lista[i]] = {};
-                    for(let j = 0; j < PARTIDOS.length;j++){
+                // for(let i = 0;i<lista.length;i++){
+                //     graficas[lista[i]] = {};
+                //     for(let j = 0; j < PARTIDOS.length;j++){
 
                         // let label =  PARTIDOS[j];
                         // let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
@@ -150,37 +147,47 @@ boton_buscador.addEventListener("click", (e)=>{
                         // console.log(arr)
                         //datasets.push({label, data, background})
 
-                        graficas[lista[i]]["id"] = lista[i];
-                        graficas[lista[i]]["tipo"] = "bar";
-                        graficas[lista[i]]["etiquetas"] = PARTIDOS;
-                        //graficas[lista[i]]["datasets"] = datasets;
-                        graficas[lista[i]]["options"] = {}
-                        graficas[lista[i]]["options"]["title"] = {} 
-                        graficas[lista[i]]["options"]["title"]["display"] = "true";
-                        graficas[lista[i]]["options"]["title"]["text"] = "Nº votos";
-                        graficas[lista[i]]["options"]["title"]["fontSize"] = 18;
+                        // graficas[lista[i]]["id"] = lista[i];
+                        // graficas[lista[i]]["tipo"] = "bar";
+                        // graficas[lista[i]]["etiquetas"] = PARTIDOS;
+                        // //graficas[lista[i]]["datasets"] = datasets;
+                        // graficas[lista[i]]["options"] = {}
+                        // graficas[lista[i]]["options"]["title"] = {} 
+                        // graficas[lista[i]]["options"]["title"]["display"] = "true";
+                        // graficas[lista[i]]["options"]["title"]["text"] = lista[i];
+                        // graficas[lista[i]]["options"]["title"]["fontSize"] = 28;
                         //console.log(data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]])
-                    }
-                }
+                //     }
+                // }
                 console.log(datasets)
                 let fragmento = document.createDocumentFragment();
                 for(let i = 0; i < lista.length; i++){
                     let canvas = document.createElement("canvas");
                     canvas.setAttribute("class", `grafica${i}`);
+                    
                     let contexto = canvas.getContext("2d");
                     let char = new Chart(contexto, {
-                        type: graficas[lista[i]]["tipo"],
+                        type: "bar",
                         data: {
                           labels: PARTIDOS,
                           datasets: [
                               {
+                                label:lista[i],
                                 data: votos_suma[i],
                                 backgroundColor:COLORES
                             }
                           ]
                         },
-                        options: graficas[lista[i]]["options"]["title"]
+                        options: {
+                            title:{
+                                display:true,
+                                text:lista[i],
+                                fontSize:28
+                            }
+                        }
                       });
+                    canvas.style.position = "relative";
+                    canvas.style.width="50px";
                     fragmento.appendChild(canvas)
                 }
                 document.querySelector(".graficas").appendChild(fragmento)
@@ -194,8 +201,57 @@ boton_buscador.addEventListener("click", (e)=>{
                 datos: datos_analizados
             }
             enviar_datos(json)
-            .then(data => {
-                console.log(data);
+            .then(data_s => {
+                for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
+                    lista.push(Object.keys(data_s.datos[`m_${i}`]));
+                }
+                console.log(lista)
+                let aux = 0;
+                let votos_suma = [];
+
+                while(lista.length > aux){
+                    votos_suma.push([]);
+                    for(let i = 0;i<PARTIDOS.length;i++){
+                        // let label =  PARTIDOS[i];
+                        let votos = data_s.datos[`m_${aux}`][lista[aux]][PARTIDOS[i]];
+                        let data = (votos.reduce((total, num)=>total+num,0));
+                        // let background =  COLORES[i];
+                        votos_suma[aux].push(data)
+                    }
+                    aux++;
+                }
+                console.log(votos_suma);
+                let fragmento = document.createDocumentFragment();
+                for(let i = 0; i < lista.length; i++){
+                    let canvas = document.createElement("canvas");
+                    canvas.setAttribute("class", `grafica${i}`);
+                    
+                    let contexto = canvas.getContext("2d");
+                    let char = new Chart(contexto, {
+                        type: "bar",
+                        data: {
+                          labels: PARTIDOS,
+                          datasets: [
+                              {
+                                label:lista[i],
+                                data: votos_suma[i],
+                                backgroundColor:COLORES
+                            }
+                          ]
+                        },
+                        options: {
+                            title:{
+                                display:true,
+                                text:lista[i],
+                                fontSize:28
+                            }
+                        }
+                      });
+                    canvas.style.position = "relative";
+                    canvas.style.width="50px";
+                    fragmento.appendChild(canvas)
+                }
+                document.querySelector(".graficas").appendChild(fragmento);
             });
             break;
         case NOMBRE:
@@ -204,8 +260,47 @@ boton_buscador.addEventListener("click", (e)=>{
                 datos: datos
             }
             enviar_datos(json)
-            .then(data => {
-                console.log(data);
+            .then(data_s => {
+                lista.push(Object.keys(data_s.datos["m_0"]));
+                let votos_suma = [];
+
+                for(let i = 0;i<PARTIDOS.length;i++){
+                        let votos = data_s.datos["m_0"][lista[0]][PARTIDOS[i]];
+                        let data = (votos.reduce((total, num)=>total+num,0));
+                        votos_suma.push(data)
+                }
+                console.log(votos_suma);
+                let fragmento = document.createDocumentFragment();
+                
+                let canvas = document.createElement("canvas");
+                canvas.setAttribute("class", "grafica0");
+                    
+                let contexto = canvas.getContext("2d");
+                let char = new Chart(contexto, {
+                        type: "bar",
+                        data: {
+                          labels: PARTIDOS,
+                          datasets: [
+                              {
+                                label:lista[0],
+                                data: votos_suma,
+                                backgroundColor:COLORES
+                            }
+                          ]
+                        },
+                        options: {
+                            title:{
+                                display:true,
+                                text:lista[0],
+                                fontSize:28
+                            }
+                        }
+                      });
+                    canvas.style.position = "relative";
+                    canvas.style.width="50px";
+                    fragmento.appendChild(canvas)
+                
+                document.querySelector(".graficas").appendChild(fragmento);
             });
             break;
     }
@@ -222,19 +317,4 @@ function enviar_datos(data){
     .then(response =>{
         return response.json()
     });
-}
-
-/**
- * funcion para determinar la longitud de objetos
- */
-
-function longitud(objeto, valor_key){
-    let lista = [];
-    lista.push(Object.keys(objeto[valor_key]).length);
-
-    for (let i = 0; i < lista[0]; i++) {
-        lista.push(Object.keys(objeto[valor_key][i]).length);
-        
-    }
-    return lista;
 }
