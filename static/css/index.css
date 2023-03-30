@@ -37,7 +37,7 @@ body {
 } */
 
 .titulo1{
-    position: fixed;
+    position: relative;
 }
 
 .filtro2{
