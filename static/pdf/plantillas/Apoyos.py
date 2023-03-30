@@ -12,6 +12,10 @@ from reportlab.lib.pagesizes import letter, landscape
 #configuracion de archivo ini
 class Apoyos():
     def GenerarApoyos(yearA, clave):
+
+        doc = SimpleDocTemplate('static\pdf\generado\Apoyos.pdf', pagesize=landscape(A4))
+        story=[]
+
         configuracion = configparser.ConfigParser()
         configuracion.read("configuracion.ini")
         configuracion.sections()
@@ -30,8 +34,6 @@ class Apoyos():
         print (cadena)
 
         if cadena == '':
-            doc = SimpleDocTemplate('static\pdf\generado\Apoyos.pdf', pagesize=landscape(A4))
-            story=[]
 
             #Nombre del municipio
             estiloT = getSampleStyleSheet()
@@ -55,9 +57,6 @@ class Apoyos():
             #5 tipo apoyo
             #0-5 6-11 12-17 18-23 24-29     30-35 36-41 42-47 48-53     54-59   60-65
             #1     2   3     4       5       6      7     8     9       10      11
-
-            doc = SimpleDocTemplate('static\pdf\generado\Apoyos.pdf', pagesize=landscape(A4))
-            story=[]
 
             #Nombre del municipio
             estiloT = getSampleStyleSheet()
