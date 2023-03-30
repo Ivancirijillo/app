@@ -31,8 +31,7 @@ class Apoyos():
         cadena = ','.join(str(elem) for elem in apoyos)
 
         if cadena == '':
-
-            #Nombre del municipio
+            #Mensaje
             estiloT = getSampleStyleSheet()
             estiloTitulo = estiloT['title']
             estiloTitulo.alignment = 1
@@ -61,7 +60,7 @@ class Apoyos():
             estiloTitulo.alignment = 1
             titulo = Paragraph(lista[0], estiloTitulo)
             story.append(titulo)
-            #apoyos
+            #Subtitulo
             estiloT = getSampleStyleSheet()
             estiloTitulo = estiloT['Heading2']
             estiloTitulo.alignment = 1
