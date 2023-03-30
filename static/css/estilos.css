@@ -32,6 +32,15 @@ body{
     height: 100vh;
 }
 
+.con_cortina{
+	background: rgba(0, 0, 0, 0.25);
+	position: absolute;
+    width: 100%;
+    height: 100%;
+	visibility: hidden;
+	z-index: 4;
+}
+
 .contenedor{
     position: absolute;
     display: flex;
@@ -53,7 +62,7 @@ body{
     border-radius: 7px;
 	transition: 1s ease all;
 	overflow-y: scroll;
-	z-index: 3;
+	z-index: 5;
 }
 
 .btn_selec{
@@ -78,7 +87,7 @@ body{
     align-items: center;
 	margin: 0 auto 10px auto;
 	width: 80%;
-	height: 42px;
+	height: 54px;
 }
 
 .opc_municipios p{
@@ -89,6 +98,7 @@ body{
 /* TARJETA */
 
 .info{
+	position: relative;
     background: #d0e4e4;
     display: flex;
     justify-content: center;
@@ -105,6 +115,11 @@ body{
 
 .subcontenedor{
     display: none;
+}
+
+.tableDatos th{
+    padding: 5px;
+    border-bottom: solid 1px #2b0faa;
 }
 
 .tableDatos td{
@@ -124,7 +139,7 @@ body{
 	visibility: visible;
 }
 .entrada {
-	padding: 20px;
+	padding: 10px;
 	text-align: center;
 	width: 95%;
 	transition: .3s ease all;
@@ -141,7 +156,7 @@ body{
 .entrada h3 {
 	font-size: 16px;
 	font-weight: 200;
-	margin-bottom: 18px;
+	margin-bottom: 12px;
 	opacity: 0;
 }
 .entrada table,
@@ -203,7 +218,7 @@ body{
 }
 
 .filtro_categoria h1{
-	margin: 30px 0 15px 0;
+	margin: 12px 0 6px 0;
 }
 
 .filtro_categoria input{
@@ -214,11 +229,17 @@ body{
 	display: none;
 }
 
+.filtro_info{
+    display: flex;
+    justify-content: center;
+}
+
 /* ESTILO DE BOTONES - Botones general */
 
 .btnImprimir,
 .opc_municipios button,
-.btnContinuar{
+.btnContinuar,
+.btn_repor_mun{
 	background-color: rgba(255, 255, 255, 0.75); 
 	color: black; 
 	border: 2px solid #0099CC;
@@ -232,14 +253,43 @@ body{
 
 .btnImprimir,
 .btnContinuar{
-	margin-top: 30px;
+	margin-top: 25px;
+}
+
+.btn_repor_mun{
+	background-color: rgba(255, 255, 255, 0.75); 
+	border: 2px solid #3BA100;
+	margin-top: 5px;
 }
 
 .btnImprimir:hover,
 .opc_municipios button:hover,
-.btnContinuar:hover {
+.btnContinuar:hover,
+.btn_regresar:hover,
+.btn_repor_mun:hover {
 	background-color: #008CBA;
 	color: white;
+}
+
+.btn_repor_mun:hover {
+	background-color: #3BA100;
+	color: white;
+}
+
+.btn_regresar{
+    position: absolute;
+	visibility: hidden;
+	background-color: rgba(255, 255, 255, 0.75);
+    top: 10px;
+    left: 10px;
+	width: 30px;
+	height: 30px;
+	font-size: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+    z-index: 3;
 }
 
 /* MENSAJE DE VALIDACION - VENTANA EMERGENTE */

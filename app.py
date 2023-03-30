@@ -7,10 +7,15 @@ import matplotlib.pyplot as plt
 from conexion import CONEXION
 import configparser
 import pymysql
+from static.pdf.plantillas.Apoyos import Apoyos
+from static.pdf.plantillas.Delincuencia import Delincuencia
+from static.pdf.plantillas.General import General
+from static.pdf.plantillas.PadronE import Padron
+from static.pdf.plantillas.Pobreza import Pobreza
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
-PARTIDOS = ["PRI", "PAN", "MORENA", "PRD", "IND"]
+PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"]
 #configuracion de archivo ini
 configuracion = configparser.ConfigParser()
 configuracion.read("configuracion.ini")
@@ -413,8 +418,11 @@ def crear_grafico(consulta_1, consulta_2):
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
     js = request.get_json()
-    print(js)
+
     lista = []
+    arreglo = []
+    contador = 1
+    diccionario = {}
     conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["port"],
                     configuracion["database1"]["user"],
@@ -427,15 +435,95 @@ def consultas_buscador():
             respuesta = conn.consultar_db(consulta)
             lista.append(respuesta)
 
+        for i in range(len(lista)):
+            arreglo.append(len(lista[i]))
+
+        for i in range(0,len(lista)):
+            diccionario[f"m_{i}"] = {
+                lista[i][0][0]:{}
+            }
+            while(contador <= 11):
+                diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
+                for j in range(0,arreglo[i]):
+                    diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
+                    
+                contador += 1
+            contador = 1
+
     elif(js["tipo"] ==  "rango"):
         for i in range(int(js["datos"][0]), int(js["datos"][1])+1):
             consulta = configuracion.get("consultas_buscador","variosVR").format(dato=i)
             respuesta = conn.consultar_db(consulta)
             lista.append(respuesta)
+        
+        for i in range(len(lista)):
+            arreglo.append(len(lista[i]))
 
-    data = {'datos': lista}
+        for i in range(0,len(lista)):
+            diccionario[f"m_{i}"] = {
+                lista[i][0][0]:{}
+            }
+            while(contador <= 11):
+                diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
+                for j in range(0,arreglo[i]):
+                    diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
+                contador += 1
+            contador = 1
+
+    elif(js["tipo"] == "nombre"):
+        if(js["datos"].find("1") != -1):
+            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=js["datos"])
+        else:
+            consulta = configuracion.get("consultas_buscador","nombreM").format(dato=js["datos"])
+        
+        respuesta = conn.consultar_db(consulta)
+        lista.append(respuesta)
+
+        arreglo.append(len(lista[0]))
+        diccionario["m_0"] = {
+            lista[0][0][0]:{}
+        }
+        
+        while(contador <= 11):
+            diccionario["m_0"][lista[0][0][0]][PARTIDOS[contador-1]] = []
+            for j in range(0,arreglo[0]):
+                diccionario["m_0"][lista[0][0][0]][PARTIDOS[contador-1]].append(lista[0][j][contador])
+            contador += 1
+        contador = 1
+
+    data = {'datos': diccionario}
+    return jsonify(data)
+
+@app.route("/consultas", methods=['POST'])
+def consultas():
+    js = request.get_json()
+    conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+    
+    respuesta = conn.consultar_db(js["consulta"])
+    data = {'consulta': respuesta}
     
     return jsonify(data)
+
+@app.route("/impresiones", methods=['POST'])
+def impresiones():
+    json = request.get_json()
+    tipo = json["tipo_c"]
+    if(tipo=="apoyo"):
+        Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
+    elif(tipo=="deli"):
+        Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
+    elif(tipo=="padron"):
+        Padron.GenerarPadron(int(json["year"]), int(json["id"]))
+    elif(tipo=="pobreza"):
+        Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
+    else:
+        General.GenerarG(int(json["year"]), int(json["id"]))
+
+    return jsonify({"hola":"hola"})
 
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")

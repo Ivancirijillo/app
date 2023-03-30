@@ -88,5 +88,10 @@ body {
 .buscar{
     color: #000;
     text-align: center;
+}
 
+/* graficas */
+.grafica0{
+    position: relative;
+    width: 50%;
 }

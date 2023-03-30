@@ -1,22 +1,59 @@
 /* SELECCION DEL MUNICIPIO DE LA BARRA SUPERIOR */
 var click_btn_selec = true;
 
+function ocultar_superior(){
+    document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.55)';
+    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+    document.querySelector(".opc_municipios").style.display = 'none';
+    document.getElementById('con_cortina').style.visibility = 'hidden';
+    click_btn_selec = true;
+}
+
 document.getElementById('btn_selec').addEventListener('click', function() {
     if(click_btn_selec == true){
         document.querySelector(".selec_municipios").style = 'height: 70%; background: rgba(255, 255, 255, 0.94)';
         document.querySelector(".barra_des").style.transform = 'rotate(-90deg)';
         document.querySelector(".opc_municipios").style = 'position: absolute;'
                                 +'display: flex; justify-content: center; align-items: center; flex-direction: column;'
+        document.getElementById('con_cortina').style.visibility = 'visible';
         click_btn_selec = false;
     }else if(click_btn_selec == false){
-        document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.55)';
-        document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
-        document.querySelector(".opc_municipios").style.display = 'none';
-        click_btn_selec = true;
+        ocultar_superior();
     }
 })
 
-function enviar_json (in_consulta){
+document.getElementById('con_cortina').addEventListener('click', function(){
+    ocultar_superior();
+})
+
+function tabla_crear(template, tablas, cabecera){
+    direccion = cabecera[cabecera.length-1];
+    if(direccion == "V"){
+        for(var i = 0; i < tablas.length ; i++){
+            for (let j = 0; j < tablas[i].length; j++) {
+                template += '<tr><th>'+cabecera[j]+'</th><td>'+tablas[i][j]+'</td></tr>';
+            }
+        }
+    }else{
+        template += '<tr>';
+        for(var i = 0; i < (cabecera.length)-1; i++){
+            template += '<th>'+cabecera[i]+'</th>';
+        }
+        template += '</tr>';
+        for(var i = 0; i < tablas.length ; i++){
+            template += '<tr>';
+            for (let j = 0; j < tablas[i].length; j++) {
+                template += '<td>'+tablas[i][j]+'</td>';
+            }
+            template += '</tr>';
+            if(i==8) i = tablas.length
+        }
+    }
+    if(tablas.length == 0) template = '<tr><td><h2> Datos inexistentes </h2></td></tr>';
+    return template;
+}
+
+function enviar_json (in_consulta, cabecera){
     let data = {
         consulta: in_consulta
     }
@@ -26,55 +63,55 @@ function enviar_json (in_consulta){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            let tablas = data["consulta"];
-            var template = '';
-            for(var i = 0; i < tablas.length ; i++){
-                template += '<tr>';
-                for (let j = 0; j < tablas[i].length; j++) {
-                    template += '<td>'+tablas[i][j]+'</td>';
-                }
-                template += '</tr>';
-            }
-            document.querySelector(".tableDatos").innerHTML = template;
-        });
+    })
+    .then(response => response.json())
+    .then(data => {
+        let tablas = data["consulta"];
+        var template = '';
+        template = tabla_crear(template, tablas, cabecera);
+        document.querySelector(".tableDatos").innerHTML = template;
+    });
 }
 
 /* VALIDACION DE LOS INPUT-BOTON CONTINUAR */
-var in_filtro_anio = true;
-var id_municipio = "";
+var id_municipio = "", anio_selec, tipo;
 document.getElementById('btnContinuar').addEventListener('click', function () {
     let entrada_anio = document.querySelectorAll("input[name=in_anio]");
     entrada_anio.forEach(item=>{
-        if(item.checked)in_filtro_anio=true;
-        if(!item.checked)in_filtro_anio=false;
+        if(item.checked) anio_selec = item.value;
     })
     let entrada_categ = document.querySelectorAll("input[name=in_categ]");
     entrada_categ.forEach(item=>{
         if(item.checked){
-            if(in_filtro_anio){
+            if(anio_selec >= 2020 && anio_selec <= 2022){
                 document.querySelector(".filtro_categoria").style.display = 'none';
                 document.querySelector(".filtrado").style.display = 'block';
-                let in_consulta = ""
-                if(item.value == 'apoyo'){
-                    in_consulta = "select NombreA, NoApoyos from Apoyos where YearA='2022' and ClaveMunicipal='"+id_municipio+"'"
+                document.querySelector(".btn_regresar").style.visibility = 'visible';
+
+                const fil_consulta = {
+                    'apoyo': "select NombreA, NoApoyos from Apoyos where YearA='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
+                    'deli': "select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia "
+                            + "where YearD='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
+                    'padron': "select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal "
+                            + "from PadronElectoral where YearE='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
+                    'pobreza': "select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET "
+                            + "from TPobreza where YearP='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'"
                 }
-                if(item.value == 'deli'){
-                    in_consulta = "select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia "
-                    + "where YearD='2022' and ClaveMunicipal='"+id_municipio+"'"
+                var cabecera_consul_A = new Array ("NombreA", "NoApoyo", " ");
+                var cabecera_consul_D = new Array ("DelitosAI", "Homicidios", "Feminicidios", "Secuestros", 
+                                                    "DespT", "Robo", "RoboT", "V");
+                var cabecera_consul_Pa = new Array ("PHombres", "PMujeres", "PTotal", "LNHombres", 
+                                                    "LNMujeres", "LNTotal", "V");
+                var cabecera_consul_Po = new Array ("Pobreza", "PobExt", "PobMod", "RezagoEd", 
+                                                    "CarSS", "CarCalidadViv", "CarAlim", "PIB", "UET", "V");
+                const fil_cabecera = {
+                    'apoyo': cabecera_consul_A,
+                    'deli': cabecera_consul_D,
+                    'padron': cabecera_consul_Pa,
+                    'pobreza': cabecera_consul_Po
                 }
-                if(item.value == 'padron'){
-                    in_consulta = "select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal "
-                    + "from PadronElectoral where YearE='2022' and ClaveMunicipal='"+id_municipio+"'"
-                }
-                if(item.value == 'pobreza'){
-                    in_consulta = "select Poblacion, Pobreza, PobExt, PobExtCar, PobMod, NpobNvul, RezagoEd, CarSalud, "
-                    + "CarSaludPor, CarSS, CarCalidadViv, CarServViv, CarAlim, IngresoInf,  IngresoInfE, PIB, UET "
-                    + "from TPobreza where YearP='2020' and ClaveMunicipal='"+id_municipio+"'"
-                }
-                enviar_json (in_consulta);
+                tipo = item.value;
+                enviar_json(fil_consulta[item.value], fil_cabecera[item.value]);
             }else{
                 document.getElementById('v_emergen').classList.remove('v_emergen');
                 document.getElementById('v_emergen').classList.add('v_emergen_validado_R');
@@ -92,8 +129,6 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
             }, 3000);
         }
     })
-    
-    
 })
 
 /* BOTON DE ACERCAMIENTO/ALEJAMIENTO DEL MAPA */
@@ -140,24 +175,65 @@ function imprimirElemento(elemento) {
     return true;
 }
 
-document.getElementById('btnImprimir').addEventListener("click", function() {
-    var div = document.querySelector(".imprimible");
-    imprimirElemento(div);
+document.getElementById('btnImprimir').addEventListener('click', function() {
+    //var div = document.querySelector(".imprimible");
+    //imprimirElemento(div);
+    console.log(tipo + " - " + anio_selec + " - " + id_municipio)
+    let data = {
+        tipo_c: tipo,
+        year: anio_selec,
+        id: id_municipio
+    }
+    fetch('/impresiones', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    });
 });
+
+document.getElementById('btn_repor_mun').addEventListener('click', function(){
+    tipo ='general';
+    let entrada_anio = document.querySelectorAll("input[name=in_anio]");
+    entrada_anio.forEach(item=>{
+        if(item.checked) anio_selec = item.value;
+    })
+    console.log(tipo + " - " + anio_selec + " - " + id_municipio)
+    let data = {
+        tipo_c: tipo,
+        year: anio_selec,
+        id: id_municipio
+    }
+    fetch('/impresiones', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    });
+})
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
 var path_anterior = ' ';
+var nom_munic = ' ';
 function tarjeta_out (nom_municipio, path_n){
-    document.querySelector(".selec_municipios").style = 'height: 22px; rgba(255, 255, 255, 0.55)';
-    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
-    document.querySelector(".opc_municipios").style.display = 'none';
-    click_btn_selec = true;
+    ocultar_superior();
 
     if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: green;*/';
     document.getElementById(path_n).style.fill = 'green';
 
-    document.getElementById('municipio').textContent = "Seleccion - " + nom_municipio
+    document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();
+    nom_munic = nom_municipio;
     path_anterior = path_n;
 }
 
@@ -176,6 +252,12 @@ function des_tarjeta (){
         document.getElementById('entrada').classList.add('active');
     }, 150);
 }
+
+/* BOTON DE REGRESAR AL FILTRO INPUT */
+document.getElementById('btn_regresar').addEventListener('click', function(){
+    tarjeta_out(nom_munic, path_anterior);
+    document.querySelector(".btn_regresar").style.visibility = 'hidden';
+})
 
 /* ---------------------------------------------------------------------------*/
 /* ---------------------------------------------------------------------------*/
@@ -706,11 +788,6 @@ document.getElementById('opc_Tlalma').addEventListener('click', function() {
 
 document.getElementById('opc_Tlalne').addEventListener('click', function() {
     tarjeta_out("Tlalnepantla de Baz", 'path224');
-    id_municipio = "15104";
-})
-
-document.getElementById('opc_Tlalne').addEventListener('click', function() {
-    tarjeta_out("Tlalnepantla de Baz", 'path226');
     id_municipio = "15104";
 })
 
@@ -1338,11 +1415,6 @@ document.getElementById('path224').addEventListener('click', function() {
     id_municipio = "15104";
 })
 
-document.getElementById('path226').addEventListener('click', function() {
-    tarjeta_out("Tlalnepantla de Baz", 'path226');
-    id_municipio = "15104";
-})
-
 document.getElementById('path228').addEventListener('click', function() {
     tarjeta_out("Tlatlaya", 'path228');
     id_municipio = "15105";
@@ -1413,7 +1485,7 @@ document.getElementById('path254').addEventListener('click', function() {
     id_municipio = "15115";
 })
 
-document.getElementById('path254').addEventListener('click', function() {
+document.getElementById('path256').addEventListener('click', function() {
     tarjeta_out("Zacanzonapán", 'path256');
     id_municipio = "15116";
 })
