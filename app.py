@@ -529,4 +529,4 @@ def interrupcion(sig, frame):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=8000, host="192.168.31.141")
