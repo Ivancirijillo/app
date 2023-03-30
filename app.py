@@ -418,7 +418,7 @@ def crear_grafico(consulta_1, consulta_2):
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
     js = request.get_json()
-    print(js)
+
     lista = []
     arreglo = []
     contador = 1
@@ -469,6 +469,27 @@ def consultas_buscador():
                     diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
                 contador += 1
             contador = 1
+
+    elif(js["tipo"] == "nombre"):
+        if(js["datos"].find("1") != -1):
+            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=js["datos"])
+        else:
+            consulta = configuracion.get("consultas_buscador","nombreM").format(dato=js["datos"])
+        
+        respuesta = conn.consultar_db(consulta)
+        lista.append(respuesta)
+
+        arreglo.append(len(lista[0]))
+        diccionario["m_0"] = {
+            lista[0][0][0]:{}
+        }
+        
+        while(contador <= 11):
+            diccionario["m_0"][lista[0][0][0]][PARTIDOS[contador-1]] = []
+            for j in range(0,arreglo[0]):
+                diccionario["m_0"][lista[0][0][0]][PARTIDOS[contador-1]].append(lista[0][j][contador])
+            contador += 1
+        contador = 1
 
     data = {'datos': diccionario}
     return jsonify(data)
