@@ -214,7 +214,10 @@ body{
 /* Div de categoria */
 
 .filtro_categoria{
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .filtro_categoria h1{
@@ -222,7 +225,7 @@ body{
 }
 
 .filtro_categoria input{
-	margin: 8px;
+	margin: 8px 8px 8px 0;
 }
 
 .filtrado{
@@ -301,7 +304,8 @@ body{
 .v_emergen_validado_R{
 	position: absolute;
 	top: 45%;
-	font-size: 22px;
+	font-size: 24px;
+	padding: 8px;
 	color: white;
 	background-color:rgba(207, 12, 15, 0.8);
     border: solid 1px #801313;

@@ -31,7 +31,11 @@ function tabla_crear(template, tablas, cabecera){
     if(direccion == "V"){
         for(var i = 0; i < tablas.length ; i++){
             for (let j = 0; j < tablas[i].length; j++) {
-                template += '<tr><th>'+cabecera[j]+'</th><td>'+tablas[i][j]+'</td></tr>';
+                if(tablas[i][j] == null){
+                    template += '<tr><th>'+cabecera[j]+'<td>-</td>';
+                }else{
+                    template += '<tr><th>'+cabecera[j]+'</th><td>'+tablas[i][j]+'</td></tr>';
+                }
             }
         }
     }else{
@@ -43,7 +47,11 @@ function tabla_crear(template, tablas, cabecera){
         for(var i = 0; i < tablas.length ; i++){
             template += '<tr>';
             for (let j = 0; j < tablas[i].length; j++) {
-                template += '<td>'+tablas[i][j]+'</td>';
+                if(tablas[i][j] == null){
+                    template += '<td>-</td>';
+                }else{
+                    template += '<td>'+tablas[i][j]+'</td>';
+                }
             }
             template += '</tr>';
             if(i==8) i = tablas.length
@@ -886,7 +894,15 @@ document.getElementById('opc_Zumpan').addEventListener('click', function() {
     id_municipio = "15120";
 })
 
+document.getElementById('opc_SanJose').addEventListener('click', function() {
+    tarjeta_out("San Josè del Rincòn", 'path266');
+    id_municipio = "15124";
+})
 
+document.getElementById('opc_Luvi').addEventListener('click', function() {
+    tarjeta_out("Luvianos", 'path268');
+    id_municipio = "15123";
+})
 
 /* PATH´S INDIVIDUALES DE SELECCION AL MUNICIPIO */ //opc_atlaco
 
@@ -1509,4 +1525,13 @@ document.getElementById('path264').addEventListener('click', function() {
     tarjeta_out("Zumpango", 'path264');
     id_municipio = "15120";
 })
-//Faltan 2 municipios San José del Rincón y Luvianos
+
+document.getElementById('path266').addEventListener('click', function() {
+    tarjeta_out("San Josè del Rincòn", 'path266');
+    id_municipio = "15124";
+})
+
+document.getElementById('path268').addEventListener('click', function() {
+    tarjeta_out("Luvianos", 'path268');
+    id_municipio = "15123";
+})
