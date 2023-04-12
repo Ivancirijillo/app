@@ -31,7 +31,11 @@ function tabla_crear(template, tablas, cabecera){
     if(direccion == "V"){
         for(var i = 0; i < tablas.length ; i++){
             for (let j = 0; j < tablas[i].length; j++) {
-                template += '<tr><th>'+cabecera[j]+'</th><td>'+tablas[i][j]+'</td></tr>';
+                if(tablas[i][j] == null){
+                    template += '<tr><th>'+cabecera[j]+'<td>-</td>';
+                }else{
+                    template += '<tr><th>'+cabecera[j]+'</th><td>'+tablas[i][j]+'</td></tr>';
+                }
             }
         }
     }else{
@@ -43,7 +47,11 @@ function tabla_crear(template, tablas, cabecera){
         for(var i = 0; i < tablas.length ; i++){
             template += '<tr>';
             for (let j = 0; j < tablas[i].length; j++) {
-                template += '<td>'+tablas[i][j]+'</td>';
+                if(tablas[i][j] == null){
+                    template += '<td>-</td>';
+                }else{
+                    template += '<td>'+tablas[i][j]+'</td>';
+                }
             }
             template += '</tr>';
             if(i==8) i = tablas.length
@@ -53,11 +61,14 @@ function tabla_crear(template, tablas, cabecera){
     return template;
 }
 
-function enviar_json (in_consulta, cabecera){
+function enviar_json (mode, cabecera){
     let data = {
-        consulta: in_consulta
+        tipo_c: tipo,
+        year: anio_selec,
+        id: id_municipio,
+        modo: mode
     }
-    fetch('/consultas', {
+    fetch('/impresiones', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -67,9 +78,11 @@ function enviar_json (in_consulta, cabecera){
     .then(response => response.json())
     .then(data => {
         let tablas = data["consulta"];
-        var template = '';
-        template = tabla_crear(template, tablas, cabecera);
-        document.querySelector(".tableDatos").innerHTML = template;
+        if(mode != "impresion"){
+            var template = '';
+            template = tabla_crear(template, tablas, cabecera);
+            document.querySelector(".tableDatos").innerHTML = template;
+        }
     });
 }
 
@@ -88,15 +101,6 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
                 document.querySelector(".filtrado").style.display = 'block';
                 document.querySelector(".btn_regresar").style.visibility = 'visible';
 
-                const fil_consulta = {
-                    'apoyo': "select NombreA, NoApoyos from Apoyos where YearA='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
-                    'deli': "select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia "
-                            + "where YearD='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
-                    'padron': "select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal "
-                            + "from PadronElectoral where YearE='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'",
-                    'pobreza': "select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET "
-                            + "from TPobreza where YearP='"+anio_selec+"' and ClaveMunicipal='"+id_municipio+"'"
-                }
                 var cabecera_consul_A = new Array ("NombreA", "NoApoyo", " ");
                 var cabecera_consul_D = new Array ("DelitosAI", "Homicidios", "Feminicidios", "Secuestros", 
                                                     "DespT", "Robo", "RoboT", "V");
@@ -111,7 +115,7 @@ document.getElementById('btnContinuar').addEventListener('click', function () {
                     'pobreza': cabecera_consul_Po
                 }
                 tipo = item.value;
-                enviar_json(fil_consulta[item.value], fil_cabecera[item.value]);
+                enviar_json(" ", fil_cabecera[item.value]);
             }else{
                 document.getElementById('v_emergen').classList.remove('v_emergen');
                 document.getElementById('v_emergen').classList.add('v_emergen_validado_R');
@@ -159,67 +163,15 @@ document.getElementById('btnAlejar').addEventListener('click', function() {
 })
 
 /* BOTON DE IMPRESION DE LA TARJETA DEL SUBCONTENEDOR */
-function imprimirElemento(elemento) {
-    var ventana = window.open('', '', 'height=1000,width=1000');
-    //ventana.document.write('<html><head><title>' + document.title + '</title>');
-    ventana.document.write('<link rel="stylesheet" href="style.css">');
-    ventana.document.write('</head><body >');
-    ventana.document.write(elemento.innerHTML);
-    ventana.document.write('</body></html>');
-    ventana.document.close();
-    ventana.focus();
-    ventana.onload = function() {
-        ventana.print();
-        ventana.close();
-    };
-    return true;
-}
 
 document.getElementById('btnImprimir').addEventListener('click', function() {
-    //var div = document.querySelector(".imprimible");
-    //imprimirElemento(div);
-    console.log(tipo + " - " + anio_selec + " - " + id_municipio)
-    let data = {
-        tipo_c: tipo,
-        year: anio_selec,
-        id: id_municipio
-    }
-    fetch('/impresiones', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    });
+    enviar_json("impresion", " ");
 });
 
 document.getElementById('btn_repor_mun').addEventListener('click', function(){
     tipo ='general';
-    let entrada_anio = document.querySelectorAll("input[name=in_anio]");
-    entrada_anio.forEach(item=>{
-        if(item.checked) anio_selec = item.value;
-    })
-    console.log(tipo + " - " + anio_selec + " - " + id_municipio)
-    let data = {
-        tipo_c: tipo,
-        year: anio_selec,
-        id: id_municipio
-    }
-    fetch('/impresiones', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    });
+    anio_selec = 2022
+    enviar_json("impresion", " ");
 })
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
@@ -886,7 +838,15 @@ document.getElementById('opc_Zumpan').addEventListener('click', function() {
     id_municipio = "15120";
 })
 
+document.getElementById('opc_SanJose').addEventListener('click', function() {
+    tarjeta_out("San Josè del Rincòn", 'path266');
+    id_municipio = "15124";
+})
 
+document.getElementById('opc_Luvi').addEventListener('click', function() {
+    tarjeta_out("Luvianos", 'path268');
+    id_municipio = "15123";
+})
 
 /* PATH´S INDIVIDUALES DE SELECCION AL MUNICIPIO */ //opc_atlaco
 
@@ -1509,4 +1469,13 @@ document.getElementById('path264').addEventListener('click', function() {
     tarjeta_out("Zumpango", 'path264');
     id_municipio = "15120";
 })
-//Faltan 2 municipios San José del Rincón y Luvianos
+
+document.getElementById('path266').addEventListener('click', function() {
+    tarjeta_out("San Josè del Rincòn", 'path266');
+    id_municipio = "15124";
+})
+
+document.getElementById('path268').addEventListener('click', function() {
+    tarjeta_out("Luvianos", 'path268');
+    id_municipio = "15123";
+})
