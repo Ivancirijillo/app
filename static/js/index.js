@@ -202,6 +202,7 @@ boton_buscador.addEventListener("click", (e)=>{
             }
             enviar_datos(json)
             .then(data_s => {
+                console.log(data_s)
                 for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
                     lista.push(Object.keys(data_s.datos[`m_${i}`]));
                 }
