@@ -507,36 +507,37 @@ def consultas_buscador():
     data = {'datos': diccionario}
     return jsonify(data)
 
-@app.route("/consultas", methods=['POST'])
-def consultas():
-    js = request.get_json()
+@app.route("/impresiones", methods=['POST'])
+def impresiones():
+    json = request.get_json()
     conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["port"],
                     configuracion["database1"]["user"],
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
-    
-    respuesta = conn.consultar_db(js["consulta"])
-    data = {'consulta': respuesta}
-    
-    return jsonify(data)
-
-@app.route("/impresiones", methods=['POST'])
-def impresiones():
-    json = request.get_json()
     tipo = json["tipo_c"]
     if(tipo=="apoyo"):
-        Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
+        respuesta = conn.consultar_db(f"select NombreA, NoApoyos from Apoyos where YearA={json['year']} and ClaveMunicipal={json['id']};")
+        if(json["modo"] == "impresion"):
+            Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
     elif(tipo=="deli"):
-        Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
+        respuesta = conn.consultar_db(f"select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia where YearD={json['year']} and ClaveMunicipal={json['id']};")
+        if(json["modo"] == "impresion"):
+            Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
     elif(tipo=="padron"):
-        Padron.GenerarPadron(int(json["year"]), int(json["id"]))
+        respuesta = conn.consultar_db(f"select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal from PadronElectoral where YearE={json['year']} and ClaveMunicipal={json['id']};")
+        if(json["modo"] == "impresion"):
+            Padron.GenerarPadron(int(json["year"]), int(json["id"]))
     elif(tipo=="pobreza"):
-        Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
+        respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
+        if(json["modo"] == "impresion"):
+            Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
     else:
-        General.GenerarG(int(json["year"]), int(json["id"]))
-
-    return jsonify({"hola":"hola"})
+        respuesta = " "
+        if(json["modo"] == "impresion"):
+            General.GenerarG(int(json["year"]), int(json["id"]))
+    data_mapa = {'consulta': respuesta}
+    return jsonify(data_mapa)
 
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")
