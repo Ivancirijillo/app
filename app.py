@@ -431,7 +431,11 @@ def consultas_buscador():
     
     if(js["tipo"] ==  "varios"):
         for dato in js["datos"]:
-            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=dato)
+            if(dato.isdigit()):
+                consulta = configuracion.get("consultas_buscador","varios_id").format(id=dato) if(15000 < int(dato) < 15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=dato)
+            else:
+                consulta = configuracion.get("consultas_buscador", "nombreM").format(dato=dato)
+            
             respuesta = conn.consultar_db(consulta)
             lista.append(respuesta)
 
@@ -451,28 +455,37 @@ def consultas_buscador():
             contador = 1
 
     elif(js["tipo"] ==  "rango"):
-        for i in range(int(js["datos"][0]), int(js["datos"][1])+1):
-            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=i)
-            respuesta = conn.consultar_db(consulta)
-            lista.append(respuesta)
-        
-        for i in range(len(lista)):
-            arreglo.append(len(lista[i]))
+        inicio =int(js["datos"][0])
+        fin = int(js["datos"][1])+1
+        n_saltos = fin-inicio 
+        consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin) if(15000 < inicio < 15126) else configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
+        respuesta = conn.consultar_db(consulta)
+        filtro_1 = encontrar_municipio(respuesta)
+        diccionario = separar_por_partidos(respuesta, filtro_1, n_saltos)
 
-        for i in range(0,len(lista)):
-            diccionario[f"m_{i}"] = {
-                lista[i][0][0]:{}
-            }
-            while(contador <= 11):
-                diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
-                for j in range(0,arreglo[i]):
-                    diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
-                contador += 1
-            contador = 1
+        # for i in range(int(js["datos"][0]), int(js["datos"][1])+1):
+        #     consulta = configuracion.get("consultas_buscador","variosVR").format(dato=i)
+        #     respuesta = conn.consultar_db(consulta)
+        #     lista.append(respuesta)
+        
+        # for i in range(len(lista)):
+        #     arreglo.append(len(lista[i]))
+
+        # for i in range(0,len(lista)):
+        #     diccionario[f"m_{i}"] = {
+        #         lista[i][0][0]:{}
+        #     }
+        #     while(contador <= 11):
+        #         diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
+        #         for j in range(0,arreglo[i]):
+        #             diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
+        #         contador += 1
+        #     contador = 1
 
     elif(js["tipo"] == "nombre"):
-        if(js["datos"].find("1") != -1):
-            consulta = configuracion.get("consultas_buscador","variosVR").format(dato=js["datos"])
+        if(js["datos"].isdigit()):
+            municipio = int(js["datos"])
+            consulta = configuracion.get("consultas_buscador","varios_id").format(id=js["datos"]) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
         else:
             consulta = configuracion.get("consultas_buscador","nombreM").format(dato=js["datos"])
         
@@ -529,6 +542,81 @@ def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")
     sys.exit(0)
 
+def encontrar_municipio(respuesta):
+    """
+    encontrar saltos
+    """
+    municipio_actual = respuesta[0][0]
+    saltos = {}
+    contador = 0
+    salto = 0
+    for i in range(len(respuesta)):
+        aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
+        if(municipio_actual == respuesta[aux][0]):
+            contador += 1
+        else:
+            contador += 1
+            saltos[f"m_{salto}"] = []
+            saltos[f"m_{salto}"] = {
+                "municipio": municipio_actual,
+                "secciones":contador
+            }
+            contador = 0
+            municipio_actual = respuesta[aux][0]
+            salto += 1
+    return saltos
+
+def encontrar_seccion(respuesta):
+    """
+    encontrar saltos
+    """
+    seccion_actual = respuesta[0][0]
+    saltos = {}
+    contador = 0
+    salto = 0
+    for i in range(len(respuesta)):
+        aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
+        if(seccion_actual == respuesta[aux][0]):
+            contador += 1
+        else:
+            contador += 1
+            saltos[f"m_{salto}"] = []
+            saltos[f"m_{salto}"] = {
+                "municipio": seccion_actual,
+                "secciones":contador
+            }
+            contador = 0
+            seccion_actual = respuesta[aux][0]
+            salto += 1
+    return saltos
+
+def separar_por_partidos(respuesta, saltos, n_saltos):
+    """
+    llenado de diccionario con separacion por municipios y partidos
+    """
+    lista = {}
+    salto = 0
+    contador = 1
+    municipio_actual = respuesta[0][0] # nos colocamos en la primer posicion de la consulta y en su primer valor , municipio
+    for i in range(len(respuesta)):
+        aux = len(respuesta)-1 if((i+1) >= len(respuesta)) else (i+1) # determinamos el valor maximo que puede tener aux
+        salto = (n_saltos-1) if(salto >= n_saltos) else salto # si el salto supera el rango de saltos dado, entonces le asignara el numero de saltos - 1
+        if(municipio_actual == respuesta[aux][0]):
+            lista[f"m_{salto}"]={
+                respuesta[aux][0] : {}
+            }
+            while(contador <= 11):
+                lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]] = []
+                for j in range(int(saltos[f"m_{salto}"]["secciones"])):
+                    lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]].append(respuesta[j][contador])
+                contador += 1
+            contador = 1
+        else:
+            municipio_actual = respuesta[aux][0]
+            salto += 1
+    return lista
+
+
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
-    app.run(debug=True, port=8000, host="192.168.31.141")
+    app.run(debug=True, port=8000,host="172.16.71.70")

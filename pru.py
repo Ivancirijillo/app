@@ -1,7 +1,13 @@
 import matplotlib.pyplot as plt
 #from mpldatacursor import datacursor
 import pandas as pd
-import os 
+import os, configparser
+from conexion import CONEXION
+
+configuracion = configparser.ConfigParser()
+configuracion.read("configuracion.ini")
+configuracion.sections()
+
 # nombre_archivo = ""
 
 # try:
@@ -80,11 +86,41 @@ import os
 # plt.show()
 
 
-diccionario = {}
-diccionario["hola"] = {}
-# diccionario["hola"]["valor"] = 1
+# diccionario = {}
+# diccionario["hola"] = {}
+# # diccionario["hola"]["valor"] = 1
 
-for i in range(0, 10):
-    diccionario["hola"][f"valor{i}"] = i
+# for i in range(0, 10):
+#     diccionario["hola"][f"valor{i}"] = i
 
-print(diccionario)
+# print(diccionario)
+
+"""
+prueba de consultas mejoradas
+"""
+#objeto de conexion
+conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+consulta = configuracion.get("consultas_buscador", "varios").format(inicio=15001, fin=15005)
+respuesta = conn.consultar_db(consulta)
+
+print(respuesta)
+
+#print(respuesta[0][0])
+lista = []
+arreglo = []
+for i in range(int(15001), int(15006)):
+    consulta = configuracion.get("consultas_buscador","variosVR").format(dato=i)
+    respuesta = conn.consultar_db(consulta)
+    lista.append(respuesta)
+
+#print(lista[0][1])
+
+#print(len(lista))
+for i in range(len(lista)):
+    arreglo.append(len(lista[i]))
+
+#print(len(arreglo))
