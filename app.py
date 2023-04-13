@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory
 import threading, multiprocessing, time, signal, sys
 from random import sample
 import pandas as pd
@@ -23,6 +23,7 @@ configuracion.sections()
 
 #variables globales 
 columnas = []
+ruta_pdf = ""
 
 #Para subir archivo tipo foto al servidor
 from werkzeug.utils import secure_filename 
@@ -516,28 +517,35 @@ def impresiones():
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
     tipo = json["tipo_c"]
+    global ruta_pdf
     if(tipo=="apoyo"):
         respuesta = conn.consultar_db(f"select NombreA, NoApoyos from Apoyos where YearA={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
+            ruta_pdf=Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
     elif(tipo=="deli"):
         respuesta = conn.consultar_db(f"select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia where YearD={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
+            ruta_pdf = Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
     elif(tipo=="padron"):
         respuesta = conn.consultar_db(f"select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal from PadronElectoral where YearE={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Padron.GenerarPadron(int(json["year"]), int(json["id"]))
+            ruta_pdf = Padron.GenerarPadron(int(json["year"]), int(json["id"]))
     elif(tipo=="pobreza"):
         respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
+            ruta_pdf = Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
     else:
         respuesta = " "
         if(json["modo"] == "impresion"):
             General.GenerarG(int(json["year"]), int(json["id"]))
     data_mapa = {'consulta': respuesta}
     return jsonify(data_mapa)
+
+@app.route("/pdf")
+def abrir_pdf():
+    return send_file(ruta_pdf)
+
+
 
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")

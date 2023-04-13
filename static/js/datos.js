@@ -165,7 +165,8 @@ document.getElementById('btnAlejar').addEventListener('click', function() {
 /* BOTON DE IMPRESION DE LA TARJETA DEL SUBCONTENEDOR */
 
 document.getElementById('btnImprimir').addEventListener('click', function() {
-    enviar_json("impresion", " ");
+    enviar_json("impresion", " ")
+    window.open("/pdf","_blank")
 });
 
 document.getElementById('btn_repor_mun').addEventListener('click', function(){
