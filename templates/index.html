@@ -19,7 +19,7 @@
         <main class="principal">
             <h1 class="titulo1">Seleccione el municipio</h1>
             <div class="buscador">
-                <input type="text" class="Ibuscar"> <button class="Bbuscar">Buscar</button>
+                <input type="text" class="Ibuscar" autofocus> <button class="Bbuscar">Buscar</button>
             </div>
             <button onclick="mostrarocultar()" class="mostrarM">Mostrar Municipios</button>
             <div id="mostrar" class="ContenidoPrincipal">
@@ -153,12 +153,12 @@
                 <div class="buscar_btn">
                     <button class="buscar">Buscar</button>
                 </div>
-                
-            </div>
-            <div class="graficas">
 
             </div>
-    </main>
+            <div class="graficas">
+                
+            </div>
+        </main>
         <script src="{{ url_for('static', filename ='js/index.js') }}"></script>
     </body>
 </html>

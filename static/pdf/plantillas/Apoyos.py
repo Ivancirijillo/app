@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import webbrowser
+import webbrowser, os
 import configparser
 from reportlab.platypus import (SimpleDocTemplate, PageBreak, Image, Spacer,
 Paragraph, Table, TableStyle)
@@ -12,8 +12,8 @@ from reportlab.lib.pagesizes import letter, landscape
 #configuracion de archivo ini
 class Apoyos():
     def GenerarApoyos(yearA, clave):
-
-        doc = SimpleDocTemplate('static\pdf\generado\Apoyos.pdf', pagesize=landscape(A4))
+        ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Apoyos.pdf"
+        doc = SimpleDocTemplate(ruta_pdf, pagesize=landscape(A4))
         story=[]
 
         configuracion = configparser.ConfigParser()
@@ -102,4 +102,4 @@ class Apoyos():
 
         doc.build(story)
         #abre el documento creado
-        webbrowser.open_new('static\pdf\generado\Apoyos.pdf')
+        return ruta_pdf
