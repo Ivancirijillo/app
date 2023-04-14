@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, jsonify, send_file,
 import threading, multiprocessing, time, signal, sys
 from random import sample
 import pandas as pd
-import json
+import json, time
 import matplotlib.pyplot as plt
 from conexion import CONEXION
 import configparser
@@ -521,7 +521,7 @@ def impresiones():
     if(tipo=="apoyo"):
         respuesta = conn.consultar_db(f"select NombreA, NoApoyos from Apoyos where YearA={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            ruta_pdf=Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
+            ruta_pdf = Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
     elif(tipo=="deli"):
         respuesta = conn.consultar_db(f"select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia where YearD={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
@@ -543,9 +543,8 @@ def impresiones():
 
 @app.route("/pdf")
 def abrir_pdf():
+    global ruta_pdf
     return send_file(ruta_pdf)
-
-
 
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")
@@ -628,4 +627,4 @@ def separar_por_partidos(respuesta, saltos, n_saltos):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
-    app.run(debug=True, port=8000,host="172.16.71.70")
+    app.run(debug=True, port=8000)

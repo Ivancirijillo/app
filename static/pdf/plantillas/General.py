@@ -6,7 +6,7 @@ from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
 from reportlab.lib import colors
 from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
 from reportlab.graphics.widgets.markers import makeMarker
-import pymysql
+import pymysql,os
 from conexion import CONEXION
 import configparser
 from reportlab.graphics.charts.barcharts import VerticalBarChart
@@ -17,9 +17,9 @@ from reportlab.lib.pagesizes import letter, landscape
 
 class General():
     def GenerarG(yearA, clave): 
-
+        ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"General.pdf"
         #Documento generado
-        doc = SimpleDocTemplate('static\pdf\generado\General.pdf', pagesize=A4)
+        doc = SimpleDocTemplate(ruta_pdf, pagesize=A4)
         story = []
 
         #configuracion de archivo ini
@@ -763,4 +763,4 @@ class General():
 
         doc.build(story)
         #abre el documento creado
-        webbrowser.open_new('static\pdf\generado\General.pdf')
+        return ruta_pdf
