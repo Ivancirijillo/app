@@ -537,13 +537,14 @@ def impresiones():
     else:
         respuesta = " "
         if(json["modo"] == "impresion"):
-            General.GenerarG(int(json["year"]), int(json["id"]))
+          ruta_pdf = General.GenerarG(int(json["year"]), int(json["id"]))
     data_mapa = {'consulta': respuesta}
     return jsonify(data_mapa)
 
 @app.route("/pdf")
 def abrir_pdf():
     global ruta_pdf
+    print(ruta_pdf)
     return send_file(ruta_pdf)
 
 def interrupcion(sig, frame):
@@ -627,4 +628,4 @@ def separar_por_partidos(respuesta, saltos, n_saltos):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=8000, host="192.168.31.156")

@@ -173,6 +173,7 @@ document.getElementById('btn_repor_mun').addEventListener('click', function(){
     tipo ='general';
     anio_selec = 2022
     enviar_json("impresion", " ");
+    window.open("/pdf","_blank")
 })
 
 /* FUNCIONES PARA LOS MUNICIPIOS */

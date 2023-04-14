@@ -12,7 +12,7 @@ from reportlab.lib.pagesizes import letter, landscape
 #configuracion de archivo ini
 class Apoyos():
     def GenerarApoyos(yearA, clave):
-        if(os.path.dirname(__file__).find("/")):
+        if(os.path.dirname(__file__).find("/")!=-1):
             ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Apoyos.pdf"
         else:
             ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"Apoyos.pdf"

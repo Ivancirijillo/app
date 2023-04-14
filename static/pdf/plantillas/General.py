@@ -18,10 +18,13 @@ from reportlab.lib.pagesizes import letter, landscape
 class General():
     def GenerarG(yearA, clave):
          
-        if(os.path.dirname(__file__).find("/")):
+        if(os.path.dirname(__file__).find("/")!=-1):
             ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"General.pdf"
+            print("holi ",ruta_pdf)
         else:
             ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"General.pdf"#Documento generado
+            print("holi2 ",ruta_pdf)
+
         #Documento generado
         doc = SimpleDocTemplate(ruta_pdf, pagesize=A4)
         story = []
