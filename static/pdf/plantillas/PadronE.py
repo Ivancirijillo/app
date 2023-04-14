@@ -18,7 +18,10 @@ from reportlab.graphics.charts.piecharts import Pie
 
 class Padron():
     def GenerarPadron(yearA, clave):
-        ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Padron.pdf"
+        if(os.path.dirname(__file__).find("/")):
+            ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Padron.pdf"
+        else:
+            ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"Padron.pdf"
         #Documento generado
         doc = SimpleDocTemplate(ruta_pdf, pagesize=A4)
         story = []

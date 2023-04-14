@@ -19,8 +19,10 @@ from reportlab.graphics.charts.piecharts import Pie
 
 class Pobreza():
     def GenerarPobreza(yearA, clave):
-        ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Pobreza.pdf"
-        #Documento generado
+        if(os.path.dirname(__file__).find("/")):
+            ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Pobreza.pdf"
+        else:
+            ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"Pobreza.pdf"#Documento generado
         doc = SimpleDocTemplate(ruta_pdf, pagesize=A4)
         story = []
 

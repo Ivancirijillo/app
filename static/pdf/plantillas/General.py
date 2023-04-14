@@ -16,7 +16,8 @@ from reportlab.platypus.doctemplate import NextPageTemplate
 from reportlab.lib.pagesizes import letter, landscape
 
 class General():
-    def GenerarG(yearA, clave): 
+    def GenerarG(yearA, clave):
+         
         ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"General.pdf"
         #Documento generado
         doc = SimpleDocTemplate(ruta_pdf, pagesize=A4)
