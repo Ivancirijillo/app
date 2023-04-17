@@ -266,11 +266,11 @@ boton_buscador.addEventListener("click", (e)=>{
         case NOMBRE:
             json = {
                 tipo: NOMBRE,
-                datos: datos,
-                years: listayear
+                datos: datos
             }
             enviar_datos(json)
             .then(data_s => {
+                console.log(data_s);
                 lista.push(Object.keys(data_s.datos["m_0"]));
                 let votos_suma = [];
 
