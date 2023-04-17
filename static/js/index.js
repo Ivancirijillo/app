@@ -87,6 +87,14 @@ let mostrarocultar = function(){
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value.toUpperCase();
+    let years = document.querySelectorAll(".cbox");
+    let listayear = [];
+    years.forEach(item=>{
+        if(item.checked){
+            listayear.push(item.getAttribute("value"));
+        }
+    });
+    console.log(listayear);
     let datos_analizados = "";
     let lista = [];
     let datasets = [];
@@ -258,7 +266,8 @@ boton_buscador.addEventListener("click", (e)=>{
         case NOMBRE:
             json = {
                 tipo: NOMBRE,
-                datos: datos
+                datos: datos,
+                years: listayear
             }
             enviar_datos(json)
             .then(data_s => {

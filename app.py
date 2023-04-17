@@ -419,7 +419,7 @@ def crear_grafico(consulta_1, consulta_2):
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
     js = request.get_json()
-
+    print(js["years"])
     lista = []
     arreglo = []
     contador = 1
