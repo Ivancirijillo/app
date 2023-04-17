@@ -628,4 +628,4 @@ def separar_por_partidos(respuesta, saltos, n_saltos):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
-    app.run(debug=True, port=8000, host="192.168.31.156")
+    app.run(debug=True, port=8000)
