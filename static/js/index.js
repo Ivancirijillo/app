@@ -31,9 +31,8 @@
 const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
-const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"];
+const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
 const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "yellow", "aqua", "black"]
-
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
