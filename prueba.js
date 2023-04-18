@@ -71,7 +71,7 @@ function validarEntradaUsuario(entrada) {
   
   //NUMEROS DEL 15001-15125
   let expresion = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][1-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][1-9]|1[0-2][0-5]))?$/;
-  let mensaje = "15125";
+  let mensaje = "15001-15125";
   console.log(expresion.test(mensaje))
 
   //LETRAS QUE ACEPTE MINIMO 6 Y MAXIMO 20 
