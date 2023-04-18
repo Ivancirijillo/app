@@ -13,6 +13,8 @@ from static.pdf.plantillas.General import General
 from static.pdf.plantillas.PadronE import Padron
 from static.pdf.plantillas.Pobreza import Pobreza
 #constantes 
+COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
+                        "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
 PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"]
 #configuracion de archivo ini
 configuracion = configparser.ConfigParser()
@@ -116,7 +118,6 @@ def crear_grafico(consulta_1, consulta_2):
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
     js = request.get_json()
-    # print(js["years"])
     lista = []
     arreglo = []
     contador = 1
@@ -162,33 +163,44 @@ def consultas_buscador():
         diccionario = separar_por_partidos(respuesta, filtro_1, n_saltos)
 
     elif(js["tipo"] == "nombre"):
+        municipio = int(js["datos"])
+        consulta1 = "("
+        for i in (js["years"]):
+            consulta1 += f" yearV={i} or"
+        consulta1 = consulta1[:-2] + ") order by v.ClaveMunicipal"
+        
         if(js["datos"].isdigit()):
-            municipio = int(js["datos"])
-            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year="2015") if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=i) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            respuesta = conn.consultar_db(consulta+consulta1)
+            lista.append(eliminar_decimal(respuesta))
         else:
             consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=2015)
-        print(consulta)
-        respuesta = conn.consultar_db(consulta)
-        cadena = ','.join(str(elem) for elem in respuesta)
-        lista1 = cadena.split(',')
-        for i in range(len(lista)):
-            lista1[i] = lista1[i].replace("(", "").strip()
-            lista1[i] = lista1[i].replace("Decimal", "").strip()
-            lista1[i] = lista1[i].replace(")", "").strip()
-            lista1[i] = lista1[i].replace("'", "").strip()
-        lista.append(lista1)
-
-        arreglo.append(len(lista[0]))
-        diccionario["m_0"] = {
-            lista[0][0][0]:{}
-        }
+        #respuesta = conn.consultar_db(consulta)
         
-        while(contador <= 11):
-            diccionario["m_0"][lista[0][0][0]][PARTIDOS[contador-1]] = []
-            for j in range(0,arreglo[0]):
-                diccionario["m_0"][lista[0][0][0]][PARTIDOS[contador-1]].append(lista[0][j][contador])
-            contador += 1
-        contador = 1
+        print(lista[0][0])
+        # lista.append(lista1[0])
+
+        # arreglo.append(len(lista[0]))
+        # diccionario["m_0"] = {
+        #     lista[0][0][0]:{}
+        # }        
+
+        diccionario["m_0"]={}
+        diccionario["m_0"][lista[0][0]]={}
+        for i in range(1,17):
+            diccionario["m_0"][lista[0][0]][PARTIDOS[i-1]] = lista[0][i]
+        # while(contador <= 17):
+        #     diccionario["m_0"][lista1[0]][PARTIDOS[contador-1]] = []
+        #     diccionario["m_0"][lista1[0]][PARTIDOS[contador-1]].append(lista1[contador])
+        #     contador +=1
+            
+        
+        # while(contador <= 17):
+        #     diccionario["m_0"][lista1[0][0][0]][PARTIDOS[contador-1]] = []
+        #     for j in range(0,len(lista1)):
+        #         diccionario["m_0"][lista1[0][0][0]][PARTIDOS[contador-1]].append(lista1[0][j][contador])
+        #     contador += 1
+        # contador = 1
 
     data = {'datos': diccionario}
     return jsonify(data)
@@ -310,6 +322,15 @@ def separar_por_partidos(respuesta, saltos, n_saltos):
             salto += 1
     return lista
 
+def eliminar_decimal(respuesta):
+    cadena = ','.join(str(elem) for elem in respuesta)
+    lista = cadena.split(',')
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace("Decimal", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+    return lista
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)

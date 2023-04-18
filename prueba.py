@@ -101,11 +101,13 @@ prueba de consultas mejoradas
 import configparser
 from conexion import CONEXION
 
-PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"]
+PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"]
 
 configuracion = configparser.ConfigParser()
 configuracion.read("configuracion.ini")
 configuracion.sections()
+
+diccionario = {}
 
 inicio =15001
 fin = 15005+1
@@ -129,7 +131,15 @@ for i in range(len(lista)):
     lista[i] = lista[i].replace("Decimal", "").strip()
     lista[i] = lista[i].replace(")", "").strip()
     lista[i] = lista[i].replace("'", "").strip()
-print(lista)
+print(lista[0])
+
+diccionario["m_0"]={}
+diccionario["m_0"][lista[0]]={}
+for i in range(1,18):
+    print(i)
+    diccionario["m_0"][lista[0]][PARTIDOS[i-1]]=lista[i]
+
+print(diccionario)
 
 """
 encontrar saltos
