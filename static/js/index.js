@@ -27,10 +27,15 @@
         this.datos = datos;
     }
 }*/
-
+//tipos
 const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
+//expresiones
+const ID_MUNICIPIO = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][1-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][1-9]|1[0-2][0-5]))?$/;
+const NOMBRE_MUNICIPIO = /^[a-zA-Z\s]{6,20}$/;
+const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-8])$/;
+//arregos
 const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
 const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "yellow", "aqua", "black"];
 
@@ -108,16 +113,10 @@ boton_buscador.addEventListener("click", (e)=>{
             }
             enviar_datos(json)
             .then(data_s => {
-                // lista = longitud(data, "datos");
-                //console.log(datos_analizados)
-                //posicion ["datos"][0] el arreglo principal
-                //posicion ["datos"][0][0] primer fila del arreglo principal
-                //posicion ["datos"][0][0][0] primer valor de la fila
-                //console.log(data.datos[`m_0`]["ACAMBAY DE RUÍZ CASTAÑEDA"]["ES"])
+
                 for(let i = 0 ;i<datos_analizados.length;i++){
                     lista.push(Object.keys(data_s.datos[`m_${i}`]));
                 }
-        
                 let aux = 0;
                 let votos_suma = [];
 
