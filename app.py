@@ -164,12 +164,16 @@ def consultas_buscador():
         diccionario = separar_por_partidos(respuesta, filtro_1, n_saltos)
 
     elif(js["tipo"] == "nombre"):
+        municipio = int(js["datos"])
+        consulta1 = "("
+        for i in (js["years"]):
+            consulta1 += f" yearV={i} or"
+        consulta1 = consulta1[:-2] + ") order by v.ClaveMunicipal"
+        
         if(js["datos"].isdigit()):
-            municipio = int(js["datos"])
-            for i in (js["years"]):
-                consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=i) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
-                respuesta = conn.consultar_db(consulta)
-                lista.append(eliminar_decimal(respuesta))
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=i) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            respuesta = conn.consultar_db(consulta+consulta1)
+            lista.append(eliminar_decimal(respuesta))
         else:
             consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=2015)
         #respuesta = conn.consultar_db(consulta)
