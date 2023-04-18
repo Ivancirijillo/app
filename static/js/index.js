@@ -86,14 +86,6 @@ let mostrarocultar = function(){
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value.toUpperCase();
-    let years = document.querySelectorAll(".cbox");
-    let listayear = [];
-    years.forEach(item=>{
-        if(item.checked){
-            listayear.push(item.getAttribute("value"));
-        }
-    });
-    console.log(listayear);
     let datos_analizados = "";
     let lista = [];
     let datasets = [];
@@ -263,23 +255,33 @@ boton_buscador.addEventListener("click", (e)=>{
             });
             break;
         case NOMBRE:
+            let years = document.querySelectorAll(".cbox");
+            let listayear = [];
+            years.forEach(item=>{
+                if(item.checked){
+                    listayear.push(item.getAttribute("value"));
+                }
+            });
             json = {
                 tipo: NOMBRE,
-                datos: datos
+                datos: datos,
+                years:listayear
             }
             console.log(json);
             enviar_datos(json)
             .then(data_s => {
-                console.log(data_s);
-                lista.push(Object.keys(data_s.datos["m_0"]));
-                let votos_suma = [];
+                console.log(data_s.datos["m_0"]);
+                let municipio = Object.keys(data_s.datos["m_0"]);
+                let lista_partidos = data_s.datos["m_0"][municipio];
+                // lista.push(Object.keys(data_s.datos["m_0"]));
+                // let votos_suma = [];
 
-                for(let i = 0;i<PARTIDOS.length;i++){
-                        let votos = data_s.datos["m_0"][lista[0]][PARTIDOS[i]];
-                        let data = (votos.reduce((total, num)=>total+num,0));
-                        votos_suma.push(data)
-                }
-                console.log(votos_suma);
+                // for(let i = 0;i<PARTIDOS.length;i++){
+                //         let votos = data_s.datos["m_0"][lista[0]][PARTIDOS[i]];
+                //         let data = (votos.reduce((total, num)=>total+num,0));
+                //         votos_suma.push(data)
+                // }
+                // console.log(votos_suma);
                 let fragmento = document.createDocumentFragment();
                 
                 let canvas = document.createElement("canvas");
@@ -292,8 +294,8 @@ boton_buscador.addEventListener("click", (e)=>{
                           labels: PARTIDOS,
                           datasets: [
                               {
-                                label:lista[0],
-                                data: votos_suma,
+                                label:municipio,
+                                data: lista_partidos,
                                 backgroundColor:COLORES
                             }
                           ]
