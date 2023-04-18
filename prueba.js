@@ -47,24 +47,39 @@
 // console.log(config)
 
 function validarEntradaUsuario(entrada) {
-  // Expresión regular para validar la entrada del usuario
-  const expresionRegular = /^(?:[a-zA-Z]|15(?:0[0-9][0-9]|1[0-2][0-6])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-6]))*)[^a-zA-Z0-9]$/;
-
-  ;
-
-  // Validar la entrada del usuario utilizando la expresión regular
-  if (expresionRegular.test(entrada)) {
-    console.log('La entrada es válida');
-  } else {
-    console.log('La entrada no es válida');
+    // Expresión regular para validar la entrada del usuario
+    const expresionRegular = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][1-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][1-9]|1[0-2][0-5]))?$/;
+  
+    ;
+  
+    // Validar la entrada del usuario utilizando la expresión regular
+    if (expresionRegular.test(entrada)) {
+      console.log('La entrada es válida');
+    } else {
+      console.log('La entrada no es válida');
+    }
   }
-}
+  
+  // Ejemplo de uso
+  validarEntradaUsuario('15001,15002,15003'); // La entrada es válida
+  validarEntradaUsuario('15001, 15127, 15128'); // La entrada no es válida
+  validarEntradaUsuario('15001dsfsdfasdf'); // La entrada no es válida
+  validarEntradaUsuario('15001-15002');//La entrada es valida
+  validarEntradaUsuario('15001-15002-15003');//La entrada no es valida
+  validarEntradaUsuario('15001-15002,');//La entrada no es valida
 
-// Ejemplo de uso
-validarEntradaUsuario('15001, 15002, 15003'); // La entrada es válida
-validarEntradaUsuario('15001, 15127, 15128'); // La entrada no es válida
-validarEntradaUsuario('15001dsfsdfasdf'); // La entrada no es válida
+  
+  //NUMEROS DEL 15001-15125
+  let expresion = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][1-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][1-9]|1[0-2][0-5]))?$/;
+  let mensaje = "15125";
+  console.log(expresion.test(mensaje))
 
-let expresion = /^(?:[a-zA-Z]{8}|15(?:0[0-9][0-9]|1[0-2][0-6]) *(?:,15(?:0[0-9][0-9]|1[0-2][0-6])))/;
-let mensaje = "15126";
-console.log(expresion.test(mensaje))
+  //LETRAS QUE ACEPTE MINIMO 6 Y MAXIMO 20 
+  let expresion1 = /^[a-zA-Z\s]{6,20}$/;
+  let mensaje1 = "QWERTQ";
+  console.log(expresion1.test(mensaje1))
+
+  //NUMEROS DEL 1-6498
+  let expresion2 = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-8])$/;
+  let mensaje2 = "6400";
+  console.log(expresion2.test(mensaje2))
