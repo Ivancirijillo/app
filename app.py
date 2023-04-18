@@ -27,7 +27,6 @@ ruta_pdf = ""
 from werkzeug.utils import secure_filename 
 import os
 
-
 #Declarando nombre de la aplicación e inicializando
 app = Flask(__name__)
 
