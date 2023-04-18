@@ -31,9 +31,8 @@
 const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
-const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "IND"];
+const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
 const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "yellow", "aqua", "black"]
-
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
@@ -87,6 +86,14 @@ let mostrarocultar = function(){
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let datos = buscador.value.toUpperCase();
+    let years = document.querySelectorAll(".cbox");
+    let listayear = [];
+    years.forEach(item=>{
+        if(item.checked){
+            listayear.push(item.getAttribute("value"));
+        }
+    });
+    console.log(listayear);
     let datos_analizados = "";
     let lista = [];
     let datasets = [];
@@ -260,8 +267,10 @@ boton_buscador.addEventListener("click", (e)=>{
                 tipo: NOMBRE,
                 datos: datos
             }
+            console.log(json);
             enviar_datos(json)
             .then(data_s => {
+                console.log(data_s);
                 lista.push(Object.keys(data_s.datos["m_0"]));
                 let votos_suma = [];
 

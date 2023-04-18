@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory
 import threading, multiprocessing, time, signal, sys
 from random import sample
 import pandas as pd
-import json
+import json, time
 import matplotlib.pyplot as plt
 from conexion import CONEXION
 import configparser
@@ -23,6 +23,7 @@ configuracion.sections()
 
 #variables globales 
 columnas = []
+ruta_pdf = ""
 
 #Para subir archivo tipo foto al servidor
 from werkzeug.utils import secure_filename 
@@ -432,7 +433,7 @@ def crear_grafico(consulta_1, consulta_2):
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
     js = request.get_json()
-
+    # print(js["years"])
     lista = []
     arreglo = []
     contador = 1
@@ -499,12 +500,19 @@ def consultas_buscador():
     elif(js["tipo"] == "nombre"):
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
-            consulta = configuracion.get("consultas_buscador","varios_id").format(id=js["datos"]) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year="2015") if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
         else:
-            consulta = configuracion.get("consultas_buscador","nombreM").format(dato=js["datos"])
-        
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=2015)
+        print(consulta)
         respuesta = conn.consultar_db(consulta)
-        lista.append(respuesta)
+        cadena = ','.join(str(elem) for elem in respuesta)
+        lista1 = cadena.split(',')
+        for i in range(len(lista)):
+            lista1[i] = lista1[i].replace("(", "").strip()
+            lista1[i] = lista1[i].replace("Decimal", "").strip()
+            lista1[i] = lista1[i].replace(")", "").strip()
+            lista1[i] = lista1[i].replace("'", "").strip()
+        lista.append(lista1)
 
         arreglo.append(len(lista[0]))
         diccionario["m_0"] = {
@@ -530,28 +538,35 @@ def impresiones():
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
     tipo = json["tipo_c"]
+    global ruta_pdf
     if(tipo=="apoyo"):
         respuesta = conn.consultar_db(f"select NombreA, NoApoyos from Apoyos where YearA={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
+            ruta_pdf = Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
     elif(tipo=="deli"):
         respuesta = conn.consultar_db(f"select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia where YearD={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
+            ruta_pdf = Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
     elif(tipo=="padron"):
         respuesta = conn.consultar_db(f"select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal from PadronElectoral where YearE={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Padron.GenerarPadron(int(json["year"]), int(json["id"]))
+            ruta_pdf = Padron.GenerarPadron(int(json["year"]), int(json["id"]))
     elif(tipo=="pobreza"):
         respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
-            Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
+            ruta_pdf = Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
     else:
         respuesta = " "
         if(json["modo"] == "impresion"):
-            General.GenerarG(int(json["year"]), int(json["id"]))
+          ruta_pdf = General.GenerarG(int(json["year"]), int(json["id"]))
     data_mapa = {'consulta': respuesta}
     return jsonify(data_mapa)
+
+@app.route("/pdf")
+def abrir_pdf():
+    global ruta_pdf
+    print(ruta_pdf)
+    return send_file(ruta_pdf)
 
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")

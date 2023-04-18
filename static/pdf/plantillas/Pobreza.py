@@ -8,7 +8,7 @@ from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
 from reportlab.lib import colors
 from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
 from reportlab.graphics.widgets.markers import makeMarker
-import pymysql
+import pymysql, os
 from conexion import CONEXION
 import configparser
 #Gráfico de Barras
@@ -19,9 +19,11 @@ from reportlab.graphics.charts.piecharts import Pie
 
 class Pobreza():
     def GenerarPobreza(yearA, clave):
-
-        #Documento generado
-        doc = SimpleDocTemplate('static\pdf\generado\Pobreza.pdf', pagesize=A4)
+        if(os.path.dirname(__file__).find("/")!=-1):
+            ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Pobreza.pdf"
+        else:
+            ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"Pobreza.pdf"#Documento generado
+        doc = SimpleDocTemplate(ruta_pdf, pagesize=A4)
         story = []
 
         #configuracion de archivo ini
@@ -238,4 +240,4 @@ class Pobreza():
 
         doc.build(story)
         #abre el documento creado
-        webbrowser.open_new('static\pdf\generado\Pobreza.pdf')
+        return ruta_pdf

@@ -12,8 +12,10 @@ from reportlab.lib.pagesizes import letter, landscape
 #configuracion de archivo ini
 class Apoyos():
     def GenerarApoyos(yearA, clave):
-        ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Apoyos.pdf"
-        print(ruta_pdf)
+        if(os.path.dirname(__file__).find("/")!=-1):
+            ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"Apoyos.pdf"
+        else:
+            ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"Apoyos.pdf"
         doc = SimpleDocTemplate(ruta_pdf, pagesize=landscape(A4))
         story=[]
 
@@ -103,4 +105,4 @@ class Apoyos():
 
         doc.build(story)
         #abre el documento creado
-        webbrowser.open_new(ruta_pdf)
+        return ruta_pdf

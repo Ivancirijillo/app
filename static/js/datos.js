@@ -165,13 +165,15 @@ document.getElementById('btnAlejar').addEventListener('click', function() {
 /* BOTON DE IMPRESION DE LA TARJETA DEL SUBCONTENEDOR */
 
 document.getElementById('btnImprimir').addEventListener('click', function() {
-    enviar_json("impresion", " ");
+    enviar_json("impresion", " ")
+    window.open("/pdf","_blank")
 });
 
 document.getElementById('btn_repor_mun').addEventListener('click', function(){
     tipo ='general';
     anio_selec = 2022
     enviar_json("impresion", " ");
+    window.open("/pdf","_blank")
 })
 
 /* FUNCIONES PARA LOS MUNICIPIOS */
@@ -195,9 +197,10 @@ function des_tarjeta (){
     document.querySelector(".titulo").style.display = 'none';
     document.querySelector(".subcontenedor").style.display = 'block';
     document.querySelector(".info").style.height = '85%';
-    document.querySelector(".filtro_categoria").style.display = 'block';
+    document.querySelector(".filtro_categoria").style.display = 'flex';
     document.querySelector(".filtrado").style.display = 'none';
     document.getElementById('v_emergen').classList.add('v_emergen');
+    document.querySelector(".btn_regresar").style.visibility = 'hidden';
     setTimeout(() => {
         //funcion de espera
         document.getElementById('enc').classList.add('active');
@@ -208,7 +211,6 @@ function des_tarjeta (){
 /* BOTON DE REGRESAR AL FILTRO INPUT */
 document.getElementById('btn_regresar').addEventListener('click', function(){
     tarjeta_out(nom_munic, path_anterior);
-    document.querySelector(".btn_regresar").style.visibility = 'hidden';
 })
 
 /* ---------------------------------------------------------------------------*/

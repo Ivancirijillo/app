@@ -120,60 +120,66 @@ conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
 
-consulta = configuracion.get("consultas_buscador", "varios").format(inicio=inicio, fin=fin)
+consulta = configuracion.get("consultas_buscador", "busca_por_yearv").format(id="15001", year="2015")
 respuesta = conn.consultar_db(consulta)
-
-print(n_saltos)
+cadena = ','.join(str(elem) for elem in respuesta)
+lista = cadena.split(',')
+for i in range(len(lista)):
+    lista[i] = lista[i].replace("(", "").strip()
+    lista[i] = lista[i].replace("Decimal", "").strip()
+    lista[i] = lista[i].replace(")", "").strip()
+    lista[i] = lista[i].replace("'", "").strip()
+print(lista)
 
 """
 encontrar saltos
 """
-municipio_actual = respuesta[0][0]
-saltos = {}
-contador = 0
-salto = 0
-for i in range(len(respuesta)):
-    aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
-    if(municipio_actual == respuesta[aux][0]):
-        contador += 1
-    else:
-        contador += 1
-        saltos[f"m_{salto}"] = []
-        saltos[f"m_{salto}"] = {
-            "municipio": municipio_actual,
-            "secciones":contador
-        }
-        contador = 0
-        municipio_actual = respuesta[aux][0]
-        salto += 1
+# municipio_actual = respuesta[0][0]
+# saltos = {}
+# contador = 0
+# salto = 0
+# for i in range(len(respuesta)):
+#     aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
+#     if(municipio_actual == respuesta[aux][0]):
+#         contador += 1
+#     else:
+#         contador += 1
+#         saltos[f"m_{salto}"] = []
+#         saltos[f"m_{salto}"] = {
+#             "municipio": municipio_actual,
+#             "secciones":contador
+#         }
+#         contador = 0
+#         municipio_actual = respuesta[aux][0]
+#         salto += 1
 
-print(saltos)
+# print(saltos)
 
-"""
-llenado de diccionario con separacion por municipios y partidos
-"""
-lista = {}
-salto = 0
-contador = 1
-municipio_actual = respuesta[0][0] # nos colocamos en la primer posicion de la consulta y en su primer valor , municipio
-for i in range(len(respuesta)):
-    aux = len(respuesta)-1 if((i+1) >= len(respuesta)) else (i+1) # determinamos el valor maximo que puede tener aux
-    salto = (n_saltos-1) if(salto >= n_saltos) else salto # si el salto supera el rango de saltos dado, entonces le asignara el numero de saltos - 1
-    if(municipio_actual == respuesta[aux][0]):
-        lista[f"m_{salto}"]={
-            respuesta[aux][0] : {}
-        }
-        while(contador <= 11):
-            lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]] = []
-            for j in range(int(saltos[f"m_{salto}"]["secciones"])):
-                lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]].append(respuesta[j][contador])
-            contador += 1
-        contador = 1
-    else:
-        municipio_actual = respuesta[aux][0]
-        salto += 1
+# """
+# llenado de diccionario con separacion por municipios y partidos
+# """
+# lista = {}
+# salto = 0
+# contador = 1
+# municipio_actual = respuesta[0][0] # nos colocamos en la primer posicion de la consulta y en su primer valor , municipio
+# for i in range(len(respuesta)):
+#     aux = len(respuesta)-1 if((i+1) >= len(respuesta)) else (i+1) # determinamos el valor maximo que puede tener aux
+#     salto = (n_saltos-1) if(salto >= n_saltos) else salto # si el salto supera el rango de saltos dado, entonces le asignara el numero de saltos - 1
+#     if(municipio_actual == respuesta[aux][0]):
+#         lista[f"m_{salto}"]={
+#             respuesta[aux][0] : {}
+#         }
+#         while(contador <= 11):
+#             lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]] = []
+#             for j in range(int(saltos[f"m_{salto}"]["secciones"])):
+#                 lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]].append(respuesta[j][contador])
+#             contador += 1
+#         contador = 1
+#     else:
+#         municipio_actual = respuesta[aux][0]
+#         salto += 1
 
-print(lista["m_0"])
+# print(lista["m_0"])
 
 # municipio_actual = respuesta[0][0]
 # lista = {}
