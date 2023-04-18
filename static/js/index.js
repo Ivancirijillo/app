@@ -267,6 +267,7 @@ boton_buscador.addEventListener("click", (e)=>{
                 tipo: NOMBRE,
                 datos: datos
             }
+            console.log(json);
             enviar_datos(json)
             .then(data_s => {
                 console.log(data_s);

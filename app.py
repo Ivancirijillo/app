@@ -486,12 +486,19 @@ def consultas_buscador():
     elif(js["tipo"] == "nombre"):
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
-            consulta = configuracion.get("consultas_buscador","varios_id").format(id=js["datos"]) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year="2015") if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
         else:
-            consulta = configuracion.get("consultas_buscador","nombreM").format(dato=js["datos"])
-        
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=2015)
+        print(consulta)
         respuesta = conn.consultar_db(consulta)
-        lista.append(respuesta)
+        cadena = ','.join(str(elem) for elem in respuesta)
+        lista1 = cadena.split(',')
+        for i in range(len(lista)):
+            lista1[i] = lista1[i].replace("(", "").strip()
+            lista1[i] = lista1[i].replace("Decimal", "").strip()
+            lista1[i] = lista1[i].replace(")", "").strip()
+            lista1[i] = lista1[i].replace("'", "").strip()
+        lista.append(lista1)
 
         arreglo.append(len(lista[0]))
         diccionario["m_0"] = {
