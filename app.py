@@ -37,6 +37,20 @@ app = Flask(__name__)
 def not_found(error):
     return 'Ruta no encontrada'
 
+@app.route("/",methods=["GET", "POST"])
+def menu():
+    return render_template("menu.html")
+
+@app.route("/menuOpc",methods=["POST"])
+def menuOpc():
+    json = request.get_json()
+    modo = json["modo"] 
+    if(modo=="graficas"):
+        data_mapa = {'resp': "/fil"}
+    elif(modo=="mapa"):
+        data_mapa = {'resp': "/mapa"}
+    return data_mapa
+
 @app.route("/mapa",methods=["GET", "POST"])
 def mapa():
     return render_template("mapa.html")
@@ -46,7 +60,7 @@ def municipio():
     return render_template("filtro.html")
      
 #Creando un Decorador
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/fil', methods=['GET', 'POST'])
 def home():
     return render_template('index.html')
 
@@ -620,4 +634,4 @@ def separar_por_partidos(respuesta, saltos, n_saltos):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
-    app.run(debug=True, port=8000,host="172.16.71.70")
+    app.run(debug=True, port=8000)
