@@ -321,8 +321,8 @@ body{
 }
 
 .btn_repor_mun:hover {
-	background-color: #FFCE00;
-	color: white;
+	background-color: var(--clr-btn-relleno_hover);
+	color: var(--clr-letras_hover);
 }
 
 .btn_regresar{
@@ -370,14 +370,14 @@ body{
 
 .mapdiv path{
     cursor: pointer;
-    fill: #d0e4e4;
-    stroke: gray;
+    fill: #FFCE00;
+    stroke: #a78700;
     stroke-width: 20px;
 	transition: .25s ease all;
 }
 
 .mapdiv path:hover{
-    fill: var(--color);
+    fill: lightgreen;
 }
 
 svg{
