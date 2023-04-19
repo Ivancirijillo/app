@@ -190,14 +190,9 @@ var path_anterior = ' ';
 var nom_munic = ' ';
 function tarjeta_out (nom_municipio, path_n){
     ocultar_superior();
-
-<<<<<<< HEAD
+    
     if(path_anterior != ' ') document.getElementById(path_anterior).style.fill = '#c5c5c5';
     document.getElementById(path_n).style.fill = 'var(--color)';
-=======
-    if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: #D97700;*/';
-    document.getElementById(path_n).style.fill = '#D97700';
->>>>>>> 667209f22852f05bed1380e17a74e7cc7ef388ee
 
     document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();
