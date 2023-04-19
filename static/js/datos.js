@@ -26,6 +26,15 @@ document.getElementById('con_cortina').addEventListener('click', function(){
     ocultar_superior();
 })
 
+/*BOTONES DE MENU*/
+document.getElementById('btn_filtro').addEventListener('click', function(){
+    document.querySelector(".filtro_categoria").style.display = 'flex';
+    document.querySelector(".btn_regresar").style.visibility = 'visible';
+    document.getElementById('menu').style.display='none';
+})
+
+/*FUNCIONES PARA LA INFORMACIÓN DE LAS TABLAS */
+
 function tabla_crear(template, tablas, cabecera){
     direccion = cabecera[cabecera.length-1];
     if(direccion == "V"){
@@ -169,7 +178,7 @@ document.getElementById('btnImprimir').addEventListener('click', function() {
     window.open("/pdf","_blank")
 });
 
-document.getElementById('btn_repor_mun').addEventListener('click', function(){
+document.getElementById('btn_reporte').addEventListener('click', function(){
     tipo ='general';
     anio_selec = 2022
     enviar_json("impresion", " ");
@@ -181,8 +190,8 @@ var nom_munic = ' ';
 function tarjeta_out (nom_municipio, path_n){
     ocultar_superior();
 
-    if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: green;*/';
-    document.getElementById(path_n).style.fill = 'green';
+    if(path_anterior != ' ') document.getElementById(path_anterior).style.fill = '#c5c5c5';
+    document.getElementById(path_n).style.fill = 'var(--color)';
 
     document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();
@@ -195,8 +204,9 @@ function des_tarjeta (){
     document.getElementById('entrada').classList.remove('active');
     document.querySelector(".titulo").style.display = 'none';
     document.querySelector(".subcontenedor").style.display = 'block';
+    document.getElementById('menu').style.display='flex';
+    document.getElementById('filtro_categoria').style.display='none';
     document.querySelector(".info").style.height = '85%';
-    document.querySelector(".filtro_categoria").style.display = 'flex';
     document.querySelector(".filtrado").style.display = 'none';
     document.getElementById('v_emergen').classList.add('v_emergen');
     document.querySelector(".btn_regresar").style.visibility = 'hidden';

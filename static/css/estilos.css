@@ -4,6 +4,16 @@
     overflow: hidden;
 }
 
+:root{
+	--color: #fff;
+  	--clr-btn-relleno: #fff;
+  	--clr-btn-borde: #0099CC;
+  	--clr-tabla-borde: #2B0FAA;
+  	--clr-letras: #000;
+	--clr-letras_hover: #fff;
+	--clr-btn-relleno_hover: #0099CC;
+}
+
 /*Scroll*/
 ::-webkit-scrollbar {
 	width: 10px;
@@ -27,7 +37,7 @@
 /* ESTRUCTURA PRINCIPAL */
 
 body{
-    background: #0a9292;
+    background: #2aadd1;
     width: 100%;
     height: 100vh;
 }
@@ -63,6 +73,10 @@ body{
 	transition: 1s ease all;
 	overflow-y: scroll;
 	z-index: 5;
+}
+
+.selec_municipios h3{
+	color: var(--clr-letras);
 }
 
 .btn_selec{
@@ -111,6 +125,9 @@ body{
 	transition: 1s ease all;
 }
 
+.info h2{
+	color: var(--clr-letras);
+}
 /*  SUBCONTENEDOR */
 
 .subcontenedor{
@@ -119,12 +136,12 @@ body{
 
 .tableDatos th{
     padding: 5px;
-    border-bottom: solid 1px #2b0faa;
+    border-bottom: solid 1px var(--clr-tabla-borde);
 }
 
 .tableDatos td{
     padding: 5px;
-    border-bottom: solid 1px #2b0faa;
+    border-bottom: solid 1px var(--clr-tabla-borde);
 }
 
 /* SUBCONTENEDOR ENTRADA DE CLASES */
@@ -210,11 +227,35 @@ body{
 	from { opacity: 0; }
 	to { opacity: 1; }
 }
+/*Div de menu */
 
+.menu{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.btn_filtro, 
+.btn_reporte{
+	background-color: #81c9fa;
+	color: #003785;
+	width: 100px;
+	height: 75px;
+	margin: 20% 5%;
+	border-radius: 10px;
+	border-color: #2196f3;
+	transition: .3s ease all;
+}
+.btn_filtro:hover, 
+.btn_reporte:hover{
+	background-color: #003785;
+	color: #b9ffff;
+	scale: 1.1;
+}
 /* Div de categoria */
 
 .filtro_categoria{
-	display: flex;
+	display: none;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -243,9 +284,9 @@ body{
 .opc_municipios button,
 .btnContinuar,
 .btn_repor_mun{
-	background-color: rgba(255, 255, 255, 0.75); 
-	color: black; 
-	border: 2px solid #0099CC;
+	background-color: var(--clr-btn-relleno); 
+	color: var(--clr-letras); 
+	border: 2px solid var(--clr-btn-borde);
 	border-radius: 5px;
 	padding: 4px 32px;
 	font-size: 16px;
@@ -260,8 +301,8 @@ body{
 }
 
 .btn_repor_mun{
-	background-color: rgba(255, 255, 255, 0.75); 
-	border: 2px solid #3BA100;
+	background-color: var(--clr-btn-relleno); 
+	border: 2px solid var(--clr-btn-borde);
 	margin-top: 5px;
 }
 
@@ -270,19 +311,19 @@ body{
 .btnContinuar:hover,
 .btn_regresar:hover,
 .btn_repor_mun:hover {
-	background-color: #008CBA;
-	color: white;
+	background-color: var(--clr-btn-relleno_hover);
+	color: var(--clr-letras_hover);
 }
 
 .btn_repor_mun:hover {
-	background-color: #3BA100;
-	color: white;
+	background-color: var(--clr-btn-relleno_hover);
+	color: var(--clr-letras_hover);
 }
 
 .btn_regresar{
     position: absolute;
 	visibility: hidden;
-	background-color: rgba(255, 255, 255, 0.75);
+	background-color: var(--clr-btn-relleno);
     top: 10px;
     left: 10px;
 	width: 30px;
@@ -322,14 +363,14 @@ body{
 
 .mapdiv path{
     cursor: pointer;
-    fill: rgba(220, 130, 15, 0.85);
-    stroke: rgb(110, 65, 5);
-    stroke-width: 5px;
+    fill: #d0e4e4;
+    stroke: gray;
+    stroke-width: 20px;
 	transition: .25s ease all;
 }
 
 .mapdiv path:hover{
-    fill: lightgreen;
+    fill: var(--color);
     /*stroke: lightgreen;
     stroke-width: 45px;*/
 }
@@ -358,10 +399,11 @@ svg{
 	height: 30px;
 	margin: 3px 10px;
 	border-radius: 8px;
+	border-color: var(--clr-btn-borde);
 }
 
 .btnAcercar:hover,
 .btnAlejar:hover{
-	background-color: rgba(46, 46, 140, 0.85);
-	color: white;
+	background-color: var(--clr-btn-relleno_hover);
+	color: var(--clr-letras_hover);
 }
