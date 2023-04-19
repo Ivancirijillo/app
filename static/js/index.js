@@ -27,12 +27,23 @@
         this.datos = datos;
     }
 }*/
+
+//pantalla completa
+//     const elem = document.documentElement;
+// if (elem.requestFullscreen) {
+//     elem.requestFullscreen();
+//     } else if (elem.webkitRequestFullscreen) { /* Safari */
+//     elem.webkitRequestFullscreen();
+//     } else if (elem.msRequestFullscreen) { /* IE11 */
+//     elem.msRequestFullscreen();
+// }
+
 //tipos
 const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
 //expresiones
-const ID_MUNICIPIO = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][1-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][1-9]|1[0-2][0-5]))?$/;
+const ID_MUNICIPIO = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/;
 const NOMBRE_MUNICIPIO = /^[a-zA-Z\s]{6,20}$/;
 const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-8])$/;
 //arregos
@@ -88,8 +99,60 @@ let mostrarocultar = function(){
     }
 }
 
+//eventos de validacion
+buscador.addEventListener("input",(e)=>{
+    e.preventDefault();
+    let dato = buscador.value
+    if(ID_MUNICIPIO.test(dato) || NOMBRE_MUNICIPIO.test(dato) || SECCION_MUNICIPIO.test(dato)) { 
+        boton_buscador.disabled = false;
+        boton_buscador.style.borderColor = "green";
+    }else {
+        boton_buscador.disabled = true;
+        boton_buscador.style.borderColor = "red";
+    }
+});
+
+buscador.addEventListener("blur",(e)=>{
+    e.preventDefault()
+    let dato = buscador.value;
+    if(ID_MUNICIPIO.test(dato) || NOMBRE_MUNICIPIO.test(dato) || SECCION_MUNICIPIO.test(dato)) { 
+        boton_buscador.disabled = false;
+        boton_buscador.style.borderColor = "green";
+    }else {
+        boton_buscador.disabled = true;
+        boton_buscador.style.borderColor = "red";
+    }
+});
+
+
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
+    let cbox = document.querySelectorAll(".cbox");
+    let pass = Array.from(cbox).some((item)=>{
+        return item.checked
+    });
+    console.log(pass)
+    if(pass){
+        analizar_datos();
+    } else{
+        alert("Seleccione un año");
+    }
+});
+
+function enviar_datos(data){
+    return fetch('/consultas-buscador', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response =>{
+        return response.json()
+    });
+}
+
+function analizar_datos(){
     let datos = buscador.value.toUpperCase();
     let datos_analizados = "";
     let lista = [];
@@ -254,13 +317,7 @@ boton_buscador.addEventListener("click", (e)=>{
             });
             break;
         case NOMBRE:
-            let years = document.querySelectorAll(".cbox");
-            let listayear = [];
-            years.forEach(item=>{
-                if(item.checked){
-                    listayear.push(item.getAttribute("value"));
-                }
-            });
+            let listayear = obtener_years();
             json = {
                 tipo: NOMBRE,
                 datos: datos,
@@ -269,63 +326,67 @@ boton_buscador.addEventListener("click", (e)=>{
             console.log(json);
             enviar_datos(json)
             .then(data_s => {
-                console.log(data_s.datos["m_0"]);
-                let municipio = Object.keys(data_s.datos["m_0"]);
-                let lista_partidos = data_s.datos["m_0"][municipio];
-                // lista.push(Object.keys(data_s.datos["m_0"]));
-                // let votos_suma = [];
-
-                // for(let i = 0;i<PARTIDOS.length;i++){
-                //         let votos = data_s.datos["m_0"][lista[0]][PARTIDOS[i]];
-                //         let data = (votos.reduce((total, num)=>total+num,0));
-                //         votos_suma.push(data)
-                // }
-                // console.log(votos_suma);
-                let fragmento = document.createDocumentFragment();
-                
-                let canvas = document.createElement("canvas");
-                canvas.setAttribute("class", "grafica0");
-                    
-                let contexto = canvas.getContext("2d");
-                let char = new Chart(contexto, {
-                        type: "bar",
-                        data: {
-                          labels: PARTIDOS,
-                          datasets: [
-                              {
-                                label:municipio,
-                                data: lista_partidos,
-                                backgroundColor:COLORES
-                            }
-                          ]
-                        },
-                        options: {
-                            title:{
-                                display:true,
-                                text:lista[0],
-                                fontSize:28
-                            }
-                        }
-                      });
-                    canvas.style.position = "relative";
-                    canvas.style.width="50px";
-                    fragmento.appendChild(canvas)
-                
-                document.querySelector(".graficas").appendChild(fragmento);
+                console.log(data_s.datos);
+                crear_grafica(data_s, lista)
             });
             break;
     }
-});
-
-function enviar_datos(data){
-    return fetch('/consultas-buscador', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-    })
-    .then(response =>{
-        return response.json()
-    });
 }
+
+function crear_grafica(data_s, lista){
+    console.log(Object.keys(data_s.datos))
+    let lista_partidos = [];
+    let municipios = Object.keys(data_s.datos)
+    municipios.forEach((item)=>{
+        lista_partidos.push(data_s.datos[item]);
+    });
+
+    let fragmento = document.createDocumentFragment();
+    for(let i=0;i<lista_partidos.length;i++){
+        let canvas = document.createElement("canvas");
+        canvas.setAttribute("class", "grafica0");
+        
+        let contexto = canvas.getContext("2d");
+        let char = new Chart(contexto, {
+                type: "bar",
+                data: {
+                labels: PARTIDOS,
+                datasets: [
+                    {
+                        label:municipios[i],
+                        data: lista_partidos[i],
+                        backgroundColor:COLORES
+                    }
+                ]
+                },
+                options: {
+                    title:{
+                        display:true,
+                        text:lista[0],
+                        fontSize:28
+                    }
+                }
+            });
+            canvas.style.position = "relative";
+            canvas.style.width="50px";
+            fragmento.appendChild(canvas)
+        
+        document.querySelector(".graficas").appendChild(fragmento);
+    }
+}
+
+function obtener_years(){
+    let years = document.querySelectorAll(".cbox");
+    let listayear = [];
+    years.forEach(item=>{
+        if(item.checked){
+            listayear.push(item.getAttribute("value"));
+        }
+    });
+    return listayear;
+}
+
+//bloquear click derecho
+// document.addEventListener("contextmenu", function(event){
+//     event.preventDefault();
+// });

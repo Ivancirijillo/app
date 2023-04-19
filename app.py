@@ -156,52 +156,37 @@ def consultas_buscador():
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
         fin = int(js["datos"][1])+1
+        years = js["years"]
         n_saltos = fin-inicio 
+
         consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin) if(15000 < inicio < 15126) else configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
         respuesta = conn.consultar_db(consulta)
         filtro_1 = encontrar_municipio(respuesta)
         diccionario = separar_por_partidos(respuesta, filtro_1, n_saltos)
 
     elif(js["tipo"] == "nombre"):
-        municipio = int(js["datos"])
+        
         consulta1 = "("
         for i in (js["years"]):
             consulta1 += f" yearV={i} or"
         consulta1 = consulta1[:-2] + ") order by v.ClaveMunicipal"
         
         if(js["datos"].isdigit()):
-            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=i) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            municipio = int(js["datos"])
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"]) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
             respuesta = conn.consultar_db(consulta+consulta1)
             lista.append(eliminar_decimal(respuesta))
         else:
-            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=2015)
-        #respuesta = conn.consultar_db(consulta)
-        
-        print(lista[0][0])
-        # lista.append(lista1[0])
 
-        # arreglo.append(len(lista[0]))
-        # diccionario["m_0"] = {
-        #     lista[0][0][0]:{}
-        # }        
+            consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"])
+            respuesta = conn.consultar_db(consulta+consulta1)
+            lista.append(eliminar_decimal(respuesta))   
 
-        diccionario["m_0"]={}
-        diccionario["m_0"][lista[0][0]]={}
+        #diccionario={}
+        diccionario[lista[0][0]]={}
         for i in range(1,17):
-            diccionario["m_0"][lista[0][0]][PARTIDOS[i-1]] = lista[0][i]
-        # while(contador <= 17):
-        #     diccionario["m_0"][lista1[0]][PARTIDOS[contador-1]] = []
-        #     diccionario["m_0"][lista1[0]][PARTIDOS[contador-1]].append(lista1[contador])
-        #     contador +=1
-            
-        
-        # while(contador <= 17):
-        #     diccionario["m_0"][lista1[0][0][0]][PARTIDOS[contador-1]] = []
-        #     for j in range(0,len(lista1)):
-        #         diccionario["m_0"][lista1[0][0][0]][PARTIDOS[contador-1]].append(lista1[0][j][contador])
-        #     contador += 1
-        # contador = 1
-
+            diccionario[lista[0][0]][PARTIDOS[i-1]] = lista[0][i]
+    
     data = {'datos': diccionario}
     return jsonify(data)
 
