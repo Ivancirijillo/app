@@ -43,7 +43,7 @@ const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
 //expresiones
-const ID_MUNICIPIO = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/;
+const ID_MUNICIPIO = /^15(?:0[0-9][0-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/;
 const NOMBRE_MUNICIPIO = /^[a-zA-Z\s]{6,20}$/;
 const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-8])$/;
 //arregos
@@ -53,6 +53,7 @@ const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "g
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
 let boton_buscador = document.querySelector(".Bbuscar")
+boton_buscador.disabled = true
 
 boton.addEventListener("click",(e)=>{
     e.preventDefault()
