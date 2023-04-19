@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/menu.css') }}">
+    <title>Menu</title>
+    <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='img_menu/menu.png') }}"/>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="titulo">
+            <h1>SELECCIONE UNA OPCIÓN</h1>
+        </div>
+        <div class="opc_menu">
+            <div type="button" class="opciones" id="opc_graficas">
+                <div class="icon">
+                    <img src="{{ url_for('static', filename ='img_menu/igrafica.png') }}" alt="">
+                    <h2 class="subtitulo" id="titulo_filtro">GRÁFICA</h2>
+                </div>
+            </div>
+            <div type="button" class="opciones" id="opc_mapa">
+                <div class="icon">
+                    <img src="{{ url_for('static', filename ='img_menu/imapa.png') }}" alt="">
+                    <h2 class="subtitulo" id="titulo_mapa">MAPA</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="area" >
+        <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+        </ul>
+    </div >
+    <script src="{{ url_for('static', filename ='js/menu.js') }}"></script>
+</body>
+</html>
