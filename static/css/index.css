@@ -94,6 +94,27 @@ body {
     text-align: center;
 }
 
+.buscador,
+.yearV{    
+	background-color: #0A9292;
+}
+
+.Bbuscar{
+	background-color: #fff; 
+	color: #000;
+	border-radius: 5px;
+	padding: 4px 32px;
+	font-size: 16px;
+	transition-duration: 0.4s;
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+.Bbuscar:hover{
+	background-color: #0453A5;
+	color: #fff;   
+}
+
 /* graficas */
 .grafica0{
     position: relative;
