@@ -13,7 +13,8 @@ body{
 .contenedor{
     position: relative;
     /*background: linear-gradient(to right, #134e5e, #71b280); */
-    background-color: #005d92;
+    background-color: #0EA5FF;
+    /*#00578A*/
     width: 100%;
     height: 100%;
 }
@@ -38,6 +39,8 @@ body{
     display: flex;
     border-radius: 10px;
     justify-content: center;
+    color:  white;
+    background-color:#00578A;
 }
 
 .opc_menu{
