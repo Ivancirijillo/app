@@ -35,7 +35,15 @@ app = Flask(__name__)
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
 def not_found(error):
-    return 'Ruta no encontrada'
+    return render_template("404.html")
+
+@app.route('/Paleta1')
+def paleta1():
+    return render_template('paleta1.html')
+
+@app.route('/Paleta2')
+def paleta2():
+    return render_template('paleta2.html')
 
 @app.route("/",methods=["GET", "POST"])
 def menu():
