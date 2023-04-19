@@ -61,7 +61,7 @@ function validarEntradaUsuario(entrada) {
   }
   
   // Ejemplo de uso
-  validarEntradaUsuario('15001,15002,15003'); // La entrada es válida
+  validarEntradaUsuario('15001,15002,15010'); // La entrada es válida
   validarEntradaUsuario('15001, 15127, 15128'); // La entrada no es válida
   validarEntradaUsuario('15001dsfsdfasdf'); // La entrada no es válida
   validarEntradaUsuario('15001-15002');//La entrada es valida
