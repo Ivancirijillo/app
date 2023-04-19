@@ -182,8 +182,8 @@ var nom_munic = ' ';
 function tarjeta_out (nom_municipio, path_n){
     ocultar_superior();
 
-    if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: green;*/';
-    document.getElementById(path_n).style.fill = 'green';
+    if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: #D97700;*/';
+    document.getElementById(path_n).style.fill = '#D97700';
 
     document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();

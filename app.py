@@ -39,11 +39,11 @@ def not_found(error):
 
 @app.route('/Paleta1')
 def paleta1():
-    return render_template('paleta1.html')
+    return render_template('paleta1v2.html')
 
 @app.route('/Paleta2')
 def paleta2():
-    return render_template('paleta2.html')
+    return render_template('paleta2v2.html')
 
 @app.route("/",methods=["GET", "POST"])
 def menu():
