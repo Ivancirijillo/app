@@ -49,6 +49,7 @@ const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0
 //arregos
 const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
 const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "yellow", "aqua", "black"];
+const NUMEROS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
@@ -292,6 +293,12 @@ function crear_grafica(data_s, tipo){
     let partidos = [];
     let votos = [];
     if(tipo == RANGO){
+        let municipio = Object.keys(data_s);
+        const mu = toString(municipio[0])
+        console.log(mu.includes("1"))
+        const contieneNumero = NUMEROS.some(numero => Object.keys(data_s)[0].includes(numero));
+        console.log(contieneNumero)
+        //if(sub_tipo.some(item=>{item.includes()}))
         for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
             partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
             votos.push([])
