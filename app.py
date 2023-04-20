@@ -12,6 +12,7 @@ from static.pdf.plantillas.Delincuencia import Delincuencia
 from static.pdf.plantillas.General import General
 from static.pdf.plantillas.PadronE import Padron
 from static.pdf.plantillas.Pobreza import Pobreza
+import random
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
@@ -35,7 +36,13 @@ app = Flask(__name__)
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("404.html")
+    valio=random.randrange(0, 2, 1)
+    #(0, 1000, 1)
+    if valio==0:
+        pagina="Pazul.html"
+    else: 
+        pagina="404.html"
+    return render_template(pagina)
 
 @app.route('/Paleta1')
 def paleta1():
