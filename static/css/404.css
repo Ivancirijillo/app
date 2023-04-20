@@ -1,5 +1,5 @@
 body {
-  background-color: #0EA5FF
+  background-color: #0A9292
 }
 svg {
   position: absolute;
@@ -29,7 +29,7 @@ svg {
   margin-top: 40px;
 }
 .buttons-con .action-link-wrap a {
-  background: #FF7077;
+  background: #0453A5;
   padding: 8px 25px;
   border-radius: 4px;
   color: #FFF;
@@ -42,7 +42,7 @@ svg {
   margin-right: 10px
 }
 .buttons-con .action-link-wrap a:hover {
-  background: #5A5C6C;
+  background: #0C3258;
   color: #fff;
 }
 

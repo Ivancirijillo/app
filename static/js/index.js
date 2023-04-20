@@ -106,10 +106,10 @@ buscador.addEventListener("input",(e)=>{
     let dato = buscador.value
     if(ID_MUNICIPIO.test(dato) || NOMBRE_MUNICIPIO.test(dato) || SECCION_MUNICIPIO.test(dato)) { 
         boton_buscador.disabled = false;
-        boton_buscador.style.borderColor = "green";
+        boton_buscador.style.borderColor = "#0453A5";
     }else {
         boton_buscador.disabled = true;
-        boton_buscador.style.borderColor = "red";
+        boton_buscador.style.borderColor = "#FF0108";
     }
 });
 
@@ -118,10 +118,10 @@ buscador.addEventListener("blur",(e)=>{
     let dato = buscador.value;
     if(ID_MUNICIPIO.test(dato) || NOMBRE_MUNICIPIO.test(dato) || SECCION_MUNICIPIO.test(dato)) { 
         boton_buscador.disabled = false;
-        boton_buscador.style.borderColor = "green";
+        boton_buscador.style.borderColor = "#0453A5";
     }else {
         boton_buscador.disabled = true;
-        boton_buscador.style.borderColor = "red";
+        boton_buscador.style.borderColor = "#FF0108";
     }
 });
 

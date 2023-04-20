@@ -13,7 +13,7 @@ body{
 .contenedor{
     position: relative;
     /*background: linear-gradient(to right, #134e5e, #71b280); */
-    background-color: #0EA5FF;
+    background-color: #0A9292;
     /*#00578A*/
     width: 100%;
     height: 100%;
@@ -33,14 +33,12 @@ body{
 }
 
 .titulo h1{
-    background: white;
-    opacity: 0.3;
     width: 40%;
     display: flex;
     border-radius: 10px;
     justify-content: center;
+    /*background-color:#00C65C;*/
     color:  white;
-    background-color:#00578A;
 }
 
 .opc_menu{
