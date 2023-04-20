@@ -177,8 +177,6 @@ def consultas_buscador():
 
         consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin) if(15000 < inicio < 15126) else configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
         respuesta = conn.consultar_db(consulta+consulta1)
-        print(len(respuesta))
-        filtro_1 = encontrar_municipio(respuesta)
         diccionario = separar_por_partido(respuesta)
         # lista.append(eliminar_decimal(respuesta))
         # diccionario = crear_diccionario(lista,diccionario)
