@@ -37,11 +37,16 @@ body {
 } */
 
 .titulo1{
+    background-color: #0A9292;
+}
+
+.titulo1 h1{
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
+    font-size: 40px;
     position: relative;
     background-color: #0A9292;
     color: #fff;
+    margin: 0;
 }
 
 .filtro2{
@@ -93,13 +98,25 @@ body {
     color: #000;
     text-align: center;
 }
-
-.buscador,
+ /*BOTON buscar */
+.buscador, 
 .yearV{    
 	background-color: #0A9292;
 }
 
-.Bbuscar{
+input[type="checkbox"] + label {
+    color: #fff; 
+    line-height: 3em;
+    font-size: medium;
+    margin-right: 1%;
+}
+
+input[type="checkbox"]:checked + label {
+    font-weight: bold;
+}
+
+.Bbuscar, 
+.mostrarM{
 	background-color: #fff; 
 	color: #000;
 	border-radius: 5px;
@@ -110,9 +127,23 @@ body {
 	text-transform: uppercase;
 }
 
-.Bbuscar:hover{
+.Bbuscar:hover, 
+.mostrarM:hover{
 	background-color: #0453A5;
 	color: #fff;   
+}
+
+/*input buscar */
+
+.Ibuscar{
+    width: 20%;
+    height: 35px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,.2);
+    outline: none;
 }
 
 /* graficas */

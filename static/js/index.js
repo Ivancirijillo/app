@@ -109,7 +109,7 @@ buscador.addEventListener("input",(e)=>{
         boton_buscador.style.borderColor = "#0453A5";
     }else {
         boton_buscador.disabled = true;
-        boton_buscador.style.borderColor = "red";
+        boton_buscador.style.borderColor = "#FF0108";
     }
 });
 
@@ -121,7 +121,7 @@ buscador.addEventListener("blur",(e)=>{
         boton_buscador.style.borderColor = "#0453A5";
     }else {
         boton_buscador.disabled = true;
-        boton_buscador.style.borderColor = "red";
+        boton_buscador.style.borderColor = "#FF0108";
     }
 });
 
