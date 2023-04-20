@@ -157,8 +157,7 @@ input[type="checkbox"]:checked + label {
 }
 
 .buttons-con .action-link-wrap {
-    margin-bottom: 1%;
-    margin-right: 90%;
+    margin-right: 85%;
   }
   .buttons-con .action-link-wrap a {
     background: #0453A5;
