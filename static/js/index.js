@@ -260,61 +260,13 @@ function analizar_datos(){
             datos_analizados = datos.split("-");
             json = {
                 tipo: RANGO,
-                datos: datos_analizados
+                datos: datos_analizados,
+                years: obtener_years()
             }
             enviar_datos(json)
             .then(data_s => {
-                console.log(data_s)
-                for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
-                    lista.push(Object.keys(data_s.datos[`m_${i}`]));
-                }
-                console.log(lista)
-                let aux = 0;
-                let votos_suma = [];
-
-                while(lista.length > aux){
-                    votos_suma.push([]);
-                    for(let i = 0;i<PARTIDOS.length;i++){
-                        // let label =  PARTIDOS[i];
-                        let votos = data_s.datos[`m_${aux}`][lista[aux]][PARTIDOS[i]];
-                        let data = (votos.reduce((total, num)=>total+num,0));
-                        // let background =  COLORES[i];
-                        votos_suma[aux].push(data)
-                    }
-                    aux++;
-                }
-                console.log(votos_suma);
-                let fragmento = document.createDocumentFragment();
-                for(let i = 0; i < lista.length; i++){
-                    let canvas = document.createElement("canvas");
-                    canvas.setAttribute("class", `grafica${i}`);
-                    
-                    let contexto = canvas.getContext("2d");
-                    let char = new Chart(contexto, {
-                        type: "bar",
-                        data: {
-                          labels: PARTIDOS,
-                          datasets: [
-                              {
-                                label:lista[i],
-                                data: votos_suma[i],
-                                backgroundColor:COLORES
-                            }
-                          ]
-                        },
-                        options: {
-                            title:{
-                                display:true,
-                                text:lista[i],
-                                fontSize:28
-                            }
-                        }
-                      });
-                    canvas.style.position = "relative";
-                    canvas.style.width="50px";
-                    fragmento.appendChild(canvas)
-                }
-                document.querySelector(".graficas").appendChild(fragmento);
+                console.log(data_s.datos);
+                crear_grafica(data_s, tipo);
             });
             break;
         case NOMBRE:
@@ -328,22 +280,48 @@ function analizar_datos(){
             enviar_datos(json)
             .then(data_s => {
                 console.log(data_s.datos);
-                crear_grafica(data_s, lista)
+                crear_grafica(data_s, tipo);
             });
             break;
     }
 }
 
-function crear_grafica(data_s, lista){
-    console.log(Object.keys(data_s.datos))
+function crear_grafica(data_s, tipo){
     let lista_partidos = [];
-    let municipios = Object.keys(data_s.datos)
-    municipios.forEach((item)=>{
-        lista_partidos.push(data_s.datos[item]);
-    });
+    let municipios = Object.keys(data_s.datos);
+    let partidos = [];
+    let votos = [];
+    if(tipo == RANGO){
+        for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
+            partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
+            votos.push([])
+            for (let j = 0; j < PARTIDOS.length; j++) {
+                votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
+            } 
+        }
+        let aux = 0;
+        while(partidos.length > aux){
+            lista_partidos.push([]);
+            for(let i = 0;i<PARTIDOS.length;i++){
+                let data = (votos[aux][i].reduce((total, num)=>total+num,0));
+                lista_partidos[aux].push(data)
+            }
+            aux++;
+        }
+        console.log(municipios[0]);
+        console.log(lista_partidos);
+    } else if(tipo == NOMBRE){
+        municipios = Object.keys(data_s.datos)
+        municipios.forEach((item)=>{
+            lista_partidos.push(data_s.datos[item]);
+        });
+        console.log(municipios);
+        console.log(lista_partidos);
+    }
+    
 
     let fragmento = document.createDocumentFragment();
-    for(let i=0;i<lista_partidos.length;i++){
+    for(let i=0;i<municipios.length;i++){
         let canvas = document.createElement("canvas");
         canvas.setAttribute("class", "grafica0");
         
@@ -363,7 +341,7 @@ function crear_grafica(data_s, lista){
                 options: {
                     title:{
                         display:true,
-                        text:lista[0],
+                        text:municipios[i],
                         fontSize:28
                     }
                 }
