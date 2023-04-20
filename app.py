@@ -40,6 +40,7 @@ def not_found(error):
     #(0, 1000, 1)
     if valio==0:
         pagina="Pazul.html"
+        pantallaC=True
     else: 
         pagina="404.html"
     return render_template(pagina)
