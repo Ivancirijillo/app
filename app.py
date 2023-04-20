@@ -188,12 +188,16 @@ def consultas_buscador():
         
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
-            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"]) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"]) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+            print(consulta+consulta1)
             respuesta = conn.consultar_db(consulta+consulta1)
+            print(respuesta)
             lista.append(eliminar_decimal(respuesta))
         else:
             consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"])
+            
             respuesta = conn.consultar_db(consulta+consulta1)
+            
             lista.append(eliminar_decimal(respuesta))   
 
         diccionario = crear_diccionario(lista,diccionario)
