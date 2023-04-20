@@ -122,24 +122,123 @@ conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
 
-consulta = configuracion.get("consultas_buscador", "busca_por_yearv").format(id="15001", year="2015")
-respuesta = conn.consultar_db(consulta)
-cadena = ','.join(str(elem) for elem in respuesta)
-lista = cadena.split(',')
-for i in range(len(lista)):
-    lista[i] = lista[i].replace("(", "").strip()
-    lista[i] = lista[i].replace("Decimal", "").strip()
-    lista[i] = lista[i].replace(")", "").strip()
-    lista[i] = lista[i].replace("'", "").strip()
-print(lista[0])
+consulta1 = "("
+for i in (["2015"]):
+    consulta1 += f" yearV={i} or"
+consulta1 = consulta1[:-2] + ") order by v.ClaveMunicipal"
 
-diccionario["m_0"]={}
-diccionario["m_0"][lista[0]]={}
-for i in range(1,18):
-    print(i)
-    diccionario["m_0"][lista[0]][PARTIDOS[i-1]]=lista[i]
+consulta = configuracion.get("consultas_buscador", "rango_id").format(inicio="15001", fin="15003")
+#print(consulta+consulta1)
+respuesta = conn.consultar_db(consulta+consulta1)
+#print(respuesta[31][2])
 
-print(diccionario)
+def encontrar(respuesta):
+    municipio_actual = respuesta[0][0]
+    municipios = []
+    secciones = []
+    contador = 0
+    municipios.append(municipio_actual)
+    for i in range(len(respuesta)):
+        if(municipio_actual == respuesta[i][0]):
+            contador += 1
+        else:
+            secciones.append(contador)
+            municipio_actual = respuesta[i][0]
+            municipios.append(municipio_actual)
+            contador = 1
+    secciones.append(contador) # Agregar la última sección
+    return municipios, secciones
+
+print(respuesta[0][1])
+
+def sep(respuesta):
+    municipios, secciones = encontrar(respuesta)
+    contador = 0
+    diccionario = {}
+    aux = 1
+    for municipio in municipios:
+        diccionario[municipio] = {}
+        while(aux <= len(PARTIDOS)):
+            diccionario[municipio][PARTIDOS[aux-1]] = []
+            for seccion in range(1,secciones[contador]+1):
+                if(respuesta[seccion-1][aux] == None):
+                    diccionario[municipio][PARTIDOS[aux-1]].append(0)
+                else:
+                    diccionario[municipio][PARTIDOS[aux-1]].append(respuesta[seccion-1][aux])
+            aux+=1
+        aux=0
+        contador += 1
+    
+    return diccionario
+
+def separa(respuesta):
+    municipios = encontrar(respuesta)
+    diccionario_m = {}
+    contador = 0
+    for municipio in municipios["municipios"]:
+        diccionario_m[municipio] = {}
+        for partido in PARTIDOS:
+            diccionario_m[municipio][partido] = []
+            for j in range(1, len(PARTIDOS) + 1):  # Corregido para incluir el último partido
+                for k in range(0,int(municipios["secciones"][contador])):
+                    if(respuesta[k][j] == None):
+                        diccionario_m[municipio][partido].append(0)
+                    else:
+                        diccionario_m[municipio][partido].append(respuesta[k][j])
+        contador += 1  # Movido al final del bucle interno
+    return diccionario_m
+
+def encontrar_municipios(respuesta):
+    """
+    encontrar saltos
+    """
+    municipio_actual = respuesta[0][0]
+    saltos = {}
+    contador = 0
+    salto = 0
+    for i in range(len(respuesta)):
+        aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
+        print(f"i:{aux}")
+        if(municipio_actual == respuesta[i][0]):
+            contador += 1
+            print(respuesta[i][0])
+        else:
+            contador += 1
+            saltos = []
+            saltos = {
+                "municipio": municipio_actual,
+                "secciones":contador
+            }
+            contador = 0
+            municipio_actual = respuesta[i][0]
+            salto += 1
+    return saltos
+
+print(encontrar(respuesta))
+
+print(sep(respuesta)["ACAMBAY DE RUÍZ CASTAÑEDA"]["MORENA"])
+# lista = encontrar(respuesta)
+# for i in lista:
+#     for j in range(len(respuesta)):
+#         print(respuesta[j][0].count(i))
+#print(separa(respuesta)["ACAMBAY DE RUÍZ CASTAÑEDA"]["PAN"])
+#print(encontrar_municipios(respuesta))
+# cadena = ','.join(str(elem) for elem in respuesta)
+# lista = cadena.split(',')
+# for i in range(len(lista)):
+#     lista[i] = lista[i].replace("(", "").strip()
+#     lista[i] = lista[i].replace("Decimal", "").strip()
+#     lista[i] = lista[i].replace(")", "").strip()
+#     lista[i] = lista[i].replace("'", "").strip()
+# print(lista[0])
+
+# diccionario["m_0"]={}
+# diccionario["m_0"][lista[0]]={}
+# for i in range(1,18):
+#     print(i)
+#     diccionario["m_0"][lista[0]][PARTIDOS[i-1]]=lista[i]
+
+# print(diccionario)
 
 """
 encontrar saltos
