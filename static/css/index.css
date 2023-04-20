@@ -43,10 +43,12 @@ body {
 .titulo1 h1{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 40px;
-    position: relative;
-    background-color: #0A9292;
     color: #fff;
     margin: 0;
+    position: relative;
+    top: -40px;
+    margin-left: 25%;
+    width: 50%;
 }
 
 .filtro2{
@@ -153,3 +155,23 @@ input[type="checkbox"]:checked + label {
     position: relative;
     width: 50%;
 }
+
+.buttons-con .action-link-wrap {
+    margin-bottom: 1%;
+    margin-right: 90%;
+  }
+  .buttons-con .action-link-wrap a {
+    background: #0453A5;
+    padding: 8px 25px;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .buttons-con .action-link-wrap a:hover {
+    background: #0C3258;
+    color: #fff;
+  }
