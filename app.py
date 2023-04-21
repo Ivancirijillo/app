@@ -172,16 +172,18 @@ def consultas_buscador():
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
         fin = int(js["datos"][1])
-        consulta1 = crear_consulta(js)
 
-        consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin) if(15000 < inicio < 15126) else configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
-        print(consulta)
-        respuesta = conn.consultar_db(consulta)
-        diccionario = separar_por_partido(respuesta)
-        # lista.append(eliminar_decimal(respuesta))
-        # diccionario = crear_diccionario(lista,diccionario)
+        if(15000 < inicio < 15126):
+            consulta1 = crear_consulta(js)
+            consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin)
+            respuesta = conn.consultar_db(consulta+consulta1)
+            diccionario = separar_por_partido(respuesta)
+        else:
+            consulta = configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
+            print(consulta)
+            respuesta = conn.consultar_db(consulta)
+            diccionario = separar_por_partido(respuesta)
        
-
     elif(js["tipo"] == "nombre"):
         
         consulta1 = crear_consulta(js)

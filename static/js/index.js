@@ -293,37 +293,42 @@ function crear_grafica(data_s, tipo){
     let partidos = [];
     let votos = [];
     if(tipo == RANGO){
-        let municipio = Object.keys(data_s);
-        const mu = toString(municipio[0])
-        console.log(mu.includes("1"))
-        const contieneNumero = NUMEROS.some(numero => Object.keys(data_s)[0].includes(numero));
-        console.log(contieneNumero)
-        //if(sub_tipo.some(item=>{item.includes()}))
-        for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
-            partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
-            votos.push([])
-            for (let j = 0; j < PARTIDOS.length; j++) {
-                votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
-            } 
-        }
-        let aux = 0;
-        while(partidos.length > aux){
-            lista_partidos.push([]);
-            for(let i = 0;i<PARTIDOS.length;i++){
-                let data = (votos[aux][i].reduce((total, num)=>total+num,0));
-                lista_partidos[aux].push(data)
+        let municipio = Object.keys(data_s.datos)[0];
+        let contieneNumero = NUMEROS.some(numero => municipio.includes(numero));
+        if(contieneNumero){
+            municipios = Object.keys(data_s.datos)
+            municipios.forEach((item)=>{
+                lista_partidos.push(data_s.datos[item]);
+            });
+            console.log(lista_partidos);
+        } else{
+            for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
+                partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
+                votos.push([])
+                for (let j = 0; j < PARTIDOS.length; j++) {
+                    votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
+                } 
             }
-            aux++;
+            let aux = 0;
+            while(partidos.length > aux){
+                lista_partidos.push([]);
+                for(let i = 0;i<PARTIDOS.length;i++){
+                    let data = (votos[aux][i].reduce((total, num)=>total+num,0));
+                    lista_partidos[aux].push(data)
+                }
+                aux++;
+            }
+            console.log(municipios[0]);
+            console.log(lista_partidos);
         }
-        console.log(municipios[0]);
-        console.log(lista_partidos);
+
     } else if(tipo == NOMBRE){
         municipios = Object.keys(data_s.datos)
         municipios.forEach((item)=>{
             lista_partidos.push(data_s.datos[item]);
         });
-        console.log(municipios);
-        console.log(lista_partidos);
+        // console.log(municipios);
+        // console.log(lista_partidos);
     }
     
 
