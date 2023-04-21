@@ -42,6 +42,7 @@
 const VARIOS = "varios";
 const RANGO = "rango";
 const NOMBRE = "nombre";
+const TODO = "todo";
 //expresiones
 const ID_MUNICIPIO = /^15(?:0[0-9][0-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/;
 const NOMBRE_MUNICIPIO = /^[a-zA-Z\s]{6,20}$/;
@@ -58,33 +59,23 @@ boton_buscador.disabled = true
 
 boton.addEventListener("click",(e)=>{
     e.preventDefault()
-    let municipios = document.querySelectorAll(".municipio")
-    let municipioP = []
-    
-    
+    let municipios = document.querySelectorAll(".municipio");
+    let municipioP = [];
     municipios.forEach(municipio => {
         if (municipio.checked){ 
             municipioP.push(municipio.getAttribute("value"))
         }
     });
 
-    let data = { municipio: municipioP};
-
-    fetch('/consulta-municipio', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+    json = {
+        tipo: NOMBRE,
+        datos: municipioP[0],
+        years: [2015,2017,2018,2021]
+    }
+    enviar_datos(json)
+    .then(data=>{
+        crear_grafica(data, NOMBRE);
     })
-    .then(response => response.json())
-    .then(data => {
-        let grafica = document.querySelector(".graficas")
-        let img = document.createElement("img")
-        img.setAttribute("src", "/static/imgs/"+`${data["nombre_grafica"]}`)
-        grafica.appendChild(img)
-        console.log(data["ruta"]);
-    });
 });
 
 //FUNCION DEL BOTON MOSTRAR Y OCULTAR
