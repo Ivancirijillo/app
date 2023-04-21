@@ -46,7 +46,7 @@ function ventana_carga(){
         //funcion ventana
         document.getElementById('enc').classList.remove('active');
         document.getElementById('pop').classList.remove('active');
-    }, 2000);
+    }, 1000);
 }
 
 
