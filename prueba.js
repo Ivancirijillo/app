@@ -79,18 +79,18 @@ function validarEntradaUsuario(entrada) {
   let mensaje1 = "QWERTQ";
   console.log(expresion1.test(mensaje1))
 
-  //NUMEROS DEL 1-6498
-  let expresion2 = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8])(?:,(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8]))*(?:-(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8]))?$/;
-  let mensaje2 = "1-6500";
+  //NUMEROS DEL 1-6637
+  let expresion2 = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9])(?:,(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9]))*(?:-(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9]))?$/;
+  let mensaje2 = "1-6599";
   console.log(expresion2.test(mensaje2))
 
-//let cadena = "ACAMBAY DE RUÍZ CASTAÑEDA. SECCION: 33";
-const numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-//const contieneNumero = numeros.some(numero => cadena.includes(numero));
+// //let cadena = "ACAMBAY DE RUÍZ CASTAÑEDA. SECCION: 33";
+// const numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+// //const contieneNumero = numeros.some(numero => cadena.includes(numero));
 
-const cadena = "ACAMBAY DE RUÍZ CASTAÑEDA. SECCION: 1";
-const contieneNumero = /[0-9]/.test(cadena);
-console.log(contieneNumero); // true
+// const cadena = "ACAMBAY DE RUÍZ CASTAÑEDA. SECCION: 1";
+// const contieneNumero = /[0-9]/.test(cadena);
+// console.log(contieneNumero); // true
 
 
-console.log(contieneNumero);
+// console.log(contieneNumero);
