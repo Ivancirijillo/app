@@ -57,10 +57,11 @@ const NOMBRE = "nombre";
 //expresiones
 const ID_MUNICIPIO = /^15(?:0[0-9][0-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/;
 const NOMBRE_MUNICIPIO = /^[a-zA-Z\s]{6,20}$/;
-const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-8])$/;
+const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8])(?:,(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8]))*(?:-(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8]))?$/;
 //arregos
-const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
-const COLORES = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "yellow", "aqua", "black"];
+const PARTIDOS= ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
+const COLORES = ["#0453A5", "#FF0108","#FFB928", "#FD4146", "#00C65C", "#FF7400",   "#33BDBD", "#BA0005",  "#B632BF", "#FF018C", "#DC3892",    "#72017A", "#FF9945", "#FD4146", "#EF7CBB", "#6BDBDB", "#BB9A00" ];
+const NUMEROS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
@@ -306,31 +307,42 @@ function crear_grafica(data_s, tipo){
     let partidos = [];
     let votos = [];
     if(tipo == RANGO){
-        for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
-            partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
-            votos.push([])
-            for (let j = 0; j < PARTIDOS.length; j++) {
-                votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
-            } 
-        }
-        let aux = 0;
-        while(partidos.length > aux){
-            lista_partidos.push([]);
-            for(let i = 0;i<PARTIDOS.length;i++){
-                let data = (votos[aux][i].reduce((total, num)=>total+num,0));
-                lista_partidos[aux].push(data)
+        let municipio = Object.keys(data_s.datos)[0];
+        let contieneNumero = NUMEROS.some(numero => municipio.includes(numero));
+        if(contieneNumero){
+            municipios = Object.keys(data_s.datos)
+            municipios.forEach((item)=>{
+                lista_partidos.push(data_s.datos[item]);
+            });
+            console.log(lista_partidos);
+        } else{
+            for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
+                partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
+                votos.push([])
+                for (let j = 0; j < PARTIDOS.length; j++) {
+                    votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
+                } 
             }
-            aux++;
+            let aux = 0;
+            while(partidos.length > aux){
+                lista_partidos.push([]);
+                for(let i = 0;i<PARTIDOS.length;i++){
+                    let data = (votos[aux][i].reduce((total, num)=>total+num,0));
+                    lista_partidos[aux].push(data)
+                }
+                aux++;
+            }
+            console.log(municipios[0]);
+            console.log(lista_partidos);
         }
-        console.log(municipios[0]);
-        console.log(lista_partidos);
+
     } else if(tipo == NOMBRE){
         municipios = Object.keys(data_s.datos)
         municipios.forEach((item)=>{
             lista_partidos.push(data_s.datos[item]);
         });
-        console.log(municipios);
-        console.log(lista_partidos);
+        // console.log(municipios);
+        // console.log(lista_partidos);
     }
     
 
