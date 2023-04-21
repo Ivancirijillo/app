@@ -38,6 +38,18 @@
 //      elem.msRequestFullscreen();
 // }
 
+function ventana_carga(){
+    document.getElementById('enc').style.background = 'rgba(0,0,0,0.4)';
+    document.getElementById('enc').classList.add('active');
+    document.getElementById('pop').classList.add('active');
+    setTimeout(() =>{
+        //funcion ventana
+        document.getElementById('enc').classList.remove('active');
+        document.getElementById('pop').classList.remove('active');
+    }, 2000);
+}
+
+
 //tipos
 const VARIOS = "varios";
 const RANGO = "rango";
@@ -60,6 +72,7 @@ boton.addEventListener("click",(e)=>{
     let municipios = document.querySelectorAll(".municipio")
     let municipioP = []
     
+    ventana_carga();
     
     municipios.forEach(municipio => {
         if (municipio.checked){ 
@@ -127,6 +140,7 @@ buscador.addEventListener("blur",(e)=>{
 
 
 boton_buscador.addEventListener("click", (e)=>{
+    ventana_carga();
     e.preventDefault();
     let cbox = document.querySelectorAll(".cbox");
     let pass = Array.from(cbox).some((item)=>{
