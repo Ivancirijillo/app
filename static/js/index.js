@@ -402,3 +402,23 @@ const inputB = document.getElementById('Ibuscador');
 document.getElementById('BLimpiar').addEventListener('click', function() {
     inputB.value= "";
 })
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const sectionPosition = section.offsetTop;
+    setTimeout(function() {
+        window.scrollTo({
+            top: sectionPosition,
+            behavior: 'smooth'
+        });
+    }, 1000);
+  }
+
+  function scrollPariba(sectionId) {
+    const section = document.getElementById(sectionId);
+    const sectionPosition = section.offsetTop;
+    window.scrollTo({
+        top: sectionPosition,
+        behavior: 'smooth'
+    });
+  }

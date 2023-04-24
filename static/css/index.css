@@ -127,20 +127,36 @@ body {
 	cursor: pointer;
 	text-transform: uppercase;
 }
-
 /* .mostrarM,
 .Blimpiar,
 .Glineas{
   margin-left: 1%;
 } */
-
+.BSubir{
+	background-color: #fff; 
+	color: #000;
+	border-radius: 5px;
+	font-size: 16px;
+	transition-duration: 0.4s;
+	cursor: pointer;
+	text-transform: uppercase;
+}
 .Bbuscar:hover, 
 .buscar:hover,
 .opc_municipios button:hover,
 .Blimpiar:hover,
-.Glineas:hover{
+.Glineas:hover,
+.BSubir:hover{
 	background-color: #0453A5;
 	color: #fff;   
+}
+
+.BSubir {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  transform: rotate(270deg);
 }
 
 /*input buscar */
@@ -338,7 +354,7 @@ body {
     
     flex-wrap: wrap;
     background-color: #33BDBD;
-
+    border-radius: 10px;
     transition: 1s ease all;
     overflow-y: scroll;
     z-index: 5;
