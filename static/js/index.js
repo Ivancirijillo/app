@@ -99,11 +99,13 @@ let isClicked = true
 
 let mostrarocultar = function(){
     if(isClicked){
-        contenedordiv.style.display = 'flex'
-        isClicked = false
+        contenedordiv.style.display = 'flex';
+        isClicked = false;
+        boton_buscador.disabled = false;
+        boton_buscador.style.borderColor = "#0453a5";
     }else{
-        contenedordiv.style.display = 'none'
-        isClicked = true
+        contenedordiv.style.display = 'none';
+        isClicked = true;
     }
 }
 
