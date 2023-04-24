@@ -408,7 +408,7 @@ body {
      /*----------------- estilos de checkbox -------------------*/
     
      .yearV {
-      height: 15%;
+      height: 80px;
       position: relative;
       font-family: monospace;
       background-color: #0A9292;
