@@ -203,33 +203,9 @@ function analizar_datos(){
                     }
                     aux++;
                 }
-                console.log(votos_suma);
+
                 
-                // for(let i = 0;i<lista.length;i++){
-                //     graficas[lista[i]] = {};
-                //     for(let j = 0; j < PARTIDOS.length;j++){
-
-                        // let label =  PARTIDOS[j];
-                        // let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
-                        //let data = parseInt(arr).reduce((total,num)=>total + num, 0)
-                        // let arr = (data.reduce((total, num)=>total+num,0))
-                        // let background =  "red";
-                        // console.log(arr)
-                        //datasets.push({label, data, background})
-
-                        // graficas[lista[i]]["id"] = lista[i];
-                        // graficas[lista[i]]["tipo"] = "bar";
-                        // graficas[lista[i]]["etiquetas"] = PARTIDOS;
-                        // //graficas[lista[i]]["datasets"] = datasets;
-                        // graficas[lista[i]]["options"] = {}
-                        // graficas[lista[i]]["options"]["title"] = {} 
-                        // graficas[lista[i]]["options"]["title"]["display"] = "true";
-                        // graficas[lista[i]]["options"]["title"]["text"] = lista[i];
-                        // graficas[lista[i]]["options"]["title"]["fontSize"] = 28;
-                        //console.log(data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]])
-                //     }
-                // }
-                console.log(datasets)
+                console.log(datasets);
                 let fragmento = document.createDocumentFragment();
                 for(let i = 0; i < lista.length; i++){
                     let canvas = document.createElement("canvas");
