@@ -53,42 +53,43 @@ body {
     width: 50%;
 }
 
-/* .filtro2{
+  /* .filtro2{
     position: relative;
     width: 90%;
     max-width: 90%;
-    height: 80%;
-    max-height: 80%;
+    height: 50%;
+    max-height: 50%;
     display: flex;
     justify-content: center;
     align-items: start;
     flex-direction: column;
     flex-wrap: wrap;
     color: black;
-    border-color: 5px solid black;
     background-color: #fff;
-    box-shadow: inset 100px, 20px, 50px, rgb(0, 0, 0);
-    
+    margin: 0 auto;
     gap: 1.5%;
+    margin-left: 5%;
+      
+    border-radius: 7px;
+    transition: 1s ease all;
+    overflow-y: scroll;
+    z-index: 5;
 
-    /* left: 50%;
+    left: 50%;
     top: 10%;
     transform: translatey(-50%);
     transform: translateX(-50%); 
-  } */
+  }  */
 
   /*BOTON MONSTRAR MUNICIPIOS */
 .ContenidoPrincipal{
+  display: none;
     position: relative;
     align-content: center;
-    width: 90%;
-    max-width: 90%;
-    height: 90%;
-    max-height: 100%;
-    display: none;
+    height: 55%;
+    max-height: 55%;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 1%;
+    /* background-color: #0A9292; */
 }
 
 .buscar{
@@ -97,9 +98,22 @@ body {
 }
  /*BOTON buscar */
 .buscador, 
-.yearV{    
+.yearV,
+.botonMostar,
+.botonGraficas{    
 	background-color: #0A9292;
+  height: 8%;
 }
+
+/* .buscador .Blimpiar{
+  border-radius: 0 100px 0 0;
+}
+.botonGraficas .Glineas{
+  border-radius: 0 0 100px 0;
+}
+.botonGraficas .Bbuscar{
+  border-radius: 0 0 0 100px;
+} */
 
 input[type="checkbox"] + label {
     color: #fff; 
@@ -114,7 +128,10 @@ input[type="checkbox"]:checked + label {
 
 .Bbuscar, 
 .mostrarM,
-.buscar{
+.buscar,
+.opc_municipios button,
+.Blimpiar,
+.Glineas{
 	background-color: #fff; 
 	color: #000;
 	border-radius: 5px;
@@ -125,9 +142,18 @@ input[type="checkbox"]:checked + label {
 	text-transform: uppercase;
 }
 
+/* .mostrarM,
+.Blimpiar,
+.Glineas{
+  margin-left: 1%;
+} */
+
 .Bbuscar:hover, 
 .mostrarM:hover,
-.buscar:hover{
+.buscar:hover,
+.opc_municipios button:hover,
+.Blimpiar:hover,
+.Glineas:hover{
 	background-color: #0453A5;
 	color: #fff;   
 }
@@ -135,14 +161,15 @@ input[type="checkbox"]:checked + label {
 /*input buscar */
 
 .Ibuscar{
-    width: 20%;
-    height: 35px;
-    padding-left: 15px;
-    border: none;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    background: #33BDBD;
-    outline: none;
+  width: 20%;
+  height: 35px;
+  padding-left: 15px;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background: #33BDBD;
+  outline: none;   
+  /* border-radius: 100px 0 0 0; */
 }
 
 /* graficas */
@@ -300,26 +327,32 @@ input[type="checkbox"]:checked + label {
   
 
   /*----------------- estilos de radio buttons -------------------*/
-  .inputGroup {
-    width: 90%;
-    height: 80%;
-    max-width: 90%;
-    max-height: 80%;
-    display: flex ;
+
+  /*.inputGroup {
+    width: 92%;
+    max-width: 92%;
+    height: 70%;
+    max-height: 70%;
     flex-direction: column;
+    margin: 0 auto;
+    
+    justify-content: center;
     align-items: center;
-    align-content: center;
-    justify-content: start;
+    
     flex-wrap: wrap;
-    background-color: #fff;
-    display:block;
-    margin: 10px 0;
-    position: relative;
+    background-color: #33BDBD;
+
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    transition: 1s ease all;
+    overflow-y: scroll;
+    z-index: 5;
   }
   
   .inputGroup label {
-    padding: 12px 30px;
-    /* width: 100%; */
+    padding: 12px;
     display: block;
     text-align: left;
     color: #3C454C;
@@ -328,6 +361,7 @@ input[type="checkbox"]:checked + label {
     z-index: 2;
     transition: color 200ms ease-in;
     overflow: hidden;
+    background-color: #fff;
   }
   
   .inputGroup label:before {
@@ -335,7 +369,7 @@ input[type="checkbox"]:checked + label {
     height: 10px;
     border-radius: 50%;
     content: '';
-    background-color: #5562eb;
+    background-color: #0453A5;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -349,7 +383,7 @@ input[type="checkbox"]:checked + label {
     width: 32px;
     height: 32px;
     content: '';
-    border: 2px solid #457aa5;
+    border: 2px solid #0453A5;
     background-color: #fff;
     background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
     background-repeat: no-repeat;
@@ -374,22 +408,18 @@ input[type="checkbox"]:checked + label {
   }
   
   .inputGroup input:checked ~ label:after {
-    background-color: #54E0C7;
-    border-color: #54E0C7;
+    background-color: #33BDBD;
+    border-color: #33BDBD;
   }
   
   .inputGroup input {
-    width: 32px;
-    height: 32px;
     order: 1;
     z-index: 2;
-    position: relative;
-    right: 30px;
-    top: 50%;
+    position: absolute;
     cursor: pointer;
     visibility: hidden;
   }
-  
+  */
   /* codepen formatting */
   .form {
     padding: 0 16px;
@@ -404,26 +434,62 @@ input[type="checkbox"]:checked + label {
     box-sizing: border-box;
   }
 
-  .filtro2{
+  /* Municipios */
+
+  .opc_municipios {
+    width: 92%;
+    max-width: 92%;
+    height: 100%;
+    max-height: 100%;
+    flex-direction: column;
+    margin: 0 auto;
+    
+    justify-content: center;
+    align-items: center;
+    
+    flex-wrap: wrap;
+    background-color: #33BDBD;
+
+    transition: 1s ease all;
+    overflow-y: scroll;
+    z-index: 5;
+  }
+
+  .opc_municipios button{
     position: relative;
-    width: 90%;
-    max-width: 90%;
-    height: 80%;
-    max-height: 80%;
     display: flex;
     justify-content: center;
-    align-items: start;
     flex-direction: column;
-    flex-wrap: wrap;
-    color: black;
-    border-color: 5px solid black;
-    background-color: #fff;
-    box-shadow: inset 100px, 20px, 50px, rgb(0, 0, 0);
-    
-    gap: 1.5%;
-
-    /* left: 50%;
-    top: 10%;
-    transform: translatey(-50%);
-    transform: translateX(-50%); */
+    align-items: center;
+    margin: 0 auto 10px auto;
+    width: 80%;
+    height: 54px;
+  }
+  .opc_municipios p{
+    display: grid;
+	  grid-template-columns: repeat(5, 1fr);
   } 
+
+  /* Personalizar scrollbar */
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #6BDBDB;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #007070;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background-color: #f5f5f5;
+  }
