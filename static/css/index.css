@@ -394,3 +394,25 @@ input[type="checkbox"]:checked + label {
   ::-webkit-scrollbar-corner {
     background-color: #f5f5f5;
   }
+
+  .alerta {
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    width: 20%;
+    height: 20%;
+    background-color: #FF0108;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 999;
+    text-transform: uppercase;
+    border-radius: 30px;
+  }
+  
+  .alerta p {
+    margin-top: 20px;
+  }
