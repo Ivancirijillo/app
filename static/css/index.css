@@ -416,3 +416,69 @@ input[type="checkbox"]:checked + label {
   .alerta p {
     margin-top: 20px;
   }
+
+     /*----------------- estilos de checkbox -------------------*/
+    
+     .yearV {
+      position: relative;
+      font-family: monospace;
+      background-color: #0A9292;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2em 0;
+      z-index: -2;
+    }
+    
+    .cbox[type=checkbox]{
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+    }
+    
+    .chbox {
+      position: relative;
+      font-size: 18px;
+      margin-left: 1em;
+      padding-left: 2em;
+      padding-right: 1em;
+      line-height: 2;
+      cursor: pointer;
+      color: #fff;
+    }
+    
+    .chbox:before {
+      box-sizing: border-box;
+      content: " ";
+      position: absolute;
+      top: 0.3em;
+      left: 0;
+      display: block;
+      width: 1.2em;
+      height: 1.2em;
+      border: 2px solid #fff;
+      border-radius: 0.25em;
+      z-index: -1;
+    }
+  
+    /* Checked */
+    
+    .cbox[type=checkbox]:checked + .chbox {
+      font-weight: bold;
+      padding-left: 1em;
+      color: #fff;
+    }
+    
+    .cbox[type=checkbox]:checked + .chbox:before{
+        top: 0;
+        width: 100%;
+        height: 2em;
+        background: #0c3258b2;
+        border:0;
+  
+    }
+  
+    .chbox,
+    .chbox::before {
+      transition: .25s all ease;
+    }
