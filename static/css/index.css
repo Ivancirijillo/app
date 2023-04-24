@@ -97,8 +97,7 @@ body {
     text-align: center;
 }
  /*BOTON buscar */
-.buscador, 
-.yearV,
+.buscador,
 .botonGraficas{    
 	background-color: #0A9292;
   height: 8%;
@@ -113,17 +112,6 @@ body {
 .botonGraficas .Bbuscar{
   border-radius: 0 0 0 100px;
 } */
-
-input[type="checkbox"] + label {
-    color: #fff; 
-    line-height: 3em;
-    font-size: medium;
-    margin-right: 1%;
-}
-
-input[type="checkbox"]:checked + label {
-    font-weight: bold;
-}
 
 .Bbuscar, 
 .buscar,
@@ -420,6 +408,7 @@ input[type="checkbox"]:checked + label {
      /*----------------- estilos de checkbox -------------------*/
     
      .yearV {
+      height: 15%;
       position: relative;
       font-family: monospace;
       background-color: #0A9292;
