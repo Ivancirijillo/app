@@ -49,10 +49,10 @@
                 <input id="Ibuscador" type="text" class="Ibuscar" autofocus><button class="Blimpiar" id = "BLimpiar">Limpiar</button>
             </div>
             <div class='yearV'>
-                <input type='checkbox' class='cbox' id='y15'value='2015'><label class='chbox'> 2015</label>
-                <input type='checkbox' class='cbox' id='y17'value='2017'><label class='chbox'> 2017</label>
-                <input type='checkbox' class='cbox' id='y18'value='2018'><label class='chbox'> 2018</label>
-                <input type='checkbox' class='cbox' id='y21'value='2021'><label class='chbox'> 2021</label>
+                <input type='checkbox' class='cbox' id='y15'value='2015'><label for="y15" class='chbox'> 2015</label>
+                <input type='checkbox' class='cbox' id='y17'value='2017'><label for="y17" class='chbox'> 2017</label>
+                <input type='checkbox' class='cbox' id='y18'value='2018'><label for="y18" class='chbox'> 2018</label>
+                <input type='checkbox' class='cbox' id='y21'value='2021'><label for="y21" class='chbox'> 2021</label>
             </div>
             <div class="botonGraficas">
                 <button class="Bbuscar">Generar gráfica de barras</button> <button class="Glineas">Generar gráfica de lineas</button>
@@ -196,6 +196,13 @@
                 
             </div>
         </main>
-        <script src="{{ url_for('static', filename ='js/index.js') }}"></script>
+        <script src="{{ url_for('static', filename ='js/index.js') }}"> </script>
+        <script>             
+            // Obtener el elemento destino
+            const destino = document.getElementById("resultado");
+
+            // Desplazarse automáticamente hasta el elemento destino
+            destino.scrollIntoView({ behavior: "smooth" });
+        </script>
     </body>
 </html>
