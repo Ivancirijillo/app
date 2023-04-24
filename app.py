@@ -37,7 +37,7 @@ app = Flask(__name__)
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
 def not_found(error):
-    valio=random.randrange(0, 2, 1)
+    valio=random.randrange(0, 100000, 1)
     #(0, 1000, 1)
     if valio==0:
         pagina="Pazul.html"

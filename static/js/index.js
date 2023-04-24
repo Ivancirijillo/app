@@ -46,7 +46,7 @@ function ventana_carga(){
         //funcion ventana
         document.getElementById('enc').classList.remove('active');
         document.getElementById('pop').classList.remove('active');
-    }, 2000);
+    }, 1000);
 }
 
 
@@ -64,34 +64,35 @@ const PARTIDOS= ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "
 const COLORES = ["#0453A5", "#FF0108","#FFB928", "#FD4146", "#00C65C", "#FF7400",   "#33BDBD", "#BA0005",  "#B632BF", "#FF018C", "#DC3892",    "#72017A", "#FF9945", "#FD4146", "#EF7CBB", "#6BDBDB", "#BB9A00" ];
 const NUMEROS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-let boton = document.querySelector(".buscar")
+//let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
 let boton_buscador = document.querySelector(".Bbuscar")
+let botones_rapidos = document.querySelectorAll(".sRapida")
 boton_buscador.disabled = true
 
-boton.addEventListener("click",(e)=>{
-    e.preventDefault()
-    let municipios = document.querySelectorAll(".municipio")
-    let municipioP = [];
+// boton.addEventListener("click",(e)=>{
+//     e.preventDefault()
+//     let municipios = document.querySelectorAll(".municipio")
+//     let municipioP = [];
     
-    ventana_carga();
+//     ventana_carga();
     
-    municipios.forEach(municipio => {
-        if (municipio.checked){ 
-            municipioP.push(municipio.getAttribute("value"))
-        }
-    });
+//     municipios.forEach(municipio => {
+//         if (municipio.checked){ 
+//             municipioP.push(municipio.getAttribute("value"))
+//         }
+//     });
 
-    json = {
-        tipo: NOMBRE,
-        datos: municipioP[0],
-        years: [2015,2017,2018,2021]
-    }
-    enviar_datos(json)
-    .then(data=>{
-        crear_grafica(data, NOMBRE);
-    })
-});
+//     json = {
+//         tipo: NOMBRE,
+//         datos: municipioP[0],
+//         years: [2015,2017,2018,2021]
+//     }
+//     enviar_datos(json)
+//     .then(data=>{
+//         crear_grafica(data, NOMBRE);
+//     })
+// });
 
 //FUNCION DEL BOTON MOSTRAR Y OCULTAR
 const contenedordiv = document.querySelector('#mostrar')
@@ -99,13 +100,32 @@ let isClicked = true
 
 let mostrarocultar = function(){
     if(isClicked){
-        contenedordiv.style.display = 'flex'
-        isClicked = false
+        contenedordiv.style.display = 'flex';
+        isClicked = false;
+        // boton_buscador.disabled = false;
+        // boton_buscador.style.borderColor = "#0453a5";
     }else{
-        contenedordiv.style.display = 'none'
-        isClicked = true
+        contenedordiv.style.display = 'none';
+        isClicked = true;
     }
 }
+
+botones_rapidos.forEach(element => {
+    element.addEventListener("click",(e)=>{
+        e.preventDefault();
+        if (buscador.value==""){
+            buscador.value = element.getAttribute("id");
+            boton_buscador.disabled = false;
+            boton_buscador.style.borderColor = "#0453A5";
+        }
+        else if (buscador.value!=""){
+            buscador.value += ","+element.getAttribute("id");
+            boton_buscador.disabled = false;
+            boton_buscador.style.borderColor = "#0453A5";
+        }
+        mostrarocultar();
+    });
+});
 
 //eventos de validacion
 buscador.addEventListener("input",(e)=>{
@@ -203,33 +223,9 @@ function analizar_datos(){
                     }
                     aux++;
                 }
-                console.log(votos_suma);
+
                 
-                // for(let i = 0;i<lista.length;i++){
-                //     graficas[lista[i]] = {};
-                //     for(let j = 0; j < PARTIDOS.length;j++){
-
-                        // let label =  PARTIDOS[j];
-                        // let data = data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]];
-                        //let data = parseInt(arr).reduce((total,num)=>total + num, 0)
-                        // let arr = (data.reduce((total, num)=>total+num,0))
-                        // let background =  "red";
-                        // console.log(arr)
-                        //datasets.push({label, data, background})
-
-                        // graficas[lista[i]]["id"] = lista[i];
-                        // graficas[lista[i]]["tipo"] = "bar";
-                        // graficas[lista[i]]["etiquetas"] = PARTIDOS;
-                        // //graficas[lista[i]]["datasets"] = datasets;
-                        // graficas[lista[i]]["options"] = {}
-                        // graficas[lista[i]]["options"]["title"] = {} 
-                        // graficas[lista[i]]["options"]["title"]["display"] = "true";
-                        // graficas[lista[i]]["options"]["title"]["text"] = lista[i];
-                        // graficas[lista[i]]["options"]["title"]["fontSize"] = 28;
-                        //console.log(data_s.datos[`m_${i}`][lista[i]][PARTIDOS[j]])
-                //     }
-                // }
-                console.log(datasets)
+                console.log(datasets);
                 let fragmento = document.createDocumentFragment();
                 for(let i = 0; i < lista.length; i++){
                     let canvas = document.createElement("canvas");
@@ -384,7 +380,10 @@ function obtener_years(){
     return listayear;
 }
 
-//bloquear click derecho
-// document.addEventListener("contextmenu", function(event){
-//     event.preventDefault();
-// });
+//llenar imput
+const inputB = document.getElementById('Ibuscador');
+
+//limpiar
+document.getElementById('BLimpiar').addEventListener('click', function() {
+    inputB.value= "";
+})
