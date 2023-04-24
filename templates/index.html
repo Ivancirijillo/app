@@ -41,150 +41,153 @@
                 </div>
                 <h1>SELECCIONE EL MUNICIPIO</h1>                
             </div>
+            <div class="buscador">
+                <br/>
+                <input id="Ibuscador" type="text" class="Ibuscar" autofocus><button class="Blimpiar" id = "BLimpiar">Limpiar</button>
+            </div>
             <div class='yearV'>
                 <input type='checkbox' class='cbox' id='y15'value='2015'><label class='chbox'> 2015</label>
                 <input type='checkbox' class='cbox' id='y17'value='2017'><label class='chbox'> 2017</label>
                 <input type='checkbox' class='cbox' id='y18'value='2018'><label class='chbox'> 2018</label>
                 <input type='checkbox' class='cbox' id='y21'value='2021'><label class='chbox'> 2021</label>
             </div>
-            <div class="buscador">
-                <br/>
-                <input type="text" class="Ibuscar" autofocus> <button class="Bbuscar">Buscar</button>
+            <div class="botonGraficas">
+                <button class="Bbuscar">Generar gráfica de barras</button> <button class="Glineas">Generar gráfica de lineas</button>
             </div>
-            <br/>
-            <button onclick="mostrarocultar()" class="mostrarM">Mostrar Municipios</button>
+            <div class="botonMostar">
+                <button onclick="mostrarocultar()" class="mostrarM">Mostrar Municipios</button>
+            </div>
             <div id="mostrar" class="ContenidoPrincipal">
-                <div class="filtro2">
-                    <i><input type = 'radio' value='15001' id='ACAMBAY DE RUÍZ CASTAÑEDA' class='municipio' name='municipio'/><label for='ACAMBAY DE RUÍZ CASTAÑEDA' > ACAMBAY DE RUÍZ CASTAÑEDA </label></i>
-                    <i><input type = 'radio' value='15002' id='ACOLMAN' class='municipio' name='municipio'/><label for='ACOLMAN' > ACOLMAN </label></i>
-                    <i><input type = 'radio' value='15003' id='ACULCO' class='municipio' name='municipio'/><label for='ACULCO' > ACULCO </label></i>
-                    <i><input type = 'radio' value='15004' id='ALMOLOYA DE ALQUISIRAS' class='municipio' name='municipio'/><label for='ALMOLOYA DE ALQUISIRAS' > ALMOLOYA DE ALQUISIRAS </label></i>
-                    <i><input type = 'radio' value='15005' id='ALMOLOYA DE JUÁREZ' class='municipio' name='municipio'/><label for='ALMOLOYA DE JUÁREZ' > ALMOLOYA DE JUÁREZ </label></i>
-                    <i><input type = 'radio' value='15006' id='ALMOLOYA DEL RÍO' class='municipio' name='municipio'/><label for='ALMOLOYA DEL RÍO' > ALMOLOYA DEL RÍO </label></i>
-                    <i><input type = 'radio' value='15007' id='AMANALCO' class='municipio' name='municipio'/><label for='AMANALCO' > AMANALCO </label></i>
-                    <i><input type = 'radio' value='15008' id='AMATEPEC' class='municipio' name='municipio'/><label for='AMATEPEC' > AMATEPEC </label></i>
-                    <i><input type = 'radio' value='15009' id='AMECAMECA' class='municipio' name='municipio'/><label for='AMECAMECA' > AMECAMECA </label></i>
-                    <i><input type = 'radio' value='15010' id='APAXCO' class='municipio' name='municipio'/><label for='APAXCO' > APAXCO </label></i>
-                    <i><input type = 'radio' value='15011' id='ATENCO' class='municipio' name='municipio'/><label for='ATENCO' > ATENCO </label></i>
-                    <i><input type = 'radio' value='15012' id='ATIZAPÁN' class='municipio' name='municipio'/><label for='ATIZAPÁN' > ATIZAPÁN </label></i>
-                    <i><input type = 'radio' value='15013' id='ATIZAPÁN DE ZARAGOZA' class='municipio' name='municipio'/><label for='ATIZAPÁN DE ZARAGOZA' > ATIZAPÁN DE ZARAGOZA </label></i>
-                    <i><input type = 'radio' value='15014' id='ATLACOMULCO' class='municipio' name='municipio'/><label for='ATLACOMULCO' > ATLACOMULCO </label></i>
-                    <i><input type = 'radio' value='15015' id='ATLAUTLA' class='municipio' name='municipio'/><label for='ATLAUTLA' > ATLAUTLA </label></i>
-                    <i><input type = 'radio' value='15016' id='AXAPUSCO' class='municipio' name='municipio'/><label for='AXAPUSCO' > AXAPUSCO </label></i>
-                    <i><input type = 'radio' value='15017' id='AYAPANGO' class='municipio' name='municipio'/><label for='AYAPANGO' > AYAPANGO </label></i>
-                    <i><input type = 'radio' value='15018' id='CALIMAYA' class='municipio' name='municipio'/><label for='CALIMAYA' > CALIMAYA </label></i>
-                    <i><input type = 'radio' value='15019' id='CAPULHUAC' class='municipio' name='municipio'/><label for='CAPULHUAC' > CAPULHUAC </label></i>
-                    <i><input type = 'radio' value='15020' id='COACALCO DE BERRIOZÁBAL' class='municipio' name='municipio'/><label for='COACALCO DE BERRIOZÁBAL' > COACALCO DE BERRIOZÁBAL </label></i>
-                    <i><input type = 'radio' value='15021' id='COATEPEC HARINAS' class='municipio' name='municipio'/><label for='COATEPEC HARINAS' > COATEPEC HARINAS </label></i>
-                    <i><input type = 'radio' value='15022' id='COCOTITLÁN' class='municipio' name='municipio'/><label for='COCOTITLÁN' > COCOTITLÁN </label></i>
-                    <i><input type = 'radio' value='15023' id='COYOTEPEC' class='municipio' name='municipio'/><label for='COYOTEPEC' > COYOTEPEC </label></i>
-                    <i><input type = 'radio' value='15024' id='CUAUTITLÁN' class='municipio' name='municipio'/><label for='CUAUTITLÁN' > CUAUTITLÁN </label></i>
-                    <i><input type = 'radio' value='15025' id='CHALCO' class='municipio' name='municipio'/><label for='CHALCO' > CHALCO </label></i>
-                    <i><input type = 'radio' value='15026' id='CHAPA DE MOTA' class='municipio' name='municipio'/><label for='CHAPA DE MOTA' > CHAPA DE MOTA </label></i>
-                    <i><input type = 'radio' value='15027' id='CHAPULTEPEC' class='municipio' name='municipio'/><label for='CHAPULTEPEC' > CHAPULTEPEC </label></i>
-                    <i><input type = 'radio' value='15028' id='CHIAUTLA' class='municipio' name='municipio'/><label for='CHIAUTLA' > CHIAUTLA </label></i>
-                    <i><input type = 'radio' value='15029' id='CHICOLOAPAN' class='municipio' name='municipio'/><label for='CHICOLOAPAN' > CHICOLOAPAN </label></i>
-                    <i><input type = 'radio' value='15030' id='CHICONCUAC' class='municipio' name='municipio'/><label for='CHICONCUAC' > CHICONCUAC </label></i>
-                    <i><input type = 'radio' value='15031' id='CHIMALHUACÁN' class='municipio' name='municipio'/><label for='CHIMALHUACÁN' > CHIMALHUACÁN </label></i>
-                    <i><input type = 'radio' value='15032' id='DONATO GUERRA' class='municipio' name='municipio'/><label for='DONATO GUERRA' > DONATO GUERRA </label></i>
-                    <i><input type = 'radio' value='15033' id='ECATEPEC DE MORELOS' class='municipio' name='municipio'/><label for='ECATEPEC DE MORELOS' > ECATEPEC DE MORELOS </label></i>
-                    <i><input type = 'radio' value='15034' id='ECATZINGO' class='municipio' name='municipio'/><label for='ECATZINGO' > ECATZINGO </label></i>
-                    <i><input type = 'radio' value='15035' id='HUEHUETOCA' class='municipio' name='municipio'/><label for='HUEHUETOCA' > HUEHUETOCA </label></i>
-                    <i><input type = 'radio' value='15036' id='HUEYPOXTLA' class='municipio' name='municipio'/><label for='HUEYPOXTLA' > HUEYPOXTLA </label></i>
-                    <i><input type = 'radio' value='15037' id='HUIXQUILUCAN' class='municipio' name='municipio'/><label for='HUIXQUILUCAN' > HUIXQUILUCAN </label></i>
-                    <i><input type = 'radio' value='15038' id='ISIDRO FABELA' class='municipio' name='municipio'/><label for='ISIDRO FABELA' > ISIDRO FABELA </label></i>
-                    <i><input type = 'radio' value='15039' id='IXTAPALUCA' class='municipio' name='municipio'/><label for='IXTAPALUCA' > IXTAPALUCA </label></i>
-                    <i><input type = 'radio' value='15040' id='IXTAPAN DE LA SAL' class='municipio' name='municipio'/><label for='IXTAPAN DE LA SAL' > IXTAPAN DE LA SAL </label></i>
-                    <i><input type = 'radio' value='15041' id='IXTAPAN DEL ORO' class='municipio' name='municipio'/><label for='IXTAPAN DEL ORO' > IXTAPAN DEL ORO </label></i>
-                    <i><input type = 'radio' value='15042' id='IXTLAHUACA' class='municipio' name='municipio'/><label for='IXTLAHUACA' > IXTLAHUACA </label></i>
-                    <i><input type = 'radio' value='15043' id='XALATLACO' class='municipio' name='municipio'/><label for='XALATLACO' > XALATLACO </label></i>
-                    <i><input type = 'radio' value='15044' id='JALTENCO' class='municipio' name='municipio'/><label for='JALTENCO' > JALTENCO </label></i>
-                    <i><input type = 'radio' value='15045' id='JILOTEPEC' class='municipio' name='municipio'/><label for='JILOTEPEC' > JILOTEPEC </label></i>
-                    <i><input type = 'radio' value='15046' id='JILOTZINGO' class='municipio' name='municipio'/><label for='JILOTZINGO' > JILOTZINGO </label></i>
-                    <i><input type = 'radio' value='15047' id='JIQUIPILCO' class='municipio' name='municipio'/><label for='JIQUIPILCO' > JIQUIPILCO </label></i>
-                    <i><input type = 'radio' value='15048' id='JOCOTITLÁN' class='municipio' name='municipio'/><label for='JOCOTITLÁN' > JOCOTITLÁN </label></i>
-                    <i><input type = 'radio' value='15049' id='JOQUICINGO' class='municipio' name='municipio'/><label for='JOQUICINGO' > JOQUICINGO </label></i>
-                    <i><input type = 'radio' value='15050' id='JUCHITEPEC' class='municipio' name='municipio'/><label for='JUCHITEPEC' > JUCHITEPEC </label></i>
-                    <i><input type = 'radio' value='15051' id='LERMA' class='municipio' name='municipio'/><label for='LERMA' > LERMA </label></i>
-                    <i><input type = 'radio' value='15052' id='MALINALCO' class='municipio' name='municipio'/><label for='MALINALCO' > MALINALCO </label></i>
-                    <i><input type = 'radio' value='15053' id='MELCHOR OCAMPO' class='municipio' name='municipio'/><label for='MELCHOR OCAMPO' > MELCHOR OCAMPO </label></i>
-                    <i><input type = 'radio' value='15054' id='METEPEC' class='municipio' name='municipio'/><label for='METEPEC' > METEPEC </label></i>
-                    <i><input type = 'radio' value='15055' id='MEXICALTZINGO' class='municipio' name='municipio'/><label for='MEXICALTZINGO' > MEXICALTZINGO </label></i>
-                    <i><input type = 'radio' value='15056' id='MORELOS' class='municipio' name='municipio'/><label for='MORELOS' > MORELOS </label></i>
-                    <i><input type = 'radio' value='15057' id='NAUCALPAN DE JUÁREZ' class='municipio' name='municipio'/><label for='NAUCALPAN DE JUÁREZ' > NAUCALPAN DE JUÁREZ </label></i>
-                    <i><input type = 'radio' value='15058' id='NEZAHUALCÓYOTL' class='municipio' name='municipio'/><label for='NEZAHUALCÓYOTL' > NEZAHUALCÓYOTL </label></i>
-                    <i><input type = 'radio' value='15059' id='NEXTLALPAN' class='municipio' name='municipio'/><label for='NEXTLALPAN' > NEXTLALPAN </label></i>
-                    <i><input type = 'radio' value='15060' id='NICOLÁS ROMERO' class='municipio' name='municipio'/><label for='NICOLÁS ROMERO' > NICOLÁS ROMERO </label></i>
-                    <i><input type = 'radio' value='15061' id='NOPALTEPEC' class='municipio' name='municipio'/><label for='NOPALTEPEC' > NOPALTEPEC </label></i>
-                    <i><input type = 'radio' value='15062' id='OCOYOACAC' class='municipio' name='municipio'/><label for='OCOYOACAC' > OCOYOACAC </label></i>
-                    <i><input type = 'radio' value='15063' id='OCUILAN' class='municipio' name='municipio'/><label for='OCUILAN' > OCUILAN </label></i>
-                    <i><input type = 'radio' value='15064' id='EL ORO' class='municipio' name='municipio'/><label for='EL ORO' > EL ORO </label></i>
-                    <i><input type = 'radio' value='15065' id='OTUMBA' class='municipio' name='municipio'/><label for='OTUMBA' > OTUMBA </label></i>
-                    <i><input type = 'radio' value='15066' id='OTZOLOAPAN' class='municipio' name='municipio'/><label for='OTZOLOAPAN' > OTZOLOAPAN </label></i>
-                    <i><input type = 'radio' value='15067' id='OTZOLOTEPEC' class='municipio' name='municipio'/><label for='OTZOLOTEPEC' > OTZOLOTEPEC </label></i>
-                    <i><input type = 'radio' value='15068' id='OZUMBA' class='municipio' name='municipio'/><label for='OZUMBA' > OZUMBA </label></i>
-                    <i><input type = 'radio' value='15069' id='PAPALOTLA' class='municipio' name='municipio'/><label for='PAPALOTLA' > PAPALOTLA </label></i>
-                    <i><input type = 'radio' value='15070' id='LA PAZ' class='municipio' name='municipio'/><label for='LA PAZ' > LA PAZ </label></i>
-                    <i><input type = 'radio' value='15071' id='POLOTITLÁN' class='municipio' name='municipio'/><label for='POLOTITLÁN' > POLOTITLÁN </label></i>
-                    <i><input type = 'radio' value='15072' id='RAYÓN' class='municipio' name='municipio'/><label for='RAYÓN' > RAYÓN </label></i>
-                    <i><input type = 'radio' value='15073' id='SAN ANTONIO LA ISLA' class='municipio' name='municipio'/><label for='SAN ANTONIO LA ISLA' > SAN ANTONIO LA ISLA </label></i>
-                    <i><input type = 'radio' value='15074' id='SAN FELIPE DEL PROGRESO' class='municipio' name='municipio'/><label for='SAN FELIPE DEL PROGRESO' > SAN FELIPE DEL PROGRESO </label></i>
-                    <i><input type = 'radio' value='15075' id='SAN MARTÍN DE LAS PIRÁMIDES' class='municipio' name='municipio'/><label for='SAN MARTÍN DE LAS PIRÁMIDES' > SAN MARTÍN DE LAS PIRÁMIDES </label></i>
-                    <i><input type = 'radio' value='15076' id='SAN MATEO ATENCO' class='municipio' name='municipio'/><label for='SAN MATEO ATENCO' > SAN MATEO ATENCO </label></i>
-                    <i><input type = 'radio' value='15077' id='SAN SIMÓN DE GUERRERO' class='municipio' name='municipio'/><label for='SAN SIMÓN DE GUERRERO' > SAN SIMÓN DE GUERRERO </label></i>
-                    <i><input type = 'radio' value='15078' id='SANTO TOMÁS' class='municipio' name='municipio'/><label for='SANTO TOMÁS' > SANTO TOMÁS </label></i>
-                    <i><input type = 'radio' value='15079' id='SOYANIQUILPAN DE JUÁREZ' class='municipio' name='municipio'/><label for='SOYANIQUILPAN DE JUÁREZ' > SOYANIQUILPAN DE JUÁREZ </label></i>
-                    <i><input type = 'radio' value='15080' id='SULTEPEC' class='municipio' name='municipio'/><label for='SULTEPEC' > SULTEPEC </label></i>
-                    <i><input type = 'radio' value='15081' id='TECÁMAC' class='municipio' name='municipio'/><label for='TECÁMAC' > TECÁMAC </label></i>
-                    <i><input type = 'radio' value='15082' id='TEJUPILCO' class='municipio' name='municipio'/><label for='TEJUPILCO' > TEJUPILCO </label></i>
-                    <i><input type = 'radio' value='15083' id='TEMAMATLA' class='municipio' name='municipio'/><label for='TEMAMATLA' > TEMAMATLA </label></i>
-                    <i><input type = 'radio' value='15084' id='TEMASCALAPA' class='municipio' name='municipio'/><label for='TEMASCALAPA' > TEMASCALAPA </label></i>
-                    <i><input type = 'radio' value='15085' id='TEMASCALCINGO' class='municipio' name='municipio'/><label for='TEMASCALCINGO' > TEMASCALCINGO </label></i>
-                    <i><input type = 'radio' value='15086' id='TEMASCALTEPEC' class='municipio' name='municipio'/><label for='TEMASCALTEPEC' > TEMASCALTEPEC </label></i>
-                    <i><input type = 'radio' value='15087' id='TEMOAYA' class='municipio' name='municipio'/><label for='TEMOAYA' > TEMOAYA </label></i>
-                    <i><input type = 'radio' value='15088' id='TENANCINGO' class='municipio' name='municipio'/><label for='TENANCINGO' > TENANCINGO </label></i>
-                    <i><input type = 'radio' value='15089' id='TENANGO DEL AIRE' class='municipio' name='municipio'/><label for='TENANGO DEL AIRE' > TENANGO DEL AIRE </label></i>
-                    <i><input type = 'radio' value='15090' id='TENANGO DEL VALLE' class='municipio' name='municipio'/><label for='TENANGO DEL VALLE' > TENANGO DEL VALLE </label></i>
-                    <i><input type = 'radio' value='15091' id='TEOLOYUCAN' class='municipio' name='municipio'/><label for='TEOLOYUCAN' > TEOLOYUCAN </label></i>
-                    <i><input type = 'radio' value='15092' id='TEOTIHUACÁN' class='municipio' name='municipio'/><label for='TEOTIHUACÁN' > TEOTIHUACÁN </label></i>
-                    <i><input type = 'radio' value='15093' id='TEPETLAOXTOC' class='municipio' name='municipio'/><label for='TEPETLAOXTOC' > TEPETLAOXTOC </label></i>
-                    <i><input type = 'radio' value='15094' id='TEPETLIXPA' class='municipio' name='municipio'/><label for='TEPETLIXPA' > TEPETLIXPA </label></i>
-                    <i><input type = 'radio' value='15095' id='TEPOTZOTLÁN' class='municipio' name='municipio'/><label for='TEPOTZOTLÁN' > TEPOTZOTLÁN </label></i>
-                    <i><input type = 'radio' value='15096' id='TEQUIXQUIAC' class='municipio' name='municipio'/><label for='TEQUIXQUIAC' > TEQUIXQUIAC </label></i>
-                    <i><input type = 'radio' value='15097' id='TEXCALTITLÁN' class='municipio' name='municipio'/><label for='TEXCALTITLÁN' > TEXCALTITLÁN </label></i>
-                    <i><input type = 'radio' value='15098' id='TEXCALYACAC' class='municipio' name='municipio'/><label for='TEXCALYACAC' > TEXCALYACAC </label></i>
-                    <i><input type = 'radio' value='15099' id='TEXCOCO' class='municipio' name='municipio'/><label for='TEXCOCO' > TEXCOCO </label></i>
-                    <i><input type = 'radio' value='15100' id='TEZOYUCA' class='municipio' name='municipio'/><label for='TEZOYUCA' > TEZOYUCA </label></i>
-                    <i><input type = 'radio' value='15101' id='TIANGUISTENCO' class='municipio' name='municipio'/><label for='TIANGUISTENCO' > TIANGUISTENCO </label></i>
-                    <i><input type = 'radio' value='15102' id='TIMILPAN' class='municipio' name='municipio'/><label for='TIMILPAN' > TIMILPAN </label></i>
-                    <i><input type = 'radio' value='15103' id='TLALMANALCO' class='municipio' name='municipio'/><label for='TLALMANALCO' > TLALMANALCO </label></i>
-                    <i><input type = 'radio' value='15104' id='TLALNEPANTLA DE BAZ' class='municipio' name='municipio'/><label for='TLALNEPANTLA DE BAZ' > TLALNEPANTLA DE BAZ </label></i>
-                    <i><input type = 'radio' value='15105' id='TLATLAYA' class='municipio' name='municipio'/><label for='TLATLAYA' > TLATLAYA </label></i>
-                    <i><input type = 'radio' value='15106' id='TOLUCA' class='municipio' name='municipio'/><label for='TOLUCA' > TOLUCA </label></i>
-                    <i><input type = 'radio' value='15107' id='TONATICO' class='municipio' name='municipio'/><label for='TONATICO' > TONATICO </label></i>
-                    <i><input type = 'radio' value='15108' id='TULTEPEC' class='municipio' name='municipio'/><label for='TULTEPEC' > TULTEPEC </label></i>
-                    <i><input type = 'radio' value='15109' id='TULTITLÁN' class='municipio' name='municipio'/><label for='TULTITLÁN' > TULTITLÁN </label></i>
-                    <i><input type = 'radio' value='15110' id='VALLE DE BRAVO' class='municipio' name='municipio'/><label for='VALLE DE BRAVO' > VALLE DE BRAVO </label></i>
-                    <i><input type = 'radio' value='15111' id='VILLA DE ALLENDE' class='municipio' name='municipio'/><label for='VILLA DE ALLENDE' > VILLA DE ALLENDE </label></i>
-                    <i><input type = 'radio' value='15112' id='VILLA DEL CARBÓN' class='municipio' name='municipio'/><label for='VILLA DEL CARBÓN' > VILLA DEL CARBÓN </label></i>
-                    <i><input type = 'radio' value='15113' id='VILLA GUERRERO' class='municipio' name='municipio'/><label for='VILLA GUERRERO' > VILLA GUERRERO </label></i>
-                    <i><input type = 'radio' value='15114' id='VILLA VICTORIA' class='municipio' name='municipio'/><label for='VILLA VICTORIA' > VILLA VICTORIA </label></i>
-                    <i><input type = 'radio' value='15115' id='XONACATLÁN' class='municipio' name='municipio'/><label for='XONACATLÁN' > XONACATLÁN </label></i>
-                    <i><input type = 'radio' value='15116' id='ZACAZONAPAN' class='municipio' name='municipio'/><label for='ZACAZONAPAN' > ZACAZONAPAN </label></i>
-                    <i><input type = 'radio' value='15117' id='ZACUALPAN' class='municipio' name='municipio'/><label for='ZACUALPAN' > ZACUALPAN </label></i>
-                    <i><input type = 'radio' value='15118' id='ZINACANTEPEC' class='municipio' name='municipio'/><label for='ZINACANTEPEC' > ZINACANTEPEC </label></i>
-                    <i><input type = 'radio' value='15119' id='ZUMPAHUACÁN' class='municipio' name='municipio'/><label for='ZUMPAHUACÁN' > ZUMPAHUACÁN </label></i>
-                    <i><input type = 'radio' value='15120' id='ZUMPANGO' class='municipio' name='municipio'/><label for='ZUMPANGO' > ZUMPANGO </label></i>
-                    <i><input type = 'radio' value='15121' id='CUAUTITLÁN IZCALLI' class='municipio' name='municipio'/><label for='CUAUTITLÁN IZCALLI' > CUAUTITLÁN IZCALLI </label></i>
-                    <i><input type = 'radio' value='15122' id='VALLE DE CHALCO SOLIDARIDAD' class='municipio' name='municipio'/><label for='VALLE DE CHALCO SOLIDARIDAD' > VALLE DE CHALCO SOLIDARIDAD </label></i>
-                    <i><input type = 'radio' value='15123' id='LUVIANOS' class='municipio' name='municipio'/><label for='LUVIANOS' > LUVIANOS </label></i>
-                    <i><input type = 'radio' value='15124' id='SAN JOSÉ DEL RINCÓN' class='municipio' name='municipio'/><label for='SAN JOSÉ DEL RINCÓN' > SAN JOSÉ DEL RINCÓN </label></i>
-                    <i><input type = 'radio' value='15125' id='TONANITLA' class='municipio' name='municipio'/><label for='TONANITLA' > TONANITLA </label></i>
+                <div class="opc_municipios">
+            <br/>
+                    <p>
+                        <button class="opc_acambay" id="opc_acambay">Acambay</button>
+                        <button class="opc_Acol" id="opc_Acol">Acolman</button>
+                        <button class="opc_Acul" id="opc_Acul">Aculco</button>
+                        <button class="opc_AlmodA" id="opc_AlmodA">Almoloya de Alquisiras</button>
+                        <button class="opc_AlmodJ" id="opc_AlmodJ">Almoloya de Juárez</button>
+                        <button class="opc_AlmodR" id="opc_AlmodR">Almoloya del Río</button>
+                        <button class="opc_Amana" id="opc_Amana">Amanalco</button>
+                        <button class="opc_Amate" id="opc_Amate">Amatepec</button>
+                        <button class="opc_Amecame" id="opc_Amecame">Amecameca</button>
+                        <button class="opc_Apaxco" id="opc_Apaxco">Apaxco</button>
+                        <button class="opc_Atenco" id="opc_Atenco">Atenco</button>
+                        <button class="opc_Atiza" id="opc_Atiza">Atizapán</button>
+                        <button class="opc_AtizadZ" id="opc_AtizadZ">Atizapán de Zaragoza</button>
+                        <button class="opc_atlaco" id="opc_atlaco">Atlacomulco</button>
+                        <button class="opc_Atlau" id="opc_Atlau">Atlautla</button>
+                        <button class="opc_Axapus" id="opc_Axapus">Axapusco</button>
+                        <button class="opc_Ayapan" id="opc_Ayapan">Ayapango</button>
+                        <button class="opc_Calima" id="opc_Calima">Calimaya</button>
+                        <button class="opc_Capulhu" id="opc_Capulhu">Capulhuac</button>
+                        <button class="opc_Coacal" id="opc_Coacal">Coacalco de Berriozábal</button>
+                        <button class="opc_Coate" id="opc_Coate">Coatepec Harinas</button>
+                        <button class="opc_Coco" id="opc_Coco">Cocotitlán</button>
+                        <button class="opc_Coyo" id="opc_Coyo">Coyotepec</button>
+                        <button class="opc_Cuau" id="opc_Cuau">Cuautitlán</button>
+                        <button class="opc_Chalco" id="opc_Chalco">Chalco</button>
+                        <button class="opc_Chap" id="opc_Chap">Chapa de Mota</button>
+                        <button class="opc_Chapul" id="opc_Chapul">Chapultepec</button>
+                        <button class="opc_Chia" id="opc_Chia">Chiautla</button>
+                        <button class="opc_Chico" id="opc_Chico">Chicoloapan</button>
+                        <button class="opc_Chin" id="opc_Chin">Chiconcuac</button>
+                        <button class="opc_Chima" id="opc_Chima">Chimalhuacán</button>
+                        <button class="opc_DondG" id="opc_DondG">Donato de Guerra</button>
+                        <button class="opc_Ecat" id="opc_Ecat">Ecatepec de Morelos</button>
+                        <button class="opc_Ecatz" id="opc_Ecatz">Ecatzingo</button>
+                        <button class="opc_Huehue" id="opc_Huehue">Huehuetoca</button>
+                        <button class="opc_Huey" id="opc_Huey">Hueypoxtla</button>
+                        <button class="opc_Huix" id="opc_Huix">Huixquilucan</button>
+                        <button class="opc_Isid" id="opc_Isid">Isidro Fabela</button>
+                        <button class="opc_Ixta" id="opc_Ixta">Ixtapaluca</button>
+                        <button class="opc_IxtapanS" id="opc_IxtapanS">Ixtapan de la Sal</button>
+                        <button class="opc_IxtapanO" id="opc_IxtapanO">Ixtapan del Oro</button>
+                        <button class="opc_ixtla" id="opc_ixtla">Ixtlahuaca</button>
+                        <button class="opc_Xala" id="opc_Xala">Xalatlaco</button>
+                        <button class="opc_Jalt" id="opc_Jalt">Jaltenco</button>
+                        <button class="opc_Jilo" id="opc_Jilo">Jilotepec</button>
+                        <button class="opc_Jolot" id="opc_Jilot">Jilotzingo</button>
+                        <button class="opc_Jiqui" id="opc_Jiqui">Jiquipilco</button>
+                        <button class="opc_Joco" id="opc_Joco">Jocotitlán</button>
+                        <button class="opc_Joqui" id="opc_Joqui">Joquicingo</button>
+                        <button class="opc_Juchi" id="opc_Juchi">Juchitepec</button>
+                        <button class="opc_Lerma" id="opc_Lerma">Lerma</button>
+                        <button class="opc_Mali" id="opc_Mali">Malinalco</button>
+                        <button class="opc_MelchO" id="opc_MelchO">Melchor Ocampo</button>
+                        <button class="opc_Metep" id="opc_Metep">Metepec</button>
+                        <button class="opc_Mexi" id="opc_Mexi">Mexicaltzingo</button>
+                        <button class="opc_Mor" id="opc_Mor">Morelos</button>
+                        <button class="opc_NauJ" id="opc_NauJ">Naucalpan de Juárez</button>
+                        <button class="opc_Neza" id="opc_Neza">Nezahualcoyotl</button>
+                        <button class="opc_Next" id="opc_Next">Nextlalpan</button>
+                        <button class="opc_NicoR" id="opc_NicoR">Nicolas Romero</button>
+                        <button class="opc_Nopal" id="opc_Nopal">Nopaltepec</button>
+                        <button class="opc_Ocoyoa" id="opc_Ocoyoa">Ocoyoacac</button>
+                        <button class="opc_Ocuilan" id="opc_Ocuilan">Ocuilan</button>
+                        <button class="opc_ElO" id="opc_ElO">El Oro</button>
+                        <button class="opc_Otumba" id="opc_Otumba">Otumba</button>
+                        <button class="opc_Otzo" id="opc_Otzo">Otzoloapan</button>
+                        <button class="opc_Otzol" id="opc_Otzol">Otzolotepec</button>
+                        <button class="opc_Ozumba" id="opc_Ozumba">Ozumba</button>
+                        <button class="opc_Papal" id="opc_Papal">Papalotla</button>
+                        <button class="opc_LaPaz" id="opc_LaPaz">La Paz</button>
+                        <button class="opc_Polo" id="opc_Polo">Polotitlán</button>
+                        <button class="opc_Rayon" id="opc_Rayon">Rayón</button>
+                        <button class="opc_SanAn" id="opc_SanAn">San Antonio La Isla</button>
+                        <button class="opc_SanFe" id="opc_SanFe">San Felipe del Progreso</button>
+                        <button class="opc_SanMar" id="opc_SanMar">San Martin de las Pirámides</button>
+                        <button class="opc_SanMateo" id="opc_SanMateo">San Mateo Atenco</button>
+                        <button class="opc_SanSim" id="opc_SanSim">San Simón de Guerrero</button>
+                        <button class="opc_SantoTom" id="opc_SantoTom">Santo Tomás</button>
+                        <button class="opc_Soya" id="opc_Soya">Soyaniquilpan de Juárez</button>
+                        <button class="opc_Sulte" id="opc_Sulte">Sultepec</button>
+                        <button class="opc_Teca" id="opc_Teca">Tecámac</button>
+                        <button class="opc_Teju" id="opc_Teju">Tejupilco</button>
+                        <button class="opc_Temama" id="opc_Temama">Temamatla</button>
+                        <button class="opc_Temas" id="opc_Temas">Temascalapa</button>
+                        <button class="opc_TemasC" id="opc_TemasC">Temascalcingo</button>
+                        <button class="opc_TemasCal" id="opc_TemasCal">Temascaltepec</button>
+                        <button class="opc_Temoaya" id="opc_Temoaya">Temoaya</button>
+                        <button class="opc_Tenan" id="opc_Tenan">Tenancingo</button>
+                        <button class="opc_TenanA" id="opc_TenanA">Tenancingo del aire</button>
+                        <button class="opc_TenanV" id="opc_TenanV">Tenancingo del Valle</button>
+                        <button class="opc_Teol" id="opc_Teol">Teoloyucan</button>
+                        <button class="opc_Teoti" id="opc_Teoti">Teotihuacán</button>
+                        <button class="opc_Tepetla" id="opc_Tepetla">Tepetlaoxtoc</button>
+                        <button class="opc_Tepet" id="opc_Tepet">Tepetlixpa</button>
+                        <button class="opc_Tepoz" id="opc_Tepoz">Tepotzotlán</button>
+                        <button class="opc_Tequix" id="opc_Tequix">Tequixquiac</button>
+                        <button class="opc_Texcal" id="opc_Texcal">Texcaltitlán</button>
+                        <button class="opc_Texcalya" id="opc_Texcalya">Texcalyacac</button>
+                        <button class="opc_Texcoco" id="opc_Texcoco">Texcoco</button>
+                        <button class="opc_Tezoy" id="opc_Tezoy">Tezoyuca</button>
+                        <button class="opc_Tianguis" id="opc_Tianguis">Tianguistenco</button>
+                        <button class="opc_Timilpan" id="opc_Timilpan">Timilpan</button>
+                        <button class="opc_Tlalma" id="opc_Tlalma">Tlalmanalco</button>
+                        <button class="opc_Tlalne" id="opc_Tlalne">Tlalnepantla</button>
+                        <button class="opc_Tlatla" id="opc_Tlatla">Tlatlaya</button>
+                        <button class="opc_Toluca" id="opc_Toluca">Toluca</button>
+                        <button class="opc_Tonatico" id="opc_Tonatico">Tonatico</button>
+                        <button class="opc_Tultepec" id="opc_Tultepec">Tultepec</button>
+                        <button class="opc_Tulti" id="opc_Tulti">Tultitlán</button>
+                        <button class="opc_ValleB" id="opc_ValleB">Valle de Bravo</button>
+                        <button class="opc_VillaA" id="opc_VillaA">Villa de Allende</button>
+                        <button class="opc_VillaC" id="opc_VillaC">Villa del Carbón</button>
+                        <button class="opc_VillaG" id="opc_VillaG">Villa Guerrero</button>
+                        <button class="opc_VillaV" id="opc_VillaV">Villa Victoria</button>
+                        <button class="opc_Xona" id="opc_Xona">Xonacatlán</button>
+                        <button class="opc_Zacanzo" id="opc_Zacanzo">Zacazonapán</button>
+                        <button class="opc_Zacua" id="opc_Zacua">Zacualpan</button>
+                        <button class="opc_Zinacan" id="opc_Zinacan">Zinacantepec</button>
+                        <button class="opc_Zumpa" id="opc_Zumpa">Zumpahuacán</button>
+                        <button class="opc_Zumpan" id="opc_Zumpan">Zumpango</button>
+                        <button class="opc_Cuauti" id="opc_Cuauti">Cuautitlán Izcalli</button>
+                        <button class="opc_ValleS" id="opc_ValleS">Valle del Chalco Solidaridad</button>
+                        <button class="opc_Luvi" id="opc_Luvi">Luvianos</button>
+                        <button class="opc_SanJose" id="opc_SanJose">San José del Rincón</button>
+                        <button class="opc_Tonan" id="opc_Tonan">Tonanitla</button>
+                    </p>
                 </div>
-                <div class="buscar_btn">
-                    <button class="buscar">Buscar</button>
-                </div>
-
             </div>
             <div class="graficas">
                 
