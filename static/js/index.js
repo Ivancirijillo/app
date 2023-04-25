@@ -153,8 +153,18 @@ buscador.addEventListener("blur",(e)=>{
 });
 
 
+function mostrarAlerta() {
+    const alerta = document.getElementById("mi-alert");
+    alerta.style.display = "flex";
+  }
+  
+  function ocultarAlerta() {
+    const alerta = document.getElementById("mi-alert");
+    alerta.style.display = "none";
+  }
+
+
 boton_buscador.addEventListener("click", (e)=>{
-    ventana_carga();
     e.preventDefault();
     let cbox = document.querySelectorAll(".cbox");
     let pass = Array.from(cbox).some((item)=>{
@@ -162,9 +172,14 @@ boton_buscador.addEventListener("click", (e)=>{
     });
     console.log(pass)
     if(pass){
+        ventana_carga();
         analizar_datos();
     } else{
-        alert("Seleccione un año");
+        //alert("Seleccione un año");
+        mostrarAlerta()
+        setTimeout(function() {
+            ocultarAlerta() 
+        }, 1500);
     }
 });
 
@@ -419,3 +434,23 @@ function obtener_years(){
 document.getElementById('BLimpiar').addEventListener('click', function() {
     buscador.value= "";
 })
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const sectionPosition = section.offsetTop;
+    setTimeout(function() {
+        window.scrollTo({
+            top: sectionPosition,
+            behavior: 'smooth'
+        });
+    }, 1000);
+  }
+
+  function scrollPariba(sectionId) {
+    const section = document.getElementById(sectionId);
+    const sectionPosition = section.offsetTop;
+    window.scrollTo({
+        top: sectionPosition,
+        behavior: 'smooth'
+    });
+  }
