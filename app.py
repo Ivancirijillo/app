@@ -194,6 +194,7 @@ def consultas_buscador():
             for year in js["years"]:
                 diccionario[year] = []
                 consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+                #print(consulta)
                 respuesta = conn.consultar_db(consulta)
                 lista.append(eliminar_decimal(respuesta))
                 #diccionario[year].append(eliminar_decimal(respuesta))
@@ -204,12 +205,13 @@ def consultas_buscador():
             #lista.append(eliminar_decimal(respuesta))
         else:
             for year in js["years"]:
+                diccionario[year] = []
                 consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"], year=year)
                 respuesta = conn.consultar_db(consulta)
                 lista.append(eliminar_decimal(respuesta))   
             print(lista)
 
-        diccionario = crear_diccionario(lista,diccionario, js)
+        diccionario = crear_diccionario(lista,diccionario)
         print(diccionario)
     
     data = {'datos': diccionario}
@@ -335,31 +337,16 @@ def crear_consulta(js):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
 
-def crear_diccionario(lista, diccionario, js):
-    years = diccionario.keys()
-    print(years)
+def crear_diccionario(lista, diccionario):
+    aux = 0
     for i in diccionario.keys():
         diccionario[i]={}
         diccionario[i][lista[0][0]]={}
         for j in range(1,17):
-            diccionario[i][lista[0][0]][PARTIDOS[j-1]] = lista[0][j]
+            diccionario[i][lista[0][0]][PARTIDOS[j-1]] = lista[aux][j]
+        aux += 1
     return diccionario
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
     app.run(debug=True, port=8000)
-
-
-{
-    ["2015"]:{
-        ["acambay"]:{
-            "pri": 0,
-            "pan": 0
-        }
-    }, ["2017"]:{
-        ["acambay"]:{
-            "pri": 0,
-            "pan": 0
-        }
-    }
-}

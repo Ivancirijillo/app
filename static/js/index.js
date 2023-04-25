@@ -345,23 +345,33 @@ function crear_grafica(data_s, tipo){
 
     } else if(tipo == NOMBRE){
         //years = Object.keys(data_s.datos)
-        console.log(Object.keys(data_s.datos["2015"]))
+        //console.log(Object.keys(data_s.datos["2015"]))
         years.forEach((item)=>{
             municipios.push(Object.keys(data_s.datos[item]))
         });
-        console.log(municipios)
+        console.log(municipios);
+
+        for (let i = 0; i < years.length; i++) {
+            let partidosAnuales = [];
+            for (let j = 0; j < PARTIDOS.length; j++) {
+                let partido = data_s.datos[years[i]][municipios[i]][PARTIDOS[j]];
+                partidosAnuales.push(partido);
+            }
+            partidos.push(partidosAnuales);
+        }
+
+        //console.log(partidos[0])
         for (let i = 0; i < years.length; i++) {
             diccionario[years[i]] = {}
             diccionario[years[i]] = {
                 label: `${municipios[i]} año ${years[i]}`,
-                data: data_s.datos[years[i]][municipios[i]],
+                data: partidos[i],
                 backgroundColor: COLORES,
                 borderColor: 'rgba(0, 99, 132, 1)',
                 yAxisID: "y-axis-density"
               }
             //lista_partidos.push(data_s.datos[item]);
         }
-        // Creamos un array vacío para almacenar los datos convertidos
 
 
         // Recorremos las llaves del objeto original
@@ -387,8 +397,8 @@ function crear_grafica(data_s, tipo){
         // Añadimos el objeto temporal al array de datos convertidos
         chartData.push(tempData);
         }
-        console.log(chartData)
-        console.log(diccionario)
+        //console.log(chartData)
+        //console.log(diccionario)
         
         //let municipio = Object.keys(data_s.datos[item]);
             
