@@ -193,7 +193,7 @@ def consultas_buscador():
             municipio = int(js["datos"])
             for year in js["years"]:
                 diccionario[year] = []
-                consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+                consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"], year=year)
                 #print(consulta)
                 respuesta = conn.consultar_db(consulta)
                 lista.append(eliminar_decimal(respuesta))
@@ -209,10 +209,10 @@ def consultas_buscador():
                 consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"], year=year)
                 respuesta = conn.consultar_db(consulta)
                 lista.append(eliminar_decimal(respuesta))   
-            print(lista)
+            #print(lista)
 
         diccionario = crear_diccionario(lista,diccionario)
-        print(diccionario)
+        #print(diccionario)
     
     data = {'datos': diccionario}
     return jsonify(data)
