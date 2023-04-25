@@ -54,9 +54,9 @@
                 <input type='checkbox' class='cbox' id='y18'value='2018'><label for="y18" class='chbox'> 2018</label>
                 <input type='checkbox' class='cbox' id='y21'value='2021'><label for="y21" class='chbox'> 2021</label>
             </div>
-            <div class="botonGraficas">
-                <button class="Bbuscar" onclick="scrollToSection('Abajoxd')">Generar gráfica de barras</button> <button class="Glineas">Generar gráfica de lineas</button>
-            </div>
+             <div class="botonGraficas">
+                <button class="Bbuscar" onclick="scrollToSection('Abajoxd')">Generar gráfica de barras</button><!-- <button class="Glineas">Generar gráfica de lineas</button>-->
+            </div> 
             <div id="mostrar" class="ContenidoPrincipal">
                 <div class="opc_municipios">
             <br/>
@@ -199,6 +199,7 @@
         </main>        
         <div class="Fondo">
             <button onclick="scrollPariba('Arribaxd')" class="BSubir">></button>
+            <button onclick="location.reload()" class="recargar">recargar</button>
         </div>
         <script src="{{ url_for('static', filename ='js/index.js') }}"> </script>
         <script>             
