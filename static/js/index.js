@@ -283,7 +283,7 @@ function analizar_datos(){
             console.log(json);
             enviar_datos(json)
             .then(data_s => {
-                console.log(data_s.datos);
+                console.log(Object.keys(data_s.datos));
                 crear_grafica(data_s, tipo);
             });
             break;
@@ -292,8 +292,11 @@ function analizar_datos(){
 
 function crear_grafica(data_s, tipo){
     let lista_partidos = [];
-    let municipios = Object.keys(data_s.datos);
+    let municipios = [];
+    let years = Object.keys(data_s.datos);
+    let diccionario = {};
     let partidos = [];
+    let chartData = [];
     let votos = [];
     if(tipo == RANGO){
         let municipio = Object.keys(data_s.datos)[0];
@@ -326,17 +329,62 @@ function crear_grafica(data_s, tipo){
         }
 
     } else if(tipo == NOMBRE){
-        municipios = Object.keys(data_s.datos)
-        municipios.forEach((item)=>{
-            lista_partidos.push(data_s.datos[item]);
+        //years = Object.keys(data_s.datos)
+        console.log(Object.keys(data_s.datos["2015"]))
+        years.forEach((item)=>{
+            municipios.push(Object.keys(data_s.datos[item]))
         });
+        console.log(municipios)
+        for (let i = 0; i < years.length; i++) {
+            diccionario[years[i]] = {}
+            diccionario[years[i]] = {
+                label: `${municipios[i]} año ${years[i]}`,
+                data: data_s.datos[years[i]][municipios[i]],
+                backgroundColor: COLORES,
+                borderColor: 'rgba(0, 99, 132, 1)',
+                yAxisID: "y-axis-density"
+              }
+            //lista_partidos.push(data_s.datos[item]);
+        }
+        // Creamos un array vacío para almacenar los datos convertidos
+
+
+        // Recorremos las llaves del objeto original
+        for (let key in diccionario) {
+
+        // Obtenemos la información de la llave actual
+        let info = diccionario[key];
+
+        // Creamos un objeto temporal para almacenar los datos convertidos
+        let tempData = {};
+
+        // Añadimos la etiqueta y los datos
+        tempData.label = info.label;
+        tempData.data = Object.values(info.data);
+
+        // Añadimos los colores
+        tempData.backgroundColor = info.backgroundColor;
+        tempData.borderColor = info.borderColor;
+
+        // Añadimos el ID del eje y
+        tempData.yAxisID = info.yAxisID;
+
+        // Añadimos el objeto temporal al array de datos convertidos
+        chartData.push(tempData);
+        }
+        console.log(chartData)
+        console.log(diccionario)
+        
+        //let municipio = Object.keys(data_s.datos[item]);
+            
+
         // console.log(municipios);
         // console.log(lista_partidos);
     }
     
 
     let fragmento = document.createDocumentFragment();
-    for(let i=0;i<municipios.length;i++){
+    //for(let i=0;i<municipios.length;i++){
         let canvas = document.createElement("canvas");
         canvas.setAttribute("class", "grafica0");
         
@@ -345,20 +393,7 @@ function crear_grafica(data_s, tipo){
                 type: "bar",
                 data: {
                 labels: PARTIDOS,
-                datasets: [
-                    {
-                        label:municipios[i],
-                        data: lista_partidos[i],
-                        backgroundColor:COLORES
-                    }
-                ]
-                },
-                options: {
-                    title:{
-                        display:true,
-                        text:municipios[i],
-                        fontSize:28
-                    }
+                datasets: chartData
                 }
             });
             canvas.style.position = "relative";
@@ -366,7 +401,7 @@ function crear_grafica(data_s, tipo){
             fragmento.appendChild(canvas)
         
         document.querySelector(".graficas").appendChild(fragmento);
-    }
+    //}
 }
 
 function obtener_years(){
@@ -380,10 +415,7 @@ function obtener_years(){
     return listayear;
 }
 
-//llenar imput
-const inputB = document.getElementById('Ibuscador');
-
 //limpiar
 document.getElementById('BLimpiar').addEventListener('click', function() {
-    inputB.value= "";
+    buscador.value= "";
 })

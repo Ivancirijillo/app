@@ -187,23 +187,30 @@ def consultas_buscador():
        
     elif(js["tipo"] == "nombre"):
         
-        consulta1 = crear_consulta(js)
+        #consulta1 = crear_consulta(js)
         
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
-            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"]) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
-            print(consulta+consulta1)
-            respuesta = conn.consultar_db(consulta+consulta1)
-            print(respuesta)
-            lista.append(eliminar_decimal(respuesta))
+            for year in js["years"]:
+                diccionario[year] = []
+                consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
+                respuesta = conn.consultar_db(consulta)
+                lista.append(eliminar_decimal(respuesta))
+                #diccionario[year].append(eliminar_decimal(respuesta))
+                #print(diccionario)
+            #print(consulta+consulta1)
+            #respuesta = conn.consultar_db(consulta+consulta1)
+            #print(respuesta)
+            #lista.append(eliminar_decimal(respuesta))
         else:
-            consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"])
-            
-            respuesta = conn.consultar_db(consulta+consulta1)
-            
-            lista.append(eliminar_decimal(respuesta))   
+            for year in js["years"]:
+                consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"], year=year)
+                respuesta = conn.consultar_db(consulta)
+                lista.append(eliminar_decimal(respuesta))   
+            print(lista)
 
-        diccionario = crear_diccionario(lista,diccionario)
+        diccionario = crear_diccionario(lista,diccionario, js)
+        print(diccionario)
     
     data = {'datos': diccionario}
     return jsonify(data)
@@ -328,12 +335,31 @@ def crear_consulta(js):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
 
-def crear_diccionario(lista, diccionario):
-    diccionario[lista[0][0]]={}
-    for i in range(1,17):
-        diccionario[lista[0][0]][PARTIDOS[i-1]] = lista[0][i]
+def crear_diccionario(lista, diccionario, js):
+    years = diccionario.keys()
+    print(years)
+    for i in diccionario.keys():
+        diccionario[i]={}
+        diccionario[i][lista[0][0]]={}
+        for j in range(1,17):
+            diccionario[i][lista[0][0]][PARTIDOS[j-1]] = lista[0][j]
     return diccionario
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
     app.run(debug=True, port=8000)
+
+
+{
+    ["2015"]:{
+        ["acambay"]:{
+            "pri": 0,
+            "pan": 0
+        }
+    }, ["2017"]:{
+        ["acambay"]:{
+            "pri": 0,
+            "pan": 0
+        }
+    }
+}
