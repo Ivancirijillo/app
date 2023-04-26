@@ -94,3 +94,49 @@ function validarEntradaUsuario(entrada) {
 
 
 // console.log(contieneNumero);
+
+let lista = [];
+let diccionario = {};
+
+for (let i = 2015; i < 2018; i++) {
+  diccionario[i] = {}
+  diccionario[i] = {
+    label: 'Density of Planet (kg/m3)',
+    data: [5427, 5243, 5514, 3933, 1326, 687, 1271, 1638],
+    backgroundColor: 'rgba(0, 99, 132, 0.6)',
+    borderColor: 'rgba(0, 99, 132, 1)',
+    yAxisID: "y-axis-density"
+  }
+}
+
+// Creamos un array vacío para almacenar los datos convertidos
+let chartData = [];
+
+// Recorremos las llaves del objeto original
+for (let key in diccionario) {
+
+  // Obtenemos la información de la llave actual
+  let info = diccionario[key];
+
+  // Creamos un objeto temporal para almacenar los datos convertidos
+  let tempData = {};
+
+  // Añadimos la etiqueta y los datos
+  tempData.label = info.label;
+  tempData.data = Object.values(info.data);
+
+  // Añadimos los colores
+  tempData.backgroundColor = info.backgroundColor;
+  tempData.borderColor = info.borderColor;
+
+  // Añadimos el ID del eje y
+  tempData.yAxisID = info.yAxisID;
+
+  // Añadimos el objeto temporal al array de datos convertidos
+  chartData.push(tempData);
+}
+
+
+
+console.log(Object.keys(diccionario))
+console.log(chartData)

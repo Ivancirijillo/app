@@ -17,7 +17,7 @@ Axapusco
 Ayapango
 Calimaya
 Capulhuac
-Coacalco de Berriozábal
+Coacalco de Berriozabal
 Coatepec Harinas
 Cocotitlan
 Coyotepec
@@ -54,8 +54,8 @@ Melchor Ocampo
 Metepec
 Mexicaltzingo
 Morelos
-Naucalpan de Juárez
-Nezahualcóyotl
+Naucalpan de Juarez
+Nezahualcoyotl
 Nextlalpan
 Nicolás Romero
 Nopaltepec
@@ -68,15 +68,15 @@ Otzolotepec
 Ozumba
 Papalotla
 La Paz
-Polotitlán
+Polotitlan
 Rayón
 San Antonio la Isla
 San Felipe del Progreso
-San Martín de las Pirámides
+San Martin de las Piramides
 San Mateo Atenco
-San Simón de Guerrero
-Santo Tomás
-Soyaniquilpan de Juárez
+San Simon de Guerrero
+Santo Tomas
+Soyaniquilpan de Juarez
 Sultepec
 Tecamac
 Tejupilco
@@ -89,12 +89,12 @@ Tenancingo
 Tenango del Aire
 Tenango del Valle
 Teoloyucan
-Teotihuacán
+Teotihuacan
 Tepetlaoxtoc
 Tepetlixpa
-Tepotzotlán
+Tepotzotlan
 Tequixquiac
-Texcaltitlán
+Texcaltitlan
 Texcalyacac
 Texcoco
 Tezoyuca
@@ -106,7 +106,7 @@ Tlatlaya
 Toluca
 Tonatico
 Tultepec
-Tultitlán
+Tultitlan
 Valle de Bravo
 Villa de Allende
 Villa del Carbon
@@ -121,5 +121,5 @@ Zumpango
 Cuautitlan Izcalli
 Valle de Chalco Solidaridad
 Luvianos
-San Jose del Rincón
+San Jose del Rincon
 Tonanitla

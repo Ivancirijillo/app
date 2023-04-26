@@ -67,6 +67,7 @@ const NUMEROS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 //let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
 let boton_buscador = document.querySelector(".Bbuscar")
+let botones_rapidos = document.querySelectorAll(".sRapida")
 boton_buscador.disabled = true
 
 // boton.addEventListener("click",(e)=>{
@@ -101,13 +102,30 @@ let mostrarocultar = function(){
     if(isClicked){
         contenedordiv.style.display = 'flex';
         isClicked = false;
-        boton_buscador.disabled = false;
-        boton_buscador.style.borderColor = "#0453a5";
+        // boton_buscador.disabled = false;
+        // boton_buscador.style.borderColor = "#0453a5";
     }else{
         contenedordiv.style.display = 'none';
         isClicked = true;
     }
 }
+
+botones_rapidos.forEach(element => {
+    element.addEventListener("click",(e)=>{
+        e.preventDefault();
+        if (buscador.value==""){
+            buscador.value = element.getAttribute("id");
+            boton_buscador.disabled = false;
+            boton_buscador.style.borderColor = "#0453A5";
+        }
+        else if (buscador.value!=""){
+            buscador.value += ","+element.getAttribute("id");
+            boton_buscador.disabled = false;
+            boton_buscador.style.borderColor = "#0453A5";
+        }
+        mostrarocultar();
+    });
+});
 
 //eventos de validacion
 buscador.addEventListener("input",(e)=>{
@@ -135,8 +153,18 @@ buscador.addEventListener("blur",(e)=>{
 });
 
 
+function mostrarAlerta() {
+    const alerta = document.getElementById("mi-alert");
+    alerta.style.display = "flex";
+  }
+  
+  function ocultarAlerta() {
+    const alerta = document.getElementById("mi-alert");
+    alerta.style.display = "none";
+  }
+
+
 boton_buscador.addEventListener("click", (e)=>{
-    ventana_carga();
     e.preventDefault();
     let cbox = document.querySelectorAll(".cbox");
     let pass = Array.from(cbox).some((item)=>{
@@ -144,9 +172,14 @@ boton_buscador.addEventListener("click", (e)=>{
     });
     console.log(pass)
     if(pass){
+        ventana_carga();
         analizar_datos();
     } else{
-        alert("Seleccione un año");
+        //alert("Seleccione un año");
+        mostrarAlerta()
+        setTimeout(function() {
+            ocultarAlerta() 
+        }, 1500);
     }
 });
 
@@ -265,7 +298,7 @@ function analizar_datos(){
             console.log(json);
             enviar_datos(json)
             .then(data_s => {
-                console.log(data_s.datos);
+                console.log(Object.keys(data_s.datos));
                 crear_grafica(data_s, tipo);
             });
             break;
@@ -274,8 +307,10 @@ function analizar_datos(){
 
 function crear_grafica(data_s, tipo){
     let lista_partidos = [];
-    let municipios = Object.keys(data_s.datos);
+    let municipios = [];
+    let years = Object.keys(data_s.datos);
     let partidos = [];
+    let chartData = {};
     let votos = [];
     if(tipo == RANGO){
         let municipio = Object.keys(data_s.datos)[0];
@@ -308,12 +343,15 @@ function crear_grafica(data_s, tipo){
         }
 
     } else if(tipo == NOMBRE){
-        municipios = Object.keys(data_s.datos)
-        municipios.forEach((item)=>{
-            lista_partidos.push(data_s.datos[item]);
-        });
-        // console.log(municipios);
-        // console.log(lista_partidos);
+
+        municipios = encontrar_municipios(years, data_s);
+        //console.log(municipios);
+
+        partidos = ordenar_partidos(municipios, years, data_s);
+        //console.log(partidos);
+
+        chartData = crear_diccionario(municipios, years, partidos);
+        //console.log(chartData["ACAMBAY DE RUÍZ CASTAÑEDA. SECCION:1"]);
     }
     
 
@@ -327,20 +365,7 @@ function crear_grafica(data_s, tipo){
                 type: "bar",
                 data: {
                 labels: PARTIDOS,
-                datasets: [
-                    {
-                        label:municipios[i],
-                        data: lista_partidos[i],
-                        backgroundColor:COLORES
-                    }
-                ]
-                },
-                options: {
-                    title:{
-                        display:true,
-                        text:municipios[i],
-                        fontSize:28
-                    }
+                datasets: chartData[municipios[i]][0]
                 }
             });
             canvas.style.position = "relative";
@@ -362,1287 +387,108 @@ function obtener_years(){
     return listayear;
 }
 
-//llenar imput
-const inputB = document.getElementById('Ibuscador');
+function ordenar_partidos(municipios, years, data_s){
+    let aux = 0;
+    let partidos = [];
+    while(aux < municipios.length){
+        for (let i = 0; i < years.length; i++) {
+            let partidosAnuales = [];
+            for (let j = 0; j < PARTIDOS.length; j++) {
+                let partido = data_s.datos[years[i]][municipios[aux]][PARTIDOS[j]];
+                partidosAnuales.push(partido);
+            }
+            partidos.push(partidosAnuales);
+        }
+        aux++;
+    }
+    return partidos;
+}
+
+function encontrar_municipios(years, data_s){
+    let municipios = [];
+    years.forEach((item)=>{
+        let estaEnLista = municipios.some(municipio => municipios.includes(municipio));
+        if (estaEnLista){} else municipios.push(Object.keys(data_s.datos[item]));
+    });
+    return municipios;
+}
+
+function crear_diccionario(municipios, years, partidos){
+    let aux = 0;
+    let diccionario = {};
+    let dic = [];
+    let chartData = [];
+    let resultado = {};
+
+    while(aux < municipios.length){
+        for (let i = 0; i < years.length; i++) {
+            diccionario[years[i]] = {};
+            diccionario[years[i]] = {
+                label: `${municipios[aux]} año ${years[i]}`,
+                data: partidos[i],
+                backgroundColor: COLORES,
+                borderColor: "rgba(0,99,132,1)",
+                yAxisID: "y-axis-destiny"
+            };
+        }
+        dic.push(diccionario);
+        aux++;
+    }
+
+    aux = 0;
+    while(aux < municipios.length){
+        resultado[municipios[aux]] = [];
+        // Recorremos las llaves del objeto original
+        for (let key in dic[aux]) {
+            // Obtenemos la información de la llave actual
+            let info = dic[aux][key];
+
+            // Creamos un objeto temporal para almacenar los datos convertidos
+            let tempData = {};
+
+            // Añadimos la etiqueta y los datos
+            tempData.label = info.label;
+            tempData.data = Object.values(info.data);
+
+            // Añadimos los colores
+            tempData.backgroundColor = info.backgroundColor;
+            tempData.borderColor = info.borderColor;
+
+            // Añadimos el ID del eje y
+            tempData.yAxisID = info.yAxisID;
+
+            // Añadimos el objeto temporal al array de datos convertidos
+            chartData.push(tempData);
+        }
+        resultado[municipios[aux]].push(chartData);
+        aux++;
+    }
+    console.log(chartData);
+    return resultado;
+}
+
 
 //limpiar
 document.getElementById('BLimpiar').addEventListener('click', function() {
-    inputB.value= "";
-})
-
-//Funcion de mostrarocultar() para todos lo sbotones
-
-const botones = document.querySelectorAll('.opc_municipios button');
-
-botones.forEach(boton => {
-  boton.onclick = function() {
-    mostrarocultar();
-  };
-});
-
-document.getElementById('opc_atlaco').addEventListener('click', function() {
-    textoBoton = "Atlacomulco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_acambay').addEventListener('click', function() {
-    textoBoton = "Acambay";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Acol').addEventListener('click', function() {
-    textoBoton = "Acolman";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Acul').addEventListener('click', function() {
-    textoBoton = "Aculco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_AlmodA').addEventListener('click', function() {
-    textoBoton = "Almoloya de Alquisiras";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_AlmodJ').addEventListener('click', function() {
-    textoBoton = "Almoloya de Juarez";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_AlmodR').addEventListener('click', function() {
-    textoBoton = "Almoloya del Rio";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Amana').addEventListener('click', function() {
-    textoBoton = "Amanalco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Amate').addEventListener('click', function() {
-    textoBoton = "Amatepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Amecame').addEventListener('click', function() {
-    textoBoton = "Amecameca";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Apaxco').addEventListener('click', function() {
-    textoBoton = "Apaxco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Atenco').addEventListener('click', function() {
-    textoBoton = "Atenco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById( 'opc_Atiza').addEventListener('click', function() {
-    textoBoton = "Atizapan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_AtizadZ').addEventListener('click', function() {
-    textoBoton = "Atizapan de Zaragoza";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Atlau').addEventListener('click', function() {
-    textoBoton = "Atlautla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Axapus').addEventListener('click', function() {
-    textoBoton = "Axapusco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ayapan').addEventListener('click', function() {
-    textoBoton = "Ayapango";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Calima').addEventListener('click', function() {
-    textoBoton = "Calimaya";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Capulhu').addEventListener('click', function() {
-    textoBoton = "Capulhuac";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chalco').addEventListener('click', function() {
-    textoBoton = "Chalco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chap').addEventListener('click', function() {
-    textoBoton = "Chapa de Mota";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chapul').addEventListener('click', function() {
-    ttextoBoton = "Chapultepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chia').addEventListener('click', function() {
-    textoBoton = "Chiautla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chico').addEventListener('click', function() {
-    textoBoton = "Chicoloapan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chin').addEventListener('click', function() {
-    textoBoton = "Chiconcuac";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Chima').addEventListener('click', function() {
-    textoBoton = "Chimalhuacan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Coacal').addEventListener('click', function() {
-    textoBoton = "Coacalco de Berriozabal";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Coate').addEventListener('click', function() {
-    textoBoton = "Coatepec Harinas";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Coco').addEventListener('click', function() {
-    textoBoton = "Cocotitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Coyo').addEventListener('click', function() {
-    textoBoton = "Coyotepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Cuau').addEventListener('click', function() {
-    textoBoton = "Cuautitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Cuauti').addEventListener('click', function() {
-    textoBoton = "Cuautitlan Izcalli";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_DondG').addEventListener('click', function() {
-    textoBoton = "Donato Guerra";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ecat').addEventListener('click', function() {
-    textoBoton = "Ecatepec de Morelos";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ecatz').addEventListener('click', function() {
-    textoBoton = "Ecatzingo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Huehue').addEventListener('click', function() {
-    textoBoton = "Huehuetoca";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Huey').addEventListener('click', function() {
-    textoBoton = "Hueypoxtla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Huix').addEventListener('click', function() {
-    textoBoton = "Huixquilucan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Isid').addEventListener('click', function() {
-    textoBoton = "Isidro Fabela";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ixta').addEventListener('click', function() {
-    textoBoton = "Ixtapaluca";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_IxtapanS').addEventListener('click', function() {
-    textoBoton = "Ixtapan de la Sal";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_IxtapanO').addEventListener('click', function() {
-    textoBoton = "Ixtapan del Oro";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_ixtla').addEventListener('click', function() {
-    textoBoton = "Ixtlahuaca";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Jalt').addEventListener('click', function() {
-    textoBoton = "Jaltenco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tonan').addEventListener('click', function() {
-    textoBoton = "Tonanitla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Jilo').addEventListener('click', function() {
-    textoBoton = "Jilotepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Jilot').addEventListener('click', function() {
-    textoBoton = "Jilotzingo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Jiqui').addEventListener('click', function() {
-    textoBoton = "Jiquipilco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Joco').addEventListener('click', function() {
-    textoBoton = "Jocotitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Joqui').addEventListener('click', function() {
-    textoBoton = "Joquicingo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Juchi').addEventListener('click', function() {
-    textoBoton = "Juchitepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Lerma').addEventListener('click', function() {
-    textoBoton = "Lerma";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Mali').addEventListener('click', function() {
-    textoBoton = "Malinalco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_MelchO').addEventListener('click', function() {
-    textoBoton = "Melchor Ocampo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Metep').addEventListener('click', function() {
-    textoBoton = "Metepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Mexi').addEventListener('click', function() {
-    textoBoton = "Mexicaltzingo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Mor').addEventListener('click', function() {
-    textoBoton = "Morelos";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_NauJ').addEventListener('click', function() {
-    textoBoton = "Naucalpan de Juarez";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Next').addEventListener('click', function() {
-    textoBoton = "Nextlalpan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Neza').addEventListener('click', function() {
-    textoBoton = "Nezahualcoyotl";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_NicoR').addEventListener('click', function() {
-    textoBoton = "Nicolas Romero";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Nopal').addEventListener('click', function() {
-    textoBoton = "Nopaltepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ocoyoa').addEventListener('click', function() {
-    textoBoton = "Ocoyoacac";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ocuilan').addEventListener('click', function() {
-    textoBoton = "Ocuilan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_ElO').addEventListener('click', function() {
-    textoBoton = "El Oro";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Otumba').addEventListener('click', function() {
-    textoBoton = "Otumba";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Otzo').addEventListener('click', function() {
-    textoBoton = "Otzoloapan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Otzol').addEventListener('click', function() {
-    textoBoton = "Otzolotepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Ozumba').addEventListener('click', function() {
-    textoBoton = "Ozumba";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Papal').addEventListener('click', function() {
-    textoBoton = "Papalotla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_LaPaz').addEventListener('click', function() {
-    textoBoton = "La Paz";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Polo').addEventListener('click', function() {
-    textoBoton = "Polotitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Rayon').addEventListener('click', function() {
-    textoBoton = "Rayon";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SanAn').addEventListener('click', function() {
-    textoBoton = "San Antonio la Isla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SanFe').addEventListener('click', function() {
-    textoBoton = "San Felipe del Progreso";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SanMar').addEventListener('click', function() {
-    textoBoton = "San Martín de las Pirámides";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SanMateo').addEventListener('click', function() {
-    textoBoton = "San Mateo Atenco", 'path168';
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SanSim').addEventListener('click', function() {
-    textoBoton = "San Simon de Guerrero";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SantoTom').addEventListener('click', function() {
-    textoBoton = "Santo Tomas";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Soya').addEventListener('click', function() {
-    textoBoton = "Soyaniquilpan de Juarez";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Sulte').addEventListener('click', function() {
-    textoBoton = "Sultepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Teca').addEventListener('click', function() {
-    textoBoton = "Tecamac";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Teju').addEventListener('click', function() {
-    textoBoton = "Tejupilco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Temama').addEventListener('click', function() {
-    textoBoton = "Temamatla";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Temas').addEventListener('click', function() {
-    textoBoton = "Temascalapa";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_TemasC').addEventListener('click', function() {
-    textoBoton = "Temascalcingo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_TemasCal').addEventListener('click', function() {
-    textoBoton = "Temascaltepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Temoaya').addEventListener('click', function() {
-    textoBoton = "Temoaya";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tenan').addEventListener('click', function() {
-    textoBoton = "Tenancingo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_TenanA').addEventListener('click', function() {
-    textoBoton = "Tenancingo del Aire";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_TenanV').addEventListener('click', function() {
-    textoBoton = "Tenango del Valle";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Teol').addEventListener('click', function() {
-    textoBoton = "Teoloyucan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Teoti').addEventListener('click', function() {
-    textoBoton = "Teotihuacan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tepetla').addEventListener('click', function() {
-    textoBoton = "Tepetlaoxtoc";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tepet').addEventListener('click', function() {
-    textoBoton = "Tepetlixpa";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tepoz').addEventListener('click', function() {
-    textoBoton = "Tepotzotlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tequix').addEventListener('click', function() {
-    textoBoton = "Tequixquiac";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Texcal').addEventListener('click', function() {
-    textoBoton = "Texcaltitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Texcalya').addEventListener('click', function() {
-    textoBoton = "Texcalyacac";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Texcoco').addEventListener('click', function() {
-    textoBoton = "Texcoco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tezoy').addEventListener('click', function() {
-    textoBoton = "Tezoyuca";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tianguis').addEventListener('click', function() {
-    textoBoton = "Tianguistenco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Timilpan').addEventListener('click', function() {
-    textoBoton = "Timilpan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tlalma').addEventListener('click', function() {
-    textoBoton = "Tlalmanalco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tlalne').addEventListener('click', function() {
-    textoBoton = "Tlalnepantla de Baz";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tlatla').addEventListener('click', function() {
-    textoBoton = "Tlatlaya";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Toluca').addEventListener('click', function() {
-    textoBoton = "Toluca";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tonatico').addEventListener('click', function() {
-    textoBoton = "Tonatico";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tultepec').addEventListener('click', function() {
-    textoBoton = "Tultepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tulti').addEventListener('click', function() {
-    textoBoton = "Tultitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Tulti').addEventListener('click', function() {
-    textoBoton = "Tultitlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_ValleB').addEventListener('click', function() {
-    textoBoton = "Valle de Bravo";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_ValleS').addEventListener('click', function() {
-    textoBoton = "Valle de Chalco Solidaridad";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_VillaA').addEventListener('click', function() {
-    textoBoton = "Villa de Allende";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_VillaC').addEventListener('click', function() {
-    textoBoton = "Villa del Carbon";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_VillaG').addEventListener('click', function() {
-    textoBoton = "Villa Guerrero";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_VillaV').addEventListener('click', function() {
-    textoBoton = "Villa Victoria";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Xala').addEventListener('click', function() {
-    textoBoton = "Xalatlaco";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Xona').addEventListener('click', function() {
-    textoBoton = "Xonacatlan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Zacanzo').addEventListener('click', function() {
-    textoBoton = "Zacanzonapan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Zacua').addEventListener('click', function() {
-    textoBoton = "Zacualpan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Zinacan').addEventListener('click', function() {
-    textoBoton = "Zinacantepec";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Zumpa').addEventListener('click', function() {
-    textoBoton = "Zumpahuacan";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Zumpan').addEventListener('click', function() {
-    textoBoton = "Zumpango";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_SanJose').addEventListener('click', function() {
-    textoBoton = "San Jose del Rincon";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-document.getElementById('opc_Luvi').addEventListener('click', function() {
-    textoBoton = "Luvianos";
-    if (inputB.value==""){
-        inputB.value = textoBoton;
-    }
-    else if (inputB.value!=""){
-        inputB.value += ","+textoBoton;
-    }
-})
-
-
-
-//bloquear click derecho
-// document.addEventListener("contextmenu", function(event){
-//     event.preventDefault();
-// });
+    buscador.value= "";
+})
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const sectionPosition = section.offsetTop;
+    setTimeout(function() {
+        window.scrollTo({
+            top: sectionPosition,
+            behavior: 'smooth'
+        });
+    }, 1000);
+  }
+
+  function scrollPariba(sectionId) {
+    const section = document.getElementById(sectionId);
+    const sectionPosition = section.offsetTop;
+    window.scrollTo({
+        top: sectionPosition,
+        behavior: 'smooth'
+    });
+  }

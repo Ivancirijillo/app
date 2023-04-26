@@ -97,8 +97,7 @@ body {
     text-align: center;
 }
  /*BOTON buscar */
-.buscador, 
-.yearV,
+.buscador,
 .botonGraficas{    
 	background-color: #0A9292;
   height: 8%;
@@ -114,17 +113,6 @@ body {
   border-radius: 0 0 0 100px;
 } */
 
-input[type="checkbox"] + label {
-    color: #fff; 
-    line-height: 3em;
-    font-size: medium;
-    margin-right: 1%;
-}
-
-input[type="checkbox"]:checked + label {
-    font-weight: bold;
-}
-
 .Bbuscar, 
 .buscar,
 .opc_municipios button,
@@ -139,12 +127,49 @@ input[type="checkbox"]:checked + label {
 	cursor: pointer;
 	text-transform: uppercase;
 }
-
 /* .mostrarM,
 .Blimpiar,
 .Glineas{
   margin-left: 1%;
 } */
+.BSubir{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 0;
+  bottom: 0;
+	border-radius: 5px;
+	font-size: 16px;
+  transform: rotate(270deg);
+}
+.recargar{
+  position: absolute;
+  right: 60px;
+  height: 40px;
+  width: 110px;
+  bottom: 0;
+	border-radius: 5px;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+.BSubir,
+.recargar {
+  position: fixed;
+  margin: 20px;
+	background-color: #0453A5;
+  border-color: #0453A5;
+	color: #fff;
+	transition-duration: 0.4s;
+	cursor: pointer;
+  z-index: 2;
+}
+.recargar:hover ,
+.BSubir:hover{
+	background-color: #0C3258;;
+	color: #fff;
+  font-weight: bold;
+}
 
 .Bbuscar:hover, 
 .buscar:hover,
@@ -350,7 +375,7 @@ input[type="checkbox"]:checked + label {
     
     flex-wrap: wrap;
     background-color: #33BDBD;
-
+    border-radius: 10px;
     transition: 1s ease all;
     overflow-y: scroll;
     z-index: 5;
@@ -394,3 +419,92 @@ input[type="checkbox"]:checked + label {
   ::-webkit-scrollbar-corner {
     background-color: #f5f5f5;
   }
+
+  .alerta {
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    width: 20%;
+    height: 20%;
+    background-color: #FF0108;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 999;
+    text-transform: uppercase;
+    border-radius: 30px;
+  }
+  
+  .alerta p {
+    margin-top: 20px;
+  }
+
+     /*----------------- estilos de checkbox -------------------*/
+    
+     .yearV {
+      height: 80px;
+      position: relative;
+      font-family: monospace;
+      background-color: #0A9292;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2em 0;
+      z-index: -2;
+    }
+    
+    .cbox[type=checkbox]{
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+    }
+    
+    .chbox {
+      position: relative;
+      font-size: 18px;
+      margin-left: 1em;
+      padding-left: 2em;
+      padding-right: 1em;
+      line-height: 2;
+      cursor: pointer;
+      color: #fff;
+    }
+    
+    .chbox:before {
+      box-sizing: border-box;
+      content: " ";
+      position: absolute;
+      top: 0.3em;
+      left: 0;
+      display: block;
+      width: 1.2em;
+      height: 1.2em;
+      border: 2px solid #fff;
+      border-radius: 0.25em;
+      z-index: -1;
+    }
+  
+    /* Checked */
+    
+    .cbox[type=checkbox]:checked + .chbox {
+      font-weight: bold;
+      padding-left: 1em;
+      color: #fff;
+    }
+    
+    .cbox[type=checkbox]:checked + .chbox:before{
+        top: 0;
+        width: 100%;
+        height: 2em;
+        background: #0c3258b2;
+        border:0;
+  
+    }
+  
+    .chbox,
+    .chbox::before {
+      transition: .25s all ease;
+    }
