@@ -309,9 +309,8 @@ function crear_grafica(data_s, tipo){
     let lista_partidos = [];
     let municipios = [];
     let years = Object.keys(data_s.datos);
-    let diccionario = {};
     let partidos = [];
-    let chartData = [];
+    let chartData = {};
     let votos = [];
     if(tipo == RANGO){
         let municipio = Object.keys(data_s.datos)[0];
@@ -344,72 +343,20 @@ function crear_grafica(data_s, tipo){
         }
 
     } else if(tipo == NOMBRE){
-        //years = Object.keys(data_s.datos)
-        //console.log(Object.keys(data_s.datos["2015"]))
-        years.forEach((item)=>{
-            municipios.push(Object.keys(data_s.datos[item]))
-        });
-        console.log(municipios);
 
-        for (let i = 0; i < years.length; i++) {
-            let partidosAnuales = [];
-            for (let j = 0; j < PARTIDOS.length; j++) {
-                let partido = data_s.datos[years[i]][municipios[i]][PARTIDOS[j]];
-                partidosAnuales.push(partido);
-            }
-            partidos.push(partidosAnuales);
-        }
+        municipios = encontrar_municipios(years, data_s);
+        //console.log(municipios);
 
-        //console.log(partidos[0])
-        for (let i = 0; i < years.length; i++) {
-            diccionario[years[i]] = {}
-            diccionario[years[i]] = {
-                label: `${municipios[i]} año ${years[i]}`,
-                data: partidos[i],
-                backgroundColor: COLORES,
-                borderColor: 'rgba(0, 99, 132, 1)',
-                yAxisID: "y-axis-density"
-              }
-            //lista_partidos.push(data_s.datos[item]);
-        }
+        partidos = ordenar_partidos(municipios, years, data_s);
+        //console.log(partidos);
 
-
-        // Recorremos las llaves del objeto original
-        for (let key in diccionario) {
-
-        // Obtenemos la información de la llave actual
-        let info = diccionario[key];
-
-        // Creamos un objeto temporal para almacenar los datos convertidos
-        let tempData = {};
-
-        // Añadimos la etiqueta y los datos
-        tempData.label = info.label;
-        tempData.data = Object.values(info.data);
-
-        // Añadimos los colores
-        tempData.backgroundColor = info.backgroundColor;
-        tempData.borderColor = info.borderColor;
-
-        // Añadimos el ID del eje y
-        tempData.yAxisID = info.yAxisID;
-
-        // Añadimos el objeto temporal al array de datos convertidos
-        chartData.push(tempData);
-        }
-        //console.log(chartData)
-        //console.log(diccionario)
-        
-        //let municipio = Object.keys(data_s.datos[item]);
-            
-
-        // console.log(municipios);
-        // console.log(lista_partidos);
+        chartData = crear_diccionario(municipios, years, partidos);
+        //console.log(chartData["ACAMBAY DE RUÍZ CASTAÑEDA. SECCION:1"]);
     }
     
 
     let fragmento = document.createDocumentFragment();
-    //for(let i=0;i<municipios.length;i++){
+    for(let i=0;i<municipios.length;i++){
         let canvas = document.createElement("canvas");
         canvas.setAttribute("class", "grafica0");
         
@@ -418,7 +365,7 @@ function crear_grafica(data_s, tipo){
                 type: "bar",
                 data: {
                 labels: PARTIDOS,
-                datasets: chartData
+                datasets: chartData[municipios[i]][0]
                 }
             });
             canvas.style.position = "relative";
@@ -426,7 +373,7 @@ function crear_grafica(data_s, tipo){
             fragmento.appendChild(canvas)
         
         document.querySelector(".graficas").appendChild(fragmento);
-    //}
+    }
 }
 
 function obtener_years(){
@@ -439,6 +386,87 @@ function obtener_years(){
     });
     return listayear;
 }
+
+function ordenar_partidos(municipios, years, data_s){
+    let aux = 0;
+    let partidos = [];
+    while(aux < municipios.length){
+        for (let i = 0; i < years.length; i++) {
+            let partidosAnuales = [];
+            for (let j = 0; j < PARTIDOS.length; j++) {
+                let partido = data_s.datos[years[i]][municipios[aux]][PARTIDOS[j]];
+                partidosAnuales.push(partido);
+            }
+            partidos.push(partidosAnuales);
+        }
+        aux++;
+    }
+    return partidos;
+}
+
+function encontrar_municipios(years, data_s){
+    let municipios = [];
+    years.forEach((item)=>{
+        let estaEnLista = municipios.some(municipio => municipios.includes(municipio));
+        if (estaEnLista){} else municipios.push(Object.keys(data_s.datos[item]));
+    });
+    return municipios;
+}
+
+function crear_diccionario(municipios, years, partidos){
+    let aux = 0;
+    let diccionario = {};
+    let dic = [];
+    let chartData = [];
+    let resultado = {};
+
+    while(aux < municipios.length){
+        for (let i = 0; i < years.length; i++) {
+            diccionario[years[i]] = {};
+            diccionario[years[i]] = {
+                label: `${municipios[aux]} año ${years[i]}`,
+                data: partidos[i],
+                backgroundColor: COLORES,
+                borderColor: "rgba(0,99,132,1)",
+                yAxisID: "y-axis-destiny"
+            };
+        }
+        dic.push(diccionario);
+        aux++;
+    }
+
+    aux = 0;
+    while(aux < municipios.length){
+        resultado[municipios[aux]] = [];
+        // Recorremos las llaves del objeto original
+        for (let key in dic[aux]) {
+            // Obtenemos la información de la llave actual
+            let info = dic[aux][key];
+
+            // Creamos un objeto temporal para almacenar los datos convertidos
+            let tempData = {};
+
+            // Añadimos la etiqueta y los datos
+            tempData.label = info.label;
+            tempData.data = Object.values(info.data);
+
+            // Añadimos los colores
+            tempData.backgroundColor = info.backgroundColor;
+            tempData.borderColor = info.borderColor;
+
+            // Añadimos el ID del eje y
+            tempData.yAxisID = info.yAxisID;
+
+            // Añadimos el objeto temporal al array de datos convertidos
+            chartData.push(tempData);
+        }
+        resultado[municipios[aux]].push(chartData);
+        aux++;
+    }
+    console.log(chartData);
+    return resultado;
+}
+
 
 //limpiar
 document.getElementById('BLimpiar').addEventListener('click', function() {
