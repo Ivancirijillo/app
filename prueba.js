@@ -48,7 +48,7 @@
 
 function validarEntradaUsuario(entrada) {
     // Expresión regular para validar la entrada del usuario
-    const expresionRegular = /^15(?:0[0-9][1-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][1-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][1-9]|1[0-2][0-5]))?$/;
+    const expresionRegular = /^15(?:0[0-9][0-9]|1[0-1][0-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-1][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-1][0-9]|1[0-2][0-5]))?$/;
   
     ;
   
