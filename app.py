@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory
 import threading, multiprocessing, time, signal, sys
+from flask_sslify import SSLify
 from random import sample
 import pandas as pd
 import json, time
@@ -12,6 +13,7 @@ from static.pdf.plantillas.Delincuencia import Delincuencia
 from static.pdf.plantillas.General import General
 from static.pdf.plantillas.PadronE import Padron
 from static.pdf.plantillas.Pobreza import Pobreza
+import random
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
@@ -35,7 +37,14 @@ app = Flask(__name__)
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("404.html")
+    valio=random.randrange(0, 100000, 1)
+    #(0, 1000, 1)
+    if valio==0:
+        pagina="Pazul.html"
+        pantallaC=True
+    else: 
+        pagina="404.html"
+    return render_template(pagina)
 
 @app.route('/Paleta1')
 def paleta1():
@@ -163,37 +172,47 @@ def consultas_buscador():
 
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
-        fin = int(js["datos"][1])+1
-        years = js["years"]
-        n_saltos = fin-inicio 
+        fin = int(js["datos"][1])
 
-        consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin) if(15000 < inicio < 15126) else configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
-        respuesta = conn.consultar_db(consulta)
-        filtro_1 = encontrar_municipio(respuesta)
-        diccionario = separar_por_partidos(respuesta, filtro_1, n_saltos)
-
+        if(15000 < inicio < 15126):
+            consulta1 = crear_consulta(js)
+            consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin)
+            respuesta = conn.consultar_db(consulta+consulta1)
+            diccionario = separar_por_partido(respuesta)
+        else:
+            consulta = configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
+            print(consulta)
+            respuesta = conn.consultar_db(consulta)
+            diccionario = separar_por_partido(respuesta)
+       
     elif(js["tipo"] == "nombre"):
         
-        consulta1 = "("
-        for i in (js["years"]):
-            consulta1 += f" yearV={i} or"
-        consulta1 = consulta1[:-2] + ") order by v.ClaveMunicipal"
+        #consulta1 = crear_consulta(js)
         
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
-            consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"]) if(1500< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"])
-            respuesta = conn.consultar_db(consulta+consulta1)
-            lista.append(eliminar_decimal(respuesta))
+            for year in js["years"]:
+                diccionario[year] = []
+                consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"], year=year)
+                #print(consulta)
+                respuesta = conn.consultar_db(consulta)
+                lista.append(eliminar_decimal(respuesta))
+                #diccionario[year].append(eliminar_decimal(respuesta))
+                #print(diccionario)
+            #print(consulta+consulta1)
+            #respuesta = conn.consultar_db(consulta+consulta1)
+            #print(respuesta)
+            #lista.append(eliminar_decimal(respuesta))
         else:
+            for year in js["years"]:
+                diccionario[year] = []
+                consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"], year=year)
+                respuesta = conn.consultar_db(consulta)
+                lista.append(eliminar_decimal(respuesta))   
+            #print(lista)
 
-            consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"])
-            respuesta = conn.consultar_db(consulta+consulta1)
-            lista.append(eliminar_decimal(respuesta))   
-
-        #diccionario={}
-        diccionario[lista[0][0]]={}
-        for i in range(1,17):
-            diccionario[lista[0][0]][PARTIDOS[i-1]] = lista[0][i]
+        diccionario = crear_diccionario(lista,diccionario)
+        #print(diccionario)
     
     data = {'datos': diccionario}
     return jsonify(data)
@@ -242,28 +261,21 @@ def interrupcion(sig, frame):
     sys.exit(0)
 
 def encontrar_municipio(respuesta):
-    """
-    encontrar saltos
-    """
     municipio_actual = respuesta[0][0]
-    saltos = {}
+    municipios = []
+    secciones = []
     contador = 0
-    salto = 0
+    municipios.append(municipio_actual)
     for i in range(len(respuesta)):
-        aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
-        if(municipio_actual == respuesta[aux][0]):
+        if(municipio_actual == respuesta[i][0]):
             contador += 1
         else:
-            contador += 1
-            saltos[f"m_{salto}"] = []
-            saltos[f"m_{salto}"] = {
-                "municipio": municipio_actual,
-                "secciones":contador
-            }
-            contador = 0
-            municipio_actual = respuesta[aux][0]
-            salto += 1
-    return saltos
+            secciones.append(contador)
+            municipio_actual = respuesta[i][0]
+            municipios.append(municipio_actual)
+            contador = 1
+    secciones.append(contador) # Agregar la última sección
+    return municipios, secciones
 
 def encontrar_seccion(respuesta):
     """
@@ -289,31 +301,25 @@ def encontrar_seccion(respuesta):
             salto += 1
     return saltos
 
-def separar_por_partidos(respuesta, saltos, n_saltos):
-    """
-    llenado de diccionario con separacion por municipios y partidos
-    """
-    lista = {}
-    salto = 0
-    contador = 1
-    municipio_actual = respuesta[0][0] # nos colocamos en la primer posicion de la consulta y en su primer valor , municipio
-    for i in range(len(respuesta)):
-        aux = len(respuesta)-1 if((i+1) >= len(respuesta)) else (i+1) # determinamos el valor maximo que puede tener aux
-        salto = (n_saltos-1) if(salto >= n_saltos) else salto # si el salto supera el rango de saltos dado, entonces le asignara el numero de saltos - 1
-        if(municipio_actual == respuesta[aux][0]):
-            lista[f"m_{salto}"]={
-                respuesta[aux][0] : {}
-            }
-            while(contador <= 11):
-                lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]] = []
-                for j in range(int(saltos[f"m_{salto}"]["secciones"])):
-                    lista[f"m_{salto}"][respuesta[aux][0]][PARTIDOS[contador-1]].append(respuesta[j][contador])
-                contador += 1
-            contador = 1
-        else:
-            municipio_actual = respuesta[aux][0]
-            salto += 1
-    return lista
+def separar_por_partido(respuesta):
+    municipios, secciones = encontrar_municipio(respuesta)
+    contador = 0
+    diccionario = {}
+    aux = 1
+    for municipio in municipios:
+        diccionario[municipio] = {}
+        while(aux <= len(PARTIDOS)):
+            diccionario[municipio][PARTIDOS[aux-1]] = []
+            for seccion in range(1,secciones[contador]+1):
+                if(respuesta[seccion-1][aux] == None):
+                    diccionario[municipio][PARTIDOS[aux-1]].append(0)
+                else:
+                    diccionario[municipio][PARTIDOS[aux-1]].append(respuesta[seccion-1][aux])
+            aux+=1
+        aux=0
+        contador += 1
+    
+    return diccionario
 
 def eliminar_decimal(respuesta):
     cadena = ','.join(str(elem) for elem in respuesta)
@@ -324,6 +330,22 @@ def eliminar_decimal(respuesta):
         lista[i] = lista[i].replace(")", "").strip()
         lista[i] = lista[i].replace("'", "").strip()
     return lista
+
+def crear_consulta(js):
+    consulta1 = "("
+    for i in (js["years"]):
+        consulta1 += f" yearV={i} or"
+    return consulta1[:-2] + ") order by v.ClaveMunicipal"
+
+def crear_diccionario(lista, diccionario):
+    aux = 0
+    for i in diccionario.keys():
+        diccionario[i]={}
+        diccionario[i][lista[0][0]]={}
+        for j in range(1,17):
+            diccionario[i][lista[0][0]][PARTIDOS[j-1]] = lista[aux][j]
+        aux += 1
+    return diccionario
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
