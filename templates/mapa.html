@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename ='css/estilos.css') }}">
-    <script src="{{ url_for('static', filename ='sheetjs/xlsx.full.min.js') }}"></script>
-    <!--script src="{{ url_for('static', filename ='js/tablaMapa.js') }}"></script-->
     <title>Mapa</title>
     <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='img_menu/imapa.png') }}"/>
 </head>
@@ -20,8 +18,8 @@
                 <h3 class="barra_des">>></h3>
             </div>
             <div class="opc_municipios">
-                <p>
-                    <button class="opc_acambay" id="opc_acambay">Acambay</button>
+                <p id="elem_p">
+                    <button class="opc_acambay" id="path16">Acambay</button>
                     <button class="opc_Acol" id="opc_Acol">Acolman</button>
                     <button class="opc_Acul" id="opc_Acul">Aculco</button>
                     <button class="opc_AlmodA" id="opc_AlmodA">Almoloya de Alquisiras</button>
@@ -217,7 +215,7 @@
             <g
                 transform="matrix(5.8081053e-2,0,0,5.8081053e-2,30686.974,6183.1729)"
                 clip-path="url(#clip)"
-                id="g14"
+                id="elem_g"
                 style="visibility:visible">
                 <a xlink:title="Acambay">
                 <path
