@@ -182,7 +182,6 @@ var nom_munic = ' ';
 function tarjeta_out (nom_municipio, path_n){
     ocultar_superior();
 
-<<<<<<< HEAD
     const cont_g = document.querySelectorAll('path');
     cont_g.forEach((elemento) => {
         if(elemento && elemento.id === path_n){
@@ -191,10 +190,6 @@ function tarjeta_out (nom_municipio, path_n){
             elemento_path = elemento;
         }
     })
-=======
-    if(path_anterior != ' ') document.getElementById(path_anterior).style = '/*fill: green;*/';
-    document.getElementById(path_n).style.fill = '#0453A5';
->>>>>>> 9b93f8fc5b2d861445c7d2e177b7d8a4ef0207f1
 
     document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();
