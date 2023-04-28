@@ -118,7 +118,7 @@ botones_rapidos.forEach(element => {
         json = {
             tipo: NOMBRE,
             datos: element.getAttribute("id"),
-            years: obtener_years()
+            years: ["2015","2017","2018","2021"]
         }
         //console.log(json);
         enviar_datos(json)
