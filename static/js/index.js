@@ -50,6 +50,7 @@ const SECCION_MUNICIPIO = /^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0
 //arregos
 const PARTIDOS= ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
 const COLORES = ["#0453A5", "#FF0108","#FFB928", "#FD4146", "#00C65C", "#FF7400",   "#33BDBD", "#BA0005",  "#B632BF", "#FF018C", "#DC3892",    "#72017A", "#FF9945", "#FD4146", "#EF7CBB", "#6BDBDB", "#BB9A00" ];
+const COLORES2 = ['#0453A5','#FF7400','#FFB928','#FF0108'];
 const NUMEROS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 //let boton = document.querySelector(".buscar")
