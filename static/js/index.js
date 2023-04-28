@@ -458,7 +458,7 @@ function crear_diccionario(municipios, years, partidos){
             diccionario[j][i]={
                 label: `${municipios[i]} año ${years[j]}`,
                 data: partidos[aux],
-                backgroundColor: COLORES,
+                backgroundColor: COLORES[j],
                 borderColor: "rgba(0,99,132,1)",
                 yAxisID: "y-axis-destiny"
             }
