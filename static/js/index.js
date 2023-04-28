@@ -38,18 +38,6 @@
 //      elem.msRequestFullscreen();
 // }
 
-function ventana_carga(){
-    document.getElementById('enc').style.background = 'rgba(0,0,0,0.4)';
-    document.getElementById('enc').classList.add('active');
-    document.getElementById('pop').classList.add('active');
-    setTimeout(() =>{
-        //funcion ventana
-        document.getElementById('enc').classList.remove('active');
-        document.getElementById('pop').classList.remove('active');
-    }, 1000);
-}
-
-
 //tipos
 const VARIOS = "varios";
 const RANGO = "rango";
@@ -110,24 +98,52 @@ let mostrarocultar = function(){
     }
 }
 
+function ventana_carga(){
+    document.getElementById('enc').style.background = 'rgba(0,0,0,0.4)';
+    document.getElementById('enc').classList.add('active');
+    document.getElementById('pop').classList.add('active');
+    setTimeout(() =>{
+        //funcion ventana
+        document.getElementById('enc').classList.remove('active');
+        document.getElementById('pop').classList.remove('active');
+    }, 1000);
+}
+
+//Eventos para busquedas rapidas
 botones_rapidos.forEach(element => {
     element.addEventListener("click",(e)=>{
         e.preventDefault();
-        if (buscador.value==""){
-            buscador.value = element.getAttribute("id");
-            boton_buscador.disabled = false;
-            boton_buscador.style.borderColor = "#0453A5";
+
+        json = {
+            tipo: NOMBRE,
+            datos: element.getAttribute("id"),
+            years: obtener_years()
         }
-        else if (buscador.value!=""){
-            buscador.value += ","+element.getAttribute("id");
-            boton_buscador.disabled = false;
-            boton_buscador.style.borderColor = "#0453A5";
-        }
+        //console.log(json);
+        enviar_datos(json)
+        .then(data_s => {
+            //console.log(Object.keys(data_s.datos));
+            crear_grafica(data_s, NOMBRE);
+        });
+
+        // if (buscador.value==""){
+        //     buscador.value = element.getAttribute("id");
+        //     boton_buscador.disabled = false;
+        //     boton_buscador.style.borderColor = "#0453A5";
+        // }
+        // else if (buscador.value!=""){
+        //     buscador.value += ","+element.getAttribute("id");
+        //     boton_buscador.disabled = false;
+        //     boton_buscador.style.borderColor = "#0453A5";
+        // }
+        ventana_carga();
+        scrollToSection("Abajoxd");
         mostrarocultar();
+        
     });
 });
 
-//eventos de validacion
+//Eventos de validacion
 buscador.addEventListener("input",(e)=>{
     e.preventDefault();
     let dato = buscador.value
@@ -151,19 +167,7 @@ buscador.addEventListener("blur",(e)=>{
         boton_buscador.style.borderColor = "#FF0108";
     }
 });
-
-
-function mostrarAlerta() {
-    const alerta = document.getElementById("mi-alert");
-    alerta.style.display = "flex";
-  }
-  
-  function ocultarAlerta() {
-    const alerta = document.getElementById("mi-alert");
-    alerta.style.display = "none";
-  }
-
-
+//Eventos de buscador
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
     let cbox = document.querySelectorAll(".cbox");
@@ -176,12 +180,27 @@ boton_buscador.addEventListener("click", (e)=>{
         analizar_datos();
     } else{
         //alert("Seleccione un año");
-        mostrarAlerta()
+        mostrarAlerta();
         setTimeout(function() {
-            ocultarAlerta() 
+            ocultarAlerta(); 
         }, 1500);
     }
 });
+
+//Boton limpiar
+document.getElementById('BLimpiar').addEventListener('click', function() {
+    buscador.value= "";
+})
+
+function mostrarAlerta() {
+    const alerta = document.getElementById("mi-alert");
+    alerta.style.display = "flex";
+}
+  
+function ocultarAlerta() {
+    const alerta = document.getElementById("mi-alert");
+    alerta.style.display = "none";
+}
 
 function enviar_datos(data){
     return fetch('/consultas-buscador', {
@@ -199,11 +218,8 @@ function enviar_datos(data){
 function analizar_datos(){
     let datos = buscador.value.toUpperCase();
     let datos_analizados = "";
-    let lista = [];
-    let datasets = [];
     let tipo = "";
     let json = {};
-    let graficas = {};
 
     if(datos.indexOf(",") != -1){
         tipo = VARIOS;
@@ -216,63 +232,13 @@ function analizar_datos(){
             datos_analizados = datos.split(",");
             json = {
                 tipo: VARIOS,
-                datos: datos_analizados
+                datos: datos_analizados,
+                years:obtener_years()
             }
             enviar_datos(json)
             .then(data_s => {
-
-                for(let i = 0 ;i<datos_analizados.length;i++){
-                    lista.push(Object.keys(data_s.datos[`m_${i}`]));
-                }
-                let aux = 0;
-                let votos_suma = [];
-
-                while(lista.length > aux){
-                    votos_suma.push([]);
-                    for(let i = 0;i<PARTIDOS.length;i++){
-                        // let label =  PARTIDOS[i];
-                        let votos = data_s.datos[`m_${aux}`][lista[aux]][PARTIDOS[i]];
-                        let data = (votos.reduce((total, num)=>total+num,0));
-                        // let background =  COLORES[i];
-                        votos_suma[aux].push(data)
-                    }
-                    aux++;
-                }
-
-                
-                console.log(datasets);
-                let fragmento = document.createDocumentFragment();
-                for(let i = 0; i < lista.length; i++){
-                    let canvas = document.createElement("canvas");
-                    canvas.setAttribute("class", `grafica${i}`);
-                    
-                    let contexto = canvas.getContext("2d");
-                    let char = new Chart(contexto, {
-                        type: "bar",
-                        data: {
-                          labels: PARTIDOS,
-                          datasets: [
-                              {
-                                label:lista[i],
-                                data: votos_suma[i],
-                                backgroundColor:COLORES
-                            }
-                          ]
-                        },
-                        options: {
-                            title:{
-                                display:true,
-                                text:lista[i],
-                                fontSize:28
-                            }
-                        }
-                      });
-                    canvas.style.position = "relative";
-                    canvas.style.width="50px";
-                    fragmento.appendChild(canvas)
-                }
-                document.querySelector(".graficas").appendChild(fragmento)
-                //console.log(graficas[lista[0]]["datasets"][0]["data"])
+                console.log(data_s.datos);
+                crear_grafica(data_s, tipo);
             });
             break;
         case RANGO:
@@ -298,7 +264,7 @@ function analizar_datos(){
             console.log(json);
             enviar_datos(json)
             .then(data_s => {
-                console.log(Object.keys(data_s.datos));
+                //console.log(Object.keys(data_s.datos));
                 crear_grafica(data_s, tipo);
             });
             break;
@@ -306,44 +272,58 @@ function analizar_datos(){
 }
 
 function crear_grafica(data_s, tipo){
-    let lista_partidos = [];
+
     let municipios = [];
     let years = Object.keys(data_s.datos);
     let partidos = [];
     let chartData = {};
-    let votos = [];
-    if(tipo == RANGO){
-        let municipio = Object.keys(data_s.datos)[0];
-        let contieneNumero = NUMEROS.some(numero => municipio.includes(numero));
-        if(contieneNumero){
-            municipios = Object.keys(data_s.datos)
-            municipios.forEach((item)=>{
-                lista_partidos.push(data_s.datos[item]);
-            });
-            console.log(lista_partidos);
-        } else{
-            for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
-                partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
-                votos.push([])
-                for (let j = 0; j < PARTIDOS.length; j++) {
-                    votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
-                } 
-            }
-            let aux = 0;
-            while(partidos.length > aux){
-                lista_partidos.push([]);
-                for(let i = 0;i<PARTIDOS.length;i++){
-                    let data = (votos[aux][i].reduce((total, num)=>total+num,0));
-                    lista_partidos[aux].push(data)
-                }
-                aux++;
-            }
-            console.log(municipios[0]);
-            console.log(lista_partidos);
-        }
+
+    if(tipo == VARIOS){
+        municipios = encontrar_municipios(years, data_s);
+        partidos = ordenar_partidos(municipios, years, data_s);
+        chartData = crear_diccionario(municipios, years, partidos)
+    }else if(tipo == RANGO){
+        municipios = encontrar_municipios(years, data_s);
+        //console.log(municipios[0].length);
+        //let partido = data_s.datos[years[i]][municipios[1]][PARTIDOS[0]]
+        //console.log(municipios[0])
+        //console.log(Object.keys(data_s.datos[years[0]][municipios[0][0]]));
+        partidos = ordenar_partidos(municipios, years, data_s);
+        console.log(partidos);
+
+        chartData = crear_diccionario(municipios, years, partidos);
+        console.log(chartData);
+        // let municipio = Object.keys(data_s.datos)[0];
+        // let contieneNumero = NUMEROS.some(numero => municipio.includes(numero));
+        // if(contieneNumero){
+        //     municipios = Object.keys(data_s.datos)
+        //     municipios.forEach((item)=>{
+        //         lista_partidos.push(data_s.datos[item]);
+        //     });
+        //     console.log(lista_partidos);
+        // } else{
+        //     for(let i = 0 ;i<Object.keys(data_s.datos).length;i++){
+        //         partidos.push(Object.keys(data_s.datos[`${Object.keys(data_s.datos)[i]}`]));
+        //         votos.push([])
+        //         for (let j = 0; j < PARTIDOS.length; j++) {
+        //             votos[i].push(data_s.datos[`${Object.keys(data_s.datos)[i]}`][PARTIDOS[j]]);
+        //         } 
+        //     }
+        //     let aux = 0;
+        //     while(partidos.length > aux){
+        //         lista_partidos.push([]);
+        //         for(let i = 0;i<PARTIDOS.length;i++){
+        //             let data = (votos[aux][i].reduce((total, num)=>total+num,0));
+        //             lista_partidos[aux].push(data)
+        //         }
+        //         aux++;
+        //     }
+        //     console.log(municipios[0]);
+        //     console.log(lista_partidos);
+        // }
 
     } else if(tipo == NOMBRE){
-
+        //console.log(Object.keys(data_s));
         municipios = encontrar_municipios(years, data_s);
         //console.log(municipios);
 
@@ -356,7 +336,17 @@ function crear_grafica(data_s, tipo){
     
 
     let fragmento = document.createDocumentFragment();
+    let municipio = [];
     for(let i=0;i<municipios.length;i++){
+        municipio.splice();
+        // for (let j = 0; j < 6; j++) {
+        //     if(chartData[j].label.includes(municipios[i])){
+        //         municipio.push(chartData[j]);
+        //         //console.log(municipios[i]);
+        //     }
+        // }
+        municipio = chartData.filter(item => item.label.includes(municipios[i]));
+        console.log(municipio);
         let canvas = document.createElement("canvas");
         canvas.setAttribute("class", "grafica0");
         
@@ -365,7 +355,7 @@ function crear_grafica(data_s, tipo){
                 type: "bar",
                 data: {
                 labels: PARTIDOS,
-                datasets: chartData[municipios[i]][0]
+                datasets: municipio
                 }
             });
             canvas.style.position = "relative";
@@ -373,6 +363,7 @@ function crear_grafica(data_s, tipo){
             fragmento.appendChild(canvas)
         
         document.querySelector(".graficas").appendChild(fragmento);
+        municipio.splice();
     }
 }
 
@@ -387,14 +378,60 @@ function obtener_years(){
     return listayear;
 }
 
+function encontrar_municipios(years, data_s){
+    let municipios = [];
+    let n_municipios = Object.keys(data_s.datos[years[0]]).length
+    //console.log(n_municipios)
+
+    for (let i = 0; i < years.length; i++) {
+        for (let j = 0; j < n_municipios; j++) {
+            let municipio = Object.keys(data_s.datos[years[i]][j])[0];
+            if (!municipios.some(m => municipio.includes(m))) {
+                municipios.push(municipio);
+            }
+        }
+    }
+    
+    // years.forEach((item)=>{
+    //     let estaEnLista = municipios.some(municipio=>municipio.includes(municipio));
+    //     if (estaEnLista){} else municipios.push(Object.keys(data_s.datos[item]));
+    // });
+
+    // years.forEach((item)=>{
+    //     let estaEnLista = municipios.some(municipio => municipios.includes(municipio));
+    //     if (estaEnLista){} else municipios.push(Object.keys(data_s.datos[item]));
+    // });
+        
+    /**formato de js
+     * 1.data_s.datos[years[0]] determina el año
+     * 2.data_s.datos[years[0]][2] determina el la posicion del arreglo
+     * 3.data_s.datos[years[0]][2]["ACULCO"] determina el municipio
+     * 4.data_s.datos[years[0]][2]["ACULCO"]["PAN"] determina el partido
+     * nota: el 2 y el 3 deben ser iguales, ejemplo:
+     * si existen 3 municipios 2 debe de estar posicionado en el arreglo donde
+     * se encuentre aculco, es el numero del municipio.
+     */
+    //console.log(municipios)
+    //console.log(data_s.datos[years[0]][0][municipios[0]][PARTIDOS[0]]);
+    
+    return municipios;
+}
+
 function ordenar_partidos(municipios, years, data_s){
     let aux = 0;
     let partidos = [];
+    //console.log(PARTIDOS.length)
     while(aux < municipios.length){
+        //console.log(aux)
         for (let i = 0; i < years.length; i++) {
+            //console.log(i)
             let partidosAnuales = [];
             for (let j = 0; j < PARTIDOS.length; j++) {
-                let partido = data_s.datos[years[i]][municipios[aux]][PARTIDOS[j]];
+                //console.log(data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]])
+                let partido = data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]];
+                // if(j==1){
+                //     console.log(municipios[aux]+":"+partido)
+                // }
                 partidosAnuales.push(partido);
             }
             partidos.push(partidosAnuales);
@@ -404,74 +441,63 @@ function ordenar_partidos(municipios, years, data_s){
     return partidos;
 }
 
-function encontrar_municipios(years, data_s){
-    let municipios = [];
-    years.forEach((item)=>{
-        let estaEnLista = municipios.some(municipio => municipios.includes(municipio));
-        if (estaEnLista){} else municipios.push(Object.keys(data_s.datos[item]));
-    });
-    return municipios;
-}
-
 function crear_diccionario(municipios, years, partidos){
-    let aux = 0;
     let diccionario = {};
-    let dic = [];
     let chartData = [];
-    let resultado = {};
-
-    while(aux < municipios.length){
-        for (let i = 0; i < years.length; i++) {
-            diccionario[years[i]] = {};
-            diccionario[years[i]] = {
-                label: `${municipios[aux]} año ${years[i]}`,
-                data: partidos[i],
+    let aux = 0;
+    for (let year in years) {
+        diccionario[year] = [];
+        for (let j = 0; j < municipios.length; j++) {
+            diccionario[year].push({[municipios[j]]: {}})            
+        }
+    }
+    //llenado de diccionario
+    for (let i = 0; i < municipios.length; i++){
+        for (let j = 0; j < years.length; j++) {
+            diccionario[j][i]={
+                label: `${municipios[i]} año ${years[j]}`,
+                data: partidos[aux],
                 backgroundColor: COLORES,
                 borderColor: "rgba(0,99,132,1)",
                 yAxisID: "y-axis-destiny"
-            };
+            }
+            aux++;
         }
-        dic.push(diccionario);
-        aux++;
+        
     }
 
-    aux = 0;
-    while(aux < municipios.length){
-        resultado[municipios[aux]] = [];
-        // Recorremos las llaves del objeto original
-        for (let key in dic[aux]) {
-            // Obtenemos la información de la llave actual
-            let info = dic[aux][key];
-
-            // Creamos un objeto temporal para almacenar los datos convertidos
+    for (let i = 0; i < years.length; i++) {
+        for (let j = 0; j < municipios.length; j++) {
+            let info = diccionario[i][j];
             let tempData = {};
 
-            // Añadimos la etiqueta y los datos
             tempData.label = info.label;
             tempData.data = Object.values(info.data);
-
-            // Añadimos los colores
             tempData.backgroundColor = info.backgroundColor;
-            tempData.borderColor = info.borderColor;
-
-            // Añadimos el ID del eje y
+            tempData.borderColor = info.borderColor; 
             tempData.yAxisID = info.yAxisID;
 
-            // Añadimos el objeto temporal al array de datos convertidos
             chartData.push(tempData);
         }
-        resultado[municipios[aux]].push(chartData);
-        aux++;
+        
     }
-    console.log(chartData);
-    return resultado;
+
+    let info = diccionario[0][0]
+    //console.log(chartData[5].label.includes(municipios[0]));
+    return chartData;
+    //console.log(Object.values(info.data));
+    //formato diccionario
+    //diccionario[] indica el año
+    //diccionario[][] indica el municipio
+    // for (let i = 0; i < years.length; i++) {
+    //     for (let j = 0; j < municipios.length; j++) {
+    //         console.logObject.keys((diccionario[i][j]));
+    //     }
+        
+    // }
+
+    
 }
-
-
-//limpiar
-document.getElementById('BLimpiar').addEventListener('click', function() {
-    buscador.value= "";
-})
 
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -482,13 +508,13 @@ function scrollToSection(sectionId) {
             behavior: 'smooth'
         });
     }, 1000);
-  }
+}
 
-  function scrollPariba(sectionId) {
+function scrollPariba(sectionId) {
     const section = document.getElementById(sectionId);
     const sectionPosition = section.offsetTop;
     window.scrollTo({
         top: sectionPosition,
         behavior: 'smooth'
     });
-  }
+}

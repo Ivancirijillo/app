@@ -146,59 +146,77 @@ def consultas_buscador():
                     configuracion["database1"]["db"])
     
     if(js["tipo"] ==  "varios"):
-        for dato in js["datos"]:
-            if(dato.isdigit()):
-                consulta = configuracion.get("consultas_buscador","varios_id").format(id=dato) if(15000 < int(dato) < 15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=dato)
-            else:
-                consulta = configuracion.get("consultas_buscador", "nombreM").format(dato=dato)
+        
+        for id_m in js["datos"]:
+            for year in js["years"]:
+                diccionario[year] = []
+                consulta = configuracion.get("consultas_buscador", "busca_por_yearv").format(id=id_m, year=year)
+                respuesta = conn.consultar_db(consulta)
+                lista.append(eliminar_decimal(respuesta))
+        
+        diccionario = crear_diccionario(lista,diccionario)
+        # for dato in js["datos"]:
+        #     if(dato.isdigit()):
+        #         for id_m in range(inicio, fin+1):
+        #             for year in (js["years"]):
+        #                 diccionario[year] = []
+        #                 consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
+        #                 respuesta = conn.consultar_db(consulta)
+        #                 lista.append(eliminar_decimal(respuesta))
+        #     else:
+        #         consulta = configuracion.get("consultas_buscador", "nombreM").format(dato=dato)
             
-            respuesta = conn.consultar_db(consulta)
-            lista.append(respuesta)
+        #     respuesta = conn.consultar_db(consulta)
+        #     lista.append(respuesta)
 
-        for i in range(len(lista)):
-            arreglo.append(len(lista[i]))
+        # for i in range(len(lista)):
+        #     arreglo.append(len(lista[i]))
 
-        for i in range(0,len(lista)):
-            diccionario[f"m_{i}"] = {
-                lista[i][0][0]:{}
-            }
-            while(contador <= 11):
-                diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
-                for j in range(0,arreglo[i]):
-                    diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
+        # for i in range(0,len(lista)):
+        #     diccionario[f"m_{i}"] = {
+        #         lista[i][0][0]:{}
+        #     }
+        #     while(contador <= 11):
+        #         diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
+        #         for j in range(0,arreglo[i]):
+        #             diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
                     
-                contador += 1
-            contador = 1
+        #         contador += 1
+        #     contador = 1
 
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
         fin = int(js["datos"][1])
 
         if(15000 < inicio < 15126):
-            consulta1 = crear_consulta(js)
-            consulta = configuracion.get("consultas_buscador","rango_id").format(inicio=inicio, fin=fin)
-            respuesta = conn.consultar_db(consulta+consulta1)
-            diccionario = separar_por_partido(respuesta)
+            for id_m in range(inicio, fin+1):
+                for year in (js["years"]):
+                    diccionario[year] = []
+                    consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
+                    respuesta = conn.consultar_db(consulta)
+                    lista.append(eliminar_decimal(respuesta))
+            #print(lista)
+            #print(encontrar_municipio(lista))
         else:
-            consulta = configuracion.get("consultas_buscador","rango_seccion").format(inicio=inicio, fin=fin)
-            print(consulta)
-            respuesta = conn.consultar_db(consulta)
-            diccionario = separar_por_partido(respuesta)
+            for id_m in range(inicio, fin+1):
+                for year in (js["years"]):
+                    diccionario[year] = []
+                    consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
+                    respuesta = conn.consultar_db(consulta)
+                    lista.append(eliminar_decimal(respuesta))
+        #print(diccionario)
+        diccionario = crear_diccionario(lista,diccionario)
+        #print(diccionario)
        
     elif(js["tipo"] == "nombre"):
-        
-        #consulta1 = crear_consulta(js)
         
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
             for year in js["years"]:
                 diccionario[year] = []
                 consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"], year=year)
-                #print(consulta)
                 respuesta = conn.consultar_db(consulta)
                 lista.append(eliminar_decimal(respuesta))
-                #diccionario[year].append(eliminar_decimal(respuesta))
-                #print(diccionario)
             #print(consulta+consulta1)
             #respuesta = conn.consultar_db(consulta+consulta1)
             #print(respuesta)
@@ -337,15 +355,61 @@ def crear_consulta(js):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
 
+# def crear_diccionario(lista, diccionario):
+#     municipios, secciones = encontrar_municipio(lista)
+#     years = len(diccionario.keys())
+#     n_municipios = len(municipios)
+
+#     aux = 0
+#     for i in diccionario.keys():
+#         diccionario[i]={}
+#         diccionario[i][lista[aux][0]]={}
+#         for j in range(1,17):
+#             diccionario[i][lista[aux][0]][PARTIDOS[j-1]] = lista[aux][j]
+#         aux += 1
+#     return diccionario
+
+# def crear_diccionario(lista, diccionario):
+#     municipios, secciones = encontrar_municipio(lista)
+#     years = len(diccionario.keys())
+#     n_municipios = len(municipios)
+#     aux = 0
+#     for year in diccionario.keys():
+#         for municipio in municipios:
+#             diccionario[year] = {
+#                 municipios[0]: {},
+#                 municipios[1]: {}
+#             }
+#         for i in range(n_municipios):
+#             for j in range(1,17):
+#                 diccionario[year][municipios[i]][PARTIDOS[j-1]] = lista[aux][j]
+#             aux +=1
+#     return diccionario
+
 def crear_diccionario(lista, diccionario):
+    municipios, secciones = encontrar_municipio(lista)
     aux = 0
-    for i in diccionario.keys():
-        diccionario[i]={}
-        diccionario[i][lista[0][0]]={}
-        for j in range(1,17):
-            diccionario[i][lista[0][0]][PARTIDOS[j-1]] = lista[aux][j]
-        aux += 1
+    for year in diccionario.keys():
+        diccionario[year] = []
+        for i in range(len(municipios)):
+            diccionario[year].append({municipios[i]:{}})
+    # if(len(municipios)>1):
+
+    for i in range(len(municipios)):
+        for year in diccionario.keys():
+            for j in range(1,17):
+                diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j] 
+            aux+=1
+    # else:
+    #     for year in diccionario.keys():
+    #         for i in range(len(municipios)):
+    #             for j in range(1,17):
+    #                 diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j] 
+    #             aux+=1
+    #print("dic")
+    #print(diccionario)
     return diccionario
+
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
