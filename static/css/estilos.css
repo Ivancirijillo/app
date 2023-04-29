@@ -55,24 +55,29 @@ body{
     position: absolute;
     display: flex;
     align-items: center;
-    margin: 1% 4% 0 4%;
-    width: 100%;
-    height: 100%;
+	justify-content: center;
+	width: 98%;
+    height: 98%;
+    gap: 12px;
+    margin: 1%;
 }
 
 /* BARRA SUPERIOR*/
 
-.selec_municipios{
+.cabecera{
 	position: absolute;
-	background-color: #6BDBDB; 
+	width: 100%;
 	top: 0;
-	right: 8%;
-	width: 92%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.selec_municipios{
+	background-color: #6BDBDB; 
 	height: 22px;
     border-radius: 7px;
 	transition: 1s ease all;
-	overflow-y: scroll;
-	z-index: 5;
 }
 
 .selec_municipios h3{
@@ -81,7 +86,6 @@ body{
 
 .btn_selec{
 	display: flex;
-    justify-content: flex-end;
     cursor: pointer;
 }
 
@@ -90,7 +94,15 @@ body{
 }
 
 .opc_municipios{
+	background-color: #6BDBDB;
+	padding: 1%; 
+	position: absolute;
 	display: none;
+	top: 1%;
+	width: 92%;
+    height: 70%;
+	border-radius: 10px;
+	z-index: 5;
 }
 
 .opc_municipios button{
@@ -106,6 +118,7 @@ body{
 
 .opc_municipios p{
     display: grid;
+	overflow-y: scroll;
 	grid-template-columns: repeat(5, 1fr);
 }
 
@@ -280,10 +293,15 @@ body{
 
 /* ESTILO DE BOTONES - Botones general */
 
+.btn_menu{
+	padding: 10px;
+}
+
 .btnImprimir,
 .opc_municipios button,
 .btnContinuar,
-.btn_repor_mun{
+.btn_repor_mun, 
+.btn_menu a{
 	background-color: var(--clr-btn-relleno); 
 	color: var(--clr-letras); 
 	border: 2px solid var(--clr-btn-borde);
@@ -293,6 +311,7 @@ body{
 	transition-duration: 0.4s;
 	cursor: pointer;
 	text-transform: uppercase;
+	text-decoration: none;
 }
 
 .btnImprimir,
@@ -310,7 +329,8 @@ body{
 .opc_municipios button:hover,
 .btnContinuar:hover,
 .btn_regresar:hover,
-.btn_repor_mun:hover {
+.btn_repor_mun:hover, 
+.btn_menu a:hover {
 	background-color: var(--clr-btn-relleno_hover);
 	color: var(--clr-letras_hover);
 }
