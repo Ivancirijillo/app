@@ -387,7 +387,7 @@ function encontrar_municipios(years, data_s){
     for (let i = 0; i < years.length; i++) {
         for (let j = 0; j < n_municipios; j++) {
             let municipio = Object.keys(data_s.datos[years[i]][j])[0];
-            if (!municipios.some(m => municipio.includes(m))) {
+            if (!municipios.some(m => municipio.includes(m))) { // verificar el filtro, repite municipios con nombres similares
                 municipios.push(municipio);
             }
         }
@@ -421,19 +421,27 @@ function encontrar_municipios(years, data_s){
 function ordenar_partidos(municipios, years, data_s){
     let aux = 0;
     let partidos = [];
-    //console.log(PARTIDOS.length)
+    console.log(Object.keys(data_s.datos[years[0]]))
     while(aux < municipios.length){
         //console.log(aux)
         for (let i = 0; i < years.length; i++) {
             //console.log(i)
             let partidosAnuales = [];
             for (let j = 0; j < PARTIDOS.length; j++) {
-                //console.log(data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]])
-                let partido = data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]];
+                //console.log(`${PARTIDOS[j]}:`+data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]])
+                try{
+                    //let partido = data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]];
+                    if(data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]] === undefined){
+                        partidosAnuales.push(0);
+                    }else partidosAnuales.push(data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]]);
+                }catch(error){
+                    console.log(error);
+                }
+
                 // if(j==1){
                 //     console.log(municipios[aux]+":"+partido)
                 // }
-                partidosAnuales.push(partido);
+                
             }
             partidos.push(partidosAnuales);
         }

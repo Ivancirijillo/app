@@ -295,30 +295,6 @@ def encontrar_municipio(respuesta):
     secciones.append(contador) # Agregar la última sección
     return municipios, secciones
 
-def encontrar_seccion(respuesta):
-    """
-    encontrar saltos
-    """
-    seccion_actual = respuesta[0][0]
-    saltos = {}
-    contador = 0
-    salto = 0
-    for i in range(len(respuesta)):
-        aux = len(respuesta)-1 if(i+1>=len(respuesta)) else (i+1)
-        if(seccion_actual == respuesta[aux][0]):
-            contador += 1
-        else:
-            contador += 1
-            saltos[f"m_{salto}"] = []
-            saltos[f"m_{salto}"] = {
-                "municipio": seccion_actual,
-                "secciones":contador
-            }
-            contador = 0
-            seccion_actual = respuesta[aux][0]
-            salto += 1
-    return saltos
-
 def separar_por_partido(respuesta):
     municipios, secciones = encontrar_municipio(respuesta)
     contador = 0
@@ -407,7 +383,7 @@ def crear_diccionario(lista, diccionario):
     #                 diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j] 
     #             aux+=1
     #print("dic")
-    #print(diccionario)
+    print(diccionario)
     return diccionario
 
 
