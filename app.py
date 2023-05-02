@@ -187,6 +187,8 @@ def consultas_buscador():
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
         fin = int(js["datos"][1])
+        fin  = 15125 if(fin == 15125) else fin
+        print(fin)
 
         if(15000 < inicio < 15126):
             for id_m in range(inicio, fin+1):
@@ -199,10 +201,12 @@ def consultas_buscador():
             #print(encontrar_municipio(lista))
         else:
             for id_m in range(inicio, fin+1):
+                print(id_m)
                 for year in (js["years"]):
                     diccionario[year] = []
-                    consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
+                    consulta = configuracion.get("consultas_buscador","toma_tu_consulta").format(seccion=id_m, year=year)
                     respuesta = conn.consultar_db(consulta)
+                    #print(respuesta)
                     lista.append(eliminar_decimal(respuesta))
         #print(diccionario)
         diccionario = crear_diccionario(lista,diccionario)
@@ -216,6 +220,7 @@ def consultas_buscador():
                 diccionario[year] = []
                 consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"], year=year)
                 respuesta = conn.consultar_db(consulta)
+                #print(respuesta)
                 lista.append(eliminar_decimal(respuesta))
             #print(consulta+consulta1)
             #respuesta = conn.consultar_db(consulta+consulta1)
@@ -370,11 +375,11 @@ def crear_diccionario(lista, diccionario):
         for i in range(len(municipios)):
             diccionario[year].append({municipios[i]:{}})
     # if(len(municipios)>1):
-
+    #print("calla fede ",diccionario)
     for i in range(len(municipios)):
         for year in diccionario.keys():
             for j in range(1,17):
-                diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j] 
+                diccionario[year][i][municipios[i]][PARTIDOS[j]] = lista[aux][j]
             aux+=1
     # else:
     #     for year in diccionario.keys():
@@ -383,7 +388,7 @@ def crear_diccionario(lista, diccionario):
     #                 diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j] 
     #             aux+=1
     #print("dic")
-    print(diccionario)
+    #print("pepe ",diccionario)
     return diccionario
 
 

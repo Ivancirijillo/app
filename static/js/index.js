@@ -18,7 +18,7 @@ const TIPOS = Object.freeze({
 const EXPRESIONES = Object.freeze({
     ID_MUNICIPIO:/^15(?:0[0-9][0-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/,
     NOMBRE_MUNICIPIO:/^[a-zA-Z\s]{6,20}$/,
-    SECCION_MUNICIPIO:/^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8])(?:,(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8]))*(?:-(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-4][0-9][0-9]|649[0-8]))?$/
+    SECCION_MUNICIPIO:/^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9])(?:,(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9]))*(?:-(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9]))?$/
 });
 //arregos
 const ARREGLOS = Object.freeze({
@@ -70,7 +70,7 @@ botones_rapidos.forEach(element => {
         e.preventDefault();
 
         json = {
-            tipo: NOMBRE,
+            tipo: TIPOS.NOMBRE,
             datos: element.getAttribute("id"),
             years: ["2015","2017","2018","2021"]
         }
@@ -78,7 +78,7 @@ botones_rapidos.forEach(element => {
         enviar_datos(json)
         .then(data_s => {
             //console.log(Object.keys(data_s.datos));
-            crear_grafica(data_s, NOMBRE);
+            crear_grafica(data_s, TIPOS.NOMBRE);
         });
 
         // if (buscador.value==""){
