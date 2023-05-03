@@ -2,7 +2,7 @@
 var click_btn_selec = true;
 
 function ocultar_superior(){
-    document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.55)';
+    document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.94)';
     document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
     document.querySelector(".opc_municipios").style.display = 'none';
     document.getElementById('con_cortina').style.visibility = 'hidden';
@@ -185,8 +185,8 @@ function tarjeta_out (nom_municipio, path_n){
     const cont_g = document.querySelectorAll('path');
     cont_g.forEach((elemento) => {
         if(elemento && elemento.id === path_n){
-            if(elemento_path != ' ') elemento_path.style.fill = '#c5c5c5';
-            elemento.style.fill = 'green';
+            if(elemento_path != ' ') elemento_path.style.fill = '#7eb057';
+            elemento.style.fill = '#137547';
             elemento_path = elemento;
         }
     })
@@ -252,6 +252,7 @@ const e_path = {
     'path68': datos_mun = new Array ('Coacalco de Berriozábal', '15020'),
     'path70': datos_mun = new Array ('Coatepec Harinas', '15021'),
     'path72': datos_mun = new Array ('Cocotitlán', '15022'),
+    'path74': datos_mun = new Array ('Coyotepec', '15023'),
     'path76': datos_mun = new Array ('Cuautitlán', '15024'),
     'path78': datos_mun = new Array ('Cuautitlán Izcalli', '15121'),
     'path80': datos_mun = new Array ('Donato Guerra', '15032'),
@@ -348,15 +349,35 @@ const e_path = {
     'path264': datos_mun = new Array ('Zumpango', '15120'),
     'path266': datos_mun = new Array ('San José del Rincón', '15124'),
     'path268': datos_mun = new Array ('Luvianos', '15123')
-
 }
 
+var dbl_click = false, path_anterior = ' '
 const btn_mun = document.getElementById('elem_g');
 btn_mun.addEventListener('click', (e) => {
     if(e.target && e.target.tagName === 'path'){
-        arr_mun = e_path[e.target.id]
-        tarjeta_out(arr_mun[0], e.target.id);
-        id_municipio = arr_mun[1]
+
+        if(dbl_click == true && path_anterior == e.target.id){
+            document.getElementById('titulo_mun').textContent = arr_mun[0];
+            document.getElementById('imagen_mun').src = '/static/img_mun/'+arr_mun[1]+'.png';
+            aumento = 2;
+            document.getElementById('Map').style = 'transform: scale('+aumento+'); opacity: 0;';
+            setTimeout(() => {
+                //funcion de espera
+                document.querySelector('.cont_secc').style = 'display: block; top: 0;';
+                document.querySelector('.cont_paths').style = 'display: none;';
+            }, 350);
+            setTimeout(() => {
+                //funcion de espera
+                document.querySelector('.frag').style = 'transform: scale(1); opacity: 1;';
+            }, 450);
+        }else{
+            arr_mun = e_path[e.target.id]
+            tarjeta_out(arr_mun[0], e.target.id);
+            id_municipio = arr_mun[1]
+        }
+
+        path_anterior = e.target.id
+        dbl_click = true
     }
 })
 
@@ -367,5 +388,38 @@ btn_opc.addEventListener('click', (e) => {
         arr_mun = e_path[e.target.id]
         tarjeta_out(arr_mun[0], e.target.id);
         id_municipio = arr_mun[1]
+        path_anterior = e.target.id
+        dbl_click = true
+        volver_mapa();
+    }
+})
+
+function volver_mapa (){
+    aumento = 1;
+    document.querySelector('.frag').style = 'transform: scale(0.2); opacity: 0;';
+    setTimeout(() => {
+        //funcion de espera
+        document.querySelector('.cont_secc').style = 'display: none;';
+        document.querySelector('.cont_paths').style = ' ';
+    }, 300);
+    setTimeout(() => {
+        //funcion de espera
+    document.getElementById('Map').style = 'transform: scale('+aumento+'); opacity: 1;';
+    }, 450);
+    dbl_click = false
+}
+
+document.getElementById('btn_volver').addEventListener('click', function() {
+    volver_mapa();
+})
+
+document.getElementById('btn_secc').addEventListener('click', function() {
+    document.querySelector('.cont_btn_secc').style = 'display: flex;';
+})
+
+const cont_btn_secc = document.getElementById('cont_btn_secc');
+cont_btn_secc.addEventListener('click', (e) => {
+    if(e.target && e.target.tagName === 'BUTTON'){
+        document.querySelector('.cont_btn_secc').style = ' ';
     }
 })
