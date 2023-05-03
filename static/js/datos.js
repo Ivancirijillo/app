@@ -414,7 +414,7 @@ document.getElementById('btn_volver').addEventListener('click', function() {
 })
 
 document.getElementById('btn_secc').addEventListener('click', function() {
-    document.querySelector('.cont_btn_secc').style = 'display: flex;';
+    document.querySelector('.cont_btn_secc').style = 'display: grid;';
 })
 
 const cont_btn_secc = document.getElementById('cont_btn_secc');
