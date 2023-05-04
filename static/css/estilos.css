@@ -74,8 +74,7 @@ body{
 }
 
 .selec_municipios{
-	background-color: #6BDBDB; 
-	height: 22px;
+	background-color: #6BDBDB;
     border-radius: 7px;
 	transition: 1s ease all;
 }
@@ -306,13 +305,15 @@ body{
 .btn_menu a,
 .btn_volver,
 .btn_secc, 
-.cont_btn_secc button{
+.cont_btn_secc button,
+.btn_selec{
 	background-color: var(--clr-btn-relleno); 
 	color: var(--clr-letras); 
 	border: 2px solid var(--clr-btn-borde);
 	border-radius: 5px;
 	padding: 4px 32px;
 	font-size: 16px;
+	font-family: sans-serif;
 	transition-duration: 0.4s;
 	cursor: pointer;
 	text-transform: uppercase;
@@ -341,7 +342,8 @@ body{
 .btn_menu a:hover,
 .btn_volver:hover,
 .btn_secc:hover, 
-.cont_btn_secc button:hover {
+.cont_btn_secc button:hover,
+.btn_selec:hover {
 	background-color: var(--clr-btn-relleno_hover);
 	color: var(--clr-letras_hover);
 }
@@ -476,7 +478,7 @@ svg{
   
 .volver_mapa{
 	position: absolute;
-	bottom: 2%;
+	top: 2%;
 	padding: 2%;
 	z-index: 2;
 }
