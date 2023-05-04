@@ -224,17 +224,27 @@ function crear_grafica(data_s){
     let years = Object.keys(data_s.datos);
     let partidos = [];
     let chartData = {};
+    
 
     municipios = encontrar_municipios(years, data_s);
+    let totalDatos = years.length * municipios.length;
+    console.log(totalDatos);
     partidos = ordenar_partidos(municipios, years, data_s);
     chartData = crear_diccionario(municipios, years, partidos);
 
     let fragmento = document.createDocumentFragment();
     let municipio = [];
+    let year = 0;
+    let aux = 0;
     for(let i=0;i<municipios.length;i++){
         //municipio.splice();
-        // verificar el filtrado, incongruncias al encontrar municipios con nombre parecido.
-        municipio = chartData.filter(item => item.label.includes(municipios[i])); 
+        // verificar el filtrado, incongruencias al encontrar municipios con nombre parecido.
+        //console.log(municipio);
+        //municipio = chartData.filter(item =>item.label.includes(municipios[i])); 
+        municipio = chartData.filter(item=>
+            item.label.substring(0,municipios[i].length).endsWith(municipios[i])
+            //console.log(item.label.substring(0,municipios[i].length))
+        );
         console.log(municipio);
         let canvas = document.createElement("canvas");
         canvas.setAttribute("class", "grafica0");
@@ -283,7 +293,7 @@ function encontrar_municipios(years, data_s){
     for (let i = 0; i < years.length; i++) {
         for (let j = 0; j < n_municipios; j++) {
             let municipio = Object.keys(data_s.datos[years[i]][j])[0];
-            if (!municipios.some(m => municipio.includes(m))) { // verificar el filtro, repite municipios con nombres similares
+            if (!municipios.some((m) => municipio.startsWith(m) && municipio.endsWith(m))) { // verificar el filtro, repite municipios con nombres similares
                 municipios.push(municipio);
             }
         }
@@ -304,7 +314,8 @@ function ordenar_partidos(municipios, years, data_s){
             for (let j = 0; j < ARREGLOS.PARTIDOS.length; j++) {
                 //console.log(`${PARTIDOS[j]}:`+data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]])
                 try{
-                    //let partido = data_s.datos[years[i]][aux][municipios[aux]][PARTIDOS[j]];
+                    // let partido = data_s.datos[years[i]][aux][municipios[aux]][ARREGLOS.PARTIDOS[j]];
+                    // partidosAnuales.push(partido)
                     if(data_s.datos[years[i]][aux][municipios[aux]][ARREGLOS.PARTIDOS[j]] === undefined){
                         partidosAnuales.push(0);
                     }else partidosAnuales.push(data_s.datos[years[i]][aux][municipios[aux]][ARREGLOS.PARTIDOS[j]]);

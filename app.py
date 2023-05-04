@@ -201,6 +201,7 @@ def consultas_buscador():
             #print(encontrar_municipio(lista))
         else:
             for id_m in range(inicio, fin+1):
+                print(id_m)
                 for year in (js["years"]):
                     diccionario[year] = []
                     consulta = configuracion.get("consultas_buscador","toma_tu_consulta").format(seccion=id_m, year=year)
