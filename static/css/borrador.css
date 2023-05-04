@@ -1,0 +1,99 @@
+body{
+    background-color: #73a587f5;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/*ESTILOS DE BARRA DE NAVEGACION*/
+
+nav {
+    background-color: #0A9292;
+    height: 60px;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    float:right;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+  }
+  
+  nav li {
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    
+  }
+  
+  nav a {
+    display: block;
+    font-size: 16px;
+    line-height: 50px;
+    padding: 0 15px;
+  }
+  
+  nav a:hover {
+    color: aliceblue;
+    background-color: #21446b;
+    text-decoration: none;
+} 
+
+.botonReMa{
+  position: absolute;
+    left: 1%;
+    height: ;
+    background: #0453A5;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 16px;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/*TITULO*/
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 146, 146,0.2); 
+}
+
+
+      /*Municipio*/
+.municipio{
+  position: absolute;
+  margin-top: 80px;
+  color: #fff;
+}
+
+.imagenMunicipio2 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  /* background-image: url('../img_mun/mun_acambay.png');
+  background-size: cover; */
+}
+
+/* .image {
+  position: absolute;
+} */
+.image2 {
+  position: absolute;
+  width: 100px;
+  height: 60px;
+}
