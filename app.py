@@ -46,6 +46,10 @@ def not_found(error):
         pagina="404.html"
     return render_template(pagina)
 
+@app.route('/Borrador')
+def borrador():
+    return render_template('Borrador.html')
+
 @app.route('/Paleta1')
 def paleta1():
     return render_template('paleta1v3.html')
