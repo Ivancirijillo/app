@@ -142,9 +142,19 @@ body {
 	font-size: 16px;
   transform: rotate(270deg);
 }
+.BBajar{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 60px;
+  bottom: 0;
+	border-radius: 5px;
+	font-size: 16px;
+  transform: rotate(90deg);
+}
 .recargar{
   position: absolute;
-  right: 60px;
+  right: 120px;
   height: 40px;
   width: 90px;
   bottom: 0;
@@ -154,7 +164,8 @@ body {
 }
 
 .BSubir,
-.recargar {
+.recargar,
+.BBajar {
   position: fixed;
   margin: 20px;
 	background-color: #0453A5;
@@ -165,7 +176,8 @@ body {
   z-index: 2;
 }
 .recargar:hover ,
-.BSubir:hover{
+.BSubir:hover,
+.BBajar:hover{
 	background-color: #0C3258;;
 	color: #fff;
   font-weight: bold;
