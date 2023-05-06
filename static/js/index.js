@@ -221,49 +221,60 @@ function analizar_datos(){
 function crear_grafica(data_s){
 
     let municipios = [];
+    let municipios_seccion = [];
+    let seccion = false;
     let years = Object.keys(data_s.datos);
     let partidos = [];
     let chartData = {};
     
 
-    municipios = encontrar_municipios(years, data_s);
-    let totalDatos = years.length * municipios.length;
-    console.log(totalDatos);
+    informacion_municipos = encontrar_municipios(years, data_s);
+    municipios = informacion_municipos[0];
+    seccion = informacion_municipos[1];
+    municipios_seccion = informacion_municipos[2];
+    //let totalDatos = years.length * municipios.length;
+    console.log(municipios);
     partidos = ordenar_partidos(municipios, years, data_s);
     chartData = crear_diccionario(municipios, years, partidos);
 
     let fragmento = document.createDocumentFragment();
     let municipio = [];
-    let year = 0;
     let aux = 0;
-    for(let i=0;i<municipios.length;i++){
-        //municipio.splice();
-        // verificar el filtrado, incongruencias al encontrar municipios con nombre parecido.
-        //console.log(municipio);
-        //municipio = chartData.filter(item =>item.label.includes(municipios[i])); 
-        municipio = chartData.filter(item=>
-            item.label.substring(0,municipios[i].length).endsWith(municipios[i])
-            //console.log(item.label.substring(0,municipios[i].length))
-        );
-        console.log(municipio);
-        let canvas = document.createElement("canvas");
-        canvas.setAttribute("class", "grafica0");
-        
-        let contexto = canvas.getContext("2d");
-        let char = new Chart(contexto, {
-                type: "bar",
-                data: {
-                labels: ARREGLOS.PARTIDOS,
-                datasets: municipio
+        for(let i=0;i<municipios.length;i++){
+            //municipio.splice();
+            // verificar el filtrado, incongruencias al encontrar municipios con nombre parecido.
+            //console.log(municipio);
+            //municipio = chartData.filter(item =>item.label.includes(municipios_seccion[i])); 
+            municipio = chartData.filter(item=> {
+                if(seccion){
+                    let ultimo_pe_espacio = item.label.substring(0,item.label.lastIndexOf(" "));
+                    let ultimo_espacio = ultimo_pe_espacio.lastIndexOf(" ");
+                    //console.log(item.label.substring(0,ultimo_espacio));
+                    return item.label.substring(0,ultimo_espacio).startsWith(municipios[i]) && item.label.substring(0,ultimo_espacio).endsWith(municipios[i])
+                }else{
+                    let longitud = item.label.indexOf("a")-1;
+                    return item.label.substring(0,longitud).startsWith(municipios[i]) && item.label.substring(0,longitud).endsWith(municipios[i])
                 }
-            });
-            canvas.style.position = "relative";
-            canvas.style.width="50px";
-            fragmento.appendChild(canvas)
-        
-        document.querySelector(".graficas").appendChild(fragmento);
-        municipio.splice();
-    }
+            }),[];
+            //console.log(municipio);
+            let canvas = document.createElement("canvas");
+            canvas.setAttribute("class", "grafica0");
+            
+            let contexto = canvas.getContext("2d");
+            let char = new Chart(contexto, {
+                    type: "bar",
+                    data: {
+                    labels: ARREGLOS.PARTIDOS,
+                    datasets: municipio
+                    }
+                });
+                canvas.style.position = "relative";
+                canvas.style.width="50px";
+                fragmento.appendChild(canvas)
+            
+            document.querySelector(".graficas").appendChild(fragmento);
+            municipio.splice();
+        }
 }
 
 function obtener_years(){
@@ -278,6 +289,8 @@ function obtener_years(){
 
 function encontrar_municipios(years, data_s){
     let municipios = [];
+    let municipios_seccion = [];
+    let seccion = false;
     let n_municipios = Object.keys(data_s.datos[years[0]]).length
     /**formato de js(data_s)
      * 1.data_s.datos[years[0]] determina el año
@@ -293,19 +306,35 @@ function encontrar_municipios(years, data_s){
     for (let i = 0; i < years.length; i++) {
         for (let j = 0; j < n_municipios; j++) {
             let municipio = Object.keys(data_s.datos[years[i]][j])[0];
-            if (!municipios.some((m) => municipio.startsWith(m) && municipio.endsWith(m))) { // verificar el filtro, repite municipios con nombres similares
-                municipios.push(municipio);
+            if(municipio.includes("SECCION")){
+                seccion = true;
+                //console.log("longitud:"+municipio.length+"-"+municipio.substring(0, municipio.length - 11))
+                let indicePunto = municipio.indexOf(".");
+                //console.log(municipio.substring(0,indicePunto))
+                if (!municipios_seccion.some((m) => municipio.substring(0,indicePunto).startsWith(m) && municipio.substring(0, indicePunto).endsWith(m))) { // verificar el filtro, repite municipios con nombres similares
+                    municipios_seccion.push(municipio.substring(0,indicePunto));
+                }
+                if (!municipios.some((m) => municipio.startsWith(m) && municipio.endsWith(m))) { // verificar el filtro, repite municipios con nombres similares
+                    municipios.push(municipio);
+                }
+            }else{
+                if (!municipios.some((m) => municipio.startsWith(m) && municipio.endsWith(m))) { // verificar el filtro, repite municipios con nombres similares
+                    municipios.push(municipio);
+                }
             }
+
         }
     }
-        
-    return municipios;
+   
+    return [municipios, seccion, municipios_seccion];
 }
 
 function ordenar_partidos(municipios, years, data_s){
     let aux = 0;
     let partidos = [];
+    let a = [];
     console.log(Object.keys(data_s.datos[years[0]]))
+
     while(aux < municipios.length){
         //console.log(aux)
         for (let i = 0; i < years.length; i++) {
@@ -332,6 +361,7 @@ function ordenar_partidos(municipios, years, data_s){
         }
         aux++;
     }
+    
     return partidos;
 }
 
@@ -344,6 +374,9 @@ function crear_diccionario(municipios, years, partidos){
     //diccionario[0] indica el año
     //diccionario[0][0] indica el municipio
     //let info = diccionario[0][0]
+
+    //encontrar municipios
+
 
     for (let year in years) {
         diccionario[year] = [];
