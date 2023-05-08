@@ -80,61 +80,6 @@ def mapa():
 @app.route('/Graficas', methods=['GET', 'POST'])
 def home():
     return render_template('index.html')
-    
-def crear_grafica(columnas, documentofiltrado, municipio):
-    for partido in columnas[1:]:
-        plt.bar(partido, int(documentofiltrado[partido].sum()))#creacion de cada barra de los partidos
-   
-    #creacion de etiquetas
-    plt.title("Votos por partido de "+ municipio)
-    plt.ylabel("N° Votos")
-    plt.xlabel("Partido")
-    #mostramos la grafica
-    plt.show()
-
-@app.route("/consulta-municipio", methods=['POST', 'GET'])
-def consultar_tablas():
-    js = request.get_json()
-    
-    conn = CONEXION(configuracion["database1"]["host"],
-                    configuracion["database1"]["port"],
-                    configuracion["database1"]["user"],
-                    configuracion["database1"]["passwd"],
-                    configuracion["database1"]["db"])
-    
-    print(int(js["municipio"][0]))
-    seccion = int(js["municipio"][0])
-
-    consulta_1 = conn.consultar_db(configuracion.get("consultas_graficaspy", "partidos").format(seccion=seccion))
-    consulta_2 = conn.consultar_db(configuracion.get("consultas_graficaspy", "sumaPartidos").format(seccion=seccion))
-    nombre_figura = f"{consulta_1[0][0]}.png"
-    
-    grafico = multiprocessing.Process(target=crear_grafico, args=(consulta_1, consulta_2))
-    grafico.start()
-    grafico.join()
-
-    
-    respuesta = {
-        'nombre_grafica': nombre_figura,
-        'consulta1':consulta_1
-    }
-    
-    return jsonify(respuesta)
-    
-def crear_grafico(consulta_1, consulta_2):
-    direccion_figura = os.path.dirname(__file__) + f"/static/imgs/{consulta_1[0][0]}.png"
-    aux = 0
-    for partido in PARTIDOS:
-        plt.bar(partido, consulta_2[0][aux])
-        altura = 0 if(consulta_2[0][aux] == 0)  else consulta_2[0][aux]/2
-        plt.text(aux, altura, str(consulta_2[0][aux]), ha='center', va='bottom')
-        aux += 1
-    
-    plt.title(f"Votos por partido de {consulta_1[0][0]}")
-    plt.xlabel("Partidos")
-    plt.ylabel("Nº votos")
-    plt.savefig(direccion_figura)
-    #plt.show()
 
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
@@ -190,20 +135,20 @@ def consultas_buscador():
 
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
-        fin = int(js["datos"][1])
-        fin  = 15125 if(fin == 15125) else fin
-        print(fin)
-
         if(15000 < inicio < 15126):
+            fin = int(js["datos"][1])
+            fin  = 15125 if(fin == 15125) else fin
             for id_m in range(inicio, fin+1):
                 for year in (js["years"]):
                     diccionario[year] = []
                     consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
                     respuesta = conn.consultar_db(consulta)
                     lista.append(eliminar_decimal(respuesta))
-            #print(lista)
+            print(len(lista))
             #print(encontrar_municipio(lista))
         else:
+            inicio =int(js["datos"][0])
+            fin = int(js["datos"][1])
             for id_m in range(inicio, fin+1):
                 for year in (js["years"]):
                     diccionario[year] = []
@@ -211,7 +156,7 @@ def consultas_buscador():
                     respuesta = conn.consultar_db(consulta)
                     #print(respuesta)
                     lista.append(eliminar_decimal(respuesta))
-        #print(diccionario)
+            print(len(lista))
         diccionario = crear_diccionario(lista,diccionario)
         #print(diccionario)
        
@@ -320,7 +265,7 @@ def separar_por_partido(respuesta):
             aux+=1
         aux=0
         contador += 1
-    
+
     return diccionario
 
 def eliminar_decimal(respuesta):
@@ -339,40 +284,10 @@ def crear_consulta(js):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
 
-# def crear_diccionario(lista, diccionario):
-#     municipios, secciones = encontrar_municipio(lista)
-#     years = len(diccionario.keys())
-#     n_municipios = len(municipios)
-
-#     aux = 0
-#     for i in diccionario.keys():
-#         diccionario[i]={}
-#         diccionario[i][lista[aux][0]]={}
-#         for j in range(1,17):
-#             diccionario[i][lista[aux][0]][PARTIDOS[j-1]] = lista[aux][j]
-#         aux += 1
-#     return diccionario
-
-# def crear_diccionario(lista, diccionario):
-#     municipios, secciones = encontrar_municipio(lista)
-#     years = len(diccionario.keys())
-#     n_municipios = len(municipios)
-#     aux = 0
-#     for year in diccionario.keys():
-#         for municipio in municipios:
-#             diccionario[year] = {
-#                 municipios[0]: {},
-#                 municipios[1]: {}
-#             }
-#         for i in range(n_municipios):
-#             for j in range(1,17):
-#                 diccionario[year][municipios[i]][PARTIDOS[j-1]] = lista[aux][j]
-#             aux +=1
-#     return diccionario
-
 def crear_diccionario(lista, diccionario):
     municipios, secciones = encontrar_municipio(lista)
     aux = 0
+    #print(secciones)
     for year in diccionario.keys():
         diccionario[year] = []
         for i in range(len(municipios)):
@@ -381,8 +296,9 @@ def crear_diccionario(lista, diccionario):
     #print("calla fede ",diccionario)
     for i in range(len(municipios)):
         for year in diccionario.keys():
-            for j in range(1,17):
-                diccionario[year][i][municipios[i]][PARTIDOS[j]] = lista[aux][j]
+            for j in range(1,len(PARTIDOS)+1):
+                diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j]
+                #print(aux)
             aux+=1
     # else:
     #     for year in diccionario.keys():
@@ -392,6 +308,7 @@ def crear_diccionario(lista, diccionario):
     #             aux+=1
     #print("dic")
     #print("pepe ",diccionario)
+    #print(diccionario)
     return diccionario
 
 

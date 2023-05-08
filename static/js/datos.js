@@ -2,8 +2,8 @@
 var click_btn_selec = true;
 
 function ocultar_superior(){
-    document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.94)';
-    document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
+    // document.querySelector(".selec_municipios").style = 'height: 22px; background: rgba(255, 255, 255, 0.94)';
+    // document.querySelector(".barra_des").style.transform = 'rotate(90deg)';
     document.querySelector(".opc_municipios").style.display = 'none';
     document.getElementById('con_cortina').style.visibility = 'hidden';
     click_btn_selec = true;
@@ -11,8 +11,8 @@ function ocultar_superior(){
 
 document.getElementById('btn_selec').addEventListener('click', function() {
     if(click_btn_selec == true){
-        document.querySelector(".selec_municipios").style = 'height: 70%; background: rgba(255, 255, 255, 0.94)';
-        document.querySelector(".barra_des").style.transform = 'rotate(-90deg)';
+        // document.querySelector(".selec_municipios").style = 'height: 70%; background: rgba(255, 255, 255, 0.94)';
+        // document.querySelector(".barra_des").style.transform = 'rotate(-90deg)';
         document.querySelector(".opc_municipios").style = 'position: absolute;'
                                 +'display: flex; justify-content: center; align-items: center; flex-direction: column;'
         document.getElementById('con_cortina').style.visibility = 'visible';

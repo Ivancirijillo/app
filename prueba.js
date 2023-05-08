@@ -140,3 +140,42 @@ for (let key in diccionario) {
 
 console.log(Object.keys(diccionario))
 console.log(chartData)
+
+let cadena1 = "ATIZAPAN de 2015";
+let cad =  "ATIZAPAN";
+let cadena2 = "ATIZAPAN DE ZARAGOZA de 2015";
+let cad2 = "ATIZAPAN DE ZARAGOZA";
+let ultimaPosicion = cadena2.lastIndexOf(cad2);
+console.log(cadena2.substring(0, cad2.length)); 
+
+let cadena3 = "hola";
+let arreglo = [cadena1,cadena3];
+console.log(arreglo[0].substring(0,cad.length));
+let arreglo2 = [];
+
+if(!arreglo.some((municipio) => cadena1.startsWith(municipio) && cadena1.endsWith(municipio))){
+  console.log("no");
+}
+
+
+let cadena = "Hola mundo, soy un texto de ejemplo";
+let subcadena = "soy";
+
+
+
+// for (let i = 0; i < arreglo.length; i++) {
+//   arreglo2 = arreglo.filter(item=>item.startsWith(arreglo[i]) && item.endsWith(arreglo[i]));
+//   console.log(arreglo2); 
+// }
+
+let palabras = ['hola', 'adios', 'buenos dias'];
+let texto = 'Hola, ¿cómo estás?';
+
+
+
+
+// let arreglo3  =  arreglo.some(municipio=>{
+//     if(!(municipio === cadena2)){
+//       console.log("no");
+//     }
+// })
