@@ -6,8 +6,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,700|Roboto+Slab:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- Add Material CSS, replace Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename ='css/material.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename ='css/borrador.css') }}">
     <link rel="stylesheet" href="assets/css/home.css">
     <title>Borrador</title>
@@ -20,19 +18,20 @@
             <nav>
                 <ul>
                   <li><a href="/Mapa" class="botonReMa">REGRESAR</a></li>
-                  <li><a onclick="" >Rezago Social</a></li>
-                  <li><a onclick="" >Apoyos</a></li>
-                  <li><a onclick="" >Economía</a></li>
-                  <li><a onclick="" >Población</a></li>
-                  <li><a onclick="" >Pobreza</a></li>
-                  <li><a onclick="" >Empleo</a></li>
-                  <li><a onclick="" >Delincuencia</a></li>
+                  <li><a onclick="autoScroll('RS')" >Rezago Social</a></li>
+                  <li><a onclick="autoScroll('A')" >Apoyos</a></li>
+                  <li><a onclick="autoScroll('E')" >Economía</a></li>
+                  <li><a onclick="autoScroll('P')" >Población</a></li>
+                  <li><a onclick="autoScroll('PR')" >Pobreza</a></li>
+                  <li><a onclick="autoScroll('EM')" >Empleo</a></li>
+                  <li><a onclick="autoScroll('D')" >Delincuencia</a></li>
                 </ul>
             </nav>
             <div  class="container" id="Arribaxd">
-               
-                <div class="image">
-                    <img class="image2" src="static/img_menu/image.jpg"></div>
+                
+                    <img class="image2" src="static/img_menu/image.jpg">
+                
+
                 <div class="overlay"></div>
 
                 <div class="imagenMunicipio">
@@ -44,12 +43,52 @@
                 </div>     
             </div> 
 
-            <div class="graficas">
+            <div id="RS" class="secciones">                
+                <h1>Rezago Social</h1>  
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
+            </div>
+
+            <div id="A" class="secciones">                
+                <h1>Apoyos</h1>    
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
+            </div>
+
+            <div id="E" class="secciones">                
+                <h1>Economía</h1>    
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
+            </div>
+
+            <div id="P" class="secciones">                
+                <h1>Población</h1>    
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
+            </div>
+
+            <div id="PR" class="secciones">                
+                <h1>Pobreza</h1>    
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
+            </div>
+
+            <div id="EM" class="secciones">                
+                <h1>Empleo</h1>    
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
+            </div>
+
+            <div id="D" class="secciones">                
+                <h1>Delincuencia</h1>    
+                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti mollitia nobis blanditiis. Tempora commodi praesentium unde eos exercitationem porro beatae ducimus, ipsum quae, quisquam doloribus a, odio consequuntur velit reiciendis.</h2>
+            
             </div>
 
             <div class="Fondo" id="Abajoxd">
             </div>
 
         </main>    
+        <script src="{{ url_for('static', filename ='js/borrador.js') }}"> </script>
     </body>
 </html>
