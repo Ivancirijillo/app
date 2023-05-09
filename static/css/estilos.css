@@ -116,6 +116,10 @@ body{
 	height: 54px;
 }
 
+.cont_btn_secc button{
+	margin-top: 10px;
+}
+
 .opc_municipios p, 
 .cont_btn_secc{
     display: grid;
@@ -516,10 +520,11 @@ svg{
 	position: absolute;
 	width: 100%;
 	height: 60%;
-	gap: 15px;
 	overflow-y: scroll;
 	display: none;
 	grid-template-columns: repeat(4, 1fr);
+	background-color: #0000004f;
+    border-radius: 15px;
 }
   
 /* .cont_btn_secc button{

@@ -414,6 +414,11 @@ document.getElementById('btn_volver').addEventListener('click', function() {
 })
 
 document.getElementById('btn_secc').addEventListener('click', function() {
+    var template = ' '
+    for (var i = 1; i <= 100; i++ ){
+        template += '<button>Sección '+i+'</button>'
+    } 
+    cont_btn_secc.innerHTML = template
     document.querySelector('.cont_btn_secc').style = 'display: grid;';
 })
 
