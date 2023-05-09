@@ -69,6 +69,7 @@ alter table economia add foreign key(ClaveMunicipal) references Municipio (Clave
 
 create table empleo(
 	ClaveMunicipal int,
+    yearEmp int,
 	agarpa bigint,
 	comercio int,
 	elec_agua int,
@@ -86,6 +87,7 @@ alter table empleo add foreign key(ClaveMunicipal) references Municipio (ClaveMu
 
 create table rezago_s(
 	ClaveMunicipal int,
+    yearR int,
 	gini int,
 	r_ingreso int,
 	analfabeta int,
