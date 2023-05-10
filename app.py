@@ -95,44 +95,17 @@ def consultas_buscador():
                     configuracion["database1"]["db"])
     
     if(js["tipo"] ==  "varios"):
-        
-        for id_m in js["datos"]:
-            for year in js["years"]:
-                diccionario[year] = []
-                consulta = configuracion.get("consultas_buscador", "busca_por_yearv").format(id=id_m, year=year)
-                respuesta = conn.consultar_db(consulta)
-                lista.append(eliminar_decimal(respuesta))
+        print(js["datos"])
+        if(js["datos"][0].isdigit()):
+            for id_m in js["datos"]:
+                for year in js["years"]:
+                    diccionario[year] = []
+                    consulta = configuracion.get("consultas_buscador", "busca_por_yearv").format(id=id_m, year=year) if(15000 < int(js["datos"][0]) < 15126) else configuracion.get("consultas_buscador", "toma_tu_consulta").format(seccion=id_m, year=year)
+                    respuesta = conn.consultar_db(consulta)
+                    lista.append(eliminar_decimal(respuesta))
         
         diccionario = crear_diccionario(lista,diccionario)
-        # for dato in js["datos"]:
-        #     if(dato.isdigit()):
-        #         for id_m in range(inicio, fin+1):
-        #             for year in (js["years"]):
-        #                 diccionario[year] = []
-        #                 consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
-        #                 respuesta = conn.consultar_db(consulta)
-        #                 lista.append(eliminar_decimal(respuesta))
-        #     else:
-        #         consulta = configuracion.get("consultas_buscador", "nombreM").format(dato=dato)
-            
-        #     respuesta = conn.consultar_db(consulta)
-        #     lista.append(respuesta)
-
-        # for i in range(len(lista)):
-        #     arreglo.append(len(lista[i]))
-
-        # for i in range(0,len(lista)):
-        #     diccionario[f"m_{i}"] = {
-        #         lista[i][0][0]:{}
-        #     }
-        #     while(contador <= 11):
-        #         diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]] = []
-        #         for j in range(0,arreglo[i]):
-        #             diccionario[f"m_{i}"][lista[i][0][0]][PARTIDOS[contador-1]].append(lista[i][j][contador])
-                    
-        #         contador += 1
-        #     contador = 1
-
+        
     elif(js["tipo"] ==  "rango"):
         inicio =int(js["datos"][0])
         if(15000 < inicio < 15126):
