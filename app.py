@@ -50,6 +50,10 @@ def not_found(error):
 def borrador():
     return render_template('Borrador.html')
 
+@app.route('/DatosMunicipio')
+def data():
+    return render_template('DatosMunicipio.html')
+
 @app.route('/Paleta1')
 def paleta1():
     return render_template('paleta1v3.html')
