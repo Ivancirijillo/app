@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory
+from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory, url_for
 import threading, multiprocessing, time, signal, sys
 from flask_sslify import SSLify
 from random import sample
@@ -46,6 +46,34 @@ def not_found(error):
         pagina="404.html"
     return render_template(pagina)
 
+@app.route('/',methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        # Obtener los datos enviados por el formulario
+        usern = request.form['username']
+        passw = request.form['password']
+
+        # Realizar la validación de las credenciales
+        conn = CONEXION(configuracion["database1"]["host"],
+                    configuracion["database1"]["port"],
+                    configuracion["database1"]["user"],
+                    configuracion["database1"]["passwd"],
+                    configuracion["database1"]["db"])
+        
+        consulta = configuracion.get("consulta_usuarios","usuario").format(username=usern, password=passw)
+        user = conn.consultar_db(consulta)
+
+        if user:
+            # Inicio de sesión exitoso, redirigir a una página de inicio
+            return redirect(url_for('menu'))
+        else:
+            # Credenciales incorrectas, mostrar un mensaje de error
+            error_message = 'Credenciales incorrectas. Inténtalo de nuevo.'
+            return render_template('login.html', error_message=error_message)
+    else:
+        # Método GET, mostrar el formulario de inicio de sesión
+        return render_template("login.html")
+
 @app.route('/Borrador')
 def borrador():
     return render_template('Borrador.html')
@@ -58,7 +86,7 @@ def paleta1():
 def paleta2():
     return render_template('paleta2v3.html')
 
-@app.route("/",methods=["GET", "POST"])
+@app.route("/Menu",methods=["GET", "POST"])
 def menu():
     return render_template("menu.html")
 
