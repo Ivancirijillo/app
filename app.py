@@ -74,21 +74,13 @@ def login():
         # Método GET, mostrar el formulario de inicio de sesión
         return render_template("login.html")
 
-@app.route('/Borrador')
-def borrador():
-    return render_template('Borrador.html')
+# @app.route('/Borrador')
+# def borrador():
+#     return render_template('Borrador.html')
 
 @app.route('/DatosMunicipio')
 def data():
-    return render_template('DatosMunicipio.html')
-
-@app.route('/Paleta1')
-def paleta1():
-    return render_template('paleta1v3.html')
-
-@app.route('/Paleta2')
-def paleta2():
-    return render_template('paleta2v3.html')
+    return render_template('Borrador.html')
 
 @app.route("/Menu",methods=["GET", "POST"])
 def menu():
