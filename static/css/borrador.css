@@ -1,5 +1,5 @@
 body{
-    background-color: #73a587f5;
+    background-color: #b9c2bdf5;
     font-family:Arial, Helvetica, sans-serif;
     margin: 0;
 }
@@ -7,60 +7,61 @@ body{
 /*ESTILOS DE BARRA DE NAVEGACION*/
 
 nav {
-    background-color: #0A9292;
-    height: 50px;
-    width: 100%;
-    text-transform: uppercase;
-    text-align: center;
-  }
+  background-color: #0A9292;
+  height: 51px;
+  width: 100%;
+  text-transform: uppercase;
+  text-align: center;
+}
   
-  nav ul {
-    list-style: none;
-    float:right;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-  }
+nav ul {
+  list-style: none;
+  float:right;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+}
   
-  nav li {
-    color: #FFF;
-    cursor: pointer;
-    
-  }
+nav li {
+  color: #FFF;
+  cursor: pointer;
+ }
   
-  nav a {
-    display: block;
-    font-size: 16px;
-    line-height: 50px;
-    padding: 0 15px;
-  }
+nav a {
+  display: block;
+  font-size: 16px;
+  line-height: 51px;
+  padding: 0 16px;
+}
   
-  nav a:hover {
-    color: aliceblue;
-    background-color: #21446b;
-    text-decoration: none;
+nav a:hover {
+  color: aliceblue;
+  background-color: #21446b;
+  text-decoration: none;
 } 
 
 .botonReMa{
   position: absolute;
   left: 1%;
-    border-radius: 10px;
-    color: #FFF;
-    font-size: 16px;
-    -webkit-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-    cursor: pointer;
-    text-decoration: none;
+  border-radius: 10px;
+  color: #FFF;
+  font-size: 16px;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /*TITULO*/
 
 .container {
-  position: relative;
+  display: block;
+  position: absolute;
   width: 100%;
-  height: 100%;
-
+  height: 40%;
+  background-image: url('../img_menu/image.jpg');
+  background-position: center;
 }
 
 .overlay {
@@ -69,46 +70,97 @@ nav {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(10, 146, 146,0.2); 
+  background-color: rgba(0, 0, 0, 0.541); 
 }
 
 /*Municipio*/
 .municipio{
   position: absolute;
-  margin-top: 80px;
+  margin-top: 1%;
   color: #fff;
   top:0;
-  left: 80px;
+  left: 90px;
 }
+
+
 
 .imagenMunicipio2 {
   position: absolute;
+  left: 1%;
+  margin-top: 2%;
   width: 60px;
   height: 60px;
   top:0;
 }
 
-.image2 {
-  position: relative;
-  width: 60%;
+.contenido{
+  padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  text-transform: uppercase;
+  gap: 30px;
 }
 
+.contenido .datos{
+  font-family:'Trebuchet MS', Arial, sans-serif;
+  font-size: 19px;
+  letter-spacing: -1px;
+}
+
+.contenido .year{
+  font-family:'Trebuchet MS', Arial, sans-serif;
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.contenido h2{
+  letter-spacing: 1px;
+  font-weight: lighter;
+  font-size: 14px;
+  margin-top: 1mm;
+}
+
+
 /*  SECCCIONES  */
+
+.grupoSec{
+  position: absolute;
+  top: 48%; /* Altura de div1 */
+  left: 0;
+}
+
+.secciones{
+  width: auto;
+  height: auto;
+}
+
+.secciones h2{
+  font-weight: lighter;
+  font-size: 14px;
+  padding-left: 1em;
+  margin-top: 1mm;
+}
+
 .secciones h1{
   font-size: 20px;
   margin-bottom: 4px;
   margin-top: 0;
   padding: 10px;
-  line-height: 1.2em;
-  box-sizing: border-box;
   color: #fff;
   background-color: #21446bc5;
   text-transform: uppercase;
   text-align: center;
+} 
+
+.secciones .sub{
+  font-size: 17px;
+  margin-bottom: 4px;
+  margin-top: 0;
+  padding: 10px;
+  color: #182549;
+  background-color:#3f4b4400;
+  text-transform: uppercase;
+  text-align: left;
 }
 
-h2{
-  text-align: justify;
-  font-size: 15px;
-  padding: 10px;
-}
