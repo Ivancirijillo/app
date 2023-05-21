@@ -1,5 +1,23 @@
+:root {
+  --main-bg-color:  #FCFCFC;
+  /*BARRA DE NAVEGACION*/
+  --top-bar-color:  #00AFAA;
+  --top-bar-font-color: #fff;
+  --top-bar-font-hover-color: #21446b;
+  /*ENCABEZADO*/
+  --header-overlay-color: rgba(0, 0, 0, 0.541); 
+  --header-font-color:  #fff;
+  /*SECCIONES*/
+  --section-font-color: #fff;
+  --section-bg--color:  #21446bc5;
+  --sub-section-font-color: #182549;
+  --sub-section-bg--color:  #3f4b4400;
+  /*PRUEBAS*/
+  --pruebas: #00AFAA;
+  }
+
 body{
-    background-color: #b9c2bdf5;
+    background-color: var(--main-bg-color);
     font-family:Arial, Helvetica, sans-serif;
     margin: 0;
 }
@@ -7,7 +25,7 @@ body{
 /*ESTILOS DE BARRA DE NAVEGACION*/
 
 nav {
-  background-color: #0A9292;
+  background-color: var(--top-bar-color);
   height: 51px;
   width: 100%;
   text-transform: uppercase;
@@ -24,7 +42,7 @@ nav ul {
 }
   
 nav li {
-  color: #FFF;
+  color: var(--top-bar-font-color);
   cursor: pointer;
  }
   
@@ -36,8 +54,8 @@ nav a {
 }
   
 nav a:hover {
-  color: aliceblue;
-  background-color: #21446b;
+  color: var(--top-bar-font-color);
+  background-color:var(--top-bar-font-hover-color);
   text-decoration: none;
 } 
 
@@ -45,7 +63,7 @@ nav a:hover {
   position: absolute;
   left: 1%;
   border-radius: 10px;
-  color: #FFF;
+  color: var(--top-bar-font-color);
   font-size: 16px;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
@@ -53,7 +71,7 @@ nav a:hover {
   text-decoration: none;
 }
 
-/*TITULO*/
+/*ENCABEZADO*/
 
 .container {
   display: block;
@@ -70,19 +88,16 @@ nav a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.541); 
+  background-color: var(--header-overlay-color);
 }
 
-/*Municipio*/
 .municipio{
   position: absolute;
   margin-top: 1%;
-  color: #fff;
+  color: var(--header-font-color);
   top:0;
   left: 90px;
 }
-
-
 
 .imagenMunicipio2 {
   position: absolute;
@@ -92,6 +107,8 @@ nav a:hover {
   height: 60px;
   top:0;
 }
+
+/*Datos*/
 
 .contenido{
   padding-top: 40px;
@@ -121,7 +138,6 @@ nav a:hover {
   margin-top: 1mm;
 }
 
-
 /*  SECCCIONES  */
 
 .grupoSec{
@@ -147,8 +163,8 @@ nav a:hover {
   margin-bottom: 4px;
   margin-top: 0;
   padding: 10px;
-  color: #fff;
-  background-color: #21446bc5;
+  color: var(--section-font-color);
+  background-color: var(--section-bg--color);
   text-transform: uppercase;
   text-align: center;
 } 
@@ -158,9 +174,24 @@ nav a:hover {
   margin-bottom: 4px;
   margin-top: 0;
   padding: 10px;
-  color: #182549;
-  background-color:#3f4b4400;
+  color: var(--sub-section-font-color);
+  background-color:var(--sub-section-bg--color);
   text-transform: uppercase;
-  text-align: left;
+  text-align: center;
 }
 
+/*Graficas*/
+
+.bloques{
+  display: flex;
+  align-items: center;
+}
+
+.tarjeta{
+  width: 30%;
+  background: var(--pruebas);
+}
+
+.ContenedorGraficos{
+  width: 70%;
+}
