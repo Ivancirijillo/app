@@ -37,7 +37,7 @@ import os
 app = Flask(__name__)
 #Declarando la clave secreta
 app.secret_key = configuracion.get("api","id")
-csrf = CSRFProtect(app)
+#csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
