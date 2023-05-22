@@ -4,3 +4,4 @@ pandas
 matplotlib
 pymysql
 reportlab
+flask_wtf
