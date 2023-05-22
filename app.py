@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory, url_for
+from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory, session, url_for
 import threading, multiprocessing, time, signal, sys
 from flask_sslify import SSLify
+from flask_wtf.csrf import CSRFProtect
+from UserSession import LoginForm
 from random import sample
 import pandas as pd
 import json, time
@@ -33,6 +35,9 @@ import os
 
 #Declarando nombre de la aplicación e inicializando
 app = Flask(__name__)
+#Declarando la clave secreta
+app.secret_key = configuracion.get("api","id")
+csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
@@ -46,12 +51,14 @@ def not_found(error):
         pagina="404.html"
     return render_template(pagina)
 
-@app.route('/',methods=["GET", "POST"])
+@app.route('/', methods=['GET', 'POST'])
+@csrf.exempt
 def login():
-    if request.method == 'POST':
+    form = LoginForm()
+    if form.validate_on_submit():
         # Obtener los datos enviados por el formulario
-        usern = request.form['username']
-        passw = request.form['password']
+        usern = form.username.data
+        passw = form.password.data
 
         # Realizar la validación de las credenciales
         conn = CONEXION(configuracion["database1"]["host"],
@@ -59,20 +66,20 @@ def login():
                     configuracion["database1"]["user"],
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
-        
         consulta = configuracion.get("consulta_usuarios","usuario").format(username=usern, password=passw)
         user = conn.consultar_db(consulta)
 
         if user:
-            # Inicio de sesión exitoso, redirigir a una página de inicio
+            # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
+            session['username'] = usern
             return redirect(url_for('menu'))
         else:
             # Credenciales incorrectas, mostrar un mensaje de error
             error_message = 'Credenciales incorrectas. Inténtalo de nuevo.'
-            return render_template('login.html', error_message=error_message)
+            return render_template('login.html',form=form , error_message=error_message)
     else:
         # Método GET, mostrar el formulario de inicio de sesión
-        return render_template("login.html")
+        return render_template("login.html", form=form)
 
 # @app.route('/Borrador')
 # def borrador():
@@ -80,29 +87,36 @@ def login():
 
 @app.route('/DatosMunicipio')
 def data():
+    # Verificar si el usuario ha iniciado sesión
+    if not 'username' in session:
+         return redirect(url_for('login'))
+    # Redirigir a la página de Datos de los Municipios
     return render_template('Borrador.html')
 
 @app.route("/Menu",methods=["GET", "POST"])
 def menu():
+    # Verificar si el usuario ha iniciado sesión
+    if not 'username' in session:
+         return redirect(url_for('login'))
+    # Redirigir a la página del Menú
     return render_template("menu.html")
 
-@app.route("/menuOpc",methods=["POST"])
-def menuOpc():
-    json = request.get_json()
-    modo = json["modo"] 
-    if(modo=="graficas"):
-        data_mapa = {'resp': "/Graficas"}
-    elif(modo=="mapa"):
-        data_mapa = {'resp': "/Mapa"}
-    return data_mapa
 
 @app.route("/Mapa",methods=["GET", "POST"])
 def mapa():
+    # Verificar si el usuario ha iniciado sesión
+    if not 'username' in session:
+         return redirect(url_for('login'))
+    # Redirigir a la página del Mapa
     return render_template("mapa.html")
      
 #Creando un Decorador
 @app.route('/Graficas', methods=['GET', 'POST'])
 def home():
+    # Verificar si el usuario ha iniciado sesión
+    if not 'username' in session:
+         return redirect(url_for('login'))
+    # Redirigir a la página de las Graficas
     return render_template('index.html')
 
 @app.route("/consultas-buscador", methods=['POST'])
@@ -220,6 +234,10 @@ def impresiones():
 
 @app.route("/pdf")
 def abrir_pdf():
+    # Verificar si el usuario ha iniciado sesión
+    if not 'username' in session:
+         return redirect(url_for('login'))
+    # Continuar
     global ruta_pdf
     print(ruta_pdf)
     return send_file(ruta_pdf)
