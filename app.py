@@ -105,6 +105,32 @@ def mapa():
 def home():
     return render_template('index.html')
 
+@app.route("/consultas-pagina", methods=['GET'])
+def consultas_pagina():
+    diccionario = {}
+    secciones= ["rezago", "apoyos"]
+    # Realizar la validación de las credenciales
+    conn = CONEXION(configuracion["database1"]["host"],
+                configuracion["database1"]["port"],
+                configuracion["database1"]["user"],
+                configuracion["database1"]["passwd"],
+                configuracion["database1"]["db"])
+    
+    #REZAGO SOCIAL
+    consulta = configuracion.get("consulta_pagina",secciones[0])
+    
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[0])
+
+    #APOYOS
+    consulta = configuracion.get("consulta_pagina",secciones[1])
+    
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[1])
+
+
+    return jsonify(lista)
+
 @app.route("/consultas-buscador", methods=['POST'])
 def consultas_buscador():
     js = request.get_json()
@@ -280,6 +306,19 @@ def crear_consulta(js):
     for i in (js["years"]):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
+
+def tratamiento(tupla,diccionario,atributo):
+    cadena = ','.join(str(elem) for elem in tupla)
+    lista = cadena.split(',')
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    
+    diccionario [atributo]= lista
+
+    return diccionario
 
 def crear_diccionario(lista, diccionario):
     municipios, secciones = encontrar_municipio(lista)
