@@ -51,6 +51,7 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     user = User(user_id)
     return user
+#csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
@@ -65,7 +66,7 @@ def not_found(error):
     return render_template(pagina)
 
 @app.route('/', methods=['GET', 'POST'])
-@csrf.exempt
+#@csrf.exempt
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -132,6 +133,58 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route("/consultas-pagina", methods=['GET'])
+def consultas_pagina():
+    diccionario = {}
+    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron"]
+    # Realizar la validación de las credenciales
+    conn = CONEXION(configuracion["database1"]["host"],
+                configuracion["database1"]["port"],
+                configuracion["database1"]["user"],
+                configuracion["database1"]["passwd"],
+                configuracion["database1"]["db"])
+    
+    #REZAGO SOCIAL
+    consulta = configuracion.get("consulta_pagina",secciones[0])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[0])
+
+    #APOYOS
+    consulta = configuracion.get("consulta_pagina",secciones[1])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[1])
+
+    #Economia
+    consulta = configuracion.get("consulta_pagina",secciones[2])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[2])
+
+    #Poblacion
+    consulta = configuracion.get("consulta_pagina",secciones[3])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[3])
+
+    #Pobreza
+    consulta = configuracion.get("consulta_pagina",secciones[4])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[4])
+
+    #Empleo
+    consulta = configuracion.get("consulta_pagina",secciones[5])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[5])
+
+    #Delincuencia
+    consulta = configuracion.get("consulta_pagina",secciones[6])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[6])
+
+    #Padron
+    consulta = configuracion.get("consulta_pagina",secciones[7])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[7])
+
+    return jsonify(lista)
 
 @app.route("/consultas-buscador", methods=['POST'])
 @csrf.exempt
@@ -311,6 +364,19 @@ def crear_consulta(js):
     for i in (js["years"]):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
+
+def tratamiento(tupla,diccionario,atributo):
+    cadena = ','.join(str(elem) for elem in tupla)
+    lista = cadena.split(',')
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    
+    diccionario [atributo]= lista
+
+    return diccionario
 
 def crear_diccionario(lista, diccionario):
     municipios, secciones = encontrar_municipio(lista)
