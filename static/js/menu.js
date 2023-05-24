@@ -9,3 +9,7 @@ document.getElementById('opc_graficas').addEventListener('click', function() {
 document.getElementById('opc_mapa').addEventListener('click', function() {
     json_wind("/Mapa");
 })
+
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    json_wind("/logout");
+})
