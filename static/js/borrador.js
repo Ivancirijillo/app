@@ -1,4 +1,7 @@
-let data;
+const vivienda =['Piso de tierra', 'No disponen de excusado o sanitario', 'No disponen de agua entubada de la red pública', 'No disponen de drenaje', 'No disponen de energía eléctrica', 'No disponen de lavadora', 'No disponen de refrigerador']
+
+var data;
+var c_viviendas = [];
 
 document.addEventListener('DOMContentLoaded', function() {
   fetch('/consultas-pagina')
@@ -6,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(result => {
       data = result; // Asignar los datos a la variable global
       procesarDatos(); // Llamar a la función que utiliza los datos
+      graficaRe(); // Llamar a la funcion de la grafica
     })
     .catch(error => {
       console.error('Error al realizar la consulta:', error);
@@ -13,13 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function procesarDatos() {
-  // Utilizar la variable data en esta función
-  console.log('Resultados:', data);
+  // REZAGO
+  //  general
+  //  vivenda
+  for (let i = 8; i < 15; i++) {
+    c_viviendas.push(data.rezago[i]);
+  }
+  console.log('Datos: ', data.rezago[0]);
+  console.log('Datos: ', c_viviendas);
   // Resto del código...
 }
-
-
-const vivienda =['Viviendas con piso de tierra', 'Viviendas que no disponen de excusado o sanitario', 'Viviendas que no disponen de agua entubada de la red pública', 'Viviendas que no disponen de drenaje', 'Viviendas que no disponen de energía eléctrica', 'viviendas que no disponen de lavadora', 'Viviendas que no disponen de refrigerador']
 
 function autoScroll(sectionId) {
     const section = document.getElementById(sectionId);
@@ -30,8 +37,9 @@ function autoScroll(sectionId) {
     });
 }
 
-const GReSo = document.getElementById('GReSo');
-console.log('Resultados:', data.rezago);
+function graficaRe() {
+  const GReSo = document.getElementById('GReSo');
+
   new Chart(GReSo, {
     
     type: 'bar',
@@ -39,8 +47,7 @@ console.log('Resultados:', data.rezago);
       labels: vivienda,
       datasets: [{
         label: 'Número de viviendas',
-        data: [3.8, 14.9, 10.4, 20.9, 2.6, 63.2, 32.4],
-
+        data: c_viviendas  /*[3.8, 14.9, 10.4, 20.9, 2.6, 63.2, 32.4]*/,
         borderWidth: 1
       }]
     },
@@ -55,6 +62,7 @@ console.log('Resultados:', data.rezago);
         
     }
   });
+}
 
   const Ed = document.getElementById('Ed');
 

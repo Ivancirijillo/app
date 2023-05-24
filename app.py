@@ -122,7 +122,7 @@ def home():
 @app.route("/consultas-pagina", methods=['GET'])
 def consultas_pagina():
     diccionario = {}
-    secciones= ["rezago", "apoyos"]
+    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
@@ -132,16 +132,43 @@ def consultas_pagina():
     
     #REZAGO SOCIAL
     consulta = configuracion.get("consulta_pagina",secciones[0])
-    
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[0])
 
     #APOYOS
     consulta = configuracion.get("consulta_pagina",secciones[1])
-    
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[1])
 
+    #Economia
+    consulta = configuracion.get("consulta_pagina",secciones[2])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[2])
+
+    #Poblacion
+    consulta = configuracion.get("consulta_pagina",secciones[3])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[3])
+
+    #Pobreza
+    consulta = configuracion.get("consulta_pagina",secciones[4])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[4])
+
+    #Empleo
+    consulta = configuracion.get("consulta_pagina",secciones[5])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[5])
+
+    #Delincuencia
+    consulta = configuracion.get("consulta_pagina",secciones[6])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[6])
+
+    #Padron
+    consulta = configuracion.get("consulta_pagina",secciones[7])
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[7])
 
     return jsonify(lista)
 
