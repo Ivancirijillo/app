@@ -1,6 +1,7 @@
 let etiquetas_graficas = {
   vivienda:   ['Piso de tierra', 'No disponen de excusado o sanitario', 'No disponen de agua entubada de la red pública', 'No disponen de drenaje', 'No disponen de energía eléctrica', 'No disponen de lavadora', 'No disponen de refrigerador'],
-  educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o mas con educacion basica incompleta']
+  educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o mas con educacion basica incompleta'],
+  economia:   ['PIB', 'PBI PER Cápita', 'Unidades Economicas', ]
 };
 
 var data;
@@ -21,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // Llamar a la funcion de la grafica
       graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', c_viviendas ); 
       graficaRe('Ed',etiquetas_graficas.educacion, 'Población', c_educacion ); 
+      graficaRe('GEco',etiquetas_graficas.economia, '$', c_economia ); 
+      
       //graficaEd();
     })
     .catch(error => {
@@ -44,14 +47,14 @@ function procesarDatos() {
   for (let i = 2; i < 4; i++) {
     c_carencias.push(data.rezago[i]);
   }
-  //Educacion
-for (let i = 4; i < 7; i++) {
-  c_educacion.push(data.rezago[i]);
-}
-//Economia
-for (let i = 2; i < 8; i++) {
-  c_economia.push(data.economia[i]);
-}
+    //Educacion
+  for (let i = 4; i < 7; i++) {
+    c_educacion.push(data.rezago[i]);
+  }
+  //ECONOMIA
+  for (let i = 2; i < 8; i++) {
+    c_economia.push(data.economia[i]);
+  }
 }
 
 function autoScroll(sectionId) {
