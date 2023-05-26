@@ -1,0 +1,4 @@
+use BaseMunicipios;
+ALTER TABLE TPobreza DROP COLUMN Poblacion;
+ALTER TABLE TPobreza DROP COLUMN PIB;
+ALTER TABLE TPobreza DROP COLUMN UET;

@@ -7,14 +7,14 @@
   /*ENCABEZADO*/
   --header-overlay-color: rgba(0, 0, 0, 0.541); 
   --header-font-color:  #fff;
-  /*SECCIONES*/
-  --section-font-color: #fff;
-  --section-bg--color:  #21446bc5;
+  /*SECCIONES*/  
+  --section-font-color: #222222; 
+  --section-bg--color:  #d7dcdf;
   --sub-section-font-color: #182549;
   --sub-section-bg--color:  #3f4b4400;
   /*PRUEBAS*/
   --pruebas: #00AFAA;
-  }
+}
 
 body{
     background-color: var(--main-bg-color);
@@ -162,7 +162,7 @@ nav a:hover {
   font-size: 20px;
   margin-bottom: 4px;
   margin-top: 0;
-  padding: 10px;
+  padding: 20px;
   color: var(--section-font-color);
   background-color: var(--section-bg--color);
   text-transform: uppercase;
@@ -170,14 +170,15 @@ nav a:hover {
 } 
 
 .secciones .sub{
+
   font-size: 17px;
   margin-bottom: 4px;
-  margin-top: 0;
-  padding: 10px;
+  margin-top: 2em;
+  padding: 20px;
   color: var(--sub-section-font-color);
   background-color:var(--sub-section-bg--color);
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
 }
 
 /*Graficas*/
@@ -189,9 +190,14 @@ nav a:hover {
 
 .tarjeta{
   width: 30%;
+  margin-left: 1%;
   background: var(--pruebas);
 }
 
 .ContenedorGraficos{
   width: 70%;
+}
+
+.Graficos{
+  width: 120%;
 }
