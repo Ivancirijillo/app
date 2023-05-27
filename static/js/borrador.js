@@ -35,14 +35,24 @@ var c_empleo = [];
 var c_deli = [];
 var c_deliHM = [];
 var c_padron = [];
+// Obtener el valor del parámetro 'contenido' de la URL
+var contenido = obtenerParametroURL('contenido');
+var contenido2=23;
 
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('/consultas-pagina')
+  fetch('/consultas-pagina', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ dato: contenido })
+  })
     .then(response => response.json())
     .then(result => {
       data = result; // Asignar los datos a la variable global
       console.log('Datos: ', data);
       procesarDatos(); // Llamar a la función que utiliza los datos
+      insertarDatos();
       // Llamar a la funcion de la grafica
       graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', c_viviendas ); 
       graficaRe('GEd',etiquetas_graficas.educacion, 'Población', c_educacion ); 
@@ -292,3 +302,32 @@ function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
   });
 
 }
+    
+// Función para obtener parámetro de la URL
+function obtenerParametroURL(nombreParametro) {
+  var urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(nombreParametro);
+}
+
+function insertarDatos(){
+  // Asignar el valores a la pagina
+  document.getElementById('tituloM').innerText = data.nombre[0];
+  document.getElementById('nommbreMun').innerText = data.nombre[0];
+  document.getElementById('tituloPoblacion').innerText = data.poblacion[2];  
+  document.getElementById('tituloPoblacionA').innerText = data.poblacion[1]; 
+  document.getElementById('tituloEdad').innerText = data.poblacion[5];  
+  document.getElementById('tituloEdadA').innerText = data.poblacion[1];  
+  document.getElementById('tituloPobreza').innerText = data.tpobreza[2] + ' %';  
+  document.getElementById('tituloPobrezaA').innerText = data.tpobreza[1];  
+  document.getElementById('tituloPIB').innerText = '$' + data.economia[2];   
+  document.getElementById('tituloPIBA').innerText = data.economia[1];  
+  document.getElementById('tituloUE').innerText = data.economia[4];  
+  document.getElementById('tituloUEA').innerText = data.economia[1];  
+  document.getElementById('tituloSalario').innerText = '$' +  data.empleo[13];  
+  document.getElementById('tituloSalarioA').innerText = data.empleo[1];
+}
+
+document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
+document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
+  
+

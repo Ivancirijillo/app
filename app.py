@@ -133,10 +133,15 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/consultas-pagina", methods=['GET'])
+@app.route("/consultas-pagina", methods=['GET', 'POST'])
+@csrf.exempt
 def consultas_pagina():
+    data = request.get_json()
+    clavemun = data.get('dato')
+    #print(dato_recibido)
+
     diccionario = {}
-    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron"]
+    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron", "nombre"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
@@ -145,44 +150,49 @@ def consultas_pagina():
                 configuracion["database1"]["db"])
     
     #REZAGO SOCIAL
-    consulta = configuracion.get("consulta_pagina",secciones[0])
+    consulta = configuracion.get("consulta_pagina",secciones[0]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[0])
 
     #APOYOS
-    consulta = configuracion.get("consulta_pagina",secciones[1])
+    consulta = configuracion.get("consulta_pagina",secciones[1]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[1])
 
     #Economia
-    consulta = configuracion.get("consulta_pagina",secciones[2])
+    consulta = configuracion.get("consulta_pagina",secciones[2]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[2])
 
     #Poblacion
-    consulta = configuracion.get("consulta_pagina",secciones[3])
+    consulta = configuracion.get("consulta_pagina",secciones[3]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[3])
 
     #Pobreza
-    consulta = configuracion.get("consulta_pagina",secciones[4])
+    consulta = configuracion.get("consulta_pagina",secciones[4]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[4])
 
     #Empleo
-    consulta = configuracion.get("consulta_pagina",secciones[5])
+    consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[5])
 
     #Delincuencia
-    consulta = configuracion.get("consulta_pagina",secciones[6])
+    consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[6])
 
     #Padron
-    consulta = configuracion.get("consulta_pagina",secciones[7])
+    consulta = configuracion.get("consulta_pagina",secciones[7]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[7])
+
+    #Nombre
+    consulta = configuracion.get("consulta_pagina",secciones[8]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[8])
 
     return jsonify(lista)
 
