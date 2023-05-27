@@ -8,8 +8,8 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename ='css/borrador.css') }}">
     <link rel="stylesheet" href="assets/css/home.css">
-    <title>Borrador</title>
-    <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='img_mun/15001.png') }}"/>
+    <title id="tituloM"></title>
+    <link id="imagenM" type="text/css" rel="shortcut icon"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
@@ -38,43 +38,43 @@
                 <div class="overlay"></div>
 
                 <div class="imagenMunicipio">
-                    <img class="imagenMunicipio2" src="static/img_mun/15001.png">
+                    <img class="imagenMunicipio2" id="imagenMunicipio22">
                 </div>
 
                 <div class="municipio" >                  
-                    <h1>Acambay</h1>
+                    <h1 id="nommbreMun"></h1>
                     <div class="contenido">
                         <div class="datosv"> 
-                            <span class="datos">16,992,418</span>
+                            <span class="datos" id="tituloPoblacion"></span>
                             <h2 class="categoria">Población</h2>
-                            <span class="year">2020</span> 
+                            <span class="year" id="tituloPoblacionA"></span> 
                         </div>
                         <div class="datosv">
-                            <span class="datos">16,992,418</span>
+                            <span class="datos" id="tituloEdad"></span>
                             <h2 class="categoria">Edad Media</h2>
-                            <span class="year">2020</span> 
+                            <span class="year" id="tituloEdadA">2020</span> 
                         </div>
 
                         <div class="datosv">
-                            <span class="datos">16,992,418</span>
+                            <span class="datos" id="tituloPobreza"></span>
                             <h2 class="categoria">Porcentaje de pobreza</h2>
-                            <span class="year">2020</span> 
+                            <span class="year" id="tituloPobrezaA"></span> 
                         </div>
                         <div class="datosv"> 
-                            <span class="datos">16,992,418</span>
+                            <span class="datos" id="tituloPIB"></span>
                             <h2 class="categoria">PBI</h2>
-                            <span class="year">2020</span> 
+                            <span class="year" id="tituloPIBA"></span> 
                         </div>
                         <div class="datosv">
-                            <span class="datos">16,992,418</span>
+                            <span class="datos" id="tituloUE"></span>
                             <h2 class="categoria">Unidades Economicas</h2>
-                            <span class="year">2020</span> 
+                            <span class="year" id="tituloUEA"></span> 
                         </div>
 
                         <div class="datosv">
-                            <span class="datos">16,992,418</span>
+                            <span class="datos" id="tituloSalario"></span>
                             <h2 class="categoria">Salario Promedio</h2>
-                            <span class="year">2020</span> 
+                            <span class="year" id="tituloSalarioA"></span> 
                         </div>
                     </div>
                     
@@ -170,9 +170,7 @@
                             <h2>tipo de apoyo: Estatal o Federal</h2> -->
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
                         </div>  
-                        <div class="ContenedorGraficos">
-                            <canvas class="Graficos" id="GApo"></canvas>
-                        </div>
+                        <div class="ContenedorGraficos" id="GApo"></div>
                     </div>          
                 </div>
 
