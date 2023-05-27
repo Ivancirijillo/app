@@ -53,7 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Datos: ', data);
       procesarDatos(); // Llamar a la función que utiliza los datos
       insertarDatos();
-      // Llamar a la funcion de la grafica
+      //Tabla apoyos
+      generarTabla(c_apoyos);
+      // Llamar a la funcion de las grafica
       graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', c_viviendas ); 
       graficaRe('GEd',etiquetas_graficas.educacion, 'Población', c_educacion ); 
       graficaRe('GEco',etiquetas_graficas.economia, '$', c_economia ); 
@@ -154,6 +156,10 @@ function procesarDatos() {
   for (let i = 5; i < 7; i++) {
     c_padron.push(data.padron[i]);
   }
+  //Apoyos
+  for (let i = 0; i < (data.apoyos).length; i++) {
+    c_apoyos.push(data.apoyos[i]);
+  }  
 }
 
 function autoScroll(sectionId) {
@@ -301,12 +307,56 @@ function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
     },
   });
 
-}
-    
+}   
 // Función para obtener parámetro de la URL
 function obtenerParametroURL(nombreParametro) {
   var urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(nombreParametro);
+}
+
+function generarTabla(CadenaA) {
+  // Obtener el contenedor de la tabla
+  var tablaContainer = document.getElementById("GApo");
+  // Crear la tabla
+  var tabla = document.createElement("table");
+  // Crear la fila de encabezado
+  var encabezado = document.createElement("tr");
+  // Crear las celdas de encabezado
+  var encabezadoCelda1 = document.createElement("th");
+  encabezadoCelda1.textContent = "Apoyo";
+  encabezado.appendChild(encabezadoCelda1);
+  var encabezadoCelda2 = document.createElement("th");
+  encabezadoCelda2.textContent = "Periodo";
+  encabezado.appendChild(encabezadoCelda2);
+  var encabezadoCelda3 = document.createElement("th");
+  encabezadoCelda3.textContent = "No. apoyos";
+  encabezado.appendChild(encabezadoCelda3);
+  
+  // Agregar el encabezado a la tabla
+  tabla.appendChild(encabezado);
+  
+  // Crear las filas de datos
+  for (var i = 0; i <= CadenaA.length; i+=6) {
+    var fila = document.createElement("tr");
+    
+    var datoCelda1 = document.createElement("td");
+    datoCelda1.textContent = CadenaA[i+3];
+    fila.appendChild(datoCelda1);
+    
+    var datoCelda2 = document.createElement("td");
+    datoCelda2.textContent = CadenaA[i+2];
+    fila.appendChild(datoCelda2);
+    
+    var datoCelda3 = document.createElement("td");
+    datoCelda3.textContent = CadenaA[i+4];
+    fila.appendChild(datoCelda3);
+    
+    // Agregar la fila a la tabla
+    tabla.appendChild(fila);
+  }
+  
+  // Agregar la tabla al contenedor
+  tablaContainer.appendChild(tabla);
 }
 
 function insertarDatos(){
@@ -330,4 +380,3 @@ function insertarDatos(){
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
 document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
   
-
