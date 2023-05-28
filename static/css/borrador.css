@@ -1,5 +1,5 @@
 :root {
-  --main-bg-color:  #FCFCFC;
+  --main-bg-color:  #eeeeee;
   /*BARRA DE NAVEGACION*/
   --top-bar-color:  #00AFAA;
   --top-bar-font-color: #fff;
@@ -10,6 +10,7 @@
   /*SECCIONES*/  
   --section-font-color: #222222; 
   --section-bg--color:  #d7dcdf;
+  --section-etq-color: #92c8ed;
   --sub-section-font-color: #182549;
   --sub-section-bg--color:  #3f4b4400;
   /*PRUEBAS*/
@@ -121,7 +122,9 @@ nav a:hover {
 
 .contenido .datos{
   font-family:'Trebuchet MS', Arial, sans-serif;
+  color: var(--main-bg-color);
   font-size: 19px;
+  font-weight: lighter;
   letter-spacing: -1px;
 }
 
@@ -132,6 +135,7 @@ nav a:hover {
 }
 
 .contenido h2{
+  color: var(--main-bg-color);
   letter-spacing: 1px;
   font-weight: lighter;
   font-size: 14px;
@@ -151,26 +155,52 @@ nav a:hover {
   height: auto;
 }
 
-.secciones h2{
+.secciones .datosv{
+  width: 150px;
+  padding-right: 15px;
+}
+
+.secciones h2,
+.secciones p{
   font-weight: lighter;
-  font-size: 14px;
-  padding-left: 1em;
+  font-size: 15px;
+  /* padding-left: 1em; */
   margin-top: 1mm;
 }
 
+.secciones h2{
+  width: auto;
+  font-size: 11px;
+  letter-spacing: 0px;
+  text-align: start;
+  text-transform: uppercase;
+  background-color: var(--section-etq-color);
+  padding: 2%;
+  border-radius: 4px;
+}
+
 .secciones h1{
-  font-size: 20px;
+  font-size: 21px;
   margin-bottom: 4px;
   margin-top: 0;
   padding: 20px;
   color: var(--section-font-color);
   background-color: var(--section-bg--color);
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
+  align-items: center;
 } 
 
-.secciones .sub{
 
+.secciones .year{
+  font-size: 11px;
+  padding: 2px;
+  border-radius: 4px;
+  color: var(--section-font-color);
+  background-color: var(--section-etq-color);
+}
+
+.secciones .sub{
   font-size: 17px;
   margin-bottom: 4px;
   margin-top: 2em;
@@ -179,6 +209,13 @@ nav a:hover {
   background-color:var(--sub-section-bg--color);
   text-transform: uppercase;
   text-align: left;
+}
+
+.cajas{
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  /* background: var(--top-bar-color); */
 }
 
 /*Graficas*/
@@ -190,8 +227,11 @@ nav a:hover {
 
 .tarjeta{
   width: 30%;
+  display: flex;
+  flex-wrap: wrap;
   margin-left: 1%;
-  background: var(--pruebas);
+  padding: 2%;
+  background: var(--top-bar-color);
 }
 
 .ContenedorGraficos{
