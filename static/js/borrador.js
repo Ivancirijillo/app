@@ -17,24 +17,26 @@ let etiquetas_graficas = {
 };
 
 var data;
-var c_general = [];
-var c_viviendas = [];
-var c_carencias = [];
-var c_educacion = [];
-var c_apoyos = [];
-var c_economia = [];
-var c_Pgeneral = [];
-var c_edad = [];
-var c_lenguaI = [];
-var c_disc = [];
-var c_afili = [];
-var c_loc = [];
-var c_alimen = [];
-var c_pobreza = [];
-var c_empleo = [];
-var c_deli = [];
-var c_deliHM = [];
-var c_padron = [];
+var cadenas = {
+  c_general: [],
+  c_viviendas: [],
+  c_carencias: [],
+  c_educacion: [],
+  c_apoyos: [],
+  c_economia: [],
+  c_Pgeneral: [],
+  c_edad: [],
+  c_lenguaI: [],
+  c_disc: [],
+  c_afili: [],
+  c_loc: [],
+  c_alimen: [],
+  c_pobreza: [],
+  c_empleo: [],
+  c_deli: [],
+  c_deliHM: [],
+  c_padron: []
+}
 // Obtener el valor del parámetro 'contenido' de la URL
 var contenido = obtenerParametroURL('contenido');
 var contenido2=23;
@@ -54,24 +56,24 @@ document.addEventListener('DOMContentLoaded', function() {
       procesarDatos(); // Llamar a la función que utiliza los datos
       insertarDatos();
       //Tabla apoyos
-      generarTabla(c_apoyos);
+      generarTabla(cadenas.c_apoyos);
       // Llamar a la funcion de las grafica
-      graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', c_viviendas ); 
-      graficaRe('GEd',etiquetas_graficas.educacion, 'Población', c_educacion ); 
-      graficaRe('GEco',etiquetas_graficas.economia, '$', c_economia ); 
-      graficaPA('GGene',etiquetas_graficas.genero, 'Población', c_Pgeneral ); 
-      graficaRe('GEdad',etiquetas_graficas.indices, '', c_edad ); 
-      graficaRe('GLenI',etiquetas_graficas.indigena, '', c_lenguaI ); 
-      graficaRe('GDisc',etiquetas_graficas.disc, 'Personas con discapacidad', c_disc ); 
-      graficaPA('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', c_afili ); 
-      //graficaRe('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', c_afili ); 
-      graficaPA('GLoc',etiquetas_graficas.loc, 'Poblacion', c_loc ); 
-      graficaRe('GAli',etiquetas_graficas.hogares, 'Hogares', c_alimen ); 
-      graficaRe('GPobr',etiquetas_graficas.pobre, 'Porcentaje', c_pobreza ); 
-      graficaRe('GEmp',etiquetas_graficas.empl, 'No', c_empleo ); 
-      graficaRe('GDeli',etiquetas_graficas.delitos, 'No Casos', c_deli ); 
-      graficaPA('GDeliHyM',etiquetas_graficas.desap, 'Desapariciones', c_deliHM ); 
-      graficaPA2('GPaE',etiquetas_graficas.padron, 'No Ciudadanos', c_padron ); 
+      graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
+      graficaRe('GEd',etiquetas_graficas.educacion, 'Población', cadenas.c_educacion ); 
+      graficaRe('GEco',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
+      graficaPA('GGene',etiquetas_graficas.genero, 'Población', cadenas.c_Pgeneral ); 
+      graficaRe('GEdad',etiquetas_graficas.indices, '', cadenas.c_edad ); 
+      graficaRe('GLenI',etiquetas_graficas.indigena, '', cadenas.c_lenguaI ); 
+      graficaRe('GDisc',etiquetas_graficas.disc, 'Personas con discapacidad', cadenas.c_disc ); 
+      graficaPA('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', cadenas.c_afili ); 
+      //graficaRe('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', cadenas.c_afili ); 
+      graficaPA('GLoc',etiquetas_graficas.loc, 'Poblacion', cadenas.c_loc ); 
+      graficaRe('GAli',etiquetas_graficas.hogares, 'Hogares', cadenas.c_alimen ); 
+      graficaRe('GPobr',etiquetas_graficas.pobre, 'Porcentaje', cadenas.c_pobreza ); 
+      graficaRe('GEmp',etiquetas_graficas.empl, 'No', cadenas.c_empleo ); 
+      graficaRe('GDeli',etiquetas_graficas.delitos, 'No Casos', cadenas.c_deli ); 
+      graficaPA('GDeliHyM',etiquetas_graficas.desap, 'Desapariciones', cadenas.c_deliHM ); 
+      graficaPA2('GPaE',etiquetas_graficas.padron, 'No Ciudadanos', cadenas.c_padron ); 
     })
     .catch(error => {
       console.error('Error al realizar la consulta:', error);
@@ -81,84 +83,84 @@ document.addEventListener('DOMContentLoaded', function() {
 function procesarDatos() {
   //REZAGO
     //general
-  c_general.push(data.rezago[1]);
+  cadenas.c_general.push(data.rezago[1]);
   for (let i = 15; i < 18; i++) {
-    c_general.push(data.rezago[i]);
+    cadenas.c_general.push(data.rezago[i]);
   }
     //vivenda
   for (let i = 8; i < 15; i++) {
-    c_viviendas.push(data.rezago[i]);
+    cadenas.c_viviendas.push(data.rezago[i]);
   }
     //Carencias
-    c_carencias.push(data.rezago[7]);
+    cadenas.c_carencias.push(data.rezago[7]);
   for (let i = 2; i < 4; i++) {
-    c_carencias.push(data.rezago[i]);
+    cadenas.c_carencias.push(data.rezago[i]);
   }
     //Educacion
   for (let i = 4; i < 7; i++) {
-    c_educacion.push(data.rezago[i]);
+    cadenas.c_educacion.push(data.rezago[i]);
   }
   //ECONOMIA
   for (let i = 2; i < 8; i++) {
-    c_economia.push(data.economia[i]);
+    cadenas.c_economia.push(data.economia[i]);
   }
   //POBLACION
   for (let i = 3; i < 5; i++) {
-    c_Pgeneral.push(data.poblacion[i]);
+    cadenas.c_Pgeneral.push(data.poblacion[i]);
   }
     //Edad
   for (let i = 5; i < 15; i++) {
-    c_edad.push(data.poblacion[i]);
+    cadenas.c_edad.push(data.poblacion[i]);
   }
     //Lengua indigena
   for (let i = 15; i < 20; i++) {
-    c_lenguaI.push(data.poblacion[i]);
+    cadenas.c_lenguaI.push(data.poblacion[i]);
   }
   //Discapacidad
   for (let i = 20; i < 25; i++) {
-    c_disc.push(data.poblacion[i]);
+    cadenas.c_disc.push(data.poblacion[i]);
   }
     //Afiliado
   for (let i = 26; i < 35; i++) {
-    c_afili.push(data.poblacion[i]);
+    cadenas.c_afili.push(data.poblacion[i]);
   }
     //Localizacion
   for (let i = 35; i < 39; i++) {
-    c_loc.push(data.poblacion[i]);
+    cadenas.c_loc.push(data.poblacion[i]);
   }
     //Hogares
   for (let i = 40; i < 44; i++) {
-    c_alimen.push(data.poblacion[i]);
+    cadenas.c_alimen.push(data.poblacion[i]);
   }
   //POBREZA
   for (let i = 2; i < 16; i++) {
-    c_pobreza.push(data.tpobreza[i]);
+    cadenas.c_pobreza.push(data.tpobreza[i]);
   }
   //EMPLEO
   for (let i = 2; i < 12; i++) {
-    c_empleo.push(data.empleo[i]);
+    cadenas.c_empleo.push(data.empleo[i]);
   }
   //DELITOS
   for (let i = 2; i < 6; i++) {
-    c_deli.push(data.deli[i]);
+    cadenas.c_deli.push(data.deli[i]);
   }
   for (let i = 8; i < 13; i++) {
-    c_deli.push(data.deli[i]);
+    cadenas.c_deli.push(data.deli[i]);
   }
     //Desapariciones
   for (let i = 6; i < 8; i++) {
-    c_deliHM.push(data.deli[i]);
+    cadenas.c_deliHM.push(data.deli[i]);
   }
   //PADRON
   for (let i = 2; i < 4; i++) {
-    c_padron.push(data.padron[i]);
+    cadenas.c_padron.push(data.padron[i]);
   }
   for (let i = 5; i < 7; i++) {
-    c_padron.push(data.padron[i]);
+    cadenas.c_padron.push(data.padron[i]);
   }
   //Apoyos
   for (let i = 0; i < (data.apoyos).length; i++) {
-    c_apoyos.push(data.apoyos[i]);
+    cadenas.c_apoyos.push(data.apoyos[i]);
   }  
 }
 
