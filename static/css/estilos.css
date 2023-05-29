@@ -302,6 +302,8 @@ body{
 	padding: 10px;
 }
 
+/* ESTILO DE BOTONES - Letra */
+
 .btnImprimir,
 .opc_municipios button,
 .btnContinuar,
@@ -310,7 +312,8 @@ body{
 .btn_volver,
 .btn_secc, 
 .cont_btn_secc button,
-.btn_selec{
+.btn_selec,
+.btn_mas_info{
 	background-color: var(--clr-btn-relleno); 
 	color: var(--clr-letras); 
 	border: 2px solid var(--clr-btn-borde);
@@ -328,8 +331,12 @@ body{
 	color: #fff;
 }
 .btnImprimir,
-.btnContinuar{
+.btnContinuar,
+.btn_mas_info{
 	margin-top: 25px;
+}
+.btn_mas_info{
+	font-size: 12px;
 }
 
 .btn_repor_mun{
@@ -347,7 +354,8 @@ body{
 .btn_volver:hover,
 .btn_secc:hover, 
 .cont_btn_secc button:hover,
-.btn_selec:hover {
+.btn_selec:hover,
+.btn_mas_info:hover {
 	background-color: var(--clr-btn-relleno_hover);
 	color: var(--clr-letras_hover);
 }
@@ -561,3 +569,4 @@ svg{
 #aux_imagen_mun{
 	display: none;
 }
+
