@@ -1,7 +1,7 @@
 let etiquetas_graficas = {
   vivienda:   ['Piso de tierra', 'No disponen de excusado o sanitario', 'No disponen de agua entubada de la red pública', 'No disponen de drenaje', 'No disponen de energía eléctrica', 'No disponen de lavadora', 'No disponen de refrigerador'],
   educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o mas con educacion basica incompleta'],
-  economia:   ['PIB', 'PBI PER Cápita', 'Unidades Economicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
+  economia:   ['PBI PER Cápita', 'Unidades Economicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
   genero:     ['Hombres', 'Mujeres'],
   indices:    ['Edad Mediana', 'Mediana Hombres', 'Mediana Mujeres', 'Relación Hombre-Mujer', 'Índice de envejecimiento total', 'Índice de envejecimiento Hombres', 'Índice de envejecimiento Mujeres', 'Razón de dependencia Total', 'Razón de dependencia Infantil', 'Razón de dependencia de Vejez'],
   indigena:   ['Población de 3 años o más', 'Población que habla lengua índigena', 'Población índigena que habla español', 'Población índigena que no habla español', 'Población que no habla lengua índigena'],
@@ -35,11 +35,12 @@ var cadenas = {
   c_empleo: [],
   c_deli: [],
   c_deliHM: [],
-  c_padron: []
+  c_padron: [],
+  c_PIB: [],
+  c_PIBY: []
 }
 // Obtener el valor del parámetro 'contenido' de la URL
 var contenido = obtenerParametroURL('contenido');
-var contenido2=23;
 
 document.addEventListener('DOMContentLoaded', function() {
   fetch('/consultas-pagina', {
@@ -60,7 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // Llamar a la funcion de las grafica
       graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
       graficaRe('GEd',etiquetas_graficas.educacion, 'Población', cadenas.c_educacion ); 
-      graficaRe('GEco',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
+      //graficaRe('GEco',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
+      graficaLi('GEco', 'Producto Interno Bruto', cadenas.c_PIB, cadenas.c_PIBY); 
       graficaPA('GGene',etiquetas_graficas.genero, 'Población', cadenas.c_Pgeneral ); 
       graficaRe('GEdad',etiquetas_graficas.indices, '', cadenas.c_edad ); 
       graficaRe('GLenI',etiquetas_graficas.indigena, '', cadenas.c_lenguaI ); 
@@ -101,7 +103,7 @@ function procesarDatos() {
     cadenas.c_educacion.push(data.rezago[i]);
   }
   //ECONOMIA
-  for (let i = 2; i < 8; i++) {
+  for (let i = 3; i < 8; i++) {
     cadenas.c_economia.push(data.economia[i]);
   }
   //POBLACION
@@ -162,6 +164,14 @@ function procesarDatos() {
   for (let i = 0; i < (data.apoyos).length; i++) {
     cadenas.c_apoyos.push(data.apoyos[i]);
   }  
+  //PIB
+  for (let i = 0; i < (data.pib).length; i+=2) {
+    cadenas.c_PIB.push(data.pib[i]);
+  }  
+  //PIB años
+  for (let i = 1; i < (data.pib).length; i+=2) {
+    cadenas.c_PIBY.push(data.pib[i]);
+  } 
 }
 
 function autoScroll(sectionId) {
@@ -227,6 +237,8 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
       plugins: {
         legend: {
           position: 'top',
+          onHover: handleHover,
+          onLeave: handleLeave
         },
         title: {
           display: true,
@@ -310,6 +322,42 @@ function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
   });
 
 }   
+
+function graficaLi (seccionID, etiqueta, datos, etiquetas) {
+  var GraficaLineal = document.getElementById(seccionID);
+
+  var PIBanual = {
+    label: etiqueta,
+    data: datos,
+    lineTension: 0,
+    fill: false,
+    borderColor: 'red'
+  };
+
+  var ConteoAnual = {
+    labels: etiquetas,
+    datasets: [PIBanual]
+  };
+
+  var chartOptions = {
+    legend: {
+      display: true,
+      position: 'top',
+      labels: {
+        boxWidth: 80,
+        fontColor: 'black'
+      }
+    }
+};
+
+new Chart(GraficaLineal, {
+  type: 'line',
+  data: ConteoAnual,
+  options: chartOptions
+});
+
+}
+
 // Función para obtener parámetro de la URL
 function obtenerParametroURL(nombreParametro) {
   var urlParams = new URLSearchParams(window.location.search);
@@ -373,12 +421,25 @@ function insertarDatos(){
   document.getElementById('tituloPobrezaA').innerText = data.tpobreza[1];  
   document.getElementById('tituloPIB').innerText = '$' + data.economia[2];   
   document.getElementById('tituloPIBA').innerText = data.economia[1];  
-  document.getElementById('tituloUE').innerText = data.economia[4];  
-  document.getElementById('tituloUEA').innerText = data.economia[1];  
+  document.getElementById('tituloUE').innerText = data.unidades[0];  
+  document.getElementById('tituloUEA').innerText = data.unidades[1];  
   document.getElementById('tituloSalario').innerText = '$' +  data.empleo[13];  
   document.getElementById('tituloSalarioA').innerText = data.empleo[1];
 }
 
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
 document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
-  
+
+function handleHover(evt, item, legend) {
+  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+    colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
+  });
+  legend.chart.update();
+}
+
+function handleLeave(evt, item, legend) {
+  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+    colors[index] = color.length === 9 ? color.slice(0, -2) : color;
+  });
+  legend.chart.update();
+}
