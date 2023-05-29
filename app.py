@@ -141,7 +141,7 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron", "nombre"]
+    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron", "nombre", "unidades", "pib"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
@@ -193,6 +193,16 @@ def consultas_pagina():
     consulta = configuracion.get("consulta_pagina",secciones[8]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[8])
+
+    #Unidades Economicas
+    consulta = configuracion.get("consulta_pagina",secciones[9]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[9])
+
+    #PIB
+    consulta = configuracion.get("consulta_pagina",secciones[10]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    lista= tratamiento(resultados, diccionario, secciones[10])
 
     return jsonify(lista)
 
