@@ -23,6 +23,11 @@ body{
     margin: 0;
 }
 
+.cajas .datosv,
+.datos{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 /*ESTILOS DE BARRA DE NAVEGACION*/
 
 nav {
@@ -31,6 +36,7 @@ nav {
   width: 100%;
   text-transform: uppercase;
   text-align: center;
+  z-index: 3;
 }
   
 nav ul {
@@ -121,23 +127,29 @@ nav a:hover {
 }
 
 .contenido .datos{
-  font-family:'Trebuchet MS', Arial, sans-serif;
   color: var(--main-bg-color);
-  font-size: 19px;
+  font-size: 1.5em;
   font-weight: lighter;
   letter-spacing: -1px;
 }
 
-.contenido .year{
-  font-family:'Trebuchet MS', Arial, sans-serif;
+/* .contenido .year{
   font-size: 15px;
   margin-bottom: 0;
+} */
+
+.datosv .year{
+  font-family:'Trebuchet MS', Arial, sans-serif;
+  font-size: 13px;
+  padding: 3px 10px 3px 10px;
+  border-radius: 4px;
+  color: var(--section-font-color);
+  background-color: var(--top-bar-color);
 }
 
 .contenido h2{
   color: var(--main-bg-color);
-  letter-spacing: 1px;
-  font-weight: lighter;
+  font-weight: bold;
   font-size: 14px;
   margin-top: 1mm;
 }
@@ -156,16 +168,22 @@ nav a:hover {
 }
 
 .secciones .datosv{
+  font-size: 21px;
+  font-size: 1.5em;
+  font-weight: 200;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-left: -.05em;
   width: 150px;
   padding-right: 15px;
 }
 
-.secciones h2,
 .secciones p{
   font-weight: lighter;
-  font-size: 15px;
+  font-size: 17px;
   /* padding-left: 1em; */
   margin-top: 1mm;
+  text-align: justify;
 }
 
 .secciones h2{
@@ -180,7 +198,7 @@ nav a:hover {
 }
 
 .secciones h1{
-  font-size: 21px;
+  font-size: 23px;
   margin-bottom: 4px;
   margin-top: 0;
   padding: 20px;
@@ -192,27 +210,21 @@ nav a:hover {
 } 
 
 
-.secciones .year{
-  font-size: 11px;
-  padding: 2px;
-  border-radius: 4px;
-  color: var(--section-font-color);
-  background-color: var(--section-etq-color);
-}
-
 .secciones .sub{
-  font-size: 17px;
+  font-size: 19px;
   margin-bottom: 4px;
-  margin-top: 2em;
-  padding: 20px;
+  /* margin-top: 2em; */
+  padding: 4px 40px 0px 0px;
+  padding-left: 1%;
   color: var(--sub-section-font-color);
   background-color:var(--sub-section-bg--color);
-  text-transform: uppercase;
+  text-transform:none;
   text-align: left;
 }
 
 .cajas{
-  padding: 16px;
+  position: relative;
+  padding: 16px; 
   display: flex;
   flex-wrap: wrap;
   /* background: var(--top-bar-color); */
@@ -222,7 +234,9 @@ nav a:hover {
 
 .bloques{
   display: flex;
-  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  /* align-items: center; */
 }
 
 .tarjeta{
@@ -231,13 +245,17 @@ nav a:hover {
   flex-wrap: wrap;
   margin-left: 1%;
   padding: 2%;
-  background: var(--top-bar-color);
+  /* background: var(--top-bar-color); */
 }
 
 .ContenedorGraficos{
   width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Graficos{
   width: 120%;
+  border: 1px solid black; 
 }
