@@ -31,6 +31,7 @@ body{
 /*ESTILOS DE BARRA DE NAVEGACION*/
 
 nav {
+  /* position: fixed; */
   background-color: var(--top-bar-color);
   height: 51px;
   width: 100%;
@@ -179,11 +180,11 @@ nav a:hover {
 }
 
 .secciones p{
-  font-weight: lighter;
   font-size: 17px;
   /* padding-left: 1em; */
   margin-top: 1mm;
   text-align: justify;
+  line-height: 1.4;
 }
 
 .secciones h2{
@@ -197,29 +198,39 @@ nav a:hover {
   border-radius: 4px;
 }
 
-.secciones h1{
-  font-size: 23px;
-  margin-bottom: 4px;
-  margin-top: 0;
-  padding: 20px;
-  color: var(--section-font-color);
-  background-color: var(--section-bg--color);
-  text-transform: uppercase;
-  text-align: left;
+.secciones .titulo {
+  height: 5em;
+  display: flex;
   align-items: center;
-} 
+  background-color: var(--section-bg--color);
+}
 
+.titulo .tituloSec{
+  font-size: 23px;
+  color: var(--section-font-color);
+  text-transform: uppercase;
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+.titulo .year {
+  background-color: var(--top-bar-color);
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 4px;
+}
 
 .secciones .sub{
-  font-size: 19px;
-  margin-bottom: 4px;
-  /* margin-top: 2em; */
-  padding: 4px 40px 0px 0px;
-  padding-left: 1%;
-  color: var(--sub-section-font-color);
-  background-color:var(--sub-section-bg--color);
-  text-transform:none;
-  text-align: left;
+  font-weight: 300;
+    width: 100%;
+    font-size: 21px;
+    margin-top: 0;
+    padding: 4px 40px 0px 0px;
+    padding-left: 1%;
+    color: #006969;
+    background-color: var(--sub-section-bg--color);
+    text-transform: none;
+    text-align: left;
 }
 
 .cajas{
@@ -245,17 +256,98 @@ nav a:hover {
   flex-wrap: wrap;
   margin-left: 1%;
   padding: 2%;
+  padding-top: 0;
   /* background: var(--top-bar-color); */
+}
+
+#tarjetaEco {
+  width: 50%;
+}
+
+
+#contenedorEco {
+  width: 50%;
 }
 
 .ContenedorGraficos{
   width: 70%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.ContenedorGraficosPastel{
+  left: 18%;
+  position: relative;
+}
+
+#contenedorPastel1{
+  left: 0%;
+}
+
+#tarjetaPob{
+  width: 30%;
+}
+#tarjetaEdad {
+  width: 70%;
+}
+
 .Graficos{
+  width: 90%;
+  border: 1px solid #858585; 
+}
+
+.GraficosPastel{
   width: 120%;
-  border: 1px solid black; 
+  border: 1px solid #858585; 
+}
+
+table {
+	/*width: 800px;*/
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 10px; /* Ajusta el valor según el nivel de redondeo deseado */
+  overflow: hidden; /* Oculta cualquier contenido que se salga de los bordes redondeados */
+}
+
+th {
+	text-align: left;
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+}   
+
+th {
+  background-color: #92c8ed;
+}
+
+tr {
+  &:hover {
+    background-color: rgba(255,255,255,0.8);
+  }
+}
+
+td {
+  position: relative;
+  &:hover {
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -9999px;
+      bottom: -9999px;
+      background-color: rgba(255,255,255,0.6);
+      z-index: -1;
+    }
+  }
+}
+#tablaApo {
+  justify-content: center; /* Alinea horizontalmente al centro */
+  align-items: center;
 }

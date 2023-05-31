@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Llamar a la funcion de las grafica
       graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
       graficaRe('GEd',etiquetas_graficas.educacion, 'Población', cadenas.c_educacion ); 
-      //graficaRe('GEco',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
+      graficaRe('GEco2',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
       graficaLi('GEco', 'Producto Interno Bruto', cadenas.c_PIB, cadenas.c_PIBY); 
       graficaPA('GGene',etiquetas_graficas.genero, 'Población', cadenas.c_Pgeneral ); 
       graficaRe('GEdad',etiquetas_graficas.indices, '', cadenas.c_edad ); 
@@ -165,11 +165,11 @@ function procesarDatos() {
     cadenas.c_apoyos.push(data.apoyos[i]);
   }  
   //PIB
-  for (let i = 0; i < (data.pib).length; i+=2) {
+  for (let i = 0; i < ((data.pib).length)-2; i+=2) {
     cadenas.c_PIB.push(data.pib[i]);
   }  
   //PIB años
-  for (let i = 1; i < (data.pib).length; i+=2) {
+  for (let i = 1; i < ((data.pib).length)-2; i+=2) {
     cadenas.c_PIBY.push(data.pib[i]);
   } 
 }
@@ -215,6 +215,7 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
     datasets: [
         {
             data: datos,
+            borderWidth: 0,
             backgroundColor: [
               "#FF6384",
               "#63FF84",
@@ -255,13 +256,15 @@ function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
 
   const data = {
     labels: etiquetas,
-    datasets: [
+    datasets: [ 
       {
         backgroundColor: ['#AAA', '#777'],
+        borderWidth: 0,
         data: [datos[0], datos[1]]
       },
       {
         backgroundColor: ['hsl(0, 100%, 60%)', 'hsl(0, 100%, 35%)'],
+        borderWidth: 0,
         data: [datos[2], datos[3]]
       }
     ]
@@ -369,11 +372,12 @@ function generarTabla(CadenaA) {
   var tablaContainer = document.getElementById("GApo");
   // Crear la tabla
   var tabla = document.createElement("table");
+  tabla.classList.add("table");
   // Crear la fila de encabezado
   var encabezado = document.createElement("tr");
   // Crear las celdas de encabezado
   var encabezadoCelda1 = document.createElement("th");
-  encabezadoCelda1.textContent = "Apoyo";
+  encabezadoCelda1.textContent = "Nombre del Apoyo";
   encabezado.appendChild(encabezadoCelda1);
   var encabezadoCelda2 = document.createElement("th");
   encabezadoCelda2.textContent = "Periodo";
@@ -386,7 +390,7 @@ function generarTabla(CadenaA) {
   tabla.appendChild(encabezado);
   
   // Crear las filas de datos
-  for (var i = 0; i <= CadenaA.length; i+=6) {
+  for (var i = 0; i < CadenaA.length; i+=6) {
     var fila = document.createElement("tr");
     
     var datoCelda1 = document.createElement("td");
@@ -413,18 +417,42 @@ function insertarDatos(){
   // Asignar el valores a la pagina
   document.getElementById('tituloM').innerText = data.nombre[0];
   document.getElementById('nommbreMun').innerText = data.nombre[0];
-  document.getElementById('tituloPoblacion').innerText = data.poblacion[2];  
+  document.getElementById('tituloPoblacion').innerText = agregarComas(data.poblacion[2]);  
   document.getElementById('tituloPoblacionA').innerText = data.poblacion[1]; 
   document.getElementById('tituloEdad').innerText = data.poblacion[5];  
   document.getElementById('tituloEdadA').innerText = data.poblacion[1];  
-  document.getElementById('tituloPobreza').innerText = data.tpobreza[2] + ' %';  
+  document.getElementById('tituloPobreza').innerText = (Math.floor(data.tpobreza[2])) + ' %';  
   document.getElementById('tituloPobrezaA').innerText = data.tpobreza[1];  
-  document.getElementById('tituloPIB').innerText = '$' + data.economia[2];   
+  document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.economia[2]);   
   document.getElementById('tituloPIBA').innerText = data.economia[1];  
-  document.getElementById('tituloUE').innerText = data.unidades[0];  
+  document.getElementById('tituloUE').innerText = agregarComas(data.unidades[0]);  
   document.getElementById('tituloUEA').innerText = data.unidades[1];  
-  document.getElementById('tituloSalario').innerText = '$' +  data.empleo[13];  
-  document.getElementById('tituloSalarioA').innerText = data.empleo[1];
+  document.getElementById('tituloSalario').innerText = '$' +  data.empleo[13]; 
+  document.getElementById('tituloSalarioA').innerText = data.empleo[1]; 
+  document.getElementById('reYear').innerText = data.rezago[1];
+  document.getElementById('indiceRe').innerText = data.rezago[15];
+  document.getElementById('gradoRe').innerText = data.rezago[16];
+  document.getElementById('posicionRe').innerText = 'N° ' + data.rezago[17];
+  document.getElementById('sinSalud').innerText = data.rezago[7];
+  document.getElementById('gini').innerText = data.rezago[2];
+  document.getElementById('razonI').innerText = data.rezago[3];
+  document.getElementById('apoyoYear').innerText = data.apoyos[1];
+  document.getElementById('economiaYear').innerText = data.economia[1];
+  document.getElementById('pobYear').innerText = data.economia[1];
+  document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.economia[2]);
+  document.getElementById('etiquetaPer').innerText = '$' +  agregarComas(data.economia[3]);
+  document.getElementById('etquetaAfil').innerText = agregarComas(data.poblacion[25]);
+  document.getElementById('etiquetaAli').innerText = agregarComas(data.poblacion[39]);
+  document.getElementById('poYear').innerText = data.tpobreza[1];
+  document.getElementById('emYear').innerText = data.empleo[1];
+  document.getElementById('etiquetaTota').innerText = agregarComas(data.empleo[12]);
+  document.getElementById('etiquetaSa').innerText = '$' +  agregarComas(data.empleo[13]);
+  document.getElementById('deliYear').innerText =data.deli[1];
+  document.getElementById('paeleYear').innerText =data.padron[1];
+  document.getElementById('etiquetaP').innerText =agregarComas(data.padron[4]);
+  document.getElementById('etiquetaLista').innerText =agregarComas(data.padron[7]);
+  document.getElementById('parrafoPob').innerText = "La población total de Municipio de México en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
+  
 }
 
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
@@ -442,4 +470,8 @@ function handleLeave(evt, item, legend) {
     colors[index] = color.length === 9 ? color.slice(0, -2) : color;
   });
   legend.chart.update();
+}
+
+function agregarComas(numero) {
+  return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
