@@ -277,6 +277,10 @@ nav a:hover {
   align-items: center;
 }
 
+#lineas{
+  width: 100%;
+}
+
 .ContenedorGraficosPastel{
   left: 18%;
   position: relative;
