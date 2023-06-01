@@ -74,7 +74,11 @@ document.addEventListener('DOMContentLoaded', function() {
       graficaRe('GPobr',etiquetas_graficas.pobre, 'Porcentaje', cadenas.c_pobreza ); 
       graficaRe('GEmp',etiquetas_graficas.empl, 'No', cadenas.c_empleo ); 
       graficaRe('GDeli',etiquetas_graficas.delitos, 'No Casos', cadenas.c_deli ); 
-      graficaPA('GDeliHyM',etiquetas_graficas.desap, 'Desapariciones', cadenas.c_deliHM ); 
+      if(data.deli[8]!=0){
+        graficaPA('GDeliHyM',etiquetas_graficas.desap, 'Desapariciones', cadenas.c_deliHM ); 
+        document.getElementById('parrafoDeli').innerText = "El número de desapariciones totales en " + data.deli[1] +" fue de " + data.deli[8] + ", siendo " + ((100*(data.deli[7]))/(data.deli[8])).toFixed(2) + "% mujeres y " + ((100*(data.deli[6]))/(data.deli[8])).toFixed(2) + "% hombres." ;
+        
+      }
       graficaPA2('GPaE',etiquetas_graficas.padron, 'No Ciudadanos', cadenas.c_padron ); 
     })
     .catch(error => {
@@ -451,7 +455,7 @@ function insertarDatos(){
   document.getElementById('paeleYear').innerText =data.padron[1];
   document.getElementById('etiquetaP').innerText =agregarComas(data.padron[4]);
   document.getElementById('etiquetaLista').innerText =agregarComas(data.padron[7]);
-  document.getElementById('parrafoPob').innerText = "La población total de Municipio de México en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
+  document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
   
 }
 
