@@ -116,7 +116,7 @@
                     <div class="bloques"> 
                         <div class="tarjeta"> 
                             <h1 class="sub">Vivienda</h1>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
+                            <p>En el municipio las condiciones de construcción de las viviendas habitadas tienen variaciones importantes en cuanto sus carencias de servicios de publicos, como lo son el acceso a agua potable, a energia electrica o la conexion de drenaje, ademas de carencias derivadas de estos, como lo son la falta de sanitarios, etc.</p>
                         </div>  
                         <div class="ContenedorGraficos">
                             <canvas class="Graficos" id="GReSo"></canvas>
@@ -142,6 +142,9 @@
                         <h1 class="tituloSec">Apoyos</h1>
                         <span class="year" id="apoyoYear"></span> 
                     </div>   
+                    <div class="cajas">
+                        <p>Lograr familias fuertes en los municipios involucra que todos los miembros de la familia, en todas las etapas de sus vidas, puedan desarrollarse plenamente. Se busca atender directa e indirectamente temas de reducción de desigualdades, salud y bienestar, educación de calidad, y disminución de la violencia intrafamiliar para niños, niñas, adolescentes y grupos vulnerables. Por lo anterior, en la municipio se han otorgado los siguientes Apoyos que atienden a distintas necesidades de los ciudadanos:</p>
+                    </div>
                     <div class="bloques" id="tablaApo"> 
                         <div class="ContenedorGraficos" id="GApo"></div>
                     </div>          
@@ -162,13 +165,14 @@
                                 <span class="datos" id="etiquetaPer"></span>
                                 <h2 class="categoria">PBI PER Cápita</h2>
                             </div>
-                            <p>El gráfico muestra la evolución anual que ha sufrido el Producto Interno Bruto (PBI) a traves de los años desde 2018 hasta 2021.</p>
+                            <p>El gráfico de lineas muestra la evolución anual que ha sufrido el Producto Interno Bruto (PBI) a traves de los años desde 2018 hasta 2021.</p>
                         
                             <div class="ContenedorGraficos" id="lineas">
                                 <canvas class="Graficos" id="GEco"></canvas>
                             </div>
                         </div>  
                         <div class="ContenedorGraficos" id="contenedorEco">
+                            <br><br><br><br><p>Por su parte, el gráfico de barras muestra el numero de unidades economicas totales en el municipio, además de incluir la proporcion u ingresos en sus distintas variables.</p>
                             <canvas class="Graficos" id="GEco2"></canvas>
                         </div>
                     </div>                  
@@ -189,6 +193,7 @@
                         </div>  
                         <div class="tarjeta" id="tarjetaEdad">
                             <h1 class="sub">Edad</h1>
+                            <p>En la grafica se muestra la mediana que existen entre los rangos de edad de la poblacion, ademas que se integran los indices de envejecimiento y las razones de dependencia.</p>
                             <canvas class="Graficos" id="GEdad"></canvas>
                         </div>
                     </div>  
@@ -206,7 +211,12 @@
                     <div class="bloques"> 
                         <div class="tarjeta"> 
                             <h1 class="sub">Discapacidad</h1>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
+                            <p>Según la Clasificación Internacional del Funcionamiento, de la Discapacidad y de la Salud
+                            (CIF), se define la discapacidad como las deficiencias,
+                            limitaciones de la actividad y restricciones a la
+                            participación de una persona (OMS, 2018).</p>
+                            <p>En el gráfico de pastel podemos observar de forma ilustrativa el total de la población, y que porción de la misma, padece alguna discapacidad.</p>
+                            <p>En este sentido, en el siguiente grafico de barras se muestra  el número de personas que padecen estas según su clasificación:</p>
                         </div>  
                         <div class="ContenedorGraficos">
                             <canvas class="Graficos" id="GDisc"></canvas>
@@ -230,7 +240,7 @@
                     <div class="bloques"> 
                         <div class="tarjeta"> 
                             <h1 class="sub">Localización</h1>
-                            <p>La gráfica muestra la proporción de migración que existe dentro del municipio, tanto a nivel interno como externo. También se representa la población que reside en el municipio.</p>
+                            <p>La gráfica muestra la proporción de migración que existe dentro del municipio, tanto a nivel interno como externo. Ya que el año 2021  También se representa la población que reside en el municipio.</p>
                         </div>  
                         <div class="ContenedorGraficosPastel">
                             <canvas class="GraficosPastel" id="GLoc"></canvas>
@@ -260,8 +270,14 @@
                     <!-- <h2>Año</h2>     -->
                     <div class="bloques"> 
                         <div class="tarjeta">
-                            <p>En el gráfico se muestra los porcentajes de la potblacion que se encuentran en situación de pobreza en sus distintas variables, ademas que tambien muestra el rezago y carencias con el que se cuenta, como lo son la vivienda, seguro social y alimentacion.
-                            </p>
+                            <p>De acuerdo con el Consejo Nacional de Evaluación de
+                            la Política de Desarrollo Social, una persona está en
+                            situación de pobreza cuando tiene al menos una
+                            carencia social (educación, salud, seguridad, vivienda,
+                            servicios básicos y alimentación), asimismo cuando no
+                            pueden obtener bienes y servicios para satisfacer sus
+                            necesidades básicas (CONEVAL, 2010).</p>
+                            <p>En el gráfico se muestran los porcentajes de la población que se encuentran en situación de pobreza en sus distintas variables, junto con la visualización de los niveles de rezago y carencias en aspectos fundamentales como vivienda, seguro social y alimentación.</p>
                         </div>  
                         <div class="ContenedorGraficos">
                             <canvas class="Graficos" id="GPobr"></canvas>
@@ -284,7 +300,7 @@
                                 <span class="datos" id="etiquetaSa"></span>
                                 <h2 class="categoria">Salario Promedio</h2>
                             </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
+                            <p>Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de 955 empleos.</p>
                         </div>  
                         <div class="ContenedorGraficos">
                             <canvas class="Graficos" id="GEmp"></canvas>
@@ -299,7 +315,8 @@
                     </div>             
                     <div class="bloques"> 
                         <div class="tarjeta"> 
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
+                            <p>La delincuencia dentro del municipio es algo que se ha intentado contrarestar a lo largo de los años, sin embargo, eso no ha sido posible por lo que aún existen bastantes casos, lo cual genera una sensación de inseguridad en la población.</p>
+                            <p>En el gráfico se presenta el número de delitos ocurridos en el municipio durante el año 2022, clasificados por categoría. Se destaca que los delitos de acto impacto y los robos tienen los índices más altos de ocurrencia.</p>
                         </div>  
                         <div class="ContenedorGraficos">
                             <canvas class="Graficos" id="GDeli"></canvas>
@@ -307,7 +324,7 @@
                     </div> 
                     <div class="bloques"> 
                         <div class="tarjeta"> 
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
+                            <p>En el gráfico de pastel se representan las desapariciones en el municipio, categorizadas según el género de las personas desaparecidas.</p>
                         </div>  
                         <div class="ContenedorGraficosPastel">
                             <canvas class="GraficosPastel" id="GDeliHyM"></canvas>
@@ -328,9 +345,9 @@
                             </div>
                             <div class="datosv">
                                 <span class="datos" id="etiquetaLista"></span>
-                                <h2 class="categoria">Lista nominal, poblacion que cuenta con credencial para votar vigente</h2>
+                                <h2 class="categoria">Lista nominal</h2>
                             </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam inventore delectus atque! In consequuntur optio blanditiis. Nobis in mollitia deleniti omnis sint exercitationem inventore accusamus distinctio? Quaerat, vitae itaque. Accusantium.</p>
+                            <p>El padrón electoral es la base de datos que contiene la información de todos los ciudadanos mexicanos que han solicitado su inscripción al mismo, con la finalidad de obtener su credencial para votar con fotografía y así ejercer su derecho al voto. <br>                            En la lista nominal se encuentran todos aquellos ciudadanos que solicitaron su inscripción al Padrón Electoral y cuentan ya con su credencial para votar con fotografía vigente.</p>
                         </div>  
                         <div class="ContenedorGraficosPastel">
                             <canvas class="GraficosPastel" id="GPaE"></canvas>
