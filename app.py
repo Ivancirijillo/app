@@ -117,7 +117,7 @@ def menu():
 @login_required
 def mapa():
     # Redirigir a la página del Mapa
-    return render_template("mapa.html")
+    return render_template("mapaOptimizado.html")
      
 #Creando un Decorador
 @app.route('/Graficas', methods=['GET', 'POST'])
