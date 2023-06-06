@@ -298,19 +298,19 @@ def impresiones():
                     configuracion["database1"]["db"])
     tipo = json["tipo_c"]
     global ruta_pdf
-    if(tipo=="apoyo"):
+    if(tipo=="Apoyos"):
         respuesta = conn.consultar_db(f"select NombreA, NoApoyos from Apoyos where YearA={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Apoyos.GenerarApoyos(int(json["year"]), int(json["id"]))
-    elif(tipo=="deli"):
+    elif(tipo=="Delincuencia"):
         respuesta = conn.consultar_db(f"select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia where YearD={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
-    elif(tipo=="padron"):
+    elif(tipo=="Padrón Electora"):
         respuesta = conn.consultar_db(f"select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal from PadronElectoral where YearE={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Padron.GenerarPadron(int(json["year"]), int(json["id"]))
-    elif(tipo=="pobreza"):
+    elif(tipo=="Pobreza"):
         respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))

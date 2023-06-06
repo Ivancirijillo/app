@@ -1,0 +1,384 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* SCROLL */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-corner{
+	background-color:#ffffff00;
+}
+
+::-webkit-scrollbar-track {
+	background-color:#d3e0e000;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #00afaa;
+	border-radius: 10px;
+}
+
+/*CUERPO*/
+body{
+	background-color: #f5ecdc;
+    width: 100%;
+    height: 100vh;
+}
+
+/* CABECERA */
+header{
+    background-color: #00afaa;
+	position: relative;
+    color: white;
+	width: 100%;
+    height: 8%;
+	gap: 1%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.titulo-prin,
+.menu-opciones{
+	width: 47%;
+}
+
+.titulo-prin h1{
+	font-family: sans-serif;
+	text-transform: uppercase;
+}
+
+.menu-opciones{
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.menu-opciones div{
+	width: 16%;
+	height: 100%;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	font-size: 1rem;
+	font-family: sans-serif;
+	text-transform: uppercase;
+    cursor: pointer;
+	transition: .3s ease all;
+}
+
+.menu-opciones div:hover{
+	background: rgba(0, 0, 0, 0.25);
+}
+
+.btn-menu img{
+	width: 45px;
+}
+
+/* CORTINA */
+.oscuro{
+	background: rgba(0, 0, 0, 0.25);
+	position: absolute;
+    width: 100%;
+    height: 92vh;
+	visibility: hidden;
+}
+
+/* CONTENEDOR PRINCIPAL - SECCIONES */
+.contenedor-pricipal{
+    width: 100%;
+    height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-pricipal section{
+    box-sizing: border-box;
+    margin: 1%;
+    border-radius: 15px;
+	box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
+	display: flex;
+	flex-direction: column;
+    justify-content: center;
+	transition: 1s ease .5s all;
+}
+
+.cont-tarjeta{
+	position: relative;
+    background: rgba(255, 255, 255, 0.45);
+    width: 35%;
+    height: 10%;
+	padding: 1%;
+}
+
+.tarjeta-seg{
+    height: 95%;
+}
+
+.cont-mapa{
+	background-color: #eef1fa;
+    width: 65%;
+    height: 95%;
+}
+
+/* CONTENEDOR - TARJETAS */
+/* #subtarjeta{
+} */
+
+/* TARJETA - TITULO */
+.tarjeta-titulo{
+	font-size: 1rem;
+    font-weight: bold;
+	font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*TARJETA - LISTAS*/
+.tarjeta-listas{
+	opacity: 0;
+	display: none;
+	z-index: 1;
+}
+
+.cont-tarjeta p{
+    padding: 10px 0;
+	font-size: 1rem;
+    font-weight: bold;
+	font-family: sans-serif;
+}
+
+.lista{
+    margin-bottom: 15px;
+    width: 100%;
+    height: 35px;
+    border-radius: 8px;
+    border: 1px solid #00afaa;
+}
+
+.contenido-lista{
+    width: 100%;
+    height: 100%;
+    color: gray;
+    display: flex;
+    align-items: center;
+}
+
+.contenido-lista-seg{
+    color: black;
+}
+
+.contenido-lista p{
+    width: 90%;
+    padding: 0 5px;
+}
+
+.contenido-lista i{
+    width: 10%;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #00afaa;
+}
+
+.lista ul{
+    background-color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    width: 50%;
+    height: 100px;
+    left: 103%;
+    top: -35px;
+	border-radius: 5px;
+    padding: 2% 2% 0 2%;
+	list-style: none;
+	overflow-y: scroll;
+}
+
+.ul-prim{
+    display: none;
+}
+.ul-seg{
+	display: block;
+}
+
+.lista li{
+	padding: 2%;
+	margin-bottom: 5%;
+	border-radius: 5px;
+	border: 2px solid #00afaa;
+	font-size: 1rem;
+    font-weight: bold;
+	font-family: sans-serif;
+}
+
+.li-seg{
+	color: white;
+	background-color: #00afaa;
+}
+
+.btn-cont{
+	display: flex;
+}
+
+.btn-cont button,
+.btn-imprimir{
+	background-color: #00afaa; 
+	color: white;
+	width: 100%;
+	margin: 1%;
+	padding: 2% 3%;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 2px solid #00afaa;
+	font-family: sans-serif;
+	text-transform: uppercase;
+	transition-duration: 0.4s;
+	cursor: pointer;
+}
+
+.btn-cont button:hover,
+.btn-imprimir:hover{
+	background-color: white; 
+	color: #00afaa;
+}
+
+/* MENSAJE DE VALIDACION - VENTANA EMERGENTE */
+
+.v-emergen{
+	display: none;
+}
+
+.v-emergen_validado_R{
+	position: absolute;
+	width: 85%;
+	height: 5%;
+	top: 45%;
+	left: 0;
+	right: 0;
+	margin: auto;
+	padding: 8px;
+	color: white;
+	font-size: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color:#FF0108;
+    border: solid 1px #FF0108;
+}
+
+/*TARJETA - TABLA*/
+.tarjeta-tabla{
+	opacity: 0;
+	display: none;
+	overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.btn-volver{
+    position: absolute;
+	color: white;
+	background-color: #00afaa;
+	border: 2px solid #00afaa;
+    top: 10px;
+    left: 10px;
+	width: 30px;
+	height: 30px;
+	font-size: 1rem;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-volver:hover{
+	background-color: white; 
+	color: #00afaa;
+}
+
+.filtro-info{
+	display: flex;
+    flex-direction: column;
+}
+
+.tabla-datos .pAnio{
+	display: flex;
+    justify-content: center;
+	background: #00afa95e;
+    margin-top: 10%;
+}
+
+.tabla-datos table{
+	display: flex;
+    justify-content: center;
+}¿
+
+.tabla-datos th{
+    padding: 5px;
+    border-bottom: solid 1px #00afaa;
+}
+
+.tabla-datos td{
+    padding: 5px;
+    border-bottom: solid 1px #00afaa;
+}
+
+/* CLASE - TARJETA DE ENTRADA DESPLAZAMIENTO */
+.seg-tarjeta{
+	display: block;
+	animation: entradaAparicion .5s linear .65s forwards; 
+}
+
+/* CONTENEDOR - MAPA */
+.cont-fijo{
+	border-radius: 15px;
+    /* overflow-y: scroll;
+    overflow-x: scroll; */
+	width: 100%;
+	height: 100%;
+}
+
+iframe{
+	width: 100%;
+	height: 100%;
+}
+
+/* ANIMACIONES */
+@keyframes entradaTitulo {
+	from {
+		opacity: 0;
+		transform: translateY(25px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+@keyframes entradaSubtitulo {
+	from {
+		opacity: 0;
+		transform: translateY(-25px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+@keyframes entradaAparicion {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@media screen and (max-width: 1000px) {
+	.btn-cont{
+		flex-wrap: wrap-reverse;
+	}
+}

@@ -1,5 +1,5 @@
 function json_wind(mode){
-        window.location.href = mode;
+    window.location.href = mode;
 }
 
 document.getElementById('opc_graficas').addEventListener('click', function() {
