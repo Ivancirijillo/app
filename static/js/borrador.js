@@ -456,7 +456,9 @@ function insertarDatos(){
   document.getElementById('etiquetaP').innerText =agregarComas(data.padron[4]);
   document.getElementById('etiquetaLista').innerText =agregarComas(data.padron[7]);
   document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
-  
+  document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.poblacion[34]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.poblacion[25]) + " personas que sí están afiliadas.";
+  document.getElementById('parrafoEmpleo').innerText = "Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de " + agregarComas(data.empleo[12]) + " empleos.";
+
 }
 
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
