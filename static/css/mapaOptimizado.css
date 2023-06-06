@@ -230,7 +230,8 @@ header{
 }
 
 .btn-cont button,
-.btn-imprimir{
+.btn-imprimir,
+.btnMore button{
 	background-color: #00afaa; 
 	color: white;
 	width: 100%;
@@ -246,9 +247,23 @@ header{
 }
 
 .btn-cont button:hover,
-.btn-imprimir:hover{
+.btn-imprimir:hover,
+.btnMore button:hover{
 	background-color: white; 
 	color: #00afaa;
+}
+
+.btnMore{
+	position: absolute;
+	width: 100%;
+    bottom: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.btnMore button{
+	width: 30%;
+	font-size: 10px;
 }
 
 /* MENSAJE DE VALIDACION - VENTANA EMERGENTE */
