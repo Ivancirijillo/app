@@ -1,7 +1,7 @@
 let etiquetas_graficas = {
   vivienda:   ['Piso de tierra', 'No disponen de excusado o sanitario', 'No disponen de agua entubada de la red pública', 'No disponen de drenaje', 'No disponen de energía eléctrica', 'No disponen de lavadora', 'No disponen de refrigerador'],
   educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o mas con educacion basica incompleta'],
-  economia:   ['PBI PER Cápita', 'Unidades Economicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
+  economia:   ['Unidades Economicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
   genero:     ['Hombres', 'Mujeres'],
   indices:    ['Edad Mediana', 'Mediana Hombres', 'Mediana Mujeres', 'Relación Hombre-Mujer', 'Índice de envejecimiento total', 'Índice de envejecimiento Hombres', 'Índice de envejecimiento Mujeres', 'Razón de dependencia Total', 'Razón de dependencia Infantil', 'Razón de dependencia de Vejez'],
   indigena:   ['Población de 3 años o más', 'Población que habla lengua índigena', 'Población índigena que habla español', 'Población índigena que no habla español', 'Población que no habla lengua índigena'],
@@ -107,7 +107,7 @@ function procesarDatos() {
     cadenas.c_educacion.push(data.rezago[i]);
   }
   //ECONOMIA
-  for (let i = 3; i < 8; i++) {
+  for (let i = 4; i < 8; i++) {
     cadenas.c_economia.push(data.economia[i]);
   }
   //POBLACION
@@ -221,15 +221,16 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
             data: datos,
             borderWidth: 0,
             backgroundColor: [
-              "#FF6384",
-              "#63FF84",
-              "#8463FF",
-              "#2AADE7",
-              "#6384FF",
-              "#00AFAA",
-              "#B012AE",
-              "#B01261",
-              "#A2B012"
+              "#28A1E9",
+              "#FFD41F",
+              "#FE1F2A",
+              "#32F41E",
+              "#FF9A1F",
+              "#E41EEB",
+              "#00C65C",
+              "#F21DA8",
+              "#0A9292",
+              "#F91E68"
             ]
         }]
 };
@@ -262,12 +263,12 @@ function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
     labels: etiquetas,
     datasets: [ 
       {
-        backgroundColor: ['#AAA', '#777'],
+        backgroundColor: ["#28A1E9", "#FFD41F" ],
         borderWidth: 0,
         data: [datos[0], datos[1]]
       },
       {
-        backgroundColor: ['hsl(0, 100%, 60%)', 'hsl(0, 100%, 35%)'],
+        backgroundColor: ["#FE1F2A", "#FF9A1F"],
         borderWidth: 0,
         data: [datos[2], datos[3]]
       }
@@ -458,6 +459,7 @@ function insertarDatos(){
   document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
   document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.poblacion[34]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.poblacion[25]) + " personas que sí están afiliadas.";
   document.getElementById('parrafoEmpleo').innerText = "Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de " + agregarComas(data.empleo[12]) + " empleos.";
+  document.getElementById('parrafoAlimentacion').innerText = "En el año 2020, los hogares con limitación alimentaria representaron el 13% de total, mientras que los hogares sin esta limitación representaron el 73% restante.";
 
 }
 
