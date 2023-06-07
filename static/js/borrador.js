@@ -1,17 +1,17 @@
 let etiquetas_graficas = {
   vivienda:   ['Piso de tierra', 'No disponen de excusado o sanitario', 'No disponen de agua entubada de la red pública', 'No disponen de drenaje', 'No disponen de energía eléctrica', 'No disponen de lavadora', 'No disponen de refrigerador'],
-  educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o mas con educacion basica incompleta'],
-  economia:   ['Unidades Economicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
+  educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o más con educación básica incompleta'],
+  economia:   ['Unidades Económicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
   genero:     ['Hombres', 'Mujeres'],
   indices:    ['Edad Mediana', 'Mediana Hombres', 'Mediana Mujeres', 'Relación Hombre-Mujer', 'Índice de envejecimiento total', 'Índice de envejecimiento Hombres', 'Índice de envejecimiento Mujeres', 'Razón de dependencia Total', 'Razón de dependencia Infantil', 'Razón de dependencia de Vejez'],
   indigena:   ['Población de 3 años o más', 'Población que habla lengua índigena', 'Población índigena que habla español', 'Población índigena que no habla español', 'Población que no habla lengua índigena'],
   disc:       ['Personas con discapacidad','Personas con discapacidad total', 'Personas con discapacidad parcial o limitaciones', 'Población con algún problema o condición mental', 'Población sin discapacidad, limitacion, problema o condición mental'],
   afil:       ['IMSS', 'ISSSTE', 'ISSSTE Estatal', 'Pemex, Defensa o Marina', 'INSABI', 'IMSS BIENESTAR', 'Institución privada', 'Otra afiliación', 'No afiliado'],
   loc:        ['Vive en la entidad', 'Vive en otra entidad', 'Vive en EE. UU.', 'Viven en otro país'],
-  hogares:    ['Con limitación alimentaria', 'Sin limitación alimentaria', 'Hogares con limitación alimentaria', 'Hogares sin limitación alimentaria'],
+  hogares:    ['Con limitación alimentaria', 'Sin limitación alimentaria'],
   pobre:      ['Porcentaje de pobreza', 'Porcentaje de pobreza extrema' , 'Pobreza extrema carencias promedio' , 'Pobreza moderada' , 'Porcentaje de no pobre y no vulnerable' , 'Porcentaje de rezago educativo' , 'Promedio de carencia de salud' , 'Carencia Salud Carencias promedio' , 'Porcentaje carencia Seguro Social' , 'Porcentaje carencia de calidad de vivienda' , 'Porcentaje carencia de servicios de vivienda' , 'Porcentaje carencia de alimentación' , 'Porcentaje de ingreso inferior pobreza' , 'Porcentaje de ingreso inferior pobreza extrema'],
-  empl:       ['Agricultura, Ganaderia, Silvicultura, Pesca y Caza', 'Comercio', 'Industria Electrica y Captación, y suministro de Agua Potable', 'Industrias de la Construccion', 'Industrias de Transformación', 'Industrias de Transformación 2', 'Industrias Extractivas', 'Servicios para Empresas, Personas y el Hogar', 'Servicios Sociales y Comunales', 'Transportes y comunicaciones'],
-  delitos:    ['Delitos de alto impacto', 'Homicidios', 'Feminicidios', 'Secuestros', '>Desapariciones', 'Robos', 'Robos transporte', 'Violencia de género en todas sus modalidades', 'Violencia familiar'],
+  empl:       ['Agricultura, Ganadería, Silvicultura, Pesca y Caza', 'Comercio', 'Industria Eléctrica y Captación, y suministro de Agua Potable', 'Industrias de la Construcción', 'Industrias de Transformación', 'Industrias de Transformación 2', 'Industrias Extractivas', 'Servicios para Empresas, Personas y el Hogar', 'Servicios Sociales y Comunales', 'Transportes y comunicaciones'],
+  delitos:    ['Delitos de alto impacto', 'Homicidios', 'Feminicidios', 'Secuestros', 'Desapariciones', 'Robos', 'Robos transporte', 'Violencia de género en todas sus modalidades', 'Violencia familiar'],
   desap:      ['Hombres', 'Mujeres'],
   padron:     ['Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres']
 };
@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
       graficaRe('GDisc',etiquetas_graficas.disc, 'Personas con discapacidad', cadenas.c_disc ); 
       graficaPA('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', cadenas.c_afili ); 
       //graficaRe('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', cadenas.c_afili ); 
-      graficaPA('GLoc',etiquetas_graficas.loc, 'Poblacion', cadenas.c_loc ); 
-      graficaRe('GAli',etiquetas_graficas.hogares, 'Hogares', cadenas.c_alimen ); 
+      graficaPA('GLoc',etiquetas_graficas.loc, 'Población', cadenas.c_loc ); 
+      graficaPA('GAli',etiquetas_graficas.hogares, 'Hogares', cadenas.c_alimen ); 
       graficaRe('GPobr',etiquetas_graficas.pobre, 'Porcentaje', cadenas.c_pobreza ); 
       graficaRe('GEmp',etiquetas_graficas.empl, 'No', cadenas.c_empleo ); 
       graficaRe('GDeli',etiquetas_graficas.delitos, 'No Casos', cadenas.c_deli ); 
@@ -135,7 +135,7 @@ function procesarDatos() {
     cadenas.c_loc.push(data.poblacion[i]);
   }
     //Hogares
-  for (let i = 40; i < 44; i++) {
+  for (let i = 42; i < 44; i++) {
     cadenas.c_alimen.push(data.poblacion[i]);
   }
   //POBREZA
@@ -182,7 +182,7 @@ function autoScroll(sectionId) {
     const section = document.getElementById(sectionId);
     const sectionPosition = section.offsetTop;
     window.scrollTo({
-        top: sectionPosition,
+        top: sectionPosition+310,
         behavior: 'smooth'
     });
 }
@@ -443,7 +443,7 @@ function insertarDatos(){
   document.getElementById('razonI').innerText = data.rezago[3];
   document.getElementById('apoyoYear').innerText = data.apoyos[1];
   document.getElementById('economiaYear').innerText = data.economia[1];
-  document.getElementById('pobYear').innerText = data.economia[1];
+  document.getElementById('pobYear').innerText = data.poblacion[1];
   document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.economia[2]);
   document.getElementById('etiquetaPer').innerText = '$' +  agregarComas(data.economia[3]);
   document.getElementById('etquetaAfil').innerText = agregarComas(data.poblacion[25]);
@@ -459,7 +459,7 @@ function insertarDatos(){
   document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
   document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.poblacion[34]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.poblacion[25]) + " personas que sí están afiliadas.";
   document.getElementById('parrafoEmpleo').innerText = "Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de " + agregarComas(data.empleo[12]) + " empleos.";
-  document.getElementById('parrafoAlimentacion').innerText = "En el año 2020, los hogares con limitación alimentaria representaron el 13% de total, mientras que los hogares sin esta limitación representaron el 73% restante.";
+  document.getElementById('parrafoAlimentacion').innerText = "En el año " + data.poblacion[1] + ", los hogares con limitación alimentaria representaron el " + ((100*(data.poblacion[42]))/(data.poblacion[39])).toFixed(2) + " % de total, mientras que los hogares sin esta limitación representaron el " + ((100*(data.poblacion[43]))/(data.poblacion[39])).toFixed(2) + " restante.";
 
 }
 
