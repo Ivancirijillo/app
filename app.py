@@ -1,7 +1,7 @@
 from datetime import timedelta
 from flask import Flask, abort, after_this_request, render_template, request, redirect, jsonify, send_file, send_from_directory, session, url_for
 import threading, multiprocessing, time, signal, sys
-from flask_login import LoginManager, current_user, login_required, login_user, logout_user
+from flask_login import LoginManager, login_required, login_user, logout_user
 from flask_sslify import SSLify
 from flask_wtf.csrf import CSRFProtect
 from UserSession import LoginForm, User
@@ -428,6 +428,58 @@ def crear_diccionario(lista, diccionario):
     #print("pepe ",diccionario)
     #print(diccionario)
     return diccionario
+
+
+# SUBIR DATOS
+
+@app.route('/CargaArchivo')
+@login_required
+def carga():
+    return render_template('cargaArchivo.html')
+
+
+@app.route('/cargar', methods=['POST'])
+@csrf.exempt
+def cargar_archivo():
+    archivo = request.files['archivo']
+    if archivo:
+        # Establecer la conexión con la base de datos
+        conexion = pymysql.connect(host='localhost', port=3306, user='root', password='', db='prueba')
+        cursor = conexion.cursor()
+
+        # Crea las tablas en la base de datos (solo para fines de demostración)
+        # Aquí debes ajustar la estructura de las tablas según tus necesidades
+        cursor.execute("CREATE TABLE IF NOT EXISTS Hoja1 (Id INT PRIMARY KEY, Nombre VARCHAR(50), Edad INT)")
+        cursor.execute("CREATE TABLE IF NOT EXISTS Hoja2 (Id INT, Ciudad VARCHAR(50), País VARCHAR(50), FOREIGN KEY (Id) REFERENCES Hoja1(Id))")
+
+        # Lee el archivo Excel
+        datos = pd.read_excel(archivo, sheet_name=None)
+
+        # Recorre todas las hojas y guarda los datos en la base de datos
+        for hoja, datos_hoja in datos.items():
+            # Convierte los datos de la hoja a una lista de tuplas
+            filas = [tuple(x) for x in datos_hoja.values]
+
+            # Genera el SQL para insertar los datos en la tabla correspondiente
+            tabla = hoja  # Nombre de la tabla en la base de datos
+            campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
+            marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
+
+            # Construye la consulta SQL
+            consulta = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
+
+            # Inserta los datos en la base de datos
+            cursor.executemany(consulta, filas)
+
+        # Guarda los cambios en la base de datos
+        conexion.commit()
+
+        # Cierra la conexión con la base de datos
+        conexion.close()
+
+        return 'Archivo cargado exitosamente en la base de datos.'
+
+    return 'No se ha seleccionado ningún archivo.'
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
