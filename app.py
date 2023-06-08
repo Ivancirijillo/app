@@ -18,6 +18,8 @@ from static.pdf.plantillas.General import General
 from static.pdf.plantillas.PadronE import Padron
 from static.pdf.plantillas.Pobreza import Pobreza
 import random
+from flask import session
+
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
@@ -73,6 +75,7 @@ def login():
         # Obtener los datos enviados por el formulario
         usern = form.username.data
         passw = form.password.data
+        rol = form.role.data
 
         # Realizar la validación de las credenciales
         conn = CONEXION(configuracion["database1"]["host"],
@@ -85,7 +88,8 @@ def login():
 
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
-            user = User(usern)
+            user = User(usern, rol) 
+            session['user_type'] = user.role  # Almacena el tipo de usuario en la sesión
             login_user(user)
             return redirect(url_for('menu'))
         else:
