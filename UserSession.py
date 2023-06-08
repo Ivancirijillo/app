@@ -4,10 +4,9 @@ from wtforms.validators import DataRequired
 
 # Clase Usuario que implementa los métodos de Flask-Login
 class User:
-    def __init__(self, username, role):
+    def __init__(self, username):
         self.username = username
         # Establece is_active como True para indicar que el usuario está activo
-        self.role = role
         self.is_active = True  
 
     def get_id(self):
@@ -25,5 +24,4 @@ class User:
 class LoginForm(FlaskForm):
     username = StringField('Usuario', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
-    role = SelectField('Tipo de Usuario', choices=[('normal', 'Normal'), ('administrativo', 'Administrativo')], validators=[DataRequired()])
     submit = SubmitField('Iniciar sesión')
