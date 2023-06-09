@@ -85,9 +85,12 @@ def login():
 
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
-            user = User(usern)
-            login_user(user)
-            return redirect(url_for('menu'))
+            role = user[0][3] #Obtener el rol del usuario
+            login_user(User(usern))
+            if role == 'admin':
+                return redirect(url_for('carga'))  # Redirigir a la página de carga para el rol de administrador
+            elif role == 'normal':
+                return redirect(url_for('menu'))  # Redirigir a la página de menú para el rol normal
         else:
             # Credenciales incorrectas, mostrar un mensaje de error
             error_message = 'Credenciales incorrectas. Inténtalo de nuevo.'
