@@ -4,7 +4,7 @@ import threading, multiprocessing, time, signal, sys
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from flask_sslify import SSLify
 from flask_wtf.csrf import CSRFProtect
-from UserSession import LoginForm, User
+from UserSession import LoginForm, User, TypeUser
 from random import sample
 import pandas as pd
 import json, time
@@ -31,6 +31,7 @@ configuracion.sections()
 #variables globales 
 columnas = []
 ruta_pdf = ""
+usuarioA = ""
 
 #Para subir archivo tipo foto al servidor
 from werkzeug.utils import secure_filename 
@@ -50,8 +51,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User(user_id)
-    return user
+    return TypeUser.load_user(user_id)
 #csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
@@ -69,6 +69,7 @@ def not_found(error):
 @app.route('/', methods=['GET', 'POST'])
 #@csrf.exempt
 def login():
+    global usuarioA
     form = LoginForm()
     if form.validate_on_submit():
         # Obtener los datos enviados por el formulario
@@ -83,16 +84,20 @@ def login():
                     configuracion["database1"]["db"])
         consulta = configuracion.get("consulta_usuarios","usuario").format(username=usern, password=passw)
         user = conn.consultar_db(consulta)
+
+        print('consulta 1')
+        print(user)
         
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
             role = user[0][3] #Obtener el rol del usuario
-            login_user(User(usern))
+            login_user(User(usern, role))
             if role == 'admin':
+                TypeUser.set_usuarioA(True)
                 return redirect(url_for('carga'))  # Redirigir a la página de carga para el rol de administrador
             elif role == 'normal':
+                TypeUser.set_usuarioA(False)
                 return redirect(url_for('menu'))  # Redirigir a la página de menú para el rol normal
-            
         else:
             # Credenciales incorrectas, mostrar un mensaje de error
             error_message = 'Credenciales incorrectas. Inténtalo de nuevo.'
@@ -435,7 +440,10 @@ def crear_diccionario(lista, diccionario):
 @app.route('/CargaArchivo')
 @login_required
 def carga():
-    return render_template('cargaArchivo.html')
+    if current_user.role == 'admin':
+        return render_template('cargaArchivo.html')
+    else:
+        return redirect(url_for('menu'))
 
 
 @app.route('/cargar', methods=['POST'])
