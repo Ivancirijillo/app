@@ -492,7 +492,7 @@ def cargar_archivo():
 # error 
 @app.errorhandler(Exception)
 def handle_error(error):
-    return 'Ocurrió un error desconocido', 500
+    return render_template('attribute_error.html', error=error), 500
 
 # error para AttributeError
 @app.errorhandler(AttributeError)
