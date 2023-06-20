@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/erores.css') }}">
     <title>Error - AttributeError</title>
-    <style>
-        /* Estilos personalizados */
-        body {
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 24px;
-            color: red;
-        }
-    </style>
+    <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='img_menu/advertencia.png') }}"/>
 </head>
 <body>
-    <h1>Error - AttributeError</h1>
-    <p>Ocurrió un error: {{ error }}</p>
+    <div class="contenedor">
+        <img src="static/img_menu/peligro.png" alt="">
+        <h1>Error - AttributeError</h1>
+        <p>Ocurrió un error: {{ error }}</p> 
+
+        <div class="buttons-con">
+            <div class="action-link-wrap">
+            <a href="/" class="link-button link-back-button">Regresar</a>
+            </div>
+        </div>
+
+    </div>
+    
 </body>
 </html>
