@@ -42,11 +42,9 @@ class TypeUser:
 
     @staticmethod
     def load_user(user_id):
-        print('segunda consulta')
         if TypeUser.usuarioA:
             role = 'admin'
         else:
             role = 'normal'
         user = User(user_id, role)
-        print(TypeUser.usuarioA)
         return user

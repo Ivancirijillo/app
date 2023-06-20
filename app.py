@@ -5,7 +5,6 @@ from flask_login import LoginManager, current_user, login_required, login_user, 
 from flask_sslify import SSLify
 from flask_wtf.csrf import CSRFProtect
 from UserSession import LoginForm, User, TypeUser
-from random import sample
 import pandas as pd
 import json, time
 import matplotlib.pyplot as plt
@@ -84,9 +83,6 @@ def login():
                     configuracion["database1"]["db"])
         consulta = configuracion.get("consulta_usuarios","usuario").format(username=usern, password=passw)
         user = conn.consultar_db(consulta)
-
-        print('consulta 1')
-        print(user)
         
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
@@ -449,45 +445,59 @@ def carga():
 @app.route('/cargar', methods=['POST'])
 @csrf.exempt
 def cargar_archivo():
-    archivo = request.files['archivo']
-    if archivo:
-        # Establecer la conexión con la base de datos
-        conexion = pymysql.connect(host='localhost', port=3306, user='root', password='', db='prueba')
-        cursor = conexion.cursor()
+    try:
+        archivo = request.files['archivo']
+        tablas = []
+        if archivo:
+            # Establecer la conexión con la base de datos
+            
+            conn = CONEXION(configuracion["database1"]["host"],
+                                configuracion["database1"]["port"],
+                                configuracion["database1"]["user"],
+                                configuracion["database1"]["passwd"],
+                                configuracion["database1"]["db"])
+            #cursor = conn.consultar_db2
 
-        # Crea las tablas en la base de datos (solo para fines de demostración)
-        # Aquí debes ajustar la estructura de las tablas según tus necesidades
-        cursor.execute("CREATE TABLE IF NOT EXISTS Hoja1 (Id INT PRIMARY KEY, Nombre VARCHAR(50), Edad INT)")
-        cursor.execute("CREATE TABLE IF NOT EXISTS Hoja2 (Id INT, Ciudad VARCHAR(50), País VARCHAR(50), FOREIGN KEY (Id) REFERENCES Hoja1(Id))")
+            # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
+            datos = pd.read_excel(archivo, sheet_name=None)
 
-        # Lee el archivo Excel
-        datos = pd.read_excel(archivo, sheet_name=None)
+            # Recorre todas las hojas y guarda los datos en la base de datos
+            for hoja, datos_hoja in datos.items():
+                # Convierte los datos de la hoja a una lista de tuplas
+                filas = [tuple(x) for x in datos_hoja.values]
 
-        # Recorre todas las hojas y guarda los datos en la base de datos
-        for hoja, datos_hoja in datos.items():
-            # Convierte los datos de la hoja a una lista de tuplas
-            filas = [tuple(x) for x in datos_hoja.values]
+                # Genera el SQL para insertar los datos en la tabla correspondiente
+                tabla = hoja  # Nombre de la tabla en la base de datos
+                campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
+                marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
 
-            # Genera el SQL para insertar los datos en la tabla correspondiente
-            tabla = hoja  # Nombre de la tabla en la base de datos
-            campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
-            marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
+                # Construye la consulta SQL
+                insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
+                # texto de abajo es ejemplo apra mostrar una tabla
+                #tablas.append(tabla)
+                # Inserta los datos en la base de datos
+                conn.consultar_db2(insert, filas)
+                tablas.append(tabla)
+            menssaje = "Archivo cargado con exíto"
+            #agregar se ha subido exitosamente
+            return render_template('cargaArchivo.html', mensaje = menssaje)
+        return render_template('cargaArchivo.html')
+    
+    except (pymysql.IntegrityError, pymysql.ProgrammingError) as error:
+        if isinstance(error, pymysql.IntegrityError):
+            return render_template('integrity_error.html', error=error, carga=tablas), 500
+        elif isinstance(error, pymysql.ProgrammingError):
+            return render_template('programming_error.html', error=error), 500
 
-            # Construye la consulta SQL
-            consulta = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
+# error 
+@app.errorhandler(Exception)
+def handle_error(error):
+    return 'Ocurrió un error desconocido', 500
 
-            # Inserta los datos en la base de datos
-            cursor.executemany(consulta, filas)
-
-        # Guarda los cambios en la base de datos
-        conexion.commit()
-
-        # Cierra la conexión con la base de datos
-        conexion.close()
-
-        return 'Archivo cargado exitosamente en la base de datos.'
-
-    return 'No se ha seleccionado ningún archivo.'
+# error para AttributeError
+@app.errorhandler(AttributeError)
+def handle_attribute_error(error):
+    return render_template('attribute_error.html', error=error), 500
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)

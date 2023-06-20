@@ -1,0 +1,271 @@
+body{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main{
+  padding: 0px;
+}
+
+.conten{
+  text-align: center;
+  height: 25%;
+  margin: 0px;
+}
+
+.conten h1{
+  margin: 0px;
+  padding: 1.5%;
+}
+
+/* estilo input tipo file */
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.625rem 1.25rem;
+}
+
+.inputfile + label svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  margin-top: -0.25em;
+  margin-right: 0.25em;
+}
+
+.iborrainputfile {
+font-size:16px; 
+font-weight:normal;
+}
+
+/* estilo */
+
+.inputfile-7 + label {
+  color: #00afaa;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.inputfile-7 + label {
+  border: 1px solid #00afaa;
+  font-size: 1rem;
+  background-color: #fff;
+  padding: 0;
+}
+
+.inputfile-7:focus + label,
+.inputfile-7.has-focus + label,
+.inputfile-7 + label:hover {
+  border-color: #00afaa;
+}
+
+.inputfile-7 + label span,
+.inputfile-7 + label strong {
+  padding: 0.625rem 1.25rem;
+}
+
+.inputfile-7 + label span {
+  width: 300px;
+  min-height: 1em;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.inputfile-7 + label strong {
+  color: #fff;
+  background-color: #00afaa;
+  display: inline-block;
+}
+
+.inputfile-7:focus + label strong,
+.inputfile-7.has-focus + label strong,
+.inputfile-7 + label:hover strong {
+  background-color: #00817d;
+}
+  
+  
+/* Estilos para el botón de cargar */
+input[type="submit"] {
+    padding: 10px 50px 10px 50px;
+    margin-top: 1em;
+    background-color: #00afaa;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover{
+  background-color: #00817d;
+}
+
+
+.tabla-container {
+  /* display: none; */
+  overflow: auto; 
+  height: 68vh;
+  border-radius: 10px;
+}
+
+.tabla-container table {
+  border-collapse: collapse;    
+  background-color: #fff;
+}
+
+.tabla-container th,
+.tabla-container td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  padding-right: 10px
+} 
+
+.tabla-container td {
+font-size: 14px;
+color: gray;
+line-height: 1.4;
+}
+
+/* Hacer que el encabezado se quede fijo */
+.tabla-container thead th {
+  color: #fff;
+  /* text-transform: uppercase; */
+  background-color: #00afaa;
+  position: sticky; 
+  top: 0;
+}
+
+tr:hover {
+  background-color: #f2f2f2
+}
+
+td:hover {
+  background-color: #00afaa;
+  color: #fff
+}
+
+/* tr:hover {
+  background-color: #00afaa;
+}
+tr:nth-child(even){background-color: #f2f2f2} */
+
+.botonesHojas button {
+  border: 1px solid #00817d;
+  border-radius: 10px 10px 0px 0px;
+  background-color: #00afaa;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.boton:hover {
+  background-color: #00817d;
+  color: white;
+}
+
+.boton:active {
+  background-color: #00817d;
+  transform: translateY(2px);
+}
+
+/* 
+.botonesHojas button.ultimo-boton {  
+  border-radius: 10px 30px 0px 0px;
+} */
+
+
+/* Apartado de informacion */
+
+.informacion{
+  width: 90%;
+  background-color: azure;
+  border: solid 1px #007070;
+  border-radius: 20px;
+  padding: 1%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.informacion p{
+  text-align: justify;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+
+.informacion a{
+  text-decoration: none;
+  font-weight: bold;
+  color: #007070;
+}
+
+a:visited {
+  color: inherit; /* Hereda el color del texto del elemento padre */
+  text-decoration: none; /* Quita cualquier decoración de texto, como subrayado */
+}
+/* Personalizar scrollbar */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #6BDBDB;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #007070;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #f5f5f5;
+}
+
+.error-message  {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 25px;
+  border-radius: 20px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #00afaa;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* Asegura que el sombreado aparezca por encima del contenido */
+}
+
+/* Estilos para el sombreado */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Ajusta la opacidad según tus preferencias */
+  z-index: 999; /* Asegura que el sombreado aparezca por encima del contenido */
+}
