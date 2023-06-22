@@ -499,6 +499,21 @@ def handle_error(error):
 def handle_attribute_error(error):
     return render_template('attribute_error.html', error=error), 500
 
+@app.route('/archivoPDF')
+@csrf.exempt
+def descargar_archivo():
+    archivo = 'Documentos\Diccionario_de_datos.pdf'
+
+    return send_file(archivo, as_attachment=True)
+
+@app.route('/archivoExcel')
+@csrf.exempt
+def descargar_archivo2():
+    archivo = 'Documentos\Plantilla.xlsx'
+
+    return send_file(archivo, as_attachment=True)
+
+
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)
     app.run(debug=True, port=8000)
