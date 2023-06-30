@@ -108,7 +108,6 @@ function tabla_crear(tablas, cabecera){
                 }
             }
             template += '</tr>';
-            if(i==8) i = tablas.length
         }
     }
     if(tablas.length == 0) template = '<tr><td><h2> Datos inexistentes </h2></td></tr>';

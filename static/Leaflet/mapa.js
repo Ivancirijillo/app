@@ -29,6 +29,18 @@ info.update = function(props){
 };
 info.addTo(map);
 
+var btnRegresarM = L.control();
+btnRegresarM.onAdd = function(map){
+  this._button = L.DomUtil.create('button','btnRegresar');
+  this.update();
+  return this._button;
+};
+
+// Agregar el metodo que actualiza el control segun el puntero vaya pasando
+btnRegresarM.update = function(props){
+  this._button.innerHTML = '<button class="botonvolver" id="botonvolver">Volver</button>' 
+};
+
 // Crear la funcion para mostrar la simbologia de acuerdo al campo TOT_VIVIEN
 function style(feature){
   return {
@@ -81,15 +93,48 @@ function explandirTarjeta(){
 
 var layerX = ' '
 var id_municipio;
+var num;
+var dbl_clic = false
+
 function selectLayer(e){
   var layer = e.target;
+  id_municipio = layer.feature.properties.CVEGEO
+
+  var recorteM = id_municipio.slice(2,5)
+  num = parseInt(recorteM);
+
+  if(num > 24 && num < 122) {
+    num++
+    if(num == 122) num = 25
+  }
   
   zoomToFeature(e);
   if(layerX != ' ') resetHighlight(layerX);
   highlightFeature(e)
   explandirTarjeta()
+
+  if(dbl_clic == true && layerX == e.target){
+    map.removeLayer(mexicoJS);
+    btnRegresarM.addTo(map);
+
+    const botonvolver = document.getElementById('botonvolver')
+    botonvolver.addEventListener('click', function (){
+      explandirTarjeta()
+
+      map.removeLayer(Seccionesjs);
+      mexicoJS = L.geoJson(mexico,{
+        style: style,
+        onEachFeature: onEachFeature
+      }).addTo(map);
+    });
+
+    Seccionesjs = L.geoJson(Secciones_MEX,{
+      style: styleSec,
+      onEachFeature: cadaCaracteristica 
+    }).addTo(map);
+  }
+  dbl_clic = true
   
-  id_municipio = layer.feature.properties.CVEGEO
   layerX = e.target;
 }
 
@@ -107,4 +152,33 @@ mexicoJS = L.geoJson(mexico,{
 
 function enviarDatos() {
   window.location.href = '/DatosMunicipio?contenido=' + id_municipio;
+}
+
+//Area de secciones 
+function getColor(d) {
+  let recorte = d.slice(5,8)
+  return recorte == num ? 'blue':
+                    '#ffffff00';
+}
+
+// Funcion para mostrar la simbologia de acuerdo con el atributo 
+function styleSec(feature) {
+  return {
+      fillColor: getColor(feature.properties.CLAVEGEO),
+      weight: 1,
+      opacity: 1,
+      color: 'red',
+      dashArray: '',
+      fillOpacity: 0.3
+  };
+}
+
+var Seccionesjs;
+
+function cadaCaracteristica(features, layer){
+  layer.on(
+    {
+      click: highlightFeature
+    }
+  );
 }
