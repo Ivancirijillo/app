@@ -4,8 +4,7 @@ import threading, multiprocessing, time, signal, sys
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from flask_sslify import SSLify
 from flask_wtf.csrf import CSRFProtect
-from UserSession import LoginForm, User
-from random import sample
+from UserSession import LoginForm, User, TypeUser
 import pandas as pd
 import json, time
 import matplotlib.pyplot as plt
@@ -18,6 +17,7 @@ from static.pdf.plantillas.General import General
 from static.pdf.plantillas.PadronE import Padron
 from static.pdf.plantillas.Pobreza import Pobreza
 import random
+
 #constantes 
 COLUMNAS_A_ELIMINAR = ["CIRCUNSCRIPCION", "ID_ESTADO","NOMBRE_ESTADO", "ID_DISTRITO",
                         "CABECERA_DISTRITAL","ID_MUNICIPIO", "CASILLAS"]
@@ -30,6 +30,7 @@ configuracion.sections()
 #variables globales 
 columnas = []
 ruta_pdf = ""
+usuarioA = ""
 
 #Para subir archivo tipo foto al servidor
 from werkzeug.utils import secure_filename 
@@ -49,8 +50,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User(user_id)
-    return user
+    return TypeUser.load_user(user_id)
 #csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
@@ -68,6 +68,7 @@ def not_found(error):
 @app.route('/', methods=['GET', 'POST'])
 #@csrf.exempt
 def login():
+    global usuarioA
     form = LoginForm()
     if form.validate_on_submit():
         # Obtener los datos enviados por el formulario
@@ -82,12 +83,17 @@ def login():
                     configuracion["database1"]["db"])
         consulta = configuracion.get("consulta_usuarios","usuario").format(username=usern, password=passw)
         user = conn.consultar_db(consulta)
-
+        
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
-            user = User(usern)
-            login_user(user)
-            return redirect(url_for('menu'))
+            role = user[0][3] #Obtener el rol del usuario
+            login_user(User(usern, role))
+            if role == 'admin':
+                TypeUser.set_usuarioA(True)
+                return redirect(url_for('carga'))  # Redirigir a la página de carga para el rol de administrador
+            elif role == 'normal':
+                TypeUser.set_usuarioA(False)
+                return redirect(url_for('menu'))  # Redirigir a la página de menú para el rol normal
         else:
             # Credenciales incorrectas, mostrar un mensaje de error
             error_message = 'Credenciales incorrectas. Inténtalo de nuevo.'
@@ -424,6 +430,89 @@ def crear_diccionario(lista, diccionario):
     #print("pepe ",diccionario)
     #print(diccionario)
     return diccionario
+
+# SUBIR DATOS
+
+@app.route('/CargaArchivo')
+@login_required
+def carga():
+    if current_user.role == 'admin':
+        return render_template('cargaArchivo.html')
+    else:
+        return redirect(url_for('menu'))
+
+
+@app.route('/cargar', methods=['POST'])
+@csrf.exempt
+def cargar_archivo():
+    try:
+        archivo = request.files['archivo']
+        tablas = []
+        if archivo:
+            # Establecer la conexión con la base de datos
+            
+            conn = CONEXION(configuracion["database1"]["host"],
+                                configuracion["database1"]["port"],
+                                configuracion["database1"]["user"],
+                                configuracion["database1"]["passwd"],
+                                configuracion["database1"]["db"])
+            #cursor = conn.consultar_db2
+
+            # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
+            datos = pd.read_excel(archivo, sheet_name=None)
+
+            # Recorre todas las hojas y guarda los datos en la base de datos
+            for hoja, datos_hoja in datos.items():
+                # Convierte los datos de la hoja a una lista de tuplas
+                filas = [tuple(x) for x in datos_hoja.values]
+
+                # Genera el SQL para insertar los datos en la tabla correspondiente
+                tabla = hoja  # Nombre de la tabla en la base de datos
+                campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
+                marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
+
+                # Construye la consulta SQL
+                insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
+                # texto de abajo es ejemplo apra mostrar una tabla
+                #tablas.append(tabla)
+                # Inserta los datos en la base de datos
+                conn.consultar_db2(insert, filas)
+                tablas.append(tabla)
+            menssaje = "Archivo cargado con exíto"
+            #agregar se ha subido exitosamente
+            return render_template('cargaArchivo.html', mensaje = menssaje)
+        return render_template('cargaArchivo.html')
+    
+    except (pymysql.IntegrityError, pymysql.ProgrammingError) as error:
+        if isinstance(error, pymysql.IntegrityError):
+            return render_template('integrity_error.html', error=error, carga=tablas), 500
+        elif isinstance(error, pymysql.ProgrammingError):
+            return render_template('programming_error.html', error=error), 500
+
+# error 
+@app.errorhandler(Exception)
+def handle_error(error):
+    return render_template('programming_error.html', error=error), 500
+
+# error para AttributeError
+@app.errorhandler(AttributeError)
+def handle_attribute_error(error):
+    return render_template('attribute_error.html', error=error), 500
+
+@app.route('/archivoPDF')
+@csrf.exempt
+def descargar_archivo():
+    archivo = 'Documentos\Diccionario_de_datos.pdf'
+
+    return send_file(archivo, as_attachment=True)
+
+@app.route('/archivoExcel')
+@csrf.exempt
+def descargar_archivo2():
+    archivo = 'Documentos\Plantilla.xlsx'
+
+    return send_file(archivo, as_attachment=True)
+
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)

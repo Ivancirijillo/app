@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/erores.css') }}">
+    <title>Error - IntegrityError</title>
+    <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='img_menu/advertencia.png') }}"/>
+</head>
+<body>
+    <div class="contenedor">
+        <img src="static/img_menu/peligro.png" alt="">
+        <h1>Error - IntegrityError</h1>
+        <p>Ocurrió un error de integridad en la base de datos: {{ error }}</p>
+        
+        {% if carga %}
+        <p style="text-align: center;">Estas tablas fueron cargadas con exito: <span>{{ carga }}</span></p>
+        <br><span>TOMAR EN CUENTA AL MOMENTO DE REINTENTAR CARGAR INFORMACION</span>
+        {% endif %}
+        
+        <div class="buttons-con">
+            <div class="action-link-wrap">
+            <a href="/CargaArchivo" class="link-button link-back-button">Regresar</a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
