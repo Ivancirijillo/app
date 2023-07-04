@@ -11,6 +11,13 @@
     <body>
         <main>
             <div class="conten">
+                <!-- <div class="btn-salir">
+                    <button type="submit" id="logoutBtn"><img src="{{ url_for('static', filename ='img_menu/logout2.png') }}" alt=""> Cerrar session</button>
+                </div> -->
+                <div class="btndescarga-container" id="salir">
+                    <img src="/static/img_menu/logout2.png" alt="">
+                    <a class="btndescarga" id="logoutBtn"> Cerrar sesión</a>
+                </div>
                 <h1>Cargar Archivo Excel</h1>
                 {% if mensaje %}
                     <div id = "popup" class="error-message">

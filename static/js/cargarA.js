@@ -143,3 +143,11 @@ function mostrarVentanaFlotante() {
 function cerrarVentanaFlotante() {
   document.getElementById("ventanaFlotante").style.display = "none";
 }
+
+// funcion boton salir
+function json_wind(mode){
+    window.location.href = mode;
+}
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    json_wind("/logout");
+})

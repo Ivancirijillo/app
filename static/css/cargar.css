@@ -15,6 +15,7 @@ main{
 }
 
 .conten h1{
+  position: relative;
   margin: 0px;
   padding: 1.5%;
 }
@@ -235,7 +236,7 @@ tr:nth-child(even){background-color: #f2f2f2} */
 }
 
 .btndescarga-container {
-  width: 30%;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,13 +262,25 @@ tr:nth-child(even){background-color: #f2f2f2} */
   margin-right: 5px;
 }
 
-
 .btndescarga-container:hover {
   background-color: #ccc;
 }
   
 .btndescarga-container:active {
-  background-color: #6BDBDB;
+  background-color: #ccc;
+}
+
+#salir{
+  position: absolute;
+  width: auto;
+  float: right;
+  z-index: 10;
+}
+
+#salir img{
+  width: 21px;
+  height: 21px;
+  margin: 1px;
 }
 
 /* Personalizar scrollbar */
