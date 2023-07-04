@@ -2,6 +2,13 @@ var tablas = []; // tablas generadas
 var indiceTablaActual = 0; // Índice de la tabla actualmente visible
 
 function mostrarVistaPrevia(event) {
+    var inputContainer = document.getElementById("inputContainer");
+    if (event.target.files.length > 0) {
+        inputContainer.style.display = "block";
+    } else {
+        inputContainer.style.display = "none";
+    }
+
     var archivo = event.target.files[0];
     var lector = new FileReader();
 
@@ -45,7 +52,7 @@ function mostrarVistaPrevia(event) {
         }
     };
 
-    lector.readAsBinaryString(archivo);
+    lector.readAsBinaryString(archivo);    
 }
 
 function mostrarTablaActual() {
@@ -111,3 +118,28 @@ setTimeout(function(){
     document.getElementById('overlay').style.display = 'none';
 }, 3000);
 
+
+// Obtener todos los botones
+const buttons = document.querySelectorAll('.boton');
+
+// Agregar el evento click a cada botón
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Remover la clase 'selected' de todos los botones
+    buttons.forEach(button => {
+      button.classList.remove('selected');
+    });
+    
+    // Agregar la clase 'selected' al botón seleccionado
+    button.classList.add('selected');
+  });
+});
+
+
+//funciones de la ventana flotante
+function mostrarVentanaFlotante() {
+    document.getElementById("ventanaFlotante").style.display = "flex";
+  }
+function cerrarVentanaFlotante() {
+  document.getElementById("ventanaFlotante").style.display = "none";
+}
