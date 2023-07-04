@@ -346,6 +346,13 @@ header{
     border-bottom: solid 1px #00afaa;
 }
 
+/*TARJETA - SECCION*/
+.tarjeta-seccion{
+	opacity: 0;
+	display: none;
+	z-index: 1;
+}
+
 /* CLASE - TARJETA DE ENTRADA DESPLAZAMIENTO */
 .seg-tarjeta{
 	display: block;

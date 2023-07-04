@@ -131,7 +131,7 @@ function cambiarTarjeta(){
 }
 
 const btnContinuar = document.getElementById('continuar'),
-      tabla = document.getElementById('tabla')
+      tabla = document.getElementById('tabla'),
       ventanaEmergente = document.getElementById('v-emergen')
 btnContinuar.addEventListener('click', function (){
     var cabecera_consul_A = new Array ("NombreA", "NoApoyo", " ");
@@ -198,4 +198,98 @@ btnVolver.addEventListener('click', function (){
     cambiarTarjeta()
     restausarClases(ulAnio)
     restausarClases(ulCategoria)
+});
+
+/* SUBTARJETA lISTAS SECCIONES */
+const divAnio2 = document.getElementById('contenido-anio-2'),
+      divCategoria2 = document.getElementById('contenido-categoria-2'),
+      ulAnio2 = document.getElementById('opciones-ul-anio-2'),
+      ulCategoria2 = document.getElementById('opciones-ul-categoria-2'),
+      textListaPAnio2 = divAnio2.querySelector('p').textContent,
+      textListaPCategoria2 = divCategoria2.querySelector('p').textContent;
+
+divAnio2.addEventListener('click', function(){
+    restausarClases(ulCategoria2)
+    ulAnio2.classList.toggle('ul-prim')
+    ulAnio2.classList.toggle('ul-seg')
+})
+
+divCategoria2.addEventListener('click', function(){
+    restausarClases(ulAnio2)
+    ulCategoria2.classList.toggle('ul-prim')
+    ulCategoria2.classList.toggle('ul-seg')
+})
+
+var anio2 = [], categoria2 = ' ';
+ulAnio2.addEventListener('click', (e) => {
+    if(e.target && e.target.tagName === 'LI'){
+        e.target.classList.toggle('li-seg');
+    }
+    anio2 = opcSeleccionado(divAnio2, ulAnio2, textListaPAnio2)
+})
+
+ulCategoria2.addEventListener('click', (e) => {
+    if(e.target && e.target.tagName === 'LI'){
+        e.target.classList.toggle('li-seg');
+    }
+    categoria2 = opcSeleccionado(divCategoria2, ulCategoria2, textListaPCategoria2)
+})
+
+
+
+const continuarSeccion = document.getElementById('continuarSeccion');
+continuarSeccion.addEventListener('click', function (){
+    console.log("entra")
+    var cabecera_consul_V = new Array ("yearV", "V_VALIDOS", "V_NULOS", "TOTAL_V", "LISTA_N", "V");
+    const fil_cabecera = {
+        'Votos': cabecera_consul_V
+    }
+
+    const elementos = new Array(anio2.length);
+    
+    if(anio2.length != 0 /*&& categoria.length != 0*/){
+        for (let valorAnio of anio2){
+
+            // elementos[anio.indexOf(valorAnio)] = new Array(categoria.length+1);
+            elementos[anio2.indexOf(valorAnio)]/*[0]*/ = '<p class="pAnio">'+valorAnio+'</p>';
+
+            // for (let valorCategoria of categoria){
+
+                // elementos[anio.indexOf(valorAnio)][categoria.indexOf(valorCategoria)+1] = '<p>'+valorCategoria+'</p>';
+                let data = {
+                    tipo_c: 'Votos',
+                    year: valorAnio,
+                    id: id_seccion,
+                    modo: ' ' //if(data.modo != "impresion")
+                }
+                console.log(data)
+                enviar_json(data)
+                .then(dataRespuesta => {
+                    let cosultaDB = dataRespuesta["consulta"];
+                    console.log(cosultaDB)
+                    elementos[anio2.indexOf(valorAnio)]/*[categoria.indexOf(valorCategoria)+1]*/ += '<table>'+tabla_crear(cosultaDB, fil_cabecera['Votos'])+'</table>';
+                    
+                });
+            // }
+        }
+
+        console.log(elementos)
+
+        setTimeout(() => {
+            tabla.innerHTML = ' '
+            for(let i = 0; i < elementos.length; i++){
+                tabla.innerHTML += elementos[i]
+            }
+        }, 500);
+
+        subTarjetas[3].classList.toggle('seg-tarjeta')
+        subTarjetas[2].classList.toggle('seg-tarjeta')
+    }else{
+        ventanaEmergente.classList.toggle('v-emergen');
+        ventanaEmergente.classList.toggle('v-emergen_validado_R');
+        setTimeout(() => {
+            ventanaEmergente.classList.toggle('v-emergen_validado_R');
+            ventanaEmergente.classList.toggle('v-emergen');
+        }, 3000);
+    }
 });

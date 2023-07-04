@@ -320,6 +320,9 @@ def impresiones():
         respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
+    elif(tipo=="Votos"):
+        respuesta = conn.consultar_db(f"select yearV, V_VALIDOS, V_NULOS, TOTAL_V, LISTA_N from votos where yearV={json['year']} and SECCION={json['id']};")
+        print(respuesta)
     else:
         respuesta = " "
         if(json["modo"] == "impresion"):

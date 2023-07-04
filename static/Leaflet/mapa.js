@@ -83,12 +83,20 @@ function explandirTarjeta(){
   subTarjetas[0].style.display = 'none';
   subTarjetas[1].classList.add('seg-tarjeta')
   subTarjetas[2].classList.remove('seg-tarjeta')
+  subTarjetas[3].classList.remove('seg-tarjeta')
   restausarClases(ulAnio)
   restausarClases(ulCategoria)
   divAnio.querySelector('p').textContent = textListaPAnio;
   divAnio.classList.remove('contenido-lista-seg')
   divCategoria.querySelector('p').textContent = textListaPCategoria;
   divCategoria.classList.remove('contenido-lista-seg')
+}
+
+function volverExplandirTarjeta(){
+  subTarjetas[0].style.display = 'none';
+  subTarjetas[1].classList.remove('seg-tarjeta')
+  subTarjetas[2].classList.remove('seg-tarjeta')
+  subTarjetas[3].classList.add('seg-tarjeta')
 }
 
 var layerX = ' '
@@ -121,12 +129,15 @@ function selectLayer(e){
     botonvolver.addEventListener('click', function (){
       explandirTarjeta()
 
+      map.removeControl(btnRegresarM);
       map.removeLayer(Seccionesjs);
       mexicoJS = L.geoJson(mexico,{
         style: style,
         onEachFeature: onEachFeature
       }).addTo(map);
     });
+
+    volverExplandirTarjeta()
 
     Seccionesjs = L.geoJson(Secciones_MEX,{
       style: styleSec,
@@ -173,12 +184,20 @@ function styleSec(feature) {
   };
 }
 
+var id_seccion;
+function selectFeature(e){
+  var layer = e.target;
+  id_seccion = layer.feature.properties.CLAVEGEO
+  id_seccion = id_seccion.slice(8,12)
+  console.log(id_seccion)
+}
+
 var Seccionesjs;
 
 function cadaCaracteristica(features, layer){
   layer.on(
     {
-      click: highlightFeature
+      click: selectFeature
     }
   );
 }
