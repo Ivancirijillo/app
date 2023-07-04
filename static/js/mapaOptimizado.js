@@ -125,18 +125,20 @@ function enviar_json (data){
     .then(response => {return response.json()})
 }
 
+var comp = 0
 function cambiarTarjeta(){
     subTarjetas[1].classList.toggle('seg-tarjeta')
     subTarjetas[2].classList.toggle('seg-tarjeta')
+    if(comp == 1) volverExplandirTarjeta()
 }
 
 const btnContinuar = document.getElementById('continuar'),
       tabla = document.getElementById('tabla'),
       ventanaEmergente = document.getElementById('v-emergen')
 btnContinuar.addEventListener('click', function (){
-    var cabecera_consul_A = new Array ("NombreA", "NoApoyo", " ");
-    var cabecera_consul_D = new Array ("DelitosAI", "Homicidios", "Feminicidios", "Secuestros", 
-                                        "DespT", "Robo", "RoboT", "V");
+    var cabecera_consul_A = new Array ("Nombre", "Número", " ");
+    var cabecera_consul_D = new Array ("Alto Impacto", "Homicidios", "Feminicidios", "Secuestros", 
+                                        "Desapariciones Totales", "Robos", "Robo Tranporte", "V");
     var cabecera_consul_Pa = new Array ("PHombres", "PMujeres", "PTotal", "LNHombres", 
                                         "LNMujeres", "LNTotal", "V");
     var cabecera_consul_Po = new Array ("Pobreza", "PobExt", "PobMod", "RezagoEd", 
@@ -183,6 +185,7 @@ btnContinuar.addEventListener('click', function (){
         }, 500);
 
         cambiarTarjeta()
+        comp = 0
     }else{
         ventanaEmergente.classList.toggle('v-emergen');
         ventanaEmergente.classList.toggle('v-emergen_validado_R');
@@ -240,7 +243,7 @@ ulCategoria2.addEventListener('click', (e) => {
 const continuarSeccion = document.getElementById('continuarSeccion');
 continuarSeccion.addEventListener('click', function (){
     console.log("entra")
-    var cabecera_consul_V = new Array ("yearV", "V_VALIDOS", "V_NULOS", "TOTAL_V", "LISTA_N", "V");
+    var cabecera_consul_V = new Array ("Año", "Votos Válidos", "Votos Nulos", "Total de Votos", "Lista Nominal", "V");
     const fil_cabecera = {
         'Votos': cabecera_consul_V
     }
@@ -284,7 +287,9 @@ continuarSeccion.addEventListener('click', function (){
 
         subTarjetas[3].classList.toggle('seg-tarjeta')
         subTarjetas[2].classList.toggle('seg-tarjeta')
+        comp = 1
     }else{
+        console.log("entra2")
         ventanaEmergente.classList.toggle('v-emergen');
         ventanaEmergente.classList.toggle('v-emergen_validado_R');
         setTimeout(() => {

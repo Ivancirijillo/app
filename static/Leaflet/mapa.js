@@ -22,9 +22,10 @@ info.onAdd = function(map){
 };
 
 // Agregar el metodo que actualiza el control segun el puntero vaya pasando
+var clave = "0", municipio = " ";
 info.update = function(props){
   this._div.innerHTML = '<h4>Información del Municipio</h4>' + 
-                          (props ? '<b>' + props.NOM_MUN + '</b><br/>Clave: ' + props.CVEGEO + '</sup>'
+                          (props ? '<b>' + municipio + '</b><br/>Clave: ' + clave + '</sup>'
                           : 'Pase el puntero por un municipio');
 };
 info.addTo(map);
@@ -107,6 +108,8 @@ var dbl_clic = false
 function selectLayer(e){
   var layer = e.target;
   id_municipio = layer.feature.properties.CVEGEO
+  clave = id_municipio;
+  municipio = layer.feature.properties.NOM_MUN
 
   var recorteM = id_municipio.slice(2,5)
   num = parseInt(recorteM);
@@ -188,8 +191,10 @@ var id_seccion;
 function selectFeature(e){
   var layer = e.target;
   id_seccion = layer.feature.properties.CLAVEGEO
-  id_seccion = id_seccion.slice(8,12)
+  id_seccion = id_seccion.slice(8,13)
+  clave = id_seccion;
   console.log(id_seccion)
+  highlightFeature(e)
 }
 
 var Seccionesjs;
