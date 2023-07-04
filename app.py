@@ -473,14 +473,30 @@ def cargar_archivo():
                 tabla = hoja  # Nombre de la tabla en la base de datos
                 campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
                 marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
-
-                # Construye la consulta SQL
-                insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
-                # texto de abajo es ejemplo apra mostrar una tabla
-                #tablas.append(tabla)
-                # Inserta los datos en la base de datos
-                conn.consultar_db2(insert, filas)
-                tablas.append(tabla)
+                
+                if (tabla=="municipio"):
+                    # Construye la consulta SQL
+                    insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
+                    # texto de abajo es ejemplo apra mostrar una tabla
+                    #tablas.append(tabla)
+                    # Inserta los datos en la base de datos
+                    conn.consultar_db2(insert, filas)
+                    tablas.append(tabla)
+                else:
+                    columnas2 = datos_hoja.columns[2:]
+                    cadena_SQL=""
+                    for i in columnas2:
+                        cadena_SQL += i + " = VALUES(" + i + "),"
+                    cadena_SQL=cadena_SQL[:-1] 
+                    # Construye la consulta SQL
+                    #ON Conflict para postgre
+                    insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores}) ON DUPLICATE KEY UPDATE {cadena_SQL}"
+                    
+                    # texto de abajo es ejemplo apra mostrar una tabla
+                    #tablas.append(tabla)
+                    # Inserta los datos en la base de datos
+                    conn.consultar_db2(insert, filas)
+                    tablas.append(tabla)
             menssaje = "Archivo cargado con exíto"
             #agregar se ha subido exitosamente
             return render_template('cargaArchivo.html', mensaje = menssaje)
@@ -515,7 +531,6 @@ def descargar_archivo2():
     archivo = 'Documentos\Plantilla.xlsx'
 
     return send_file(archivo, as_attachment=True)
-
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, interrupcion)

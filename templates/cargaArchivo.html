@@ -11,6 +11,13 @@
     <body>
         <main>
             <div class="conten">
+                <!-- <div class="btn-salir">
+                    <button type="submit" id="logoutBtn"><img src="{{ url_for('static', filename ='img_menu/logout2.png') }}" alt=""> Cerrar session</button>
+                </div> -->
+                <div class="btndescarga-container" id="salir">
+                    <img src="/static/img_menu/logout2.png" alt="">
+                    <a class="btndescarga" id="logoutBtn"> Cerrar sesión</a>
+                </div>
                 <h1>Cargar Archivo Excel</h1>
                 {% if mensaje %}
                     <div id = "popup" class="error-message">
@@ -20,28 +27,51 @@
                 {% endif %}
 
                 <form action="/cargar" method="POST" enctype="multipart/form-data">
-                    <div class="">
+                    <div class="" onchange="mostrarVentanaFlotante()">
                         <input class="inputfile inputfile-7" type="file" name="archivo" id="archivo" accept=".xlsx" onchange="mostrarVistaPrevia(event)"/>
                         <label for="archivo"><span class="iborrainputfile"></span>
                         <strong><svg   width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>Seleccionar archivo</strong></label>
                         <!-- <a href="#IrVentanaFlotante"> <img src="static/img_menu/info.png" width="40"></a> -->
                     </div>
-                    <input type="submit" value="Cargar">
+                    <div id="inputContainer" style="display: none;">
+                        <input type="submit" value="Cargar datos">
+                    </div>
+                    
                 </form>
             </div>
             
             <div id="contenedor-botones" class="botonesHojas"></div>
             <div id="vista-previa" class="tabla-container">
                 <div class="informacion">
-                    <h2>Recomendaciones a tener en cuenta al subir un archivo.</h2><br>
-                    <p>1. Si se desea subir diferentes tablas desde un mismo archivo, cada nombre de las hojas debe corresponder al nombre de la tabla a la que se desea subir los datos.</p>
-                    <p>2. Los nombres de las columnas en el archivo corresponden a los campos de las tablas. Por lo tanto, es importante que los nombres de las columnas coincidan con los campos de las tablas. No es estrictamente necesario que las columnas estén en el mismo orden que las tablas, ni que se deban agregar todas las columnas. Sin embargo, se recomienda seguir un orden y colocar todas las columnas por buenas prácticas y para optimizar el proceso de llenado en la base de datos.</p>
-                    <p> 3. El archivo que se va a subir no debe contener filas ni columnas en blanco al inicio. Esto significa que el archivo debe estar lleno desde la columna A y la fila 1. Es importante asegurarse de que no haya espacios vacíos antes de los datos para evitar problemas en la importación.</p>
+                    <h2>Recomendaciones a tener en cuenta al subir un archivo.</h2>
+                    <p>1. El nombre de cada una de las hojas debe corresponde al nombre de la tabla a la que se desea subir los datos.</p>
+                    <p>2. Los nombres de las columnas en el archivo corresponden a los campos de las tablas. Por lo tanto, es importante que los nombres de las columnas coincidan con los campos de las tablas.</p>
+                    <p> 3. El archivo no debe contener filas ni columnas en blanco al inicio. Esto significa que el archivo debe estar lleno desde la columna A y la fila 1. Es importante asegurarse de que no haya espacios vacíos antes de los datos para evitar problemas en la importación.</p>
 
-                    <p>Nota : Los de las tabla y los campos que las componen pueden ser consultados en el <span><a href="/archivoPDF" download="Diccionario_de_datos.pdf">diccionario de datos.</a></span> Para optimizar el proceso de verificación de las columnas y nombre de las tablas, puede <span> <a href="/archivoExcel" download="Plantilla.xlsx">descargar la plantilla de excel</a></span>.</p>
+                    <p><span><span class="resaltado">Nota:</span> Los nombres de las tabla y sus campos sorrepondientes puede consultarlos en el diccionario de datos. 
+                    Para optimizar el proceso de verificación de las columnas y nombre de las tablas, puede utilizar la plantilla de excel que hemos preparado previamente.</span></p>
+
+                    <div class="conte-descarga">
+                        <div class="btndescarga-container">
+                            <img src="/static/img_menu/diccionario.png">
+                            <a class="btndescarga" href="/archivoPDF" download="Diccionario_de_datos.pdf"> Descargar diccionario de datos</a>
+                        </div>
+                        <div class="btndescarga-container">
+                            <img src="/static/img_menu/excel.png" alt="">
+                            <a class="btndescarga" href="/archivoExcel" download="Plantilla.xlsx"> Descargar plantilla de excel</a>
+                        </div>
+                    </div>
+
                 </div>  
             </div>   
-
+            <div id="ventanaFlotante" class="ventana">
+                <div class="contenido">
+                    <!-- Contenido de la ventana flotante -->
+                    <a class="btncerrar" type="button" onclick="cerrarVentanaFlotante()"><img src="/static/img_menu/cerrar.png" alt=""></a>
+                    <h2>Importante</h2>
+                    <p>A continuacion verá una vista previa de los datos que contiene el archivo seleccionado, asegurece que estos sean correctos, y sigan la estructura mencionada. Una vez que haya verificado que la información es correcta puede subir los datos dando clic en el boton <span class="resaltado">"Cargar datos"</span>.</p>
+                </div>
+            </div>
         </main>
         <script src="{{ url_for('static', filename ='js/cargarA.js') }}"> </script>
     </body>
