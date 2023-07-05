@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(result => {
       data = result; // Asignar los datos a la variable global
-      console.log('Datos: ', data);
+      console.log('Datos: ', data); //imprime los resultados de la consuylta a la base de datos
+      //console.log('Datos: ', (((Object.values(data.empleo)).length)-1)); 
       procesarDatos(); // Llamar a la función que utiliza los datos
       insertarDatos();
       //Tabla apoyos
@@ -74,9 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
       graficaRe('GPobr',etiquetas_graficas.pobre, 'Porcentaje', cadenas.c_pobreza ); 
       graficaRe('GEmp',etiquetas_graficas.empl, 'No', cadenas.c_empleo ); 
       graficaRe('GDeli',etiquetas_graficas.delitos, 'No Casos', cadenas.c_deli ); 
-      if(data.deli[8]!=0){
+      if(data.deli[(((Object.values(data.deli)).length)-6)]!=0){
         graficaPA('GDeliHyM',etiquetas_graficas.desap, 'Desapariciones', cadenas.c_deliHM ); 
-        document.getElementById('parrafoDeli').innerText = "El número de desapariciones totales en " + data.deli[1] +" fue de " + data.deli[8] + ", siendo " + ((100*(data.deli[7]))/(data.deli[8])).toFixed(2) + "% mujeres y " + ((100*(data.deli[6]))/(data.deli[8])).toFixed(2) + "% hombres." ;
+        document.getElementById('parrafoDeli').innerText = "El número de desapariciones totales en " + data.deli[(((Object.values(data.deli)).length)-13)] +" fue de " + data.deli[(((Object.values(data.deli)).length)-6)] + ", siendo " + ((100*(data.deli[(((Object.values(data.deli)).length)-7)]))/(data.deli[(((Object.values(data.deli)).length)-6)])).toFixed(2) + "% mujeres y " + ((100*(data.deli[(((Object.values(data.deli)).length)-8)]))/(data.deli[(((Object.values(data.deli)).length)-6)])).toFixed(2) + "% hombres." ;
         
       }
       graficaPA2('GPaE',etiquetas_graficas.padron, 'No Ciudadanos', cadenas.c_padron ); 
@@ -420,47 +421,48 @@ function generarTabla(CadenaA) {
 
 function insertarDatos(){
   // Asignar el valores a la pagina
+  //datos que se utilizan más de una vez
+  //pobCAntidad=(((Object.values(data.poblacion)).length)-42);
   document.getElementById('tituloM').innerText = data.nombre[0];
   document.getElementById('nommbreMun').innerText = data.nombre[0];
-  document.getElementById('tituloPoblacion').innerText = agregarComas(data.poblacion[2]);  
-  document.getElementById('tituloPoblacionA').innerText = data.poblacion[1]; 
-  document.getElementById('tituloEdad').innerText = data.poblacion[5];  
-  document.getElementById('tituloEdadA').innerText = data.poblacion[1];  
-  document.getElementById('tituloPobreza').innerText = (Math.floor(data.tpobreza[2])) + ' %';  
-  document.getElementById('tituloPobrezaA').innerText = data.tpobreza[1];  
-  document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.economia[2]);   
-  document.getElementById('tituloPIBA').innerText = data.economia[1];  
-  document.getElementById('tituloUE').innerText = agregarComas(data.unidades[0]);  
-  document.getElementById('tituloUEA').innerText = data.unidades[1];  
-  document.getElementById('tituloSalario').innerText = '$' +  data.empleo[13]; 
-  document.getElementById('tituloSalarioA').innerText = data.empleo[1]; 
-  document.getElementById('reYear').innerText = data.rezago[1];
-  document.getElementById('indiceRe').innerText = data.rezago[15];
-  document.getElementById('gradoRe').innerText = data.rezago[16];
-  document.getElementById('posicionRe').innerText = 'N° ' + data.rezago[17];
-  document.getElementById('sinSalud').innerText = data.rezago[7];
-  document.getElementById('gini').innerText = data.rezago[2];
-  document.getElementById('razonI').innerText = data.rezago[3];
+  document.getElementById('tituloPoblacion').innerText = agregarComas(data.poblacion[(((Object.values(data.poblacion)).length)-42)]);  
+  document.getElementById('tituloPoblacionA').innerText = data.poblacion[(((Object.values(data.poblacion)).length)-43)]; 
+  document.getElementById('tituloEdad').innerText = data.poblacion[(((Object.values(data.poblacion)).length)-39)];  
+  document.getElementById('tituloEdadA').innerText = data.poblacion[(((Object.values(data.poblacion)).length)-43)];  
+  document.getElementById('tituloPobreza').innerText = (Math.floor(data.tpobreza[(((Object.values(data.tpobreza)).length)-14)])) + ' %';  
+  document.getElementById('tituloPobrezaA').innerText = data.tpobreza[(((Object.values(data.tpobreza)).length)-15)];  
+  document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.economia[(((Object.values(data.economia)).length)-6)]);   
+  document.getElementById('tituloPIBA').innerText = data.economia[(((Object.values(data.economia)).length)-7)];  
+  document.getElementById('tituloUE').innerText = agregarComas(data.economia[(((Object.values(data.economia)).length)-3)]);  
+  document.getElementById('tituloUEA').innerText = data.economia[(((Object.values(data.economia)).length)-7)];  
+  document.getElementById('tituloSalario').innerText = '$' +  data.empleo[(((Object.values(data.empleo)).length)-1)]; 
+  document.getElementById('tituloSalarioA').innerText = data.empleo[(((Object.values(data.empleo)).length)-13)]; 
+  document.getElementById('reYear').innerText = data.rezago[(((Object.values(data.rezago)).length)-17)];
+  document.getElementById('indiceRe').innerText = data.rezago[(((Object.values(data.rezago)).length)-3)];
+  document.getElementById('gradoRe').innerText = data.rezago[(((Object.values(data.rezago)).length)-2)];
+  document.getElementById('posicionRe').innerText = 'N° ' + data.rezago[(((Object.values(data.rezago)).length)-1)];
+  document.getElementById('sinSalud').innerText = data.rezago[(((Object.values(data.rezago)).length)-11)];
+  document.getElementById('gini').innerText = data.rezago[(((Object.values(data.rezago)).length)-16)];
+  document.getElementById('razonI').innerText = data.rezago[(((Object.values(data.rezago)).length)-15)];
   document.getElementById('apoyoYear').innerText = data.apoyos[1];
-  document.getElementById('economiaYear').innerText = data.economia[1];
-  document.getElementById('pobYear').innerText = data.poblacion[1];
-  document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.economia[2]);
-  document.getElementById('etiquetaPer').innerText = '$' +  agregarComas(data.economia[3]);
-  document.getElementById('etquetaAfil').innerText = agregarComas(data.poblacion[25]);
-  document.getElementById('etiquetaAli').innerText = agregarComas(data.poblacion[39]);
-  document.getElementById('poYear').innerText = data.tpobreza[1];
-  document.getElementById('emYear').innerText = data.empleo[1];
-  document.getElementById('etiquetaTota').innerText = agregarComas(data.empleo[12]);
-  document.getElementById('etiquetaSa').innerText = '$' +  agregarComas(data.empleo[13]);
-  document.getElementById('deliYear').innerText =data.deli[1];
-  document.getElementById('paeleYear').innerText =data.padron[1];
-  document.getElementById('etiquetaP').innerText =agregarComas(data.padron[4]);
-  document.getElementById('etiquetaLista').innerText =agregarComas(data.padron[7]);
-  document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.poblacion[1] +" fue de " + agregarComas(data.poblacion[2]) + " habitantes, siendo " + ((100*(data.poblacion[4]))/(data.poblacion[2])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[3]))/(data.poblacion[2])).toFixed(2) + "% hombres." ;
-  document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.poblacion[34]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.poblacion[25]) + " personas que sí están afiliadas.";
-  document.getElementById('parrafoEmpleo').innerText = "Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de " + agregarComas(data.empleo[12]) + " empleos.";
-  document.getElementById('parrafoAlimentacion').innerText = "En el año " + data.poblacion[1] + ", los hogares con limitación alimentaria representaron el " + ((100*(data.poblacion[42]))/(data.poblacion[39])).toFixed(2) + " % de total, mientras que los hogares sin esta limitación representaron el " + ((100*(data.poblacion[43]))/(data.poblacion[39])).toFixed(2) + " restante.";
-
+  document.getElementById('economiaYear').innerText = data.economia[(((Object.values(data.economia)).length)-7)];
+  document.getElementById('pobYear').innerText = data.poblacion[(((Object.values(data.poblacion)).length)-43)];
+  document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.economia[(((Object.values(data.economia)).length)-6)]);
+  document.getElementById('etiquetaPer').innerText = '$' +  agregarComas(data.economia[(((Object.values(data.economia)).length)-5)]);
+  document.getElementById('etquetaAfil').innerText = agregarComas(data.poblacion[(((Object.values(data.poblacion)).length)-19)]);
+  document.getElementById('etiquetaAli').innerText = agregarComas(data.poblacion[(((Object.values(data.poblacion)).length)-5)]);
+  document.getElementById('poYear').innerText = data.tpobreza[(((Object.values(data.tpobreza)).length)-15)];
+  document.getElementById('emYear').innerText = data.empleo[(((Object.values(data.empleo)).length)-13)];
+  document.getElementById('etiquetaTota').innerText = agregarComas(data.empleo[(((Object.values(data.empleo)).length)-2)]);
+  document.getElementById('etiquetaSa').innerText = '$' +  agregarComas(data.empleo[(((Object.values(data.empleo)).length)-1)]);
+  document.getElementById('deliYear').innerText =data.deli[(((Object.values(data.deli)).length)-13)];
+  document.getElementById('paeleYear').innerText =data.padron[(((Object.values(data.padron)).length)-7)];
+  document.getElementById('etiquetaP').innerText =agregarComas(data.padron[(((Object.values(data.padron)).length)-4)]);
+  document.getElementById('etiquetaLista').innerText =agregarComas(data.padron[(((Object.values(data.padron)).length)-1)]);
+  document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.poblacion[(((Object.values(data.poblacion)).length)-43)] +" fue de " + agregarComas(data.poblacion[(((Object.values(data.poblacion)).length)-42)]) + " habitantes, siendo " + ((100*(data.poblacion[(((Object.values(data.poblacion)).length)-40)]))/(data.poblacion[(((Object.values(data.poblacion)).length)-42)])).toFixed(2) + "% mujeres y " + ((100*(data.poblacion[(((Object.values(data.poblacion)).length)-41)]))/(data.poblacion[(((Object.values(data.poblacion)).length)-42)])).toFixed(2) + "% hombres." ;
+  document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.poblacion[(((Object.values(data.poblacion)).length)-10)]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.poblacion[(((Object.values(data.poblacion)).length)-19)]) + " personas que sí están afiliadas.";
+  document.getElementById('parrafoEmpleo').innerText = "Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de " + agregarComas(data.empleo[(((Object.values(data.empleo)).length)-2)]) + " empleos.";
+  document.getElementById('parrafoAlimentacion').innerText = "En el año " + data.poblacion[(((Object.values(data.poblacion)).length)-43)] + ", los hogares con limitación alimentaria representaron el " + ((100*(data.poblacion[(((Object.values(data.poblacion)).length)-2)]))/(data.poblacion[(((Object.values(data.poblacion)).length)-5)])).toFixed(2) + " % de total, mientras que los hogares sin esta limitación representaron el " + ((100*(data.poblacion[(((Object.values(data.poblacion)).length)-1)]))/(data.poblacion[(((Object.values(data.poblacion)).length)-5)])).toFixed(2) + " restante.";
 }
 
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
