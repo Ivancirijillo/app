@@ -22,9 +22,10 @@ info.onAdd = function(map){
 };
 
 // Agregar el metodo que actualiza el control segun el puntero vaya pasando
+var clave = "0", municipio = " ";
 info.update = function(props){
   this._div.innerHTML = '<h4>Información del Municipio</h4>' + 
-                          (props ? '<b>' + props.NOM_MUN + '</b><br/>Clave: ' + props.CVEGEO + '</sup>'
+                          (props ? '<b>' + municipio + '</b><br/>Clave: ' + clave + '</sup>'
                           : 'Pase el puntero por un municipio');
 };
 info.addTo(map);
@@ -83,12 +84,20 @@ function explandirTarjeta(){
   subTarjetas[0].style.display = 'none';
   subTarjetas[1].classList.add('seg-tarjeta')
   subTarjetas[2].classList.remove('seg-tarjeta')
+  subTarjetas[3].classList.remove('seg-tarjeta')
   restausarClases(ulAnio)
   restausarClases(ulCategoria)
   divAnio.querySelector('p').textContent = textListaPAnio;
   divAnio.classList.remove('contenido-lista-seg')
   divCategoria.querySelector('p').textContent = textListaPCategoria;
   divCategoria.classList.remove('contenido-lista-seg')
+}
+
+function volverExplandirTarjeta(){
+  subTarjetas[0].style.display = 'none';
+  subTarjetas[1].classList.remove('seg-tarjeta')
+  subTarjetas[2].classList.remove('seg-tarjeta')
+  subTarjetas[3].classList.add('seg-tarjeta')
 }
 
 var layerX = ' '
@@ -99,6 +108,8 @@ var dbl_clic = false
 function selectLayer(e){
   var layer = e.target;
   id_municipio = layer.feature.properties.CVEGEO
+  clave = id_municipio;
+  municipio = layer.feature.properties.NOM_MUN
 
   var recorteM = id_municipio.slice(2,5)
   num = parseInt(recorteM);
@@ -121,12 +132,15 @@ function selectLayer(e){
     botonvolver.addEventListener('click', function (){
       explandirTarjeta()
 
+      map.removeControl(btnRegresarM);
       map.removeLayer(Seccionesjs);
       mexicoJS = L.geoJson(mexico,{
         style: style,
         onEachFeature: onEachFeature
       }).addTo(map);
     });
+
+    volverExplandirTarjeta()
 
     Seccionesjs = L.geoJson(Secciones_MEX,{
       style: styleSec,
@@ -173,12 +187,22 @@ function styleSec(feature) {
   };
 }
 
+var id_seccion;
+function selectFeature(e){
+  var layer = e.target;
+  id_seccion = layer.feature.properties.CLAVEGEO
+  id_seccion = id_seccion.slice(8,13)
+  clave = id_seccion;
+  console.log(id_seccion)
+  highlightFeature(e)
+}
+
 var Seccionesjs;
 
 function cadaCaracteristica(features, layer){
   layer.on(
     {
-      click: highlightFeature
+      click: selectFeature
     }
   );
 }
