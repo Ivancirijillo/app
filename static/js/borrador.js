@@ -60,7 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
       //Tabla apoyos
       generarTabla(cadenas.c_apoyos);
       // Llamar a la funcion de las grafica
-      graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
+      //graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
+
+      const etiquetas = ['Etiqueta 1', 'Etiqueta 2', 'Etiqueta 3'];
+      const etiquetasDatasets = ['Dataset 1', 'Dataset 2', 'Dataset 3'];
+      const datos = [
+        [3.8, 14.9, 10.4, 20.9, 2.6, 63.2, 32.4],
+        [5.2, 8.7, 16.3, 12.5, 9.8, 5.4, 11.2],
+        [15.3, 12.6, 18.4, 9.1, 6.7, 13.8, 7.2]
+      ];
+      graficaBORRADOR('GReSo',etiquetas, etiquetasDatasets, datos );
+
       graficaRe('GEd',etiquetas_graficas.educacion, 'Población', cadenas.c_educacion ); 
       graficaRe('GEco2',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
       graficaLi('GEco', 'Producto Interno Bruto', cadenas.c_PIB, cadenas.c_PIBY); 
@@ -187,6 +197,37 @@ function autoScroll(sectionId) {
         behavior: 'smooth'
     });
 }
+
+
+
+function graficaBORRADOR(seccionID, etiquetas, etiquetasDatasets, datos) {
+  const GReSo = document.getElementById(seccionID);
+  
+  const datasets = datos.map((dataset, index) => ({
+    label: etiquetasDatasets[index],
+    data: dataset,
+    borderWidth: 1
+  }));
+  
+  new Chart(GReSo, {
+    type: 'bar',
+    data: {
+      labels: etiquetas,
+      datasets: datasets
+    },
+    options: {
+      indexAxis: 'y',
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      responsive: true,
+    }
+  });
+}
+
+
 
 function graficaRe(seccionID, etiquetas, etiqueta, datos) {
   const GReSo = document.getElementById(seccionID);
