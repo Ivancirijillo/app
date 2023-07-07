@@ -20,6 +20,7 @@ var data;
 var cadenas = {
   c_general: [],
   c_viviendas: [],
+  c_viviendasYEAR: [],
   c_carencias: [],
   c_educacion: [],
   c_apoyos: [],
@@ -62,14 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Llamar a la funcion de las grafica
       //graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
 
-      const etiquetas = ['Etiqueta 1', 'Etiqueta 2', 'Etiqueta 3'];
-      const etiquetasDatasets = ['Dataset 1', 'Dataset 2', 'Dataset 3'];
-      const datos = [
-        [3.8, 14.9, 10.4, 20.9, 2.6, 63.2, 32.4],
-        [5.2, 8.7, 16.3, 12.5, 9.8, 5.4, 11.2],
-        [15.3, 12.6, 18.4, 9.1, 6.7, 13.8, 7.2]
-      ];
-      graficaBORRADOR('GReSo',etiquetas, etiquetasDatasets, datos );
+      graficaBORRADOR('GReSo',etiquetas_graficas.vivienda, cadenas.c_viviendasYEAR, cadenas.c_viviendas );
 
       graficaRe('GEd',etiquetas_graficas.educacion, 'Población', cadenas.c_educacion ); 
       graficaRe('GEco2',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
@@ -99,14 +93,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function procesarDatos() {
   //REZAGO
+      //Vivienda
+  console.log('Datos: ', ((Object.values(data.rezago)).length));
+  for (let i = 0; i < (((Object.values(data.rezago)).length)); i+=18) {
+    cadenas.c_viviendas.push([data.rezago[i+8], data.rezago[i+9], data.rezago[i+10], data.rezago[i+11], data.rezago[i+12], data.rezago[i+13], data.rezago[i+14]]);
+    cadenas.c_viviendasYEAR.push(data.rezago[i+1])
+  }
+  
+  //REZAGO
     //general
   cadenas.c_general.push(data.rezago[1]);
   for (let i = 15; i < 18; i++) {
     cadenas.c_general.push(data.rezago[i]);
-  }
-    //vivenda
-  for (let i = 8; i < 15; i++) {
-    cadenas.c_viviendas.push(data.rezago[i]);
   }
     //Carencias
     cadenas.c_carencias.push(data.rezago[7]);
