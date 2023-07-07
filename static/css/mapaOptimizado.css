@@ -131,15 +131,18 @@ header{
 /* CONTENEDOR - TARJETAS */
 /* #subtarjeta{
 } */
-
 /* TARJETA - TITULO */
-.tarjeta-titulo{
+.tarjeta-titulo, .tarjeta-titulo2{
 	font-size: 1rem;
     font-weight: bold;
 	font-family: sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.tarjeta-titulo2{
+	display: none;
 }
 
 /*TARJETA - LISTAS*/

@@ -81,10 +81,9 @@ const subTarjetas = document.querySelectorAll('#subtarjeta'),
       tarjeta = document.getElementById('tarjeta');
 function explandirTarjeta(){
   tarjeta.classList.add('tarjeta-seg')
-  subTarjetas[0].style.display = 'none';
-  subTarjetas[1].classList.add('seg-tarjeta')
-  subTarjetas[2].classList.remove('seg-tarjeta')
-  subTarjetas[3].classList.remove('seg-tarjeta')
+
+  cambioTarjeta(1)
+
   restausarClases(ulAnio)
   restausarClases(ulCategoria)
   divAnio.querySelector('p').textContent = textListaPAnio;
@@ -93,11 +92,14 @@ function explandirTarjeta(){
   divCategoria.classList.remove('contenido-lista-seg')
 }
 
-function volverExplandirTarjeta(){
+function cambioTarjeta(pos){
   subTarjetas[0].style.display = 'none';
   subTarjetas[1].classList.remove('seg-tarjeta')
   subTarjetas[2].classList.remove('seg-tarjeta')
-  subTarjetas[3].classList.add('seg-tarjeta')
+  subTarjetas[3].classList.remove('seg-tarjeta')
+  subTarjetas[4].classList.remove('seg-tarjeta')
+
+  subTarjetas[pos].classList.add('seg-tarjeta')
 }
 
 var layerX = ' '
@@ -110,6 +112,9 @@ function selectLayer(e){
   id_municipio = layer.feature.properties.CVEGEO
   clave = id_municipio;
   municipio = layer.feature.properties.NOM_MUN
+
+  restausarClases(ulAnio)
+  restausarClases(ulCategoria)
 
   var recorteM = id_municipio.slice(2,5)
   num = parseInt(recorteM);
@@ -140,7 +145,7 @@ function selectLayer(e){
       }).addTo(map);
     });
 
-    volverExplandirTarjeta()
+    cambioTarjeta(3)
 
     Seccionesjs = L.geoJson(Secciones_MEX,{
       style: styleSec,
@@ -194,6 +199,7 @@ function selectFeature(e){
   id_seccion = id_seccion.slice(8,13)
   clave = id_seccion;
   console.log(id_seccion)
+  cambioTarjeta(4)
   highlightFeature(e)
 }
 
