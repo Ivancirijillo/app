@@ -200,16 +200,6 @@ def consultas_pagina():
     resultados = conn.consultar_db(consulta)
     lista= tratamiento(resultados, diccionario, secciones[8])
 
-    #Unidades Economicas
-    consulta = configuracion.get("consulta_pagina",secciones[9]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[9])
-
-    #PIB
-    consulta = configuracion.get("consulta_pagina",secciones[10]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[10])
-
     return jsonify(lista)
 
 @app.route("/consultas-buscador", methods=['POST'])

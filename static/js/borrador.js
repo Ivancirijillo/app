@@ -1,45 +1,5 @@
-let etiquetas_graficas = {
-  vivienda:   ['Piso de tierra', 'No disponen de excusado o sanitario', 'No disponen de agua entubada de la red pública', 'No disponen de drenaje', 'No disponen de energía eléctrica', 'No disponen de lavadora', 'No disponen de refrigerador'],
-  educacion:  ['15 años o más analfabeta', '6 a 14 años que no asiten a la escuela', '15 años o más con educación básica incompleta'],
-  economia:   ['Unidades Económicas', 'Proporción Deuda Pública / Ingresos', 'Proporción servicio de Deuda / Ingresos', 'Obligaciones Corto Plazo / Ingresos'],
-  genero:     ['Hombres', 'Mujeres'],
-  indices:    ['Edad Mediana', 'Mediana Hombres', 'Mediana Mujeres', 'Relación Hombre-Mujer', 'Índice de envejecimiento total', 'Índice de envejecimiento Hombres', 'Índice de envejecimiento Mujeres', 'Razón de dependencia Total', 'Razón de dependencia Infantil', 'Razón de dependencia de Vejez'],
-  indigena:   ['Población de 3 años o más', 'Población que habla lengua índigena', 'Población índigena que habla español', 'Población índigena que no habla español', 'Población que no habla lengua índigena'],
-  disc:       ['Personas con discapacidad','Personas con discapacidad total', 'Personas con discapacidad parcial o limitaciones', 'Población con algún problema o condición mental', 'Población sin discapacidad, limitacion, problema o condición mental'],
-  afil:       ['IMSS', 'ISSSTE', 'ISSSTE Estatal', 'Pemex, Defensa o Marina', 'INSABI', 'IMSS BIENESTAR', 'Institución privada', 'Otra afiliación', 'No afiliado'],
-  loc:        ['Vive en la entidad', 'Vive en otra entidad', 'Vive en EE. UU.', 'Viven en otro país'],
-  hogares:    ['Con limitación alimentaria', 'Sin limitación alimentaria'],
-  pobre:      ['Porcentaje de pobreza', 'Porcentaje de pobreza extrema' , 'Pobreza extrema carencias promedio' , 'Pobreza moderada' , 'Porcentaje de no pobre y no vulnerable' , 'Porcentaje de rezago educativo' , 'Promedio de carencia de salud' , 'Carencia Salud Carencias promedio' , 'Porcentaje carencia Seguro Social' , 'Porcentaje carencia de calidad de vivienda' , 'Porcentaje carencia de servicios de vivienda' , 'Porcentaje carencia de alimentación' , 'Porcentaje de ingreso inferior pobreza' , 'Porcentaje de ingreso inferior pobreza extrema'],
-  empl:       ['Agricultura, Ganadería, Silvicultura, Pesca y Caza', 'Comercio', 'Industria Eléctrica y Captación, y suministro de Agua Potable', 'Industrias de la Construcción', 'Industrias de Transformación', 'Industrias de Transformación 2', 'Industrias Extractivas', 'Servicios para Empresas, Personas y el Hogar', 'Servicios Sociales y Comunales', 'Transportes y comunicaciones'],
-  delitos:    ['Delitos de alto impacto', 'Homicidios', 'Feminicidios', 'Secuestros', 'Desapariciones', 'Robos', 'Robos transporte', 'Violencia de género en todas sus modalidades', 'Violencia familiar'],
-  desap:      ['Hombres', 'Mujeres'],
-  padron:     ['Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres']
-};
-
 var data;
-var cadenas = {
-  c_general: [],
-  c_viviendas: [],
-  c_viviendasYEAR: [],
-  c_carencias: [],
-  c_educacion: [],
-  c_apoyos: [],
-  c_economia: [],
-  c_Pgeneral: [],
-  c_edad: [],
-  c_lenguaI: [],
-  c_disc: [],
-  c_afili: [],
-  c_loc: [],
-  c_alimen: [],
-  c_pobreza: [],
-  c_empleo: [],
-  c_deli: [],
-  c_deliHM: [],
-  c_padron: [],
-  c_PIB: [],
-  c_PIBY: []
-}
+
 // Obtener el valor del parámetro 'contenido' de la URL
 var contenido = obtenerParametroURL('contenido');
 
@@ -61,24 +21,21 @@ document.addEventListener('DOMContentLoaded', function() {
       //Tabla apoyos
       generarTabla(cadenas.c_apoyos);
       // Llamar a la funcion de las grafica
-      //graficaRe('GReSo',etiquetas_graficas.vivienda, 'Número de viviendas', cadenas.c_viviendas ); 
-
-      graficaBORRADOR('GReSo',etiquetas_graficas.vivienda, cadenas.c_viviendasYEAR, cadenas.c_viviendas );
-
-      graficaRe('GEd',etiquetas_graficas.educacion, 'Población', cadenas.c_educacion ); 
-      graficaRe('GEco2',etiquetas_graficas.economia, '$', cadenas.c_economia ); 
-      graficaLi('GEco', 'Producto Interno Bruto', cadenas.c_PIB, cadenas.c_PIBY); 
+      graficaBa('GReSo',etiquetas_graficas.vivienda, cadenas.c_viviendasYEAR, cadenas.c_viviendas );      
+      graficaBa('GEd',etiquetas_graficas.educacion, cadenas.c_viviendasYEAR, cadenas.c_educacion ); 
+      graficaBa('GEco2',etiquetas_graficas.economia, cadenas.c_economiaYEAR, cadenas.c_economia ); 
+      graficaLi('GEco', 'Producto Interno Bruto', cadenas.c_PIB, cadenas.c_economiaYEAR); 
       graficaPA('GGene',etiquetas_graficas.genero, 'Población', cadenas.c_Pgeneral ); 
-      graficaRe('GEdad',etiquetas_graficas.indices, '', cadenas.c_edad ); 
-      graficaRe('GLenI',etiquetas_graficas.indigena, '', cadenas.c_lenguaI ); 
-      graficaRe('GDisc',etiquetas_graficas.disc, 'Personas con discapacidad', cadenas.c_disc ); 
+      graficaBa('GEdad',etiquetas_graficas.indices, cadenas.c_edadYEAR, cadenas.c_edad ); 
+      graficaBa('GLenI',etiquetas_graficas.indigena, cadenas.c_edadYEAR, cadenas.c_lenguaI ); 
+      graficaBa('GDisc',etiquetas_graficas.disc, cadenas.c_edadYEAR, cadenas.c_disc ); 
       graficaPA('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', cadenas.c_afili ); 
       //graficaRe('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', cadenas.c_afili ); 
       graficaPA('GLoc',etiquetas_graficas.loc, 'Población', cadenas.c_loc ); 
       graficaPA('GAli',etiquetas_graficas.hogares, 'Hogares', cadenas.c_alimen ); 
-      graficaRe('GPobr',etiquetas_graficas.pobre, 'Porcentaje', cadenas.c_pobreza ); 
-      graficaRe('GEmp',etiquetas_graficas.empl, 'No', cadenas.c_empleo ); 
-      graficaRe('GDeli',etiquetas_graficas.delitos, 'No Casos', cadenas.c_deli ); 
+      graficaBa('GPobr',etiquetas_graficas.pobre, cadenas.c_pobrezaYEAR, cadenas.c_pobreza); 
+      graficaBa('GEmp',etiquetas_graficas.empl, cadenas.c_empleoYEAR, cadenas.c_empleo ); 
+      graficaBa('GDeli',etiquetas_graficas.delitos, cadenas.c_deliYEAR, cadenas.c_deli ); 
       if(data.deli[(((Object.values(data.deli)).length)-6)]!=0){
         graficaPA('GDeliHyM',etiquetas_graficas.desap, 'Desapariciones', cadenas.c_deliHM ); 
         document.getElementById('parrafoDeli').innerText = "El número de desapariciones totales en " + data.deli[(((Object.values(data.deli)).length)-13)] +" fue de " + data.deli[(((Object.values(data.deli)).length)-6)] + ", siendo " + ((100*(data.deli[(((Object.values(data.deli)).length)-7)]))/(data.deli[(((Object.values(data.deli)).length)-6)])).toFixed(2) + "% mujeres y " + ((100*(data.deli[(((Object.values(data.deli)).length)-8)]))/(data.deli[(((Object.values(data.deli)).length)-6)])).toFixed(2) + "% hombres." ;
@@ -93,98 +50,78 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function procesarDatos() {
   //REZAGO
-      //Vivienda
   console.log('Datos: ', ((Object.values(data.rezago)).length));
   for (let i = 0; i < (((Object.values(data.rezago)).length)); i+=18) {
+    //Vivienda
     cadenas.c_viviendas.push([data.rezago[i+8], data.rezago[i+9], data.rezago[i+10], data.rezago[i+11], data.rezago[i+12], data.rezago[i+13], data.rezago[i+14]]);
     cadenas.c_viviendasYEAR.push(data.rezago[i+1])
-  }
-  
-  //REZAGO
-    //general
-  cadenas.c_general.push(data.rezago[1]);
-  for (let i = 15; i < 18; i++) {
-    cadenas.c_general.push(data.rezago[i]);
-  }
-    //Carencias
-    cadenas.c_carencias.push(data.rezago[7]);
-  for (let i = 2; i < 4; i++) {
-    cadenas.c_carencias.push(data.rezago[i]);
-  }
     //Educacion
-  for (let i = 4; i < 7; i++) {
-    cadenas.c_educacion.push(data.rezago[i]);
+    cadenas.c_educacion.push([data.rezago[i+4], data.rezago[i+5], data.rezago[i+6]]);
   }
   //ECONOMIA
-  for (let i = 4; i < 8; i++) {
-    cadenas.c_economia.push(data.economia[i]);
+  for (let i = 0; i < (((Object.values(data.economia)).length)); i+=8) {
+    cadenas.c_economia.push([data.economia[i+4], data.economia[i+5], data.economia[i+6], data.economia[i+7]]);
+    cadenas.c_economiaYEAR.push(data.economia[i+1])
+      //PIB       Lineas     
+    cadenas.c_PIB.push(data.economia[i+2])
   }
-  //POBLACION
+  //POBLACION     Pastel
   for (let i = 3; i < 5; i++) {
-    cadenas.c_Pgeneral.push(data.poblacion[i]);
+    cadenas.c_Pgeneral.push(data.poblacion[i+(((Object.values(data.poblacion)).length))-44]);
   }
-    //Edad
-  for (let i = 5; i < 15; i++) {
-    cadenas.c_edad.push(data.poblacion[i]);
-  }
-    //Lengua indigena
-  for (let i = 15; i < 20; i++) {
-    cadenas.c_lenguaI.push(data.poblacion[i]);
-  }
-  //Discapacidad
-  for (let i = 20; i < 25; i++) {
-    cadenas.c_disc.push(data.poblacion[i]);
+  for (let i = 0; i < (((Object.values(data.poblacion)).length)); i+=44) {
+      //Edad
+    cadenas.c_edad.push([data.poblacion[i+5], data.poblacion[i+6], data.poblacion[i+7], data.poblacion[i+8], data.poblacion[i+9], data.poblacion[i+10], data.poblacion[i+11], data.poblacion[i+12], data.poblacion[i+13], data.poblacion[i+14] ]);
+    cadenas.c_edadYEAR.push(data.poblacion[i+1])
+      //Lengua indigena
+    cadenas.c_lenguaI.push([data.poblacion[i+15], data.poblacion[i+16], data.poblacion[i+17], data.poblacion[i+18], data.poblacion[i+19]])
+      //Discapacidad
+    cadenas.c_disc.push([data.poblacion[i+20], data.poblacion[i+21], data.poblacion[i+22], data.poblacion[i+23], data.poblacion[i+24]])
   }
     //Afiliado
   for (let i = 26; i < 35; i++) {
-    cadenas.c_afili.push(data.poblacion[i]);
+    cadenas.c_afili.push(data.poblacion[i+(((Object.values(data.poblacion)).length))-44]);
   }
     //Localizacion
   for (let i = 35; i < 39; i++) {
-    cadenas.c_loc.push(data.poblacion[i]);
+    cadenas.c_loc.push(data.poblacion[i+(((Object.values(data.poblacion)).length))-44]);
   }
     //Hogares
   for (let i = 42; i < 44; i++) {
-    cadenas.c_alimen.push(data.poblacion[i]);
+    cadenas.c_alimen.push(data.poblacion[i+(((Object.values(data.poblacion)).length))-44]);
   }
   //POBREZA
-  for (let i = 2; i < 16; i++) {
-    cadenas.c_pobreza.push(data.tpobreza[i]);
+  for (let i = 0; i < (((Object.values(data.tpobreza)).length)); i+=16) {
+  cadenas.c_pobreza.push([data.tpobreza[i+2], data.tpobreza[i+3], data.tpobreza[i+4], data.tpobreza[i+5], data.tpobreza[i+6], data.tpobreza[i+7], data.tpobreza[i+8], data.tpobreza[i+9], data.tpobreza[i+10], data.tpobreza[i+11], data.tpobreza[i+12], data.tpobreza[i+13], data.tpobreza[i+14], data.tpobreza[i+15] ]);
+  cadenas.c_pobrezaYEAR.push(data.tpobreza[i+1])
   }
   //EMPLEO
-  for (let i = 2; i < 12; i++) {
-    cadenas.c_empleo.push(data.empleo[i]);
+  for (let i = 0; i < (((Object.values(data.empleo)).length)); i+=14) {
+  cadenas.c_empleo.push([data.empleo[i+2], data.empleo[i+3], data.empleo[i+4], data.empleo[i+5], data.empleo[i+6], data.empleo[i+7], data.empleo[i+8], data.empleo[i+9], data.empleo[i+10], data.empleo[i+11]]);
+  cadenas.c_empleoYEAR.push(data.empleo[i+1])
   }
   //DELITOS
-  for (let i = 2; i < 6; i++) {
-    cadenas.c_deli.push(data.deli[i]);
+  for (let i = 0; i < (((Object.values(data.deli)).length)); i+=14) {
+  cadenas.c_deli.push([data.deli[i+2], data.deli[i+3], data.deli[i+4], data.deli[i+5], data.deli[i+8], data.deli[i+9], data.deli[i+10], data.deli[i+11], data.deli[i+12]]);
+  cadenas.c_deliYEAR.push(data.deli[i+1])
   }
-  for (let i = 8; i < 13; i++) {
-    cadenas.c_deli.push(data.deli[i]);
-  }
-    //Desapariciones
+    //Desapariciones      //Pastel
   for (let i = 6; i < 8; i++) {
-    cadenas.c_deliHM.push(data.deli[i]);
+    cadenas.c_deliHM.push(data.deli[i+(((Object.values(data.deli)).length))-14]);
   }
   //PADRON
   for (let i = 2; i < 4; i++) {
-    cadenas.c_padron.push(data.padron[i]);
+    cadenas.c_padron.push(data.padron[i+(((Object.values(data.padron)).length))-8]);
   }
   for (let i = 5; i < 7; i++) {
-    cadenas.c_padron.push(data.padron[i]);
+    cadenas.c_padron.push(data.padron[i+(((Object.values(data.padron)).length))-8]);
   }
+
+
   //Apoyos
   for (let i = 0; i < (data.apoyos).length; i++) {
     cadenas.c_apoyos.push(data.apoyos[i]);
   }  
-  //PIB
-  for (let i = 0; i < ((data.pib).length)-2; i+=2) {
-    cadenas.c_PIB.push(data.pib[i]);
-  }  
-  //PIB años
-  for (let i = 1; i < ((data.pib).length)-2; i+=2) {
-    cadenas.c_PIBY.push(data.pib[i]);
-  } 
 }
 
 function autoScroll(sectionId) {
@@ -196,14 +133,15 @@ function autoScroll(sectionId) {
     });
 }
 
-
-
-function graficaBORRADOR(seccionID, etiquetas, etiquetasDatasets, datos) {
+function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
   const GReSo = document.getElementById(seccionID);
+
+  const colores = ["#005794", "#0083A2", "#00AFAA", "#2784BE","#4E66CC", "#8475D9",  "#C59CE5", "#F0C4F0", "#FAEBF3"];
   
   const datasets = datos.map((dataset, index) => ({
     label: etiquetasDatasets[index],
     data: dataset,
+    backgroundColor: colores[index],
     borderWidth: 1
   }));
   
@@ -224,8 +162,6 @@ function graficaBORRADOR(seccionID, etiquetas, etiquetasDatasets, datos) {
     }
   });
 }
-
-
 
 function graficaRe(seccionID, etiquetas, etiqueta, datos) {
   const GReSo = document.getElementById(seccionID);
