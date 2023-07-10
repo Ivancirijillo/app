@@ -19,6 +19,10 @@ const divAnio = document.getElementById('contenido-anio'),
       textListaPCategoria = divCategoria.querySelector('p').textContent;
 
 function restausarClases(elem_cont){
+    let Aux = elem_cont.querySelectorAll('.li-seg')
+    Aux.forEach(element => {
+        element.classList.remove('li-seg');
+    })
     elem_cont.classList.add('ul-prim')
     elem_cont.classList.remove('ul-seg')
 }
@@ -129,20 +133,20 @@ var comp = 0
 function cambiarTarjeta(){
     subTarjetas[1].classList.toggle('seg-tarjeta')
     subTarjetas[2].classList.toggle('seg-tarjeta')
-    if(comp == 1) volverExplandirTarjeta()
+    if(comp == 1) cambioTarjeta(4)
 }
 
 const btnContinuar = document.getElementById('continuar'),
       tabla = document.getElementById('tabla'),
       ventanaEmergente = document.getElementById('v-emergen')
 btnContinuar.addEventListener('click', function (){
-    var cabecera_consul_A = new Array ("Nombre", "Número", " ");
+    var cabecera_consul_A = new Array ("Nombre", "Número de Apoyos", " ");
     var cabecera_consul_D = new Array ("Alto Impacto", "Homicidios", "Feminicidios", "Secuestros", 
                                         "Desapariciones Totales", "Robos", "Robo Tranporte", "V");
-    var cabecera_consul_Pa = new Array ("PHombres", "PMujeres", "PTotal", "LNHombres", 
-                                        "LNMujeres", "LNTotal", "V");
-    var cabecera_consul_Po = new Array ("Pobreza", "PobExt", "PobMod", "RezagoEd", 
-                                        "CarSS", "CarCalidadViv", "CarAlim", "PIB", "UET", "V");
+    var cabecera_consul_Pa = new Array ("Padrón Hombres", "Padrón Mujeres", "Padrón Total", "Lista Nominal Hombres", 
+                                        "Lista Nominal Mujeres", "Lista Nominal Total", "V");
+    var cabecera_consul_Po = new Array ("Pobreza", "Porcentaje de Pobreza extrema", "Pobreza moderada", "Porcentaje de Rezago Educativo", 
+                                        "Porcentaje Carencia Seguro Social", "Porcentaje Carencia de Calidad de Vivienda.", "Porcentaje Carencia de Alimentación.", "PIB", "UET", "V");
     const fil_cabecera = {
         'Apoyos': cabecera_consul_A,
         'Delincuencia': cabecera_consul_D,
@@ -285,7 +289,7 @@ continuarSeccion.addEventListener('click', function (){
             }
         }, 500);
 
-        subTarjetas[3].classList.toggle('seg-tarjeta')
+        subTarjetas[4].classList.toggle('seg-tarjeta')
         subTarjetas[2].classList.toggle('seg-tarjeta')
         comp = 1
     }else{
