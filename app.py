@@ -147,7 +147,7 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron", "nombre", "unidades", "pib"]
+    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron", "nombre", "sexo", "loc", "afil", "alim", "desp", "GPadron" ]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
@@ -158,59 +158,52 @@ def consultas_pagina():
     #REZAGO SOCIAL
     consulta = configuracion.get("consulta_pagina",secciones[0]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[0])
+    tratamiento(resultados, diccionario, secciones[0])
 
     #APOYOS
     consulta = configuracion.get("consulta_pagina",secciones[1]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[1])
+    tratamiento(resultados, diccionario, secciones[1])
 
     #Economia
     consulta = configuracion.get("consulta_pagina",secciones[2]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[2])
+    tratamiento(resultados, diccionario, secciones[2])
 
     #Poblacion
     consulta = configuracion.get("consulta_pagina",secciones[3]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[3])
+    tratamiento(resultados, diccionario, secciones[3])
+        #Sexo Grafica Pastel 
+        
+    tratamientoGPastel(resultados, diccionario, secciones[9], 44, 3, 4)
 
     #Pobreza
     consulta = configuracion.get("consulta_pagina",secciones[4]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[4])
+    tratamiento(resultados, diccionario, secciones[4])
 
     #Empleo
     consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[5])
+    tratamiento(resultados, diccionario, secciones[5])
 
     #Delincuencia
     consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[6])
+    tratamiento(resultados, diccionario, secciones[6])
 
     #Padron
     consulta = configuracion.get("consulta_pagina",secciones[7]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[7])
+    tratamiento(resultados, diccionario, secciones[7])
 
     #Nombre
     consulta = configuracion.get("consulta_pagina",secciones[8]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[8])
+    tratamiento(resultados, diccionario, secciones[8])
 
-    #Unidades Economicas
-    consulta = configuracion.get("consulta_pagina",secciones[9]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[9])
-
-    #PIB
-    consulta = configuracion.get("consulta_pagina",secciones[10]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    lista= tratamiento(resultados, diccionario, secciones[10])
-
-    return jsonify(lista)
+    return jsonify(diccionario)
 
 @app.route("/consultas-buscador", methods=['POST'])
 @csrf.exempt
@@ -394,7 +387,7 @@ def crear_consulta(js):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
 
-def tratamiento(tupla,diccionario,atributo):
+def tratamiento(tupla, diccionario, atributo):
     cadena = ','.join(str(elem) for elem in tupla)
     lista = cadena.split(',')
     for i in range(len(lista)):
@@ -405,7 +398,29 @@ def tratamiento(tupla,diccionario,atributo):
     
     diccionario [atributo]= lista
 
-    return diccionario
+    return 0
+
+def tratamientoGPastel(tupla, diccionario, atributo, longitud, valor1, valor2):
+
+    cadena = ','.join(str(elem) for elem in tupla)
+    lista = cadena.split(',')
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    #years=[]
+    for i in range(0, len(lista), longitud):
+        datos=[]
+        datos.append(lista[i+valor1])
+        datos.append(lista[i+valor2])
+        year=lista[i+1]
+        #years.append(year)
+        if atributo not in diccionario:
+            diccionario[atributo] = {}  # Crear un diccionario anidado
+        diccionario [atributo][year]= datos
+    #diccionario [atributo]["Years"]= years
+    return 0
 
 def crear_diccionario(lista, diccionario):
     municipios, secciones = encontrar_municipio(lista)
