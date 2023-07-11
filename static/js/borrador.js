@@ -14,10 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(result => {
       data = result; // Asignar los datos a la variable global
-      console.log('Datos: ', data); //imprime los resultados de la consuylta a la base de datos
-      //console.log('Datos: ', (((Object.values(data.empleo)).length)-1)); 
+      console.log('Datos: ', data); 
+      
+      const clavesSegundoNivel = Object.keys(data.sexo);
+
+      // Obtenemos la última clave del segundo nivel
+      const ultimaClaveSegundoNivel = clavesSegundoNivel[clavesSegundoNivel.length - 1];
+      
+      console.log('Datos: ', ultimaClaveSegundoNivel);
+  
+      
+      
       procesarDatos(); // Llamar a la función que utiliza los datos
       insertarDatos();
+
+
+      graficaPA('GGene',etiquetas_graficas.genero, 'Población', cadenas.c_Pgeneral ); 
+
+      borrador();
+      
+
       //Tabla apoyos
       generarTabla(cadenas.c_apoyos);
       // Llamar a la funcion de las grafica
@@ -25,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
       graficaBa('GEd',etiquetas_graficas.educacion, cadenas.c_viviendasYEAR, cadenas.c_educacion ); 
       graficaBa('GEco2',etiquetas_graficas.economia, cadenas.c_economiaYEAR, cadenas.c_economia ); 
       graficaLi('GEco', 'Producto Interno Bruto', cadenas.c_PIB, cadenas.c_economiaYEAR); 
-      graficaPA('GGene',etiquetas_graficas.genero, 'Población', cadenas.c_Pgeneral ); 
       graficaBa('GEdad',etiquetas_graficas.indices, cadenas.c_edadYEAR, cadenas.c_edad ); 
       graficaBa('GLenI',etiquetas_graficas.indigena, cadenas.c_edadYEAR, cadenas.c_lenguaI ); 
       graficaBa('GDisc',etiquetas_graficas.disc, cadenas.c_edadYEAR, cadenas.c_disc ); 
@@ -47,6 +62,36 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Error al realizar la consulta:', error);
     });
 });
+
+function borrador(){
+  var select = document.getElementById("opcionPob");
+  //select.innerHTML = '<option disabled selected>Elije una opción</option>';
+  for (let key in data.sexo) {    
+    // Crear una nueva opción
+    var option = document.createElement("option");    
+    // Establecer el valor y el texto de la opción
+    option.value = key;
+    option.text = key;    
+    // Agregar la opción al select
+    select.add(option);
+  }
+
+  // Variable para guardar la opción seleccionada
+  var opcionSeleccionada;
+
+  // Evento para detectar el cambio de selección
+  select.addEventListener("change", function() {
+    // Obtener la opción seleccionada
+    opcionSeleccionada = select.value;
+    console.log(opcionSeleccionada);  
+    var contenedor = document.getElementById("contenedorPastel1");
+    hola="sexo"
+    hola2="GraficosPastel"
+    contenedor.innerHTML = '<canvas class="'+hola2+'" id="GGene"></canvas>'; // limpiar el contenedor
+    graficaPA('GGene',etiquetas_graficas.genero, 'Población', data[hola][opcionSeleccionada]); 
+
+  }); 
+}
 
 function procesarDatos() {
   //REZAGO
@@ -134,7 +179,7 @@ function autoScroll(sectionId) {
 }
 
 function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
-  const GReSo = document.getElementById(seccionID);
+  const GraficoB = document.getElementById(seccionID);
 
   const colores = ["#005794", "#0083A2", "#00AFAA", "#2784BE","#4E66CC", "#8475D9",  "#C59CE5", "#F0C4F0", "#FAEBF3"];
   
@@ -145,7 +190,7 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
     borderWidth: 1
   }));
   
-  new Chart(GReSo, {
+  new Chart(GraficoB, {
     type: 'bar',
     data: {
       labels: etiquetas,
@@ -164,8 +209,8 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
 }
 
 function graficaRe(seccionID, etiquetas, etiqueta, datos) {
-  const GReSo = document.getElementById(seccionID);
-  new Chart(GReSo, {
+  const GraficoB1 = document.getElementById(seccionID);
+  new Chart(GraficoB1, {
     type: 'bar',
     data: {
       labels: etiquetas,
@@ -188,8 +233,7 @@ function graficaRe(seccionID, etiquetas, etiqueta, datos) {
 }
 
 function graficaPA(seccionID, etiquetas, etiqueta, datos) {
-  const GReSo = document.getElementById(seccionID);
-
+  const GraficoP = document.getElementById(seccionID);
   var datosPastel = {
     labels: etiquetas,
     datasets: [
@@ -211,7 +255,7 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
         }]
 };
 
-  new Chart(GReSo, {
+  new Chart(GraficoP, {
     type: 'pie',
     data: datosPastel,
     options: {
@@ -233,7 +277,7 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
 }
 
 function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
-  const GReSo = document.getElementById(seccionID);
+  const GraficoP2 = document.getElementById(seccionID);
 
   const data = {
     labels: etiquetas,
@@ -251,7 +295,7 @@ function graficaPA2(seccionID, etiquetas, etiqueta, datos) {
     ]
   };
 
-  new Chart(GReSo, {
+  new Chart(GraficoP2, {
     type: 'pie',
     data: data,
     options: {
@@ -419,7 +463,6 @@ function insertarDatos(){
   document.getElementById('sinSalud').innerText = data.rezago[(((Object.values(data.rezago)).length)-11)];
   document.getElementById('gini').innerText = data.rezago[(((Object.values(data.rezago)).length)-16)];
   document.getElementById('razonI').innerText = data.rezago[(((Object.values(data.rezago)).length)-15)];
-  document.getElementById('apoyoYear').innerText = data.apoyos[1];
   document.getElementById('economiaYear').innerText = data.economia[(((Object.values(data.economia)).length)-7)];
   document.getElementById('pobYear').innerText = data.poblacion[(((Object.values(data.poblacion)).length)-43)];
   document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.economia[(((Object.values(data.economia)).length)-6)]);
@@ -439,7 +482,6 @@ function insertarDatos(){
   document.getElementById('parrafoEmpleo').innerText = "Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica las industrias que generan el mayor número de empleos. Se destaca que las industrias de transformación son las que generan la mayor cantidad de empleos, con un total de " + agregarComas(data.empleo[(((Object.values(data.empleo)).length)-2)]) + " empleos.";
   document.getElementById('parrafoAlimentacion').innerText = "En el año " + data.poblacion[(((Object.values(data.poblacion)).length)-43)] + ", los hogares con limitación alimentaria representaron el " + ((100*(data.poblacion[(((Object.values(data.poblacion)).length)-2)]))/(data.poblacion[(((Object.values(data.poblacion)).length)-5)])).toFixed(2) + " % de total, mientras que los hogares sin esta limitación representaron el " + ((100*(data.poblacion[(((Object.values(data.poblacion)).length)-1)]))/(data.poblacion[(((Object.values(data.poblacion)).length)-5)])).toFixed(2) + " restante.";
 }
-
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
 document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
 

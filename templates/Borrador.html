@@ -137,7 +137,6 @@
                 <div id="A" class="secciones">
                     <div class="titulo">
                         <h1 class="tituloSec">Apoyos</h1>
-                        <span class="year" id="apoyoYear"></span> 
                     </div>   
                     <div class="cajas">
                         <p>Lograr familias fuertes en los municipios implica que todos los miembros de la familia, en todas las etapas de sus vidas, tengan la oportunidad de desarrollarse plenamente. Esto implica abordar de manera directa e indirecta temas como la reducción de desigualdades, la promoción de la salud y el bienestar, la garantía de una educación de calidad y la prevención de la violencia intrafamiliar, especialmente para niños, niñas, adolescentes y grupos vulnerables. Para lograrlo, en el municipio se han otorgado los siguientes apoyos que atienden diversas necesidades de los ciudadanos:</p>
@@ -162,7 +161,7 @@
                                 <span class="datos" id="etiquetaPer"></span>
                                 <h2 class="categoria">PBI PER Cápita</h2>
                             </div>
-                            <p>El gráfico de lineas muestra la evolución anual que ha sufrido el Producto Interno Bruto (PBI) a través de los años desde 2018 hasta 2021.</p>
+                            <p>El gráfico de lineas muestra la evolución anual que ha sufrido el Producto Interno Bruto (PBI) a través de los años.</p>
                         
                             <div class="ContenedorGraficos" id="lineas">
                                 <canvas class="Graficos" id="GEco"></canvas>
@@ -183,6 +182,9 @@
                     <div class="bloques"> 
                         <div class="tarjeta" id="tarjetaPob"> 
                             <p id="parrafoPob"></p>
+                            <select id="opcionPob">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
                             <div class="ContenedorGraficosPastel" id="contenedorPastel1">
                                 <canvas class="GraficosPastel" id="GGene"></canvas>
                             </div>
@@ -338,7 +340,7 @@
             <button onclick="autoScroll('Arribaxd')" class="BSubir"><img src="{{ url_for('static', filename ='img_menu/flecha.png') }}" alt=""></button>
         </div> 
         <script src="{{ url_for('static', filename ='js/variables.js') }}"> </script>
-        <script src="{{ url_for('static', filename ='js/borrador.js') }}"> </script>
+        <script src="{{ url_for('static', filename ='js/dataMunicipal.js') }}"> </script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
 </html>
