@@ -43,7 +43,6 @@ function opcSeleccionado(divActivo, ulActivo, textOrigin){
         textSelec += ' -' + element.textContent
         seleccion = element.textContent
     })
-    console.log(opciones)
 
     if(textSelec != ' '){
         divActivo.querySelector('p').textContent = textSelec;
@@ -171,9 +170,11 @@ btnContinuar.addEventListener('click', function (){
                     id: id_municipio,
                     modo: ' ' //if(data.modo != "impresion")
                 }
+                console.log(data)
                 enviar_json(data)
                 .then(dataRespuesta => {
                     let cosultaDB = dataRespuesta["consulta"];
+                    console.log(dataRespuesta["consulta"])
                     elementos[anio.indexOf(valorAnio)][categoria.indexOf(valorCategoria)+1] += '<table>'+tabla_crear(cosultaDB, fil_cabecera[valorCategoria])+'</table>';
                 });
             }
@@ -302,3 +303,36 @@ continuarSeccion.addEventListener('click', function (){
         }, 3000);
     }
 });
+
+function printDiv(nombreDiv) {
+    var contenido= document.getElementById(nombreDiv).innerHTML;
+    var contenidoOriginal = document.body.innerHTML;
+
+    document.body.innerHTML = contenido;
+
+    var div = document.querySelector('div'); 
+    div.style.backgroundColor = 'white'; 
+    div.style.color = 'black'; 
+    div.style.border = '1px solid white';
+    div.style.width = '100vw'; 
+    div.style.height = '100vh';
+    
+    window.print();
+    wind_pag('/Mapa')
+}
+
+document.getElementById('reporte').addEventListener('click', function(){
+    let data = {
+        tipo_c: 'general',
+        year: 2022,
+        id: id_municipio,
+        modo: 'impresion' //if(data.modo != "impresion")
+    }
+    enviar_json(data)
+    .then(dataRespuesta => {
+        let cosultaDB = dataRespuesta["consulta"];
+    });
+
+
+    window.open("/pdf","_blank")
+})

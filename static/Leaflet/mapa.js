@@ -170,7 +170,8 @@ mexicoJS = L.geoJson(mexico,{
 }).addTo(map);
 
 function enviarDatos() {
-  window.location.href = '/DatosMunicipio?contenido=' + id_municipio;
+  // window.location.href = '/DatosMunicipio?contenido=' + id_municipio;
+  window.open('http://127.0.0.1:8000/DatosMunicipio?contenido=' + id_municipio);
 }
 
 //Area de secciones 
