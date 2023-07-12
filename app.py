@@ -147,61 +147,44 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["rezago", "apoyos", "economia", "poblacion", "tpobreza", "empleo", "deli", "padron", "nombre", "sexo", "loc", "afil", "alim", "desp", "GPadron" ]
+    secciones= ["nombre", "poblacion", "rezago", "economia"]
+    encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
                 configuracion["database1"]["user"],
                 configuracion["database1"]["passwd"],
                 configuracion["database1"]["db"])
-    
-    #REZAGO SOCIAL
+
+    #Nombre
     consulta = configuracion.get("consulta_pagina",secciones[0]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     tratamiento(resultados, diccionario, secciones[0])
-
-    #APOYOS
+    
+    #Poblacion
     consulta = configuracion.get("consulta_pagina",secciones[1]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[1])
-
-    #Economia
+        #Edad
+    tratamientoGraficas(resultados, diccionario, encabezados[0], 44, 5, 10 )
+        #Lengua Indigena
+    tratamientoGraficas(resultados, diccionario, encabezados[1], 44, 15, 5 )
+        #Discapacidad
+    tratamientoGraficas(resultados, diccionario, encabezados[2], 44, 20, 5 )
+    
+    #Rezago Social
     consulta = configuracion.get("consulta_pagina",secciones[2]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[2])
+        #Vivienda
+    tratamientoGraficas(resultados, diccionario, encabezados[3], 18, 8, 7)
+        #Educacion
+    tratamientoGraficas(resultados, diccionario, encabezados[4], 18, 4, 3)
 
-    #Poblacion
+    #Economia
     consulta = configuracion.get("consulta_pagina",secciones[3]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[3])
-        #Sexo Grafica Pastel 
-        
-    tratamientoGPastel(resultados, diccionario, secciones[9], 44, 3, 4)
-
-    #Pobreza
-    consulta = configuracion.get("consulta_pagina",secciones[4]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[4])
-
-    #Empleo
-    consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[5])
-
-    #Delincuencia
-    consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[6])
-
-    #Padron
-    consulta = configuracion.get("consulta_pagina",secciones[7]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[7])
-
-    #Nombre
-    consulta = configuracion.get("consulta_pagina",secciones[8]).format(clave=clavemun)
-    resultados = conn.consultar_db(consulta)
-    tratamiento(resultados, diccionario, secciones[8])
+        #Deuda
+    tratamientoGraficas(resultados, diccionario, encabezados[5], 8, 5, 3)
+    
 
     return jsonify(diccionario)
 
@@ -398,6 +381,27 @@ def tratamiento(tupla, diccionario, atributo):
     
     diccionario [atributo]= lista
 
+    return 0
+
+def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
+    cadena = ','.join(str(elem) for elem in tupla)
+    lista = cadena.split(',')
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    #years=[]
+    for i in range(0, len(lista), salto):
+        datos=[]
+        for j in range (i, (longitud+i), 1):
+            datos.append(lista[j+inicio])
+        year=lista[i+1]
+        #years.append(year)
+        if atributo not in diccionario:
+            diccionario[atributo] = {}  # Crear un diccionario anidado
+        diccionario [atributo][year]= datos
+    #diccionario [atributo]["Years"]= years
     return 0
 
 def tratamientoGPastel(tupla, diccionario, atributo, longitud, valor1, valor2):
