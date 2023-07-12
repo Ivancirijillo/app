@@ -203,7 +203,7 @@ def consultas_buscador():
                     configuracion["database1"]["db"])
     
     if(js["tipo"] ==  "varios"):
-        print(js["datos"])
+        #print(js["datos"])
         if(js["datos"][0].isdigit()):
             for id_m in js["datos"]:
                 for year in js["years"]:
@@ -288,12 +288,12 @@ def impresiones():
         respuesta = conn.consultar_db(f"select DelitosAI, Homicidios, Feminicidios, Secuestros, DespT, Robo, RoboT from Delincuencia where YearD={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Delincuencia.GenerarDelincuencia(int(json["year"]), int(json["id"]))
-    elif(tipo=="Padrón Electora"):
+    elif(tipo=="Padrón Electoral"):
         respuesta = conn.consultar_db(f"select  PHombres, PMujeres, PTotal, LNHombres, LNMujeres, LNTotal from PadronElectoral where YearE={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Padron.GenerarPadron(int(json["year"]), int(json["id"]))
     elif(tipo=="Pobreza"):
-        respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim, PIB, UET from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
+        respuesta = conn.consultar_db(f"select Pobreza, PobExt, PobMod, RezagoEd, CarSS, CarCalidadViv, CarAlim from TPobreza where YearP={json['year']} and ClaveMunicipal={json['id']};")
         if(json["modo"] == "impresion"):
             ruta_pdf = Pobreza.GenerarPobreza(int(json["year"]), int(json["id"]))
     elif(tipo=="Votos"):
@@ -307,10 +307,10 @@ def impresiones():
     return jsonify(data_mapa)
 
 @app.route("/pdf")
-@login_required
+@csrf.exempt
 def abrir_pdf():
     global ruta_pdf
-    print(ruta_pdf)
+    print("xd ",ruta_pdf)
     return send_file(ruta_pdf)
 
 def interrupcion(sig, frame):

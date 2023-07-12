@@ -22,7 +22,7 @@ class General():
             ruta_pdf=os.path.dirname(__file__).replace("/plantillas","/generado/")+"General.pdf"
             print("holi ",ruta_pdf)
         else:
-            ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"General.pdf"#Documento generado
+            ruta_pdf=os.path.dirname(__file__).replace("\plantillas","\generado\\")+"General.pdf"  #Documento generado
             print("holi2 ",ruta_pdf)
 
         #Documento generado
@@ -518,8 +518,8 @@ class General():
         
         ####################_POBREZA_####################
         #consultas
-        pobreza = conn.consultar_db(f"select m.NombreM, p.YearP, p.Poblacion, p.Pobreza, p.PobExt, p.PobExtCar, p.PobMod, p.NpobNvul, p.RezagoEd, p.CarSalud, p.CarSaludPor, p.CarSS, p.CarCalidadViv, p.CarServViv, p.CarAlim, p.IngresoInf, p.IngresoInfE, p.PIB, p.UET from TPobreza as p inner join Municipio as m on p.ClaveMunicipal = m.ClaveMunicipal where p.YearP={yearA} and p.ClaveMunicipal={clave};")
-        poblacion = conn.consultar_db(f"select  SUM(Poblacion) from TPobreza where YearP={yearA};")
+        pobreza = conn.consultar_db(f"select m.NombreM, p.YearP, pob.poblacion_tot, p.Pobreza, p.PobExt, p.PobExtCar, p.PobMod, p.NpobNvul, p.RezagoEd, p.CarSalud, p.CarSaludPor, p.CarSS, p.CarCalidadViv, p.CarServViv, p.CarAlim, p.IngresoInf, p.IngresoInfE, e.pib, e.uet from TPobreza as p inner join Municipio as m on p.ClaveMunicipal = m.ClaveMunicipal inner join poblacion as pob on p.ClaveMunicipal = pob.ClaveMunicipal inner join economia as e on p.ClaveMunicipal = e.ClaveMunicipal where p.YearP={yearA} and p.ClaveMunicipal={clave};")
+        poblacion = conn.consultar_db(f"select  SUM(poblacion_tot) from poblacion where YearPob={yearA};")
         #pasar a cadena
         cadena = ','.join(str(elem) for elem in pobreza)
         cadena2 = ','.join(str(elem) for elem in poblacion)
