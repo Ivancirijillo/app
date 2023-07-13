@@ -23,7 +23,7 @@ var cadenas = {
     c_apoyos: [],
     c_economia: [],
     c_economiaYEAR: [],
-    c_Pgeneral: [],
+    c_Pgeneral: [10,5],
     c_PgeneralYEAR: [],
     c_edad: [],
     c_edadYEAR: [],
