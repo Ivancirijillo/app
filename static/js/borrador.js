@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const ultimaClaveSegundoNivel = clavesSegundoNivel[clavesSegundoNivel.length - 1];
       
       console.log('Datos: ', ultimaClaveSegundoNivel);
+      console.log('Datos: ', data["sexo"][ultimaClaveSegundoNivel]);
   
       
       

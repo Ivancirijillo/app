@@ -147,8 +147,8 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["nombre", "poblacion", "rezago", "economia"]
-    encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda"]
+    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli"]
+    encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda", "pib", "sexo"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
@@ -170,6 +170,8 @@ def consultas_pagina():
     tratamientoGraficas(resultados, diccionario, encabezados[1], 44, 15, 5 )
         #Discapacidad
     tratamientoGraficas(resultados, diccionario, encabezados[2], 44, 20, 5 )
+        #Sexo
+    tratamientoGraficas(resultados, diccionario, encabezados[7], 44, 3, 2 )
     
     #Rezago Social
     consulta = configuracion.get("consulta_pagina",secciones[2]).format(clave=clavemun)
@@ -184,7 +186,28 @@ def consultas_pagina():
     resultados = conn.consultar_db(consulta)
         #Deuda
     tratamientoGraficas(resultados, diccionario, encabezados[5], 8, 5, 3)
+        #PIB
+    tratamientoGraficas(resultados, diccionario, encabezados[6], 8, 2, 1)
     
+    #Pobreza
+    consulta = configuracion.get("consulta_pagina",secciones[4]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+        #Porcentajes
+    tratamientoGraficas(resultados, diccionario, secciones[4], 16, 2, 14)
+   
+    #Empleo
+    consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+        #No
+    tratamientoGraficas(resultados, diccionario, secciones[5], 14, 2, 10)
+   
+    #DELINCUENCIA
+    consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+        #No
+    tratamientoGraficas(resultados, diccionario, secciones[6], 14, 2, 4)
+    tratamientoGraficas2(resultados, diccionario, secciones[6], 14, 8, 5)
+
 
     return jsonify(diccionario)
 
@@ -382,6 +405,26 @@ def tratamiento(tupla, diccionario, atributo):
     diccionario [atributo]= lista
 
     return 0
+
+
+def tratamientoGraficas2(tupla, diccionario, atributo, salto, inicio, longitud):
+    cadena = ','.join(str(elem) for elem in tupla)
+    lista = cadena.split(',')
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    for i in range(0, len(lista), salto):
+        datos=[]
+        for j in range (i, (longitud+i), 1):
+            datos.append(lista[j+inicio])
+        year=lista[i+1]
+        if atributo not in diccionario:
+            diccionario[atributo] = {}  # Crear un diccionario anidado
+        diccionario [atributo][year].extend(datos)
+    return 0
+
 
 def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
     cadena = ','.join(str(elem) for elem in tupla)
