@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
       //console.log('Datos: ', data["sexo"][Object.keys(data.sexo)[Object.keys(data.sexo).length - 1]]);
 
-
       insertarDatos();
       //REZAGO SOCIAL
       graficaBa('GReSo',etiquetas_graficas.vivienda, Object.keys(data.vivienda), Object.values(data.vivienda));      
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
       graficaBa('GEco2',etiquetas_graficas.economia, Object.keys(data.deuda), Object.values(data.deuda)); 
         //lineal
       graficaLi('GEco', 'Producto Interno Bruto', Object.values(data.pib).flat(), Object.keys(data.pib)); 
-      borrador();
       //POBLACION
         //Barras
       graficaBa('GEdad',etiquetas_graficas.indices, Object.keys(data.edad), Object.values(data.edad)); 
@@ -36,12 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
       graficaBa('GDisc',etiquetas_graficas.disc, Object.keys(data.disc), Object.values(data.disc));
         //Pastel
       graficaPA('GGene',etiquetas_graficas.genero, 'Población', (data["sexo"][Object.keys(data.sexo)[Object.keys(data.sexo).length - 1]])); 
+        seleccion("opcionPob", "sexo", "contenedorPastel1", "GGene", "genero", "Población")
+      graficaPA('GLoc',etiquetas_graficas.loc, 'Población', (data["loc"][Object.keys(data.loc)[Object.keys(data.loc).length - 1]])); 
+        seleccion("opcionLoc", "loc", "contenedorPastel2", "GLoc", "loc", "Población")
+      graficaPA('GAfil',etiquetas_graficas.afil, 'Afiliados totales a sistemas de seguridad social', (data["afil"][Object.keys(data.afil)[Object.keys(data.afil).length - 1]])); 
+        seleccion("opcionAfil", "afil", "contenedorPastel3", "GAfil", "afil", "Afiliados totales a sistemas de seguridad social")
+      graficaPA('GAli',etiquetas_graficas.hogares, 'Hogares', (data["alim"][Object.keys(data.alim)[Object.keys(data.alim).length - 1]])); 
+        seleccion("opcionAlim", "alim", "contenedorPastel4", "GAli", "hogares", "Hogares")
       //POBREZA
       graficaBa('GPobr',etiquetas_graficas.pobre, Object.keys(data.tpobreza), Object.values(data.tpobreza)); 
       //EMPLEO
       //graficaBa('GEmp',etiquetas_graficas.empl, Object.keys(data.empleo), Object.values(data.empleo)); 
       //DELINCUENCIA
       graficaBa('GDeli',etiquetas_graficas.delitos, Object.keys(data.deli), Object.values(data.deli)); 
+      //PADRON ELECTORAL
+      graficaPA2('GPaE',etiquetas_graficas.padron,  (data["padron"][Object.keys(data.padron)[Object.keys(data.padron).length - 1]])); 
+        seleccion("opcionPadron", "padron", "contenedorP", "GPaE", "padron", "")
       
     })
     .catch(error => {
@@ -181,6 +189,81 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
 
 }
 
+function graficaPA2(seccionID, etiquetas, datos) {
+  const GraficoP2 = document.getElementById(seccionID);
+
+  const data = {
+    labels: etiquetas,
+    datasets: [ 
+      {
+        backgroundColor: ["#28A1E9", "#FFD41F" ],
+        borderWidth: 0,
+        data: [datos[0], datos[1]]
+      },
+      {
+        backgroundColor: ["#FE1F2A", "#FF9A1F"],
+        borderWidth: 0,
+        data: [datos[2], datos[3]]
+      }
+    ]
+  };
+
+  new Chart(GraficoP2, {
+    type: 'pie',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            generateLabels: function(chart) {
+              // Get the default label list
+              const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
+              const labelsOriginal = original.call(this, chart);
+  
+              // Build an array of colors used in the datasets of the chart
+              let datasetColors = chart.data.datasets.map(function(e) {
+                return e.backgroundColor;
+              });
+              datasetColors = datasetColors.flat();
+  
+              // Modify the color and hide state of each label
+              labelsOriginal.forEach(label => {
+                // There are twice as many labels as there are datasets. This converts the label index into the corresponding dataset index
+                label.datasetIndex = (label.index - label.index % 2) / 2;
+  
+                // The hidden state must match the dataset's hidden state
+                label.hidden = !chart.isDatasetVisible(label.datasetIndex);
+  
+                // Change the color to match the dataset
+                label.fillStyle = datasetColors[label.index];
+              });
+  
+              return labelsOriginal;
+            }
+          },
+          onClick: function(mouseEvent, legendItem, legend) {
+            // toggle the visibility of the dataset from what it currently is
+            legend.chart.getDatasetMeta(
+              legendItem.datasetIndex
+            ).hidden = legend.chart.isDatasetVisible(legendItem.datasetIndex);
+            legend.chart.update();
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const labelIndex = (context.datasetIndex * 2) + context.dataIndex;
+              return context.chart.data.labels[labelIndex] + ': ' + context.formattedValue;
+            }
+          }
+        }
+      }
+    },
+  });
+
+}  
+
 function handleHover(evt, item, legend) {
   legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
     colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
@@ -195,10 +278,10 @@ function handleLeave(evt, item, legend) {
   legend.chart.update();
 }
 
-function borrador(){
-  var select = document.getElementById("opcionPob");
+function seleccion(seccionID, datosID, contenedorID, graficaID, cadenaID, leyenda){
+  var select = document.getElementById(seccionID);
   //select.innerHTML = '<option disabled selected>Elije una opción</option>';
-  for (let key in data.sexo) {    
+  for (let key in data[datosID]) {    
     // Crear una nueva opción
     var option = document.createElement("option");    
     // Establecer el valor y el texto de la opción
@@ -210,17 +293,19 @@ function borrador(){
 
   // Variable para guardar la opción seleccionada
   var opcionSeleccionada;
-
   // Evento para detectar el cambio de selección
   select.addEventListener("change", function() {
     // Obtener la opción seleccionada
     opcionSeleccionada = select.value;
     console.log(opcionSeleccionada);  
-    var contenedor = document.getElementById("contenedorPastel1");
-    hola="sexo"
-    hola2="GraficosPastel"
-    contenedor.innerHTML = '<canvas class="'+hola2+'" id="GGene"></canvas>'; // limpiar el contenedor
-    graficaPA('GGene',etiquetas_graficas.genero, 'Población', data[hola][opcionSeleccionada]); 
+    var contenedor = document.getElementById(contenedorID);
+    contenedor.innerHTML = '<canvas class="GraficosPastel" id="'+graficaID+'"></canvas>'; // limpiar el contenedor
+    if (datosID=="padron"){
+      graficaPA2(graficaID,etiquetas_graficas[cadenaID], data[datosID][opcionSeleccionada]); 
+    }
+    else{
+      graficaPA(graficaID ,etiquetas_graficas[cadenaID], leyenda, data[datosID][opcionSeleccionada]); 
+    }    
 
   }); 
 }

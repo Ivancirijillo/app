@@ -223,7 +223,13 @@
                         <div class="tarjeta"> 
                             <h1 class="sub">Localización</h1>
                             <p>La gráfica muestra la proporción de migración que existe dentro del municipio, tanto a nivel interno como externo. Ya que el año 2021  También se representa la población que reside en el municipio.</p>
-                            <canvas class="GraficosPastel" id="GLoc"></canvas>
+                            <select id="opcionLoc">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div class="ContenedorGraficosPastel" id="contenedorPastel2">
+                                <canvas class="GraficosPastel" id="GLoc"></canvas>
+                            </div>
+                            
                         </div>  
                         <div class="tarjeta"> 
                             <h1 class="sub">Afiliaciones</h1>
@@ -232,7 +238,12 @@
                                 <h2 class="categoria">Afiliados totales a sistemas de seguridad social</h2>
                             </div>
                             <p id="parrafoAfil"></p>
-                            <canvas class="GraficosPastel" id="GAfil"></canvas>
+                            <select id="opcionAfil">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div class="ContenedorGraficosPastel" id="contenedorPastel3">
+                                <canvas class="GraficosPastel" id="GAfil"></canvas>
+                            </div>                            
                         </div>  
                         <div class="tarjeta">                             
                             <h1 class="sub">Alimentación</h1>
@@ -241,7 +252,12 @@
                                 <h2 class="categoria">Hogares</h2>
                             </div>
                             <p id="parrafoAlimentacion"></p>
-                            <canvas class="GraficosPastel" id="GAli"></canvas>
+                            <select id="opcionAlim">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div class="ContenedorGraficosPastel" id="contenedorPastel4">
+                                <canvas class="GraficosPastel" id="GAli"></canvas>
+                            </div>   
                         </div>  
                     </div>                      
                 </div>
@@ -325,8 +341,13 @@
                             </div>
                             <p>El padrón electoral es la base de datos que contiene la información de todos los ciudadanos mexicanos que han solicitado su inscripción al mismo, con la finalidad de obtener su credencial para votar con fotografía y así ejercer su derecho al voto. <br>                            En la lista nominal se encuentran todos aquellos ciudadanos que solicitaron su inscripción al Padrón Electoral y cuentan ya con su credencial para votar con fotografía vigente.</p>
                         </div>  
-                        <div class="ContenedorGraficosPastel">
-                            <canvas class="GraficosPastel" id="GPaE"></canvas>
+                        <div class="ContenedorGraficosPastel">                            
+                            <select id="opcionPadron">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div id="contenedorP">
+                                <canvas class="GraficosPastel" id="GPaE"></canvas>
+                            </div>
                         </div>
                     </div>  
                 </div>

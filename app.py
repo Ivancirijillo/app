@@ -147,8 +147,8 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli"]
-    encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda", "pib", "sexo"]
+    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli", "padron"]
+    encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda", "pib", "sexo", "loc", "afil", "alim"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
                 configuracion["database1"]["port"],
@@ -165,14 +165,20 @@ def consultas_pagina():
     consulta = configuracion.get("consulta_pagina",secciones[1]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
         #Edad
-    tratamientoGraficas(resultados, diccionario, encabezados[0], 44, 5, 10 )
+    tratamientoGraficas(resultados, diccionario, encabezados[0], 44, 5, 10)
         #Lengua Indigena
-    tratamientoGraficas(resultados, diccionario, encabezados[1], 44, 15, 5 )
+    tratamientoGraficas(resultados, diccionario, encabezados[1], 44, 15, 5)
         #Discapacidad
-    tratamientoGraficas(resultados, diccionario, encabezados[2], 44, 20, 5 )
+    tratamientoGraficas(resultados, diccionario, encabezados[2], 44, 20, 5)
         #Sexo
-    tratamientoGraficas(resultados, diccionario, encabezados[7], 44, 3, 2 )
-    
+    tratamientoGraficas(resultados, diccionario, encabezados[7], 44, 3, 2)
+        #Localidad
+    tratamientoGraficas(resultados, diccionario, encabezados[8], 44, 35, 4)
+        #Afiliados
+    tratamientoGraficas(resultados, diccionario, encabezados[9], 44, 26, 9)
+        #Alimentacion
+    tratamientoGraficas(resultados, diccionario, encabezados[10], 44, 42, 2)
+
     #Rezago Social
     consulta = configuracion.get("consulta_pagina",secciones[2]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
@@ -208,6 +214,11 @@ def consultas_pagina():
     tratamientoGraficas(resultados, diccionario, secciones[6], 14, 2, 4)
     tratamientoGraficas2(resultados, diccionario, secciones[6], 14, 8, 5)
 
+    #PADRON ELECTORAL
+    consulta = configuracion.get("consulta_pagina",secciones[7]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamientoGraficas(resultados, diccionario, secciones[7], 8, 2, 2)
+    tratamientoGraficas2(resultados, diccionario, secciones[7], 8, 5, 2)
 
     return jsonify(diccionario)
 
@@ -439,28 +450,6 @@ def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
         datos=[]
         for j in range (i, (longitud+i), 1):
             datos.append(lista[j+inicio])
-        year=lista[i+1]
-        #years.append(year)
-        if atributo not in diccionario:
-            diccionario[atributo] = {}  # Crear un diccionario anidado
-        diccionario [atributo][year]= datos
-    #diccionario [atributo]["Years"]= years
-    return 0
-
-def tratamientoGPastel(tupla, diccionario, atributo, longitud, valor1, valor2):
-
-    cadena = ','.join(str(elem) for elem in tupla)
-    lista = cadena.split(',')
-    for i in range(len(lista)):
-        lista[i] = lista[i].replace("(", "").strip()
-        lista[i] = lista[i].replace(")", "").strip()
-        lista[i] = lista[i].replace("'", "").strip()
-        lista[i] = lista[i].replace("None", "0").strip()
-    #years=[]
-    for i in range(0, len(lista), longitud):
-        datos=[]
-        datos.append(lista[i+valor1])
-        datos.append(lista[i+valor2])
         year=lista[i+1]
         #years.append(year)
         if atributo not in diccionario:
