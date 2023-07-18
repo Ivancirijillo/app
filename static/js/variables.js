@@ -15,30 +15,3 @@
     desap:      ['Hombres', 'Mujeres'],
     padron:     ['Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres']
   };
-
-var cadenas = {
-    c_viviendas: [],
-    c_viviendasYEAR: [],
-    c_educacion: [],
-    c_apoyos: [],
-    c_economia: [],
-    c_economiaYEAR: [],
-    c_Pgeneral: [10,5],
-    c_PgeneralYEAR: [],
-    c_edad: [],
-    c_edadYEAR: [],
-    c_lenguaI: [],
-    c_disc: [],
-    c_afili: [],
-    c_loc: [],
-    c_alimen: [],
-    c_pobreza: [],
-    c_pobrezaYEAR:[],
-    c_empleo: [],
-    c_empleoYEAR: [],
-    c_deli: [],
-    c_deliYEAR:[],
-    c_deliHM: [],
-    c_padron: [],
-    c_PIB: []
-  }

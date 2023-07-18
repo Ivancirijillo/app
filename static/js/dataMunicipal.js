@@ -1,4 +1,4 @@
-//VARIABLES
+//VARIABLES Archivo: "variables.js"
 var data;
   // Obtener el valor del parámetro 'contenido' de la URL
 var contenido = obtenerParametroURL('contenido');
@@ -15,13 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(result => {
       data = result; // Asignar los datos a la variable global
       console.log('Datos: ', data); 
-
       //console.log('Datos: ', data["sexo"][Object.keys(data.sexo)[Object.keys(data.sexo).length - 1]]);
-
       insertarDatos();
       //REZAGO SOCIAL
       graficaBa('GReSo',etiquetas_graficas.vivienda, Object.keys(data.vivienda), Object.values(data.vivienda));      
       graficaBa('GEd',etiquetas_graficas.educacion, Object.keys(data.educacion), Object.values(data.educacion)); 
+      //APOYOS
+      generarTabla(Object.values(data.apoyos).flat());
+        cambiarT("opcionApo", "apoYears", "GApo")
       //ECONOMIA
         //Barras
       graficaBa('GEco2',etiquetas_graficas.economia, Object.keys(data.deuda), Object.values(data.deuda)); 
@@ -91,7 +92,6 @@ function insertarDatos(){
     document.getElementById('tituloUEA').innerText = data.datoEco[0];  
     document.getElementById('tituloSalario').innerText = '$' +  agregarComas(data.datoEmp[1]); 
     document.getElementById('tituloSalarioA').innerText = data.datoEmp[0]; 
-  
     //Rezago Social
     document.getElementById('reYear').innerText = data.datoRe[0];
     document.getElementById('indiceRe').innerText = data.datoRe[1];
@@ -100,13 +100,10 @@ function insertarDatos(){
     document.getElementById('sinSalud').innerText = agregarComas(data.datoRe[4]);
     document.getElementById('gini').innerText = data.datoRe[5];
     document.getElementById('razonI').innerText = data.datoRe[6];
-    
-    //Apoyos
     //Economia
     document.getElementById('economiaYear').innerText = data.datoEco[0]; 
     document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.datoEco[1]);
     document.getElementById('etiquetaPer').innerText = '$' +  agregarComas(data.datoEco[2]);
-   
     //Poblacion
     document.getElementById('pobYear').innerText = data.datoPob[0];  
     document.getElementById('etquetaAfil').innerText = agregarComas(data.datoPob[3]);
@@ -114,14 +111,12 @@ function insertarDatos(){
     document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.datoPob[0] +" fue de " + agregarComas(data.datoPob[1]) + " habitantes, siendo " + ((100*(data.datoPob[5]))/(data.datoPob[1])).toFixed(2) + "% mujeres y " + ((100*(data.datoPob[6]))/(data.datoPob[1])).toFixed(2) + "% hombres." ;
     document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.datoPob[7]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.datoPob[3]) + " personas que sí están afiliadas.";
     document.getElementById('parrafoAlimentacion').innerText = "En el año " + data.datoPob[0] + ", los hogares con limitación alimentaria representaron el " + data.datoPob[8] + " % de total, mientras que los hogares sin esta limitación representaron el " + data.datoPob[9] + " % restante.";
-
     //Pobreza
     document.getElementById('poYear').innerText = data.datoPobre[0];  
     //Empleo
     document.getElementById('emYear').innerText = data.datoEmp[0];
     document.getElementById('etiquetaTota').innerText = agregarComas(data.datoEmp[2]);
     document.getElementById('etiquetaSa').innerText = '$' +  agregarComas(data.datoEmp[1]);
-
     //Padron Electoral
     document.getElementById('paeleYear').innerText = data.datoPa[0];
     document.getElementById('etiquetaP').innerText =agregarComas(data.datoPa[1]);
@@ -131,7 +126,6 @@ function insertarDatos(){
 
 function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
   const GraficoB = document.getElementById(seccionID);
-
   const colores = ["#005794", "#0083A2", "#00AFAA", "#2784BE","#4E66CC", "#8475D9",  "#C59CE5", "#F0C4F0", "#FAEBF3"];
   
   const datasets = datos.map((dataset, index) => ({
@@ -161,7 +155,6 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
 
 function graficaLi (seccionID, etiqueta, datos, etiquetas ) {
   var GraficaLineal = document.getElementById(seccionID);
-
   var PIBanual = {
     label: etiqueta,
     data: datos,
@@ -169,12 +162,10 @@ function graficaLi (seccionID, etiqueta, datos, etiquetas ) {
     fill: false,
     borderColor: 'red'
   };
-
   var ConteoAnual = {
     labels: etiquetas,
     datasets: [PIBanual]
   };
-
   var chartOptions = {
     legend: {
       display: true,
@@ -240,7 +231,6 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
 
 function graficaPA2(seccionID, etiquetas, datos) {
   const GraficoP2 = document.getElementById(seccionID);
-
   const data = {
     labels: etiquetas,
     datasets: [ 
@@ -359,6 +349,114 @@ function seleccion(seccionID, datosID, contenedorID, graficaID, cadenaID, leyend
   }); 
 }
 
+function cambiarT(seccionID, datosID, contenedorID){
+  var select = document.getElementById(seccionID);
+  //select.innerHTML = '<option disabled selected>Elije una opción</option>';
+  for (let key in data[datosID]) {    
+    // Crear una nueva opción
+    var option = document.createElement("option");    
+    // Establecer el valor y el texto de la opción
+    option.value = data[datosID][key];
+    option.text = data[datosID][key];    
+    // Agregar la opción al select
+    select.add(option);
+  }
+
+  // Variable para guardar la opción seleccionada
+  var opcionSeleccionada;
+  // Evento para detectar el cambio de selección
+  select.addEventListener("change", async function() {
+    // Obtener la opción seleccionada
+    opcionSeleccionada = select.value;
+    console.log(opcionSeleccionada);  
+    var aux = [contenido, opcionSeleccionada];
+  try {
+      const resultado = await consultaT(aux);
+      console.log('Tablas: ', resultado); 
+    
+      var contenedor = document.getElementById(contenedorID);
+      contenedor.innerHTML = ''; // limpiar el contenedor
+      generarTabla(Object.values(resultado).flat());
+  } catch (error) {
+      console.error('Error:', error);
+  }
+  
+
+  }); 
+}
+
 function agregarComas(numero) {
   return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function generarTabla(CadenaA) {
+  // Obtener el contenedor de la tabla
+  var tablaContainer = document.getElementById("GApo");
+  // Crear la tabla
+  var tabla = document.createElement("table");
+  tabla.classList.add("table");
+  // Crear la fila de encabezado
+  var encabezado = document.createElement("tr");
+  // Crear las celdas de encabezado
+  var encabezadoCelda1 = document.createElement("th");
+  encabezadoCelda1.textContent = "Nombre del Apoyo";
+  encabezado.appendChild(encabezadoCelda1);
+  var encabezadoCelda2 = document.createElement("th");
+  encabezadoCelda2.textContent = "Periodo";
+  encabezado.appendChild(encabezadoCelda2);
+  var encabezadoCelda3 = document.createElement("th");
+  encabezadoCelda3.textContent = "No. apoyos";
+  encabezado.appendChild(encabezadoCelda3);
+  var encabezadoCelda4 = document.createElement("th");
+  encabezadoCelda4.textContent = "Tipo";
+  encabezado.appendChild(encabezadoCelda4);
+  
+  // Agregar el encabezado a la tabla
+  tabla.appendChild(encabezado);
+  
+  // Crear las filas de datos
+  for (var i = 0; i < CadenaA.length; i+=6) {
+    var fila = document.createElement("tr");
+    
+    var datoCelda1 = document.createElement("td");
+    datoCelda1.textContent = CadenaA[i+3];
+    fila.appendChild(datoCelda1);
+    
+    var datoCelda2 = document.createElement("td");
+    datoCelda2.textContent = CadenaA[i+2];
+    fila.appendChild(datoCelda2);
+    
+    var datoCelda3 = document.createElement("td");
+    datoCelda3.textContent = CadenaA[i+4];
+    fila.appendChild(datoCelda3);
+    
+    var datoCelda4 = document.createElement("td");
+    var tipo =CadenaA[i+5]
+    if (tipo=="0"){
+      tipo="No definido"
+    }
+    datoCelda4.textContent = tipo;
+    fila.appendChild(datoCelda4);
+    
+    // Agregar la fila a la tabla
+    tabla.appendChild(fila);
+  }
+  
+  // Agregar la tabla al contenedor
+  tablaContainer.appendChild(tabla);
+}
+
+function consultaT(dato) {
+  return new Promise((resolve, reject) => {
+      fetch('/consultas-tabla', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ dato: dato })
+      })
+      .then(response => response.json())
+      .then(data => resolve(data.resultado))
+      .catch(error => reject(error));
+  });
 }

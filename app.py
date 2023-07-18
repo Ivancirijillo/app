@@ -147,7 +147,7 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli", "padron", "datoPob", "datoPobre", "datoEco", "datoEmp", "datoRe", "datoPa"]
+    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli", "padron", "datoPob", "datoPobre", "datoEco", "datoEmp", "datoRe", "datoPa", "apoyos", "apoYears"]
     encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda", "pib", "sexo", "loc", "afil", "alim"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
@@ -244,8 +244,33 @@ def consultas_pagina():
     resultados = conn.consultar_db(consulta)
     tratamiento(resultados, diccionario, secciones[13])
 
+    #APOYOS
+    consulta = configuracion.get("consulta_pagina",secciones[14]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[14])
+
+    consulta = configuracion.get("consulta_pagina",secciones[15]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[15])
+
     return jsonify(diccionario)
 
+@app.route("/consultas-tabla", methods=['GET', 'POST'])
+@csrf.exempt
+def consultas_tabla():
+    recibido = request.json['dato']
+    conn = CONEXION(configuracion["database1"]["host"],
+                configuracion["database1"]["port"],
+                configuracion["database1"]["user"],
+                configuracion["database1"]["passwd"],
+                configuracion["database1"]["db"])
+    diccionario = {}
+    consulta = configuracion.get("consulta_pagina","apoSelec").format(clave=recibido[0], year=recibido[1])
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, "apoSelec")
+    
+    return jsonify({'resultado': diccionario})
+   
 @app.route("/consultas-buscador", methods=['POST'])
 @csrf.exempt
 def consultas_buscador():
@@ -437,6 +462,10 @@ def tratamiento(tupla, diccionario, atributo):
         lista[i] = lista[i].replace("'", "").strip()
         lista[i] = lista[i].replace("None", "0").strip()
     
+    if atributo=="apoYears":
+        #Elimina elementos vacios
+        lista=[elemento for elemento in lista if elemento != '']
+
     diccionario [atributo]= lista
 
     return 0
