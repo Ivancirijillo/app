@@ -567,7 +567,8 @@ def cargar_archivo():
 
             # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
             datos = pd.read_excel(archivo, sheet_name=None)
-
+            menssaje=""
+            aux=False
             # Recorre todas las hojas y guarda los datos en la base de datos
             for hoja, datos_hoja in datos.items():
                 # Convierte los datos de la hoja a una lista de tuplas
@@ -586,6 +587,10 @@ def cargar_archivo():
                     # Inserta los datos en la base de datos
                     conn.consultar_db2(insert, filas)
                     tablas.append(tabla)
+                    aux=True
+                if (tabla=="usuarios"):
+                    menssaje="No se pueden crear ni modificar usuarios."
+                    tablas.append(menssaje)
                 else:
                     columnas2 = datos_hoja.columns[2:]
                     cadena_SQL=""
@@ -601,7 +606,10 @@ def cargar_archivo():
                     # Inserta los datos en la base de datos
                     conn.consultar_db2(insert, filas)
                     tablas.append(tabla)
-            menssaje = "Archivo cargado con exíto"
+            if menssaje=="":
+                menssaje = "Archivos cargados con exíto."
+            elif menssaje!="" and aux:
+                menssaje += "Los otros archivos fueron cargados con exíto."
             #agregar se ha subido exitosamente
             return render_template('cargaArchivo.html', mensaje = menssaje)
         return render_template('cargaArchivo.html')
