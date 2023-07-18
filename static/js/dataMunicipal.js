@@ -76,8 +76,57 @@ function autoScroll(sectionId) {
 }
 
 function insertarDatos(){
+    //Titulo
     document.getElementById('tituloM').innerText = data.nombre[0];
     document.getElementById('nommbreMun').innerText = data.nombre[0];
+    document.getElementById('tituloPoblacion').innerText = agregarComas(data.datoPob[1]);  
+    document.getElementById('tituloPoblacionA').innerText = data.datoPob[0];  
+    document.getElementById('tituloEdad').innerText = data.datoPob[2];   
+    document.getElementById('tituloEdadA').innerText = data.datoPob[0];  
+    document.getElementById('tituloPobreza').innerText = (Math.floor(data.datoPobre[1])) + ' %';  
+    document.getElementById('tituloPobrezaA').innerText = data.datoPobre[0];  
+    document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.datoEco[1]);   
+    document.getElementById('tituloPIBA').innerText = data.datoEco[0];  
+    document.getElementById('tituloUE').innerText = agregarComas(data.datoEco[3]);  
+    document.getElementById('tituloUEA').innerText = data.datoEco[0];  
+    document.getElementById('tituloSalario').innerText = '$' +  agregarComas(data.datoEmp[1]); 
+    document.getElementById('tituloSalarioA').innerText = data.datoEmp[0]; 
+  
+    //Rezago Social
+    document.getElementById('reYear').innerText = data.datoRe[0];
+    document.getElementById('indiceRe').innerText = data.datoRe[1];
+    document.getElementById('gradoRe').innerText = data.datoRe[2];
+    document.getElementById('posicionRe').innerText = 'N° ' + agregarComas(data.datoRe[3]);
+    document.getElementById('sinSalud').innerText = agregarComas(data.datoRe[4]);
+    document.getElementById('gini').innerText = data.datoRe[5];
+    document.getElementById('razonI').innerText = data.datoRe[6];
+    
+    //Apoyos
+    //Economia
+    document.getElementById('economiaYear').innerText = data.datoEco[0]; 
+    document.getElementById('etiquetaPib').innerText = '$' +  agregarComas(data.datoEco[1]);
+    document.getElementById('etiquetaPer').innerText = '$' +  agregarComas(data.datoEco[2]);
+   
+    //Poblacion
+    document.getElementById('pobYear').innerText = data.datoPob[0];  
+    document.getElementById('etquetaAfil').innerText = agregarComas(data.datoPob[3]);
+    document.getElementById('etiquetaAli').innerText = agregarComas(data.datoPob[4]);
+    document.getElementById('parrafoPob').innerText = "La población total de " + data.nombre[0] + " en " + data.datoPob[0] +" fue de " + agregarComas(data.datoPob[1]) + " habitantes, siendo " + ((100*(data.datoPob[5]))/(data.datoPob[1])).toFixed(2) + "% mujeres y " + ((100*(data.datoPob[6]))/(data.datoPob[1])).toFixed(2) + "% hombres." ;
+    document.getElementById('parrafoAfil').innerText = "Se considera que una persona se encuentra en situación de carencia por acceso a los servicios de salud cuando no cuenta con adscripción o derecho a recibir servicios médicos de alguna institución que los presta. En este sentido, dentro del municipio, existe una población de " + agregarComas(data.datoPob[7]) + " personas que no están afiliadas a ninguna de estas instituciones, mientras que hay " + agregarComas(data.datoPob[3]) + " personas que sí están afiliadas.";
+    document.getElementById('parrafoAlimentacion').innerText = "En el año " + data.datoPob[0] + ", los hogares con limitación alimentaria representaron el " + data.datoPob[8] + " % de total, mientras que los hogares sin esta limitación representaron el " + data.datoPob[9] + " % restante.";
+
+    //Pobreza
+    document.getElementById('poYear').innerText = data.datoPobre[0];  
+    //Empleo
+    document.getElementById('emYear').innerText = data.datoEmp[0];
+    document.getElementById('etiquetaTota').innerText = agregarComas(data.datoEmp[2]);
+    document.getElementById('etiquetaSa').innerText = '$' +  agregarComas(data.datoEmp[1]);
+
+    //Padron Electoral
+    document.getElementById('paeleYear').innerText = data.datoPa[0];
+    document.getElementById('etiquetaP').innerText =agregarComas(data.datoPa[1]);
+    document.getElementById('etiquetaLista').innerText =agregarComas(data.datoPa[2]);
+  
 }
 
 function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
@@ -308,4 +357,8 @@ function seleccion(seccionID, datosID, contenedorID, graficaID, cadenaID, leyend
     }    
 
   }); 
+}
+
+function agregarComas(numero) {
+  return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

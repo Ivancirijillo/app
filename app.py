@@ -147,7 +147,7 @@ def consultas_pagina():
     #print(dato_recibido)
 
     diccionario = {}
-    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli", "padron"]
+    secciones= ["nombre", "poblacion", "rezago", "economia", "tpobreza", "empleo", "deli", "padron", "datoPob", "datoPobre", "datoEco", "datoEmp", "datoRe", "datoPa"]
     encabezados= ["edad", "lengua", "disc", "vivienda", "educacion", "deuda", "pib", "sexo", "loc", "afil", "alim"]
     # Realizar la validación de las credenciales
     conn = CONEXION(configuracion["database1"]["host"],
@@ -178,7 +178,11 @@ def consultas_pagina():
     tratamientoGraficas(resultados, diccionario, encabezados[9], 44, 26, 9)
         #Alimentacion
     tratamientoGraficas(resultados, diccionario, encabezados[10], 44, 42, 2)
-
+        #Datos más receintes
+    consulta = configuracion.get("consulta_pagina",secciones[8]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[8])
+    
     #Rezago Social
     consulta = configuracion.get("consulta_pagina",secciones[2]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
@@ -186,6 +190,10 @@ def consultas_pagina():
     tratamientoGraficas(resultados, diccionario, encabezados[3], 18, 8, 7)
         #Educacion
     tratamientoGraficas(resultados, diccionario, encabezados[4], 18, 4, 3)
+        #Datos más receintes
+    consulta = configuracion.get("consulta_pagina",secciones[12]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[12])
 
     #Economia
     consulta = configuracion.get("consulta_pagina",secciones[3]).format(clave=clavemun)
@@ -194,18 +202,30 @@ def consultas_pagina():
     tratamientoGraficas(resultados, diccionario, encabezados[5], 8, 5, 3)
         #PIB
     tratamientoGraficas(resultados, diccionario, encabezados[6], 8, 2, 1)
+        #Datos más receintes
+    consulta = configuracion.get("consulta_pagina",secciones[10]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[10])
     
     #Pobreza
     consulta = configuracion.get("consulta_pagina",secciones[4]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
         #Porcentajes
     tratamientoGraficas(resultados, diccionario, secciones[4], 16, 2, 14)
+        #Datos más receintes
+    consulta = configuracion.get("consulta_pagina",secciones[9]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[9])
    
     #Empleo
     consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
         #No
     tratamientoGraficas(resultados, diccionario, secciones[5], 14, 2, 10)
+        #Datos más receintes
+    consulta = configuracion.get("consulta_pagina",secciones[11]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[11])
    
     #DELINCUENCIA
     consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
@@ -219,6 +239,10 @@ def consultas_pagina():
     resultados = conn.consultar_db(consulta)
     tratamientoGraficas(resultados, diccionario, secciones[7], 8, 2, 2)
     tratamientoGraficas2(resultados, diccionario, secciones[7], 8, 5, 2)
+        #Datos más receintes
+    consulta = configuracion.get("consulta_pagina",secciones[13]).format(clave=clavemun)
+    resultados = conn.consultar_db(consulta)
+    tratamiento(resultados, diccionario, secciones[13])
 
     return jsonify(diccionario)
 
