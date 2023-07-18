@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #00afaa;
+    color: #fff;
+    text-align: center;
+    padding: 0.5px;
+}
+
+main {
+    padding: 1rem;
+}
+
+.plantilla {
+    /* margin: 0 auto; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.titulos {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+#Municipio {
+    font-size: 32px;
+    margin: 0;
+    color: #333;
+}
+
+#Categoria {
+    font-size: 24px;
+    margin: 0;
+    color: #666;
+    padding: 2%;
+}
+
+#Year {
+    padding-top: 3%;
+    font-size: 18px;
+    margin: 0;
+    color: #999;
+}
+
+#texto {
+    text-align: justify;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.r_ilustracion {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+/* Estilos para colocar las listas en horizontal */
+.btn-prim {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+  
+.btn-prim button {
+    font-size: 24px;
+    margin-right: 10px; /* Opcional: espacio entre botones */
+    border: none;
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.btn-prim button:hover {
+    background-color: #ddd;
+}
+
+.btn-prim button.half-width {
+    flex: 0 0 100%; 
+    text-align: center;
+    margin-right: 0; 
+}
+
+#boton-volver {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+
+  

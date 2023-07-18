@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Documento</title>
+</head>
+    
+<body>
+    <header>
+        <h1>Reporte</h1>
+    </header>
+    <main>
+        <div class="plantilla">
+            <div class="titulos">
+                <h1 id="Municipio">Municipio</h1>
+                <h2 id="Categoria">Categoría</h2>
+                <div id="opciones" class="btn-prim">
+                    <button onclick="mostrarCategoria('Apoyos')">Apoyos</button>
+                    <button onclick="mostrarCategoria('Delincuencia')">Delincuencia</button>
+                    <button onclick="mostrarCategoria('Padrón Electoral')">Padrón Electoral</button>
+                    <button onclick="mostrarCategoria('Pobreza')">Pobreza</button>
+                    <button onclick="mostrarCategoria('Economía')">Economía</button>
+                    <button onclick="mostrarCategoria('Empleo')">Empleo</button>
+                    <button onclick="mostrarCategoria('Población')">Población</button>
+                    <button onclick="mostrarCategoria('Rezago Social')">Rezago Social</button>
+                    <!-- Botón Volver -->
+                    <button id="boton-volver" onclick="mostrarTodosLosBotones()" style="display: none;">Volver</button>
+                </div>
+                <h3 id="Year">Año</h3>
+            </div>
+            <p id="texto"></p>
+            <div class="r_ilustracion">
+                <canvas id="graph"></canvas>
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <script src="plantilla.js"></script>
+</body>
+</html>

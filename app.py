@@ -124,6 +124,12 @@ def menu():
 def mapa():
     # Redirigir a la página del Mapa
     return render_template("mapaOptimizado.html")
+
+@app.route("/pdfModel",methods=["GET", "POST"])
+@login_required
+def model():
+    # Redirigir a la página del Auxi
+    return render_template("auxi.html")
      
 #Creando un Decorador
 @app.route('/Graficas', methods=['GET', 'POST'])
@@ -382,6 +388,14 @@ def impresiones():
     elif(tipo=="Votos"):
         respuesta = conn.consultar_db(f"select yearV, V_VALIDOS, V_NULOS, TOTAL_V, LISTA_N from votos where yearV={json['year']} and SECCION={json['id']};")
         print(respuesta)
+    elif(tipo=="Economía"):
+        respuesta = conn.consultar_db(f"select pib, pib_per_cap, uet from economia where yearEco={json['year']} and ClaveMunicipal={json['id']};")
+    elif(tipo=="Empleo"):
+        respuesta = conn.consultar_db(f"select total, salario_promedio from empleo where yearEmp={json['year']} and ClaveMunicipal={json['id']};")
+    elif(tipo=="Población"):
+        respuesta = conn.consultar_db(f"select poblacion_tot, edad_mediana, pob_habla_ind, t_pob_disc, total_afil, no_afil, hogar, p_h_lim_alim, p_h_sn_l_alim from poblacion where yearPob={json['year']} and ClaveMunicipal={json['id']};")
+    elif(tipo=="Rezago Social"):
+        respuesta = conn.consultar_db(f"select gini, ind_rezago, grado_rezago, posicion_n from rezago_s where yearR={json['year']} and ClaveMunicipal={json['id']};")
     else:
         respuesta = " "
         if(json["modo"] == "impresion"):
