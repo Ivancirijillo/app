@@ -43,39 +43,7 @@ const informacion = {
     'Población': "Grafica de Pobla",
     'Rezago Social': "Representación de Gráfica de RS"
 }
-// texto_c.textContent = informacion['Apoyos']
+texto_c.textContent = informacion['Apoyos']
 
 
-const botones = document.querySelectorAll('.btn-prim button');
-const botonVolver = document.getElementById('boton-volver');
 
-function mostrarCategoria(categoria) {
-
-    botones.forEach((boton) => {
-      if (boton.innerText === categoria) {
-        boton.classList.add('half-width');
-        boton.style.backgroundColor = 'transparent';
-        texto_c.textContent = informacion[categoria]; 
-      } else {
-        boton.style.display = 'none';
-      }
-    });
-    botonVolver.style.display = 'block';
-}
-
-function mostrarTodosLosBotones() {
-    botones.forEach((boton) => {
-      boton.style.display = 'block';
-      boton.classList.remove('half-width');
-      boton.style.backgroundColor = '#f0f0f0';
-    });
-
-    texto_c.textContent = ''; 
-    botonVolver.style.display = 'none'; 
-    //Mostrar el botón "Volver" cuando los demás botones se oculten
-    setTimeout(() => {
-      if (botones.length === 1) {
-        botonVolver.style.display = 'block';
-      }
-    }, 10);
-  }
