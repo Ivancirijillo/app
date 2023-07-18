@@ -110,7 +110,7 @@ def login():
 @login_required
 def data():
     # Redirigir a la página de Datos de los Municipios
-    return render_template('Borrador.html')
+    return render_template('DataMunicipal.html')
 
 @app.route("/Menu",methods=["GET", "POST"])
 @login_required

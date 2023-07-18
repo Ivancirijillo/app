@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/borrador.css') }}">
+    <title id="tituloM"></title>
+    <link id="imagenM" type="text/css" rel="shortcut icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header>        
+        <nav  id="Arribaxd">
+            <ul>
+              <li><a href="/Mapa" class="botonReMa">REGRESAR</a></li>
+              <li><a onclick="autoScroll('RS')" >Rezago Social</a></li>
+              <li><a onclick="autoScroll('A')" >Apoyos</a></li>
+              <li><a onclick="autoScroll('E')" >Economía</a></li>
+              <li><a onclick="autoScroll('P')" >Población</a></li>
+              <li><a onclick="autoScroll('PR')" >Pobreza</a></li>
+              <li><a onclick="autoScroll('EM')" >Empleo</a></li>
+              <li><a onclick="autoScroll('D')" >Delincuencia</a></li>
+              <li><a onclick="autoScroll('PE')" >Padron Electoral</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+
+
+    <script src="{{ url_for('static', filename ='js/variables.js') }}"> </script>
+    <script src="{{ url_for('static', filename ='js/dataMunicipal.js') }}"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
