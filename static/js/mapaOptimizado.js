@@ -55,13 +55,15 @@ function opcSeleccionado(divActivo, ulActivo, textOrigin){
 }
 
 divAnio.addEventListener('click', function(){
-    restausarClases(ulCategoria)
+    ulCategoria.classList.add('ul-prim')
+    ulCategoria.classList.remove('ul-seg')
     ulAnio.classList.toggle('ul-prim')
     ulAnio.classList.toggle('ul-seg')
 })
 
 divCategoria.addEventListener('click', function(){
-    restausarClases(ulAnio)
+    ulAnio.classList.add('ul-prim')
+    ulAnio.classList.remove('ul-seg')
     ulCategoria.classList.toggle('ul-prim')
     ulCategoria.classList.toggle('ul-seg')
 })
@@ -141,16 +143,25 @@ const btnContinuar = document.getElementById('continuar'),
 btnContinuar.addEventListener('click', function (){
     var cabecera_consul_A = new Array ("Nombre", "Número de Apoyos", " ");
     var cabecera_consul_D = new Array ("Alto Impacto", "Homicidios", "Feminicidios", "Secuestros", 
-                                        "Desapariciones Totales", "Robos", "Robo Tranporte", "V");
+                                        "Desapariciones Totales", "Robos", "Robo Transporte", "V");
     var cabecera_consul_Pa = new Array ("Padrón Hombres", "Padrón Mujeres", "Padrón Total", "Lista Nominal Hombres", 
                                         "Lista Nominal Mujeres", "Lista Nominal Total", "V");
     var cabecera_consul_Po = new Array ("Pobreza", "Porcentaje de Pobreza extrema", "Pobreza moderada", "Porcentaje de Rezago Educativo", 
                                         "Porcentaje Carencia Seguro Social", "Porcentaje Carencia de Calidad de Vivienda.", "Porcentaje Carencia de Alimentación.", "PIB", "UET", "V");
+    var cabecera_consul_Eco = new Array ("PIB", "PIB PER CÁPITA", "Unidades económicas", "V");
+    var cabecera_consul_Em = new Array ("Total General", "Salario Promedio", "V");
+    var cabecera_consul_Pob = new Array ("Población total", "Edad mediana", "Habla lengua indígena", "Personas con discapacidad", 
+                                        "Afiliados al sistema de seguridad social", "No Afiliado", "Hogares", "Con Limitación Alimentaria","Sin Limitación Alimentaria", "V");
+    var cabecera_consul_R = new Array ("Coeficiente de Gini", "Índice de Rezago Social", "Grado de Rezago Social", "Lugar Nacional", "V");
     const fil_cabecera = {
         'Apoyos': cabecera_consul_A,
         'Delincuencia': cabecera_consul_D,
         'Padrón Electoral': cabecera_consul_Pa,
-        'Pobreza': cabecera_consul_Po
+        'Pobreza': cabecera_consul_Po,
+        'Economía': cabecera_consul_Eco,
+        'Empleo': cabecera_consul_Em,
+        'Población': cabecera_consul_Pob,
+        'Rezago Social': cabecera_consul_R
     }
 
     const elementos = new Array(anio.length);
