@@ -141,6 +141,9 @@
                     <div class="cajas">
                         <p>Lograr familias fuertes en los municipios implica que todos los miembros de la familia, en todas las etapas de sus vidas, tengan la oportunidad de desarrollarse plenamente. Esto implica abordar de manera directa e indirecta temas como la reducción de desigualdades, la promoción de la salud y el bienestar, la garantía de una educación de calidad y la prevención de la violencia intrafamiliar, especialmente para niños, niñas, adolescentes y grupos vulnerables. Para lograrlo, en el municipio se han otorgado los siguientes apoyos que atienden diversas necesidades de los ciudadanos:</p>
                     </div>
+                    <select id="opcionApo">
+                        <option disabled selected>Elije una opción</option>
+                    </select>
                     <div class="bloques" id="tablaApo"> 
                         <div class="ContenedorGraficos" id="GApo"></div>
                     </div>          
@@ -155,13 +158,13 @@
                         <div class="tarjeta" id="tarjetaEco"> 
                             <div class="datosv">
                                 <span class="datos" id="etiquetaPib"></span>
-                                <h2 class="categoria">Producto Interno Bruto (PBI)</h2>
+                                <h2 class="categoria">Producto Interno Bruto (PIB)</h2>
                             </div>
                             <div class="datosv">
                                 <span class="datos" id="etiquetaPer"></span>
-                                <h2 class="categoria">PBI PER Cápita</h2>
+                                <h2 class="categoria">PIB PER Cápita</h2>
                             </div>
-                            <p>El gráfico de lineas muestra la evolución anual que ha sufrido el Producto Interno Bruto (PBI) a través de los años.</p>
+                            <p>El gráfico de lineas muestra la evolución anual que ha sufrido el Producto Interno Bruto (PIB) a través de los años.</p>
                         
                             <div class="ContenedorGraficos" id="lineas">
                                 <canvas class="Graficos" id="GEco"></canvas>
@@ -222,8 +225,14 @@
                     <div class="bloques"> 
                         <div class="tarjeta"> 
                             <h1 class="sub">Localización</h1>
-                            <p>La gráfica muestra la proporción de migración que existe dentro del municipio, tanto a nivel interno como externo. Ya que el año 2021  También se representa la población que reside en el municipio.</p>
-                            <canvas class="GraficosPastel" id="GLoc"></canvas>
+                            <p>La gráfica muestra la proporción de migración que existe dentro del municipio, tanto a nivel interno como externo.</p>
+                            <select id="opcionLoc">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div class="ContenedorGraficosPastel" id="contenedorPastel2">
+                                <canvas class="GraficosPastel" id="GLoc"></canvas>
+                            </div>
+                            
                         </div>  
                         <div class="tarjeta"> 
                             <h1 class="sub">Afiliaciones</h1>
@@ -232,7 +241,12 @@
                                 <h2 class="categoria">Afiliados totales a sistemas de seguridad social</h2>
                             </div>
                             <p id="parrafoAfil"></p>
-                            <canvas class="GraficosPastel" id="GAfil"></canvas>
+                            <select id="opcionAfil">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div class="ContenedorGraficosPastel" id="contenedorPastel3">
+                                <canvas class="GraficosPastel" id="GAfil"></canvas>
+                            </div>                            
                         </div>  
                         <div class="tarjeta">                             
                             <h1 class="sub">Alimentación</h1>
@@ -241,7 +255,12 @@
                                 <h2 class="categoria">Hogares</h2>
                             </div>
                             <p id="parrafoAlimentacion"></p>
-                            <canvas class="GraficosPastel" id="GAli"></canvas>
+                            <select id="opcionAlim">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div class="ContenedorGraficosPastel" id="contenedorPastel4">
+                                <canvas class="GraficosPastel" id="GAli"></canvas>
+                            </div>   
                         </div>  
                     </div>                      
                 </div>
@@ -278,7 +297,7 @@
                                 <span class="datos" id="etiquetaSa"></span>
                                 <h2 class="categoria">Salario Promedio</h2>
                             </div>
-                            <p id="parrafoEmpleo"></p>
+                            <p >Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica una comparación de las diferentes industrias.</p>
                         </div>  
                         <div class="ContenedorGraficos">
                             <canvas class="Graficos" id="GEmp"></canvas>
@@ -289,7 +308,6 @@
                 <div id="D" class="secciones"> 
                     <div class="titulo">
                         <h1 class="tituloSec">Delincuencia</h1>
-                        <span class="year" id="deliYear"></span> 
                     </div>           
                                         
                     <div class="bloques"> 
@@ -325,8 +343,13 @@
                             </div>
                             <p>El padrón electoral es la base de datos que contiene la información de todos los ciudadanos mexicanos que han solicitado su inscripción al mismo, con la finalidad de obtener su credencial para votar con fotografía y así ejercer su derecho al voto. <br>                            En la lista nominal se encuentran todos aquellos ciudadanos que solicitaron su inscripción al Padrón Electoral y cuentan ya con su credencial para votar con fotografía vigente.</p>
                         </div>  
-                        <div class="ContenedorGraficosPastel">
-                            <canvas class="GraficosPastel" id="GPaE"></canvas>
+                        <div class="ContenedorGraficosPastel">                            
+                            <select id="opcionPadron">
+                                <option disabled selected>Elije una opción</option>
+                            </select>
+                            <div id="contenedorP">
+                                <canvas class="GraficosPastel" id="GPaE"></canvas>
+                            </div>
                         </div>
                     </div>  
                 </div>
