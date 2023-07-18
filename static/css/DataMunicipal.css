@@ -1,0 +1,77 @@
+:root {
+    --main-bg-color:  #eeeeee;
+    /*BARRA DE NAVEGACION*/
+    --top-bar-color:  #00AFAA;
+    --top-bar-font-color: #fff;
+    --top-bar-font-hover-color: #21446b;
+    /*ENCABEZADO*/
+    --header-overlay-color: rgba(0, 0, 0, 0.541); 
+    --header-font-color:  #fff;
+    /*SECCIONES*/  
+    --section-font-color: #222222; 
+    --section-bg--color:  #d7dcdf;
+    --section-etq-color: #92c8ed;
+    --sub-section-font-color: #182549;
+    --sub-section-bg--color:  #3f4b4400;
+    /*PRUEBAS*/
+    --pruebas: #00AFAA;
+  }
+
+body{
+    background-color: var(--main-bg-color);
+    font-family:Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+  
+  /*ESTILOS DE BARRA DE NAVEGACION*/
+header{
+    background-color: #222222;
+}
+nav {
+    position: fixed;
+    background-color: var(--top-bar-color);
+    min-height: 5px;
+    max-width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 3; 
+  }
+    
+  nav ul {
+    list-style: none;
+    float:right;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+  }
+    
+  nav li {
+    color: var(--top-bar-font-color);
+    cursor: pointer;
+   }
+    
+  nav a {
+    display: block;
+    font-size: 16px;
+    line-height: 51px;
+    padding: 0 16px;
+  }
+    
+  nav a:hover {
+    color: var(--top-bar-font-color);
+    background-color:var(--top-bar-font-hover-color);
+    text-decoration: none;
+  } 
+  
+  .botonReMa{
+    position: absolute;
+    left: 1%;
+    border-radius: 10px;
+    color: var(--top-bar-font-color);
+    font-size: 16px;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    text-decoration: none;
+  }
