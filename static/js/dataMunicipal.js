@@ -142,7 +142,7 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
       datasets: datasets
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: 'x',
       scales: {
         y: {
           beginAtZero: true
@@ -499,7 +499,7 @@ const getOrCreateTooltip = (chart) => {
     tooltipEl.style.fontSize = '13px';
     tooltipEl.style.background = 'rgba(0, 0, 0,0.7)';
     tooltipEl.style.borderRadius = '10px';
-    tooltipEl.style.color = 'black';
+    tooltipEl.style.color = 'white';
     tooltipEl.style.opacity = 1;
     tooltipEl.style.pointerEvents = 'none';
     tooltipEl.style.position = 'absolute';
@@ -565,7 +565,8 @@ const externalTooltipHandler = (context) => {
       span.style.display = 'inline-block';
 
       const tr = document.createElement('tr');
-      tr.style.backgroundColor = '#ccc';
+      tr.style.color = "#000";
+      tr.style.backgroundColor = '#fff';
       tr.style.borderWidth = 0;
 
       const td = document.createElement('td');
@@ -598,3 +599,30 @@ const externalTooltipHandler = (context) => {
   tooltipEl.style.left = positionX + tooltip.caretX + 'px';
   tooltipEl.style.top = positionY + tooltip.caretY + 'px';
 };
+
+
+
+// Antualizacion de pagina en cada redimencion de pantalla
+
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+
+// Función para verificar si las dimensiones de la ventana han cambiado
+function checkWindowDimensions() {
+  const newWindowWidth = window.innerWidth;
+  const newWindowHeight = window.innerHeight;
+
+  if (newWindowWidth !== windowWidth || newWindowHeight !== windowHeight) {
+    windowWidth = newWindowWidth;
+    windowHeight = newWindowHeight;
+    location.reload();
+  }
+}
+
+// Función para iniciar la verificación periódica
+function startAutoRefresh() {
+  setInterval(checkWindowDimensions, 500); // Verificar cada 500 milisegundos (ajustable según tus necesidades)
+}
+
+// Llamar a la función para iniciar la verificación periódica
+startAutoRefresh();
