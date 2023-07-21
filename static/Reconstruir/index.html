@@ -14,27 +14,105 @@
     </header>
     <main>
         <div class="plantilla">
-            <div class="titulos">
-                <h1 id="Municipio">Municipio</h1>
-                <h2 id="Categoria">Categoría</h2>
-                <div id="opciones" class="btn-prim">
-                    <button onclick="mostrarCategoria('Apoyos')">Apoyos</button>
-                    <button onclick="mostrarCategoria('Delincuencia')">Delincuencia</button>
-                    <button onclick="mostrarCategoria('Padrón Electoral')">Padrón Electoral</button>
-                    <button onclick="mostrarCategoria('Pobreza')">Pobreza</button>
-                    <button onclick="mostrarCategoria('Economía')">Economía</button>
-                    <button onclick="mostrarCategoria('Empleo')">Empleo</button>
-                    <button onclick="mostrarCategoria('Población')">Población</button>
-                    <button onclick="mostrarCategoria('Rezago Social')">Rezago Social</button>
-                    <!-- Botón Volver -->
-                    <button id="boton-volver" onclick="mostrarTodosLosBotones()" style="display: none;">Volver</button>
+
+            <div id="Apoyo" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Apoyo</h2>
+                    <h3 id="Year">Año</h3>
                 </div>
-                <h3 id="Year">Año</h3>
+                <p id="textoA"></p>
+                <div class="r_ilustracion">
+                    <!-- <canvas id="graph"></canvas> -->
+                    <table></table>
+                </div>
             </div>
-            <p id="texto"></p>
-            <div class="r_ilustracion">
-                <canvas id="graph"></canvas>
+
+            <div id="Delincuencia" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Delincuencia</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoD"></p>
+                <div class="r_ilustracion">
+                    <canvas id="graphA"></canvas>
+                </div>
             </div>
+            
+            <div id="PadroE" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Padrón Electoral</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoPE"></p>
+                <div class="r_ilustracion">
+                    <canvas id="graphPE"></canvas>
+                </div>
+            </div>
+
+            <div id="Pobreza" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Pobreza</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoPob"></p>
+                <div class="r_ilustracion">
+                    <canvas id="graphPob"></canvas>
+                </div>
+            </div>
+
+            <div id="Economia" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Economía</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoEco"></p>
+                <div class="r_ilustracion">
+                    <!-- <canvas id="graphEco"></canvas> -->
+                </div>
+            </div>
+
+            <div id="Empleo" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Empleo</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoEm"></p>
+                <div class="r_ilustracion">
+                    <canvas id="graphEm"></canvas>
+                </div>
+            </div>
+
+            <div id="Poblacion" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Población</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoP"></p>
+                <div class="r_ilustracion">
+                    <canvas id="graphP"></canvas>
+                    <canvas id="graphP1"></canvas>
+                </div>
+            </div>
+
+            <div id="RezagoS" class="categoria">
+                <div class="titulos">
+                    <h1 id="Municipio">Municipio</h1>
+                    <h2 id="Categoria">Rezago Social</h2>
+                    <h3 id="Year">Año</h3>
+                </div>
+                <p id="textoRS"></p>
+                <div class="r_ilustracion">
+                    <canvas id="graphR"></canvas>
+                </div>
+            </div>
+
         </div>
     </main>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
