@@ -159,10 +159,10 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
           color: '#00817d',
         },
         
-        tooltip: {
-          enabled: false,
-          external: externalTooltipHandler
-        }
+        // tooltip: {
+        //   enabled: false,
+        //   external: externalTooltipHandler
+        // }
       },
       responsive: true,
     }
@@ -377,7 +377,7 @@ function seleccion(seccionID, datosID, contenedorID, graficaID, cadenaID, leyend
 
 function cambiarT(seccionID, datosID, contenedorID){
   var select = document.getElementById(seccionID);
-  //select.innerHTML = '<option disabled selected>Elije una opción</option>';
+  //select.innerHTML = '<option disabled selected>Selecciona una opción</option>';
   for (let key in data[datosID]) {    
     // Crear una nueva opción
     var option = document.createElement("option");    
@@ -602,27 +602,27 @@ const externalTooltipHandler = (context) => {
 
 
 
-// Antualizacion de pagina en cada redimencion de pantalla
+// // Antualizacion de pagina en cada redimencion de pantalla
 
-let windowWidth = window.innerWidth;
-let windowHeight = window.innerHeight;
+// let windowWidth = window.innerWidth;
+// let windowHeight = window.innerHeight;
 
-// Función para verificar si las dimensiones de la ventana han cambiado
-function checkWindowDimensions() {
-  const newWindowWidth = window.innerWidth;
-  const newWindowHeight = window.innerHeight;
+// // Función para verificar si las dimensiones de la ventana han cambiado
+// function checkWindowDimensions() {
+//   const newWindowWidth = window.innerWidth;
+//   const newWindowHeight = window.innerHeight;
 
-  if (newWindowWidth !== windowWidth || newWindowHeight !== windowHeight) {
-    windowWidth = newWindowWidth;
-    windowHeight = newWindowHeight;
-    location.reload();
-  }
-}
+//   if (newWindowWidth !== windowWidth || newWindowHeight !== windowHeight) {
+//     windowWidth = newWindowWidth;
+//     windowHeight = newWindowHeight;
+//     location.reload();
+//   }
+// }
 
-// Función para iniciar la verificación periódica
-function startAutoRefresh() {
-  setInterval(checkWindowDimensions, 500); // Verificar cada 500 milisegundos (ajustable según tus necesidades)
-}
+// // Función para iniciar la verificación periódica
+// function startAutoRefresh() {
+//   setInterval(checkWindowDimensions, 500); // Verificar cada 500 milisegundos (ajustable según tus necesidades)
+// }
 
-// Llamar a la función para iniciar la verificación periódica
-startAutoRefresh();
+// // Llamar a la función para iniciar la verificación periódica
+// startAutoRefresh();

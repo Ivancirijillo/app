@@ -18,7 +18,7 @@
             <a href="/Mapa" class="enlace">REGRESAR</a>
 
             <ul>
-              <li><a class="active" onclick="autoScroll('RS')" >Rezago Social</a></li>
+              <li><a onclick="autoScroll('RS')" >Rezago Social</a></li>
               <li><a onclick="autoScroll('A')" >Apoyos</a></li>
               <li><a onclick="autoScroll('E')" >Economía</a></li>
               <li><a onclick="autoScroll('P')" >Población</a></li>
@@ -33,7 +33,53 @@
     <section>
         
     </section>
+    
+    <section class="secciones" id="RS">     
 
+        <div class="titulo">
+            <h1 class="tituloSec">Rezago Social</h1>
+            <span class="year" id="reYear"></span> 
+        </div>
+        <br>
+        <div class="datos">
+            <div class="datosv">
+                <span class="datos" id="indiceRe"></span>
+                <h2 class="categoria">Índice de rezago social</h2>
+            </div>
+            <div class="datosv">
+                <span class="datos" id="gradoRe"></span>
+                <h2 class="categoria">Grado de rezago social</h2>
+            </div>
+            <div class="datosv">
+                <span class="datos" id="posicionRe"> </span>
+                <h2 class="categoria">Lugar nacional</h2>
+            </div>  
+            <div class="datosv">
+                <span class="datos" id="gini"></span>
+                <h2 class="categoria">Coeficiente de Gini</h2>
+            </div>
+            <div class="datosv">
+                <span class="datos" id="razonI"></span>
+                <h2 class="categoria">Razón de ingreso</h2>
+            </div>  
+            <div class="datosv">
+                <span class="datos" id="sinSalud"></span>
+                <h2 class="categoria">Población sin derechohabiencia a servicios de salud</h2>
+            </div>
+            <p>El coeficiente o índice de Gini es una medida estadística diseñada para representar la distribución de los ingresos de los habitantes, en concreto, la inequidad entre ellos. Los índices más cercanos a 0 representan una mayor equidad entre sus habitantes, mientras que los valores cercanos a 1 expresan una máxima inequidad en la población.</p>
+        </div> 
+
+        <div class="datos"> 
+            <div class="datosv" id="textoGraficas"> 
+                <h1 class="sub">Vivienda</h1>
+                <p>En el municipio, las condiciones de construcción de las viviendas habitadas presentan variaciones importantes en cuanto a sus carencias de servicios públicos, como el acceso a agua potable, energía eléctrica o la conexión de drenaje. Además, se observan carencias derivadas de estos servicios, como la falta de sanitarios, entre otros.</p>
+            </div>  
+            <div class="ContenedorGraficos">
+                <canvas class="Graficos" id="GReSo"></canvas>
+            </div>
+        </div> 
+
+    </section>
 
     <script src="{{ url_for('static', filename ='js/variables.js') }}"> </script>
     <script src="{{ url_for('static', filename ='js/dataMunicipal.js') }}"> </script>

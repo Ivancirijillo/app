@@ -31,12 +31,8 @@ body{
     font-family:Arial, Helvetica, sans-serif;
 }
 
-.cajas .datosv,
-.datos{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/*ESTILOS DE BARRA DE NAVEGACION*/
+/*INICIO 
+ESTILOS DE BARRA DE NAVEGACION*/
 
 nav {
   background: var(--top-bar-color);
@@ -137,3 +133,81 @@ section{
     left: 0;
   }
 }
+/*FIN 
+ESTILOS DE BARRA DE NAVEGACION*/
+
+/*INICIO
+ESTILOS SECCIONES*/
+p{
+  text-align: justify;
+  margin: 10px;
+  background-color: #fff;
+}
+.secciones{
+  display: inline-block;  
+  flex-wrap: wrap;
+  background: none;
+  background-color: gray;
+  width: 100%;
+}
+  div.titulo{
+    display: inline-block;  
+    background-color: #00AFAA;
+    width: 100%;
+  }
+    h1.tituloSec,
+    h1.sub{
+      display: inline-block;
+      background-color: #182549;
+      margin: 1%;
+      font-size: 23px;
+    }
+    span.year{
+      background-color: #21446b;
+      margin: 1%;
+      margin-top: 1%;
+      padding: 5px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 12px;
+    }
+    
+  div.datos{
+    margin: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: blueviolet;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+    div.datosv{
+      flex: 2;
+      background-color: #182549;
+      margin: .5%;
+    }
+      span.datos{
+        font-size: 18px;
+        background-color: #fff;
+      }
+      h2.categoria{
+        background-color: var(--section-etq-color);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        text-align: start;
+        padding: 2%;
+        border-radius: 4px;
+      }
+    div.ContenedorGraficos{
+      background-color: #fff;
+      min-width: 60%;
+      max-width: 100%;
+    }
+   /*  #textoGraficas{
+      min-width: 30%; 
+      min-width: 400px;
+    }*/
+    canvas{
+      background-color: #92c8ed;
+    }
+/*FIN
+ESTILOS SECCIONES*/
