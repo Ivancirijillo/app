@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
       //POBREZA
       graficaBa('GPobr',etiquetas_graficas.pobre, Object.keys(data.tpobreza), Object.values(data.tpobreza)); 
       //EMPLEO
-      //graficaBa('GEmp',etiquetas_graficas.empl, Object.keys(data.empleo), Object.values(data.empleo)); 
+      graficaBa('GEmp',etiquetas_graficas.empl, Object.keys(data.empleo), Object.values(data.empleo)); 
       //DELINCUENCIA
       graficaBa('GDeli',etiquetas_graficas.delitos, Object.keys(data.deli), Object.values(data.deli)); 
       //PADRON ELECTORAL
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
-document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
+//document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
 
 // Función para obtener parámetro de la URL
 function obtenerParametroURL(nombreParametro) {
@@ -71,27 +71,28 @@ function autoScroll(sectionId) {
     const section = document.getElementById(sectionId);
     const sectionPosition = section.offsetTop;
     window.scrollTo({
-        top: sectionPosition+310,
+        // top: sectionPosition+310,
+        top: sectionPosition,
         behavior: 'smooth'
     });
 }
 
 function insertarDatos(){
     //Titulo
-    document.getElementById('tituloM').innerText = data.nombre[0];
-    document.getElementById('nommbreMun').innerText = data.nombre[0];
-    document.getElementById('tituloPoblacion').innerText = agregarComas(data.datoPob[1]);  
-    document.getElementById('tituloPoblacionA').innerText = data.datoPob[0];  
-    document.getElementById('tituloEdad').innerText = data.datoPob[2];   
-    document.getElementById('tituloEdadA').innerText = data.datoPob[0];  
-    document.getElementById('tituloPobreza').innerText = (Math.floor(data.datoPobre[1])) + ' %';  
-    document.getElementById('tituloPobrezaA').innerText = data.datoPobre[0];  
-    document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.datoEco[1]);   
-    document.getElementById('tituloPIBA').innerText = data.datoEco[0];  
-    document.getElementById('tituloUE').innerText = agregarComas(data.datoEco[3]);  
-    document.getElementById('tituloUEA').innerText = data.datoEco[0];  
-    document.getElementById('tituloSalario').innerText = '$' +  agregarComas(data.datoEmp[1]); 
-    document.getElementById('tituloSalarioA').innerText = data.datoEmp[0]; 
+    // document.getElementById('tituloM').innerText = data.nombre[0];
+    // document.getElementById('nommbreMun').innerText = data.nombre[0];
+    // document.getElementById('tituloPoblacion').innerText = agregarComas(data.datoPob[1]);  
+    // document.getElementById('tituloPoblacionA').innerText = data.datoPob[0];  
+    // document.getElementById('tituloEdad').innerText = data.datoPob[2];   
+    // document.getElementById('tituloEdadA').innerText = data.datoPob[0];  
+    // document.getElementById('tituloPobreza').innerText = (Math.floor(data.datoPobre[1])) + ' %';  
+    // document.getElementById('tituloPobrezaA').innerText = data.datoPobre[0];  
+    // document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.datoEco[1]);   
+    // document.getElementById('tituloPIBA').innerText = data.datoEco[0];  
+    // document.getElementById('tituloUE').innerText = agregarComas(data.datoEco[3]);  
+    // document.getElementById('tituloUEA').innerText = data.datoEco[0];  
+    // document.getElementById('tituloSalario').innerText = '$' +  agregarComas(data.datoEmp[1]); 
+    // document.getElementById('tituloSalarioA').innerText = data.datoEmp[0]; 
     //Rezago Social
     document.getElementById('reYear').innerText = data.datoRe[0];
     document.getElementById('indiceRe').innerText = data.datoRe[1];
@@ -159,10 +160,10 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
           color: '#00817d',
         },
         
-        // tooltip: {
-        //   enabled: false,
-        //   external: externalTooltipHandler
-        // }
+        tooltip: {
+          enabled: false,
+          external: externalTooltipHandler
+        }
       },
       responsive: true,
     }

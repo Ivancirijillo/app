@@ -34,8 +34,7 @@
         
     </section>
     
-    <section class="secciones" id="RS">     
-
+    <div class="secciones" id="RS">     
         <div class="titulo">
             <h1 class="tituloSec">Rezago Social</h1>
             <span class="year" id="reYear"></span> 
@@ -44,31 +43,36 @@
         <div class="datos">
             <div class="datosv">
                 <span class="datos" id="indiceRe"></span>
+                <br>
                 <h2 class="categoria">Índice de rezago social</h2>
             </div>
             <div class="datosv">
                 <span class="datos" id="gradoRe"></span>
+                <br>
                 <h2 class="categoria">Grado de rezago social</h2>
             </div>
             <div class="datosv">
                 <span class="datos" id="posicionRe"> </span>
+                <br>
                 <h2 class="categoria">Lugar nacional</h2>
             </div>  
             <div class="datosv">
                 <span class="datos" id="gini"></span>
+                <br>
                 <h2 class="categoria">Coeficiente de Gini</h2>
             </div>
             <div class="datosv">
                 <span class="datos" id="razonI"></span>
+                <br>
                 <h2 class="categoria">Razón de ingreso</h2>
             </div>  
             <div class="datosv">
                 <span class="datos" id="sinSalud"></span>
+                <br>
                 <h2 class="categoria">Población sin derechohabiencia a servicios de salud</h2>
             </div>
             <p>El coeficiente o índice de Gini es una medida estadística diseñada para representar la distribución de los ingresos de los habitantes, en concreto, la inequidad entre ellos. Los índices más cercanos a 0 representan una mayor equidad entre sus habitantes, mientras que los valores cercanos a 1 expresan una máxima inequidad en la población.</p>
         </div> 
-
         <div class="datos"> 
             <div class="datosv" id="textoGraficas"> 
                 <h1 class="sub">Vivienda</h1>
@@ -78,9 +82,255 @@
                 <canvas class="Graficos" id="GReSo"></canvas>
             </div>
         </div> 
+        <div class="datos"> 
+            <div class="datosv" id="textoGraficas"> 
+                <h1 class="sub">Educación</h1>
+                <p>El primer componente del rezago educativo se refiere a la población de 6 a 14 años que no asiste a la escuela o que sí asiste pero no está cursando el nivel educativo correspondiente.
+                    El segundo componente del rezago educativo se refiere a la población de 15 años o más que no ha completado la educación básica o que se encuentra en situación de analfabetismo.</p>
+            </div>  
+            <div class="ContenedorGraficos">
+                <canvas class="Graficos" id="GEd"></canvas>
+            </div>
+        </div> 
+    </div>
 
-    </section>
+    <div class="secciones" id="A">  
+        <div class="titulo">
+            <h1 class="tituloSec">Apoyos</h1>
+        </div>   
+        <p>Lograr familias fuertes en los municipios implica que todos los miembros de la familia, en todas las etapas de sus vidas, tengan la oportunidad de desarrollarse plenamente. Esto implica abordar de manera directa e indirecta temas como la reducción de desigualdades, la promoción de la salud y el bienestar, la garantía de una educación de calidad y la prevención de la violencia intrafamiliar, especialmente para niños, niñas, adolescentes y grupos vulnerables. Para lograrlo, en el municipio se han otorgado los siguientes apoyos que atienden diversas necesidades de los ciudadanos:</p>
+        <div class="tabla" id="tablaApo">
+            <select id="opcionApo">
+                <option disabled selected>Selecciona una opción</option>
+            </select>
+            <div  id="GApo"></div>
+        </div> 
+    </div>
 
+    <div class="secciones" id="E">  
+        <div class="titulo">
+            <h1 class="tituloSec">Economía</h1>
+            <span class="year" id="economiaYear"></span> 
+        </div> 
+        <div class="datos">
+            <div class="datosv">
+                <span class="datos" id="etiquetaPib"></span>
+                <br>
+                <h2 class="categoria">Producto Interno Bruto (PIB)</h2>
+            </div>
+            <div class="datosv">
+                <span class="datos" id="etiquetaPer"></span>
+                <br>
+                <h2 class="categoria">PIB PER Cápita</h2>
+            </div> 
+        </div>
+        <div class="datos">
+            <div class="datosv">
+                <p>El gráfico de lineas muestra la evolución anual que ha sufrido el Producto Interno Bruto (PIB) a través de los años.</p>
+                <div class="ContenedorGraficos" id="lineas">
+                    <canvas class="Graficos" id="GEco"></canvas>
+                </div>  
+            </div> 
+            <div class="datosv">
+                <p>Por su parte, el gráfico de barras muestra el número de unidades económicas totales en el municipio, además de incluir la proporción de ingresos en sus distintas variables.</p>               
+                <div class="ContenedorGraficos" id="contenedorEco">
+                    <canvas class="Graficos" id="GEco2"></canvas>
+                </div>  
+            </div> 
+        </div>      
+    </div>
+
+    <div id="P" class="secciones">  
+        <div class="titulo">
+            <h1 class="tituloSec">Población</h1>
+            <span class="year" id="pobYear"></span> 
+        </div>
+        <div class="datos">
+            <div class="datosv" id="graficoP1">
+                <p id="parrafoPob"></p>
+                <select id="opcionPob">
+                    <option disabled selected>Selecciona una opción</option>
+                </select>
+                <div class="ContenedorGraficosPastel" id="contenedorPastel1">
+                    <canvas class="GraficosPastel" id="GGene"></canvas>
+                </div>
+            </div>
+            <div class="datosv">
+                <h1 class="sub">Edad</h1>
+                <p>En la gráfica se muestra la mediana que existe entre los rangos de edad de la población, además de integrar los índices de envejecimiento y las razones de dependencia.</p>
+                <canvas class="Graficos" id="GEdad"></canvas>
+            </div>
+        </div>
+
+        <div class="datos"> 
+            <div class="datosv"> 
+                <h1 class="sub">Lengua Índigena</h1>
+                <p>La gráfica presenta los datos totales de la población que habla alguna lengua indígena, así como aquellos que hablan exclusivamente español. También se incluyen aquellos que hablan ambos idiomas simultáneamente.</p>
+            </div>  
+            <div class="ContenedorGraficos">
+                <canvas class="Graficos" id="GLenI"></canvas>
+            </div>
+        </div> 
+
+        <div class="datos"> 
+            <div class="datosv"> 
+                <h1 class="sub">Discapacidad</h1>
+                <p>Según la Clasificación Internacional del Funcionamiento, de la Discapacidad y de la Salud (CIF), se define la discapacidad como las deficiencias, limitaciones de la actividad y restricciones a la participación de una persona (OMS, 2018)</p>
+                <p>En el gráfico de pastel podemos observar de forma ilustrativa el total de la población, y qué porción de la misma padece alguna discapacidad.</p>
+                <p>En este sentido, en el siguiente gráfico de barras se muestra el número de personas que padecen estas según su clasificación.</p>
+            </div>  
+            <div class="ContenedorGraficos">
+                <canvas class="Graficos" id="GDisc"></canvas>
+            </div>
+        </div> 
+
+        <div class="datos"> 
+            <div class="datosv"> 
+                <h1 class="sub">Localización</h1>
+                <p>La gráfica muestra la proporción de migración que existe dentro del municipio, tanto a nivel interno como externo.</p>
+                <select id="opcionLoc">
+                    <option disabled selected>Selecciona una opción</option>
+                </select>
+                <div class="ContenedorGraficosPastel" id="contenedorPastel2">
+                    <canvas class="GraficosPastel" id="GLoc"></canvas>
+                </div>
+            </div>  
+            <div class="datosv"> 
+                <h1 class="sub">Afiliaciones</h1>
+                <div class="datosv">
+                    <span class="datos" id="etquetaAfil"></span>
+                    <br>
+                    <h2 class="categoria">Afiliados totales a sistemas de seguridad social</h2>
+                </div>
+                <p id="parrafoAfil"></p>
+                <select id="opcionAfil">
+                    <option disabled selected>Selecciona una opción</option>
+                </select>
+                <div class="ContenedorGraficosPastel" id="contenedorPastel3">
+                    <canvas class="GraficosPastel" id="GAfil"></canvas>
+                </div>  
+            </div>  
+            <div class="datosv"> 
+                <h1 class="sub">Alimentación</h1>
+                <div class="datosv">
+                    <span class="datos" id="etiquetaAli"></span>
+                    <br>
+                    <h2 class="categoria">Hogares</h2>
+                </div>
+                <p id="parrafoAlimentacion"></p>
+                <select id="opcionAlim">
+                    <option disabled selected>Selecciona una opción</option>
+                </select>
+                <div class="ContenedorGraficosPastel" id="contenedorPastel4">
+                    <canvas class="GraficosPastel" id="GAli"></canvas>
+                </div>  
+            </div>  
+        </div> 
+
+
+    </div>
+
+    <div id="PR" class="secciones">
+        <div class="titulo">
+            <h1 class="tituloSec">Pobreza</h1>
+            <span class="year" id="poYear"></span> 
+        </div> 
+        <div class="datos"> 
+            <div class="datosv"> 
+                <p>De acuerdo con el Consejo Nacional de Evaluación de la Política de Desarrollo Social, una persona está en situación de pobreza cuando tiene al menos una carencia social (educación, salud, seguridad, vivienda, servicios básicos y alimentación), así como cuando no puede obtener bienes y servicios para satisfacer sus necesidades básicas (CONEVAL, 2010).</p>
+                <p>En el gráfico se muestran los porcentajes de la población que se encuentran en situación de pobreza en sus distintas variables, junto con la visualización de los niveles de rezago y carencias en aspectos fundamentales como vivienda, seguro social y alimentación.</p>
+            </div>  
+            <div class="ContenedorGraficos">
+                <canvas class="Graficos" id="GPobr"></canvas>
+            </div>
+        </div> 
+    </div>
+
+    <div id="EM" class="secciones">
+        <div class="titulo">
+            <h1 class="tituloSec">Empleo</h1>
+            <span class="year" id="emYear"></span> 
+        </div> 
+        <div class="datos"> 
+            <div class="datosv">
+                <span class="datos" id="etiquetaTota"></span>
+                <br>
+                <h2 class="categoria">Total General</h2>
+            </div>
+            <div class="datosv">
+                <span class="datos" id="etiquetaSa"></span>
+                <br>
+                <h2 class="categoria">Salario Promedio</h2>
+            </div>
+            <p >Con el fin de obtener una perspectiva sobre la distribución del empleo formal entre los diferentes sectores en el municipio, se presenta en la gráfica una comparación de las diferentes industrias.</p>
+        </div>  
+        <div class="datos"> 
+            <div class="ContenedorGraficos" id="empleoG">
+                <canvas class="Graficos" id="GEmp"></canvas>
+            </div>
+        </div> 
+    </div>
+
+    <div id="D" class="secciones">
+        <div class="titulo">
+            <h1 class="tituloSec">Delincuencia</h1>
+        </div>
+        <div class="datos"> 
+            <div class="datosv" id="delincuenciaG"> 
+                <p>La delincuencia dentro del municipio es un desafío persistente que se ha intentado contrarrestar a lo largo de los años. A pesar de los esfuerzos, aún existen numerosos casos que generan una sensación de inseguridad en la población.</p>
+                <p>En el gráfico se presenta el número de delitos ocurridos en el municipio durante el año 2022, clasificados por categoría. Se destaca que los delitos de alto impacto y los robos tienen los índices más altos de ocurrencia.</p>
+            </div> 
+            <div class="datosv" > 
+                <div class="ContenedorGraficos" >
+                    <canvas class="Graficos" id="GDeli"></canvas>
+                </div>            
+            </div>             
+        </div> 
+        <!-- <div class="datos"> 
+            <div class="datosv" id="delincuenciaG"> 
+                <canvas class="GraficosPastel" id="GDeliHyM"></canvas>
+            </div> 
+        </div>  -->
+
+    </div>
+
+    <div id="PE" class="secciones">
+        <div class="titulo">
+            <h1 class="tituloSec">Padrón Electoral</h1>
+            <span class="year" id="paeleYear"></span> 
+        </div>    
+        <div class="datos"> 
+            <div class="datosv">
+                <span class="datos" id="etiquetaP"></span>
+                <br>
+                <h2 class="categoria">Padrón total</h2>
+            </div>
+            <div class="datosv">
+                <span class="datos" id="etiquetaLista"></span>
+                <br>
+                <h2 class="categoria">Lista nominal</h2>
+            </div>
+        </div>  
+        <div class="datos"> 
+            <div class="datosv">
+                <p>El padrón electoral es la base de datos que contiene la información de todos los ciudadanos mexicanos que han solicitado su inscripción al mismo, con la finalidad de obtener su credencial para votar con fotografía y así ejercer su derecho al voto. <br>                            En la lista nominal se encuentran todos aquellos ciudadanos que solicitaron su inscripción al Padrón Electoral y cuentan ya con su credencial para votar con fotografía vigente.</p>
+            </div>
+            <div class="datosv" id="listanNG">
+                <div class="ContenedorGraficosPastel">                            
+                    <select id="opcionPadron">
+                        <option disabled selected>Selecciona una opción</option>
+                    </select>
+                    <div id="contenedorP">
+                        <canvas class="GraficosPastel" id="GPaE"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <div class="Fondo">
+        <button onclick="autoScroll('Arribaxd')" class="BSubir"><img src="{{ url_for('static', filename ='img_menu/flecha.png') }}" alt=""></button>
+    </div> 
     <script src="{{ url_for('static', filename ='js/variables.js') }}"> </script>
     <script src="{{ url_for('static', filename ='js/dataMunicipal.js') }}"> </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

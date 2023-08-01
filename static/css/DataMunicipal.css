@@ -183,12 +183,14 @@ p{
       flex: 2;
       background-color: #182549;
       margin: .5%;
+      /* SE PUEDE OMITIR */
     }
       span.datos{
         font-size: 18px;
         background-color: #fff;
       }
       h2.categoria{
+        display: inline-block;
         background-color: var(--section-etq-color);
         font-size: 11px;
         text-transform: uppercase;
@@ -209,5 +211,104 @@ p{
     canvas{
       background-color: #92c8ed;
     }
+    #lineas, #contenedorEco{
+      min-width: 50%;
+    }
+    #graficoP1, #listanNG{
+      max-width: 30%;
+    } 
+    #empleoG{
+      min-width: 100%;
+    }
+    #delincuenciaG{
+      max-width: 30%;
+    }
 /*FIN
 ESTILOS SECCIONES*/
+
+/*INICIO
+ESTILOS TABLA*/
+table {
+	/*width: 800px;*/
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 10px; /* Ajusta el valor según el nivel de redondeo deseado */
+  overflow: hidden; /* Oculta cualquier contenido que se salga de los bordes redondeados */
+  margin: 1%;
+}
+
+th {
+	text-align: left;
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+}   
+
+th {
+  background-color: #92c8ed;
+}
+
+tr {
+  &:hover {
+    background-color: rgba(255,255,255,0.8);
+  }
+}
+
+td {
+  position: relative;
+  &:hover {
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -9999px;
+      bottom: -9999px;
+      background-color: rgba(255,255,255,0.6);
+      z-index: -1;
+    }
+  }
+}
+#tablaApo {
+  justify-content: center; /* Alinea horizontalmente al centro */
+  align-items: center;
+}
+
+/*FIN
+ESTILOS TABLA*/
+
+/*INICIO
+ESTILOS BOTON SUBIR*/
+.BSubir{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 0;
+  bottom: 0;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.BSubir{
+  position: fixed;
+  margin: 20px;
+	background-color: var(--top-bar-color);
+  border-color: var(--top-bar-color);
+	color: #fff;
+	transition-duration: 0.4s;
+	cursor: pointer;
+  z-index: 2;
+}
+
+.BSubir:hover{
+	background-color: var(--section-etq-color);
+  border-color: var(--section-etq-color);
+	color: #fff;
+  font-weight: bold;
+}
+/*FIN
+ESTILOS BOTON SUBIR*/
