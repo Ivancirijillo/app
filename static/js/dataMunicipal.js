@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
-//document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
+document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
 
 // Función para obtener parámetro de la URL
 function obtenerParametroURL(nombreParametro) {
@@ -79,20 +79,20 @@ function autoScroll(sectionId) {
 
 function insertarDatos(){
     //Titulo
-    // document.getElementById('tituloM').innerText = data.nombre[0];
-    // document.getElementById('nommbreMun').innerText = data.nombre[0];
-    // document.getElementById('tituloPoblacion').innerText = agregarComas(data.datoPob[1]);  
-    // document.getElementById('tituloPoblacionA').innerText = data.datoPob[0];  
-    // document.getElementById('tituloEdad').innerText = data.datoPob[2];   
-    // document.getElementById('tituloEdadA').innerText = data.datoPob[0];  
-    // document.getElementById('tituloPobreza').innerText = (Math.floor(data.datoPobre[1])) + ' %';  
-    // document.getElementById('tituloPobrezaA').innerText = data.datoPobre[0];  
-    // document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.datoEco[1]);   
-    // document.getElementById('tituloPIBA').innerText = data.datoEco[0];  
-    // document.getElementById('tituloUE').innerText = agregarComas(data.datoEco[3]);  
-    // document.getElementById('tituloUEA').innerText = data.datoEco[0];  
-    // document.getElementById('tituloSalario').innerText = '$' +  agregarComas(data.datoEmp[1]); 
-    // document.getElementById('tituloSalarioA').innerText = data.datoEmp[0]; 
+    document.getElementById('tituloM').innerText = data.nombre[0];
+    document.getElementById('nommbreMun').innerText = data.nombre[0];
+    document.getElementById('tituloPoblacion').innerText = agregarComas(data.datoPob[1]);  
+    document.getElementById('tituloPoblacionA').innerText = data.datoPob[0];  
+    document.getElementById('tituloEdad').innerText = data.datoPob[2];   
+    document.getElementById('tituloEdadA').innerText = data.datoPob[0];  
+    document.getElementById('tituloPobreza').innerText = (Math.floor(data.datoPobre[1])) + ' %';  
+    document.getElementById('tituloPobrezaA').innerText = data.datoPobre[0];  
+    document.getElementById('tituloPIB').innerText = '$' + agregarComas(data.datoEco[1]);   
+    document.getElementById('tituloPIBA').innerText = data.datoEco[0];  
+    document.getElementById('tituloUE').innerText = agregarComas(data.datoEco[3]);  
+    document.getElementById('tituloUEA').innerText = data.datoEco[0];  
+    document.getElementById('tituloSalario').innerText = '$' +  agregarComas(data.datoEmp[1]); 
+    document.getElementById('tituloSalarioA').innerText = data.datoEmp[0]; 
     //Rezago Social
     document.getElementById('reYear').innerText = data.datoRe[0];
     document.getElementById('indiceRe').innerText = data.datoRe[1];
@@ -627,3 +627,28 @@ const externalTooltipHandler = (context) => {
 
 // // Llamar a la función para iniciar la verificación periódica
 // startAutoRefresh();
+
+// OCULTAR MENÚ DE HAMBURGUESA
+
+document.addEventListener('DOMContentLoaded', function() {
+  const checkbox = document.getElementById('check');
+
+  // Función para ocultar el menú cuando se hace clic en un elemento <li>
+  function ocultarMenu() {
+    checkbox.checked = false; // Desmarca el checkbox para ocultar el menú
+  }
+
+  // Agregar evento de clic a los elementos <li>
+  const liElements = document.querySelectorAll('ul li');
+  liElements.forEach(function(li) {
+    li.addEventListener('click', function() {
+      ocultarMenu();
+    });
+  });
+
+  // Agregar evento de clic al label para ocultar el menú
+  const label = document.querySelector('label[for="check"]');
+  label.addEventListener('click', function() {
+    ocultarMenu();
+  });
+});
