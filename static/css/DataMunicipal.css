@@ -379,3 +379,33 @@ ESTILOS BOTON SUBIR*/
   background: none;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+
+/* Estilo del menú desplegable */
+select {
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+  width: 200px;
+  outline: none; /* Elimina el contorno azul en algunos navegadores cuando se enfoca */
+}
+
+/* Estilo de las opciones */
+select option {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Estilo para las opciones al hacer hover */
+select option:hover {
+  background-color: var(--section-etq-color);
+}
+
+/* Estilo para la opción seleccionada */
+select option:checked {
+  background-color: var(--top-bar-color);
+  color: #fff;
+}
