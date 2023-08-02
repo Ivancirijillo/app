@@ -27,7 +27,7 @@
 
 body{
     background-color: var(--main-bg-color);
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /*INICIO 
@@ -44,8 +44,16 @@ nav {
 
 .enlace{
   position: absolute;
-  padding: 20px 30px;
-  height: 20px;
+  padding: 7px 13px;
+  margin: 13px 17px;
+}
+
+.enlace:hover {
+  color: var(--top-bar-font-blanco);
+  background:var(--top-bar-color-dos);
+  line-height: normal;
+  border-radius: 4px;
+  transition: .5s;
 }
   
 nav ul {
@@ -367,14 +375,28 @@ ESTILOS BOTON SUBIR*/
   gap: 30px;
 }
 
+.contenido .datos{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--main-bg-color);
+  font-weight: lighter;
+  letter-spacing: -1px;
+}
+
 .datosv .year{
   font-family:'Trebuchet MS', Arial, sans-serif;
   font-size: 13px;
   padding: 5px 10px;
   line-height: 30px;
   border-radius: 4px;
-  color: var(--section-font-negro);
+  color: var(--section-font-color);
   background-color: var(--top-bar-color);
+}
+
+.contenido h2{
+  color: var(--main-bg-color);
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 1mm;
 }
 
 .datosv{
@@ -382,11 +404,9 @@ ESTILOS BOTON SUBIR*/
 }
 
 .municipio .datosv .categoria{
-  margin: 2%;
   display: flex;
   flex-wrap: wrap;
   background: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 
@@ -419,4 +439,10 @@ select option:checked {
   color: var(--top-bar-font-blanco);
 }
 
+
+@media (max-width: 800px){
+  section{
+    height: calc(74vh - 60px);
+  }
+}
 
