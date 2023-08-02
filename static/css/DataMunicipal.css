@@ -1,19 +1,18 @@
 :root {
   --main-bg-color:  #eeeeee;
   /*BARRA DE NAVEGACION*/
-  --top-bar-color:  #00AFAA;
+  --top-bar-color:  #00a9af;
   --top-bar-color-dos:  #006969;
-  --top-bar-font-color: #fff;
-  --top-bar-font-hover-color: #21446b;
+  --top-bar-font-blanco: #fff;
+  --top-bar-hover-color: #21446b;
   /*ENCABEZADO*/
   --header-overlay-color: rgba(0, 0, 0, 0.541); 
-  --header-font-color:  #fff;
   /*SECCIONES*/  
-  --section-font-color: #222222; 
+  --section-font-negro: #222222; 
   --section-bg--color:  #d7dcdf;
   --section-etq-color: #92c8ed;
   --sub-section-font-color: #182549;
-  --sub-section-bg--color:  #3f4b4400;
+  --sub-section-bg--color: #00AFAA;
   /*PRUEBAS*/
   --pruebas: #00AFAA;
 }
@@ -40,6 +39,7 @@ nav {
   background: var(--top-bar-color);
   height: 60px;
   width: 100%;
+  /* border: 1px solid black; */
 }
 
 .enlace{
@@ -60,7 +60,7 @@ nav ul li {
  }
   
 nav ul li a {
-  color: var(--top-bar-font-color);
+  color: var(--top-bar-font-blanco);
   font-size: 16px;
   padding: 7px 13px;
   border-radius: 3px;
@@ -68,8 +68,8 @@ nav ul li a {
 }
 
 li a.active, li a:hover{
-  color: var(--top-bar-font-color);
-  background:var(--top-bar-font-hover-color);
+  color: var(--top-bar-font-blanco);
+  background:var(--top-bar-hover-color);
   transition: .5s;
 }
   
@@ -110,7 +110,7 @@ section{
 .municipio{
   position: absolute;
   margin-top: 3%;
-  color: var(--header-font-color);
+  color: var(--top-bar-font-blanco);
   top:0;
   left: 90px;
 }
@@ -173,34 +173,38 @@ ESTILOS SECCIONES*/
 p{
   text-align: justify;
   margin: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 .secciones{
   display: inline-block;  
   flex-wrap: wrap;
   background: none;
-  background-color: gray;
+  background-color:  var(--section-bg--color); 
   width: 100%;
 }
 .secciones div.titulo{
     display: inline-block;  
-    background-color: #00AFAA;
+    background-color: var(--sub-section-bg--color);
+    /* background-color: #0086af; */
     width: 100%;
   }
   .secciones h1.tituloSec,
   .secciones h1.sub{
       display: inline-block;
-      background-color: #182549;
+      /* background-color: #182549; */
       margin: 1%;
       font-size: 23px;
     }
+    .secciones h1.sub{
+      color: var(--sub-section-font-color);
+    }
     .secciones span.year{
-      background-color: #21446b;
+      background-color: var(--top-bar-hover-color);
       margin: 1%;
       margin-top: 1%;
       padding: 5px;
       border-radius: 4px;
-      color: #fff;
+      color: var(--top-bar-font-blanco);
       font-size: 12px;
     }
     
@@ -208,18 +212,18 @@ p{
     margin: 2%;
     display: flex;
     flex-wrap: wrap;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   div.datosv{
       flex: 2;
-      background-color: #182549;
+      /* background-color: #182549; */
       margin: .5%;
       /* SE PUEDE OMITIR */
     }
       span.datos{
         font-size: 18px;
-        background-color: #fff;
+        /* background-color: #fff; */
       }
       h2.categoria{
         display: inline-block;
@@ -232,22 +236,26 @@ p{
         border-radius: 4px;
       }
     div.ContenedorGraficos{
-      background-color: #fff;
-      min-width: 60%;
+      /* background-color: #fff; */
+      /*o 60%*/
+      min-width: 70%;
       max-width: 100%;
     }
    /*  #textoGraficas{
       min-width: 30%; 
       min-width: 400px;
     }*/
-    canvas{
+    /* canvas{
       background-color: #92c8ed;
-    }
+    } */
     #lineas, #contenedorEco{
       min-width: 50%;
     }
     #graficoP1, #listanNG{
       max-width: 30%;
+    } 
+    #graficoP2{
+      max-width: 50%;
     } 
     #empleoG{
       min-width: 100%;
@@ -257,7 +265,6 @@ p{
     }
 /*FIN
 ESTILOS SECCIONES*/
-
 /*INICIO
 ESTILOS TABLA*/
 table {
@@ -270,7 +277,7 @@ table {
   margin: 1%;
 }
 
-th {
+ th {
 	text-align: left;
 }
 
@@ -281,7 +288,7 @@ td {
 }   
 
 th {
-  background-color: #92c8ed;
+  background-color: var(--section-etq-color);
 }
 
 tr {
@@ -289,7 +296,7 @@ tr {
     background-color: rgba(255,255,255,0.8);
   }
 }
-
+/*
 td {
   position: relative;
   &:hover {
@@ -305,10 +312,12 @@ td {
     }
   }
 }
-#tablaApo {
-  justify-content: center; /* Alinea horizontalmente al centro */
+
+table {
+  justify-content: center; 
   align-items: center;
-}
+} 
+*/
 
 /*FIN
 ESTILOS TABLA*/
@@ -330,7 +339,7 @@ ESTILOS BOTON SUBIR*/
   margin: 20px;
 	background-color: var(--top-bar-color);
   border-color: var(--top-bar-color);
-	color: #fff;
+	color: var(--top-bar-font-blanco);
 	transition-duration: 0.4s;
 	cursor: pointer;
   z-index: 2;
@@ -339,7 +348,7 @@ ESTILOS BOTON SUBIR*/
 .BSubir:hover{
 	background-color: var(--section-etq-color);
   border-color: var(--section-etq-color);
-	color: #fff;
+	color: var(--top-bar-font-blanco);
   font-weight: bold;
 }
 /*FIN
@@ -364,7 +373,7 @@ ESTILOS BOTON SUBIR*/
   padding: 5px 10px;
   line-height: 30px;
   border-radius: 4px;
-  color: var(--section-font-color);
+  color: var(--section-font-negro);
   background-color: var(--top-bar-color);
 }
 
@@ -385,18 +394,18 @@ ESTILOS BOTON SUBIR*/
 select {
   font-size: 16px;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--main-bg-color);
   border-radius: 4px;
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: var(--main-bg-color);
+  color: var(--section-font-negro);
   width: 200px;
   outline: none; /* Elimina el contorno azul en algunos navegadores cuando se enfoca */
 }
 
 /* Estilo de las opciones */
 select option {
-  background-color: #ffffff;
-  color: #333;
+  background-color: var(--main-bg-color);
+  color: var(--section-font-negro);
 }
 
 /* Estilo para las opciones al hacer hover */
@@ -407,5 +416,7 @@ select option:hover {
 /* Estilo para la opción seleccionada */
 select option:checked {
   background-color: var(--top-bar-color);
-  color: #fff;
+  color: var(--top-bar-font-blanco);
 }
+
+

@@ -72,7 +72,7 @@ function autoScroll(sectionId) {
     const sectionPosition = section.offsetTop;
     window.scrollTo({
         // top: sectionPosition+310,
-        top: sectionPosition,
+        top: sectionPosition-60,
         behavior: 'smooth'
     });
 }
