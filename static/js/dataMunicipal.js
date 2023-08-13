@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Error al realizar la consulta:', error);
     });
 });
-
+// Uso de la imagen del municipio dentro de la pagina
 document.getElementById('imagenM').href =  '/static/img_mun/'+contenido+'.png';
 document.getElementById('imagenMunicipio22').src =  '/static/img_mun/'+contenido+'.png';
 
@@ -66,7 +66,9 @@ function obtenerParametroURL(nombreParametro) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(nombreParametro);
 }
-
+/* autoScroll() : Función ejecutada desde el HTML que desplaza la vista hasta una seccion es particular
+  - sectionId: ID de la seccion dentro del HTML a la que se va a desplazar 
+  Ejemplo : autoScroll('RS')*/
 function autoScroll(sectionId) {
     const section = document.getElementById(sectionId);
     const sectionPosition = section.offsetTop;
@@ -76,7 +78,7 @@ function autoScroll(sectionId) {
         behavior: 'smooth'
     });
 }
-
+// insertarDatos()  : Al ejecutarse rellena los campos en HTML con datos del diccionario "data"
 function insertarDatos(){
     //Titulo
     document.getElementById('tituloM').innerText = data.nombre[0];
@@ -124,7 +126,13 @@ function insertarDatos(){
     document.getElementById('etiquetaLista').innerText =agregarComas(data.datoPa[2]);
   
 }
-
+/* graficaBa()  : Función que genera una gráfica de barras. 
+  - seccionID : ID del canvas en el HTML.
+  - etiquetas : Las etiquetas de los datos, se utilizan las variables del archivo variables.js, ejemplo "'Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres'"
+  - etiquetasDatasets : Son los años a los que pertenece la información.
+  - datos : Infomración para generar la gráfica.
+  Ejemplo : graficaBa('GEdad',etiquetas_graficas.indices, Object.keys(data.edad), Object.values(data.edad)); 
+ */
 function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
   const GraficoB = document.getElementById(seccionID);
   const colores = ["#005794", "#0083A2", "#00AFAA", "#2784BE","#4E66CC", "#8475D9",  "#C59CE5", "#F0C4F0", "#FAEBF3"];
@@ -169,7 +177,13 @@ function graficaBa(seccionID, etiquetas, etiquetasDatasets, datos) {
     }
   });
 }
-
+/* graficaLi()  : Función que genera una gráfica lineal
+  - seccionID : ID del canvas en el HTML.
+  - etiqueta  : Etiqueta para identificar la infromación. Ejemplo: Producto Interno Bruto
+  - datos : Infomración para generar la gráfica.
+  - etiquetas : Son los años a los que pertenece la información.
+  Ejemplo : graficaLi('GEco', 'Producto Interno Bruto', Object.values(data.pib).flat(), Object.keys(data.pib)); 
+ */
 function graficaLi (seccionID, etiqueta, datos, etiquetas ) {
   var GraficaLineal = document.getElementById(seccionID);
   var PIBanual = {
@@ -211,7 +225,13 @@ new Chart(GraficaLineal, {
 });
 
 }
-
+/* graficaPA()  : Función que genera una gráfica de pastel
+  - seccionID : ID del canvas en el HTML.
+  - etiquetas : Las etiquetas de los datos, se utilizan las variables del archivo variables.js, ejemplo "'Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres'"
+  - etiqueta : Etiqueta para identificar la infromación. Ejemplo: Población
+  - datos : Infomración para generar la gráfica.
+  Ejemplo : graficaPA('GGene',etiquetas_graficas.genero, 'Población', (data["sexo"][Object.keys(data.sexo)[Object.keys(data.sexo).length - 1]])); 
+ */
 function graficaPA(seccionID, etiquetas, etiqueta, datos) {
   const GraficoP = document.getElementById(seccionID);
   var datosPastel = {
@@ -255,7 +275,12 @@ function graficaPA(seccionID, etiquetas, etiqueta, datos) {
   });
 
 }
-
+/* graficaPA2()  : Función que genera una gráfica de pastel de dos niveles.
+  - seccionID : ID del canvas en el HTML.
+  - etiquetas : Las etiquetas de los datos, se utilizan las variables del archivo variables.js, ejemplo "'Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres'"
+  - datos : Infomración para generar la gráfica.
+  Ejemplo : graficaPA('GGene',etiquetas_graficas.genero, 'Población', (data["sexo"][Object.keys(data.sexo)[Object.keys(data.sexo).length - 1]])); 
+ */
 function graficaPA2(seccionID, etiquetas, datos) {
   const GraficoP2 = document.getElementById(seccionID);
   const data = {
@@ -329,21 +354,29 @@ function graficaPA2(seccionID, etiquetas, datos) {
   });
 
 }  
-
+// handleHover()  : Función que resalta una sección del gráfico al pasar el cursor sobre este. 
 function handleHover(evt, item, legend) {
   legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
     colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
   });
   legend.chart.update();
 }
-
+// handleHover()  : Función contraria a handleHover()
 function handleLeave(evt, item, legend) {
   legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
     colors[index] = color.length === 9 ? color.slice(0, -2) : color;
   });
   legend.chart.update();
 }
-
+/* seleccion()  : Crea un menu desplegable para cambiar la información de la gráfica según las opciones.
+  - seccionID : ID de select en el HTML.
+  - datosID : key del diccionario "data" de donde se obtendra la información.
+  - contenedorID  : Div en el que se encuentra el canvas correspondiente a la gráfica.
+  - graficaID : ID del canvas en el HTML.
+  - cadenaID  : Las etiquetas de los datos, se utilizan las variables del archivo variables.js, ejemplo "'Padrón hombres', 'Padrón mujeres', 'Lista nominal hombres', 'Lista nominal mujeres'"
+  - leyenda : Etiqueta para identificar la infromación. Ejemplo: Población
+  Ejemplo :  seleccion("opcionPob", "sexo", "contenedorPastel1", "GGene", "genero", "Población")
+ */
 function seleccion(seccionID, datosID, contenedorID, graficaID, cadenaID, leyenda){
   var select = document.getElementById(seccionID);
   //select.innerHTML = '<option disabled selected>Elije una opción</option>';
@@ -375,7 +408,12 @@ function seleccion(seccionID, datosID, contenedorID, graficaID, cadenaID, leyend
 
   }); 
 }
-
+/* cambiarT()  : Crea un menu desplegable para cambiar la información de la tabla según las opciones.
+  - seccionID : ID de select en el HTML.
+  - datosID : key del diccionario "data" de donde se obtendra la información.
+  - contenedorID  : Div en el que se encuentra la tablacorrespondiente a la gráfica.
+  Ejemplo :  cambiarT("opcionApo", "apoYears", "GApo")
+ */
 function cambiarT(seccionID, datosID, contenedorID){
   var select = document.getElementById(seccionID);
   //select.innerHTML = '<option disabled selected>Selecciona una opción</option>';
@@ -411,11 +449,17 @@ function cambiarT(seccionID, datosID, contenedorID){
 
   }); 
 }
-
+/* agregarComas() : Agrega comas a una cadena de tipo string.
+  - agregarComas  : Cadena de texto.
+  Ejemplo :  agregarComas(data.datoPa[2]);
+ */
 function agregarComas(numero) {
   return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
+/* generarTabla() : Genera una tabla a partir de una cadena de texto.
+  - CadenaA  : Cadena de texto, información que se mostrará en la base de datos.
+  Ejemplo :  generarTabla(Object.values(resultado).flat());
+ */
 function generarTabla(CadenaA) {
   // Obtener el contenedor de la tabla
   var tablaContainer = document.getElementById("GApo");
@@ -472,7 +516,10 @@ function generarTabla(CadenaA) {
   // Agregar la tabla al contenedor
   tablaContainer.appendChild(tabla);
 }
-
+/* consultaT() : Consulta nueva otra de la base de datos.
+  - dato  : Consulta a la abse de datos para obtener el la información utilizada en generarTabla()
+  Ejemplo :  generarTabla(Object.values(resultado).flat());
+ */
 function consultaT(dato) {
   return new Promise((resolve, reject) => {
       fetch('/consultas-tabla', {
@@ -488,9 +535,7 @@ function consultaT(dato) {
   });
 }
 
-
 /// configuracion para el tooltip
-
 const getOrCreateTooltip = (chart) => {
   let tooltipEl = chart.canvas.parentNode.querySelector('div');
 
@@ -516,7 +561,6 @@ const getOrCreateTooltip = (chart) => {
 
   return tooltipEl;
 };
-
 
 const externalTooltipHandler = (context) => {
   // Tooltip Element
@@ -601,14 +645,11 @@ const externalTooltipHandler = (context) => {
   tooltipEl.style.top = positionY + tooltip.caretY + 'px';
 };
 
-
-
-// // Antualizacion de pagina en cada redimencion de pantalla
-
+// Antualizacion de pagina en cada redimencion de pantalla
 // let windowWidth = window.innerWidth;
 // let windowHeight = window.innerHeight;
 
-// // Función para verificar si las dimensiones de la ventana han cambiado
+// Función para verificar si las dimensiones de la ventana han cambiado
 // function checkWindowDimensions() {
 //   const newWindowWidth = window.innerWidth;
 //   const newWindowHeight = window.innerHeight;
@@ -620,12 +661,12 @@ const externalTooltipHandler = (context) => {
 //   }
 // }
 
-// // Función para iniciar la verificación periódica
+// Función para iniciar la verificación periódica
 // function startAutoRefresh() {
 //   setInterval(checkWindowDimensions, 500); // Verificar cada 500 milisegundos (ajustable según tus necesidades)
 // }
 
-// // Llamar a la función para iniciar la verificación periódica
+// Llamar a la función para iniciar la verificación periódica
 // startAutoRefresh();
 
 // OCULTAR MENÚ DE HAMBURGUESA
