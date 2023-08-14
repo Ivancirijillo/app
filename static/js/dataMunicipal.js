@@ -518,7 +518,6 @@ function generarTabla(CadenaA) {
 }
 /* consultaT() : Consulta nueva otra de la base de datos.
   - dato  : Consulta a la abse de datos para obtener el la información utilizada en generarTabla()
-  Ejemplo :  generarTabla(Object.values(resultado).flat());
  */
 function consultaT(dato) {
   return new Promise((resolve, reject) => {
@@ -670,7 +669,6 @@ const externalTooltipHandler = (context) => {
 // startAutoRefresh();
 
 // OCULTAR MENÚ DE HAMBURGUESA
-
 document.addEventListener('DOMContentLoaded', function() {
   const checkbox = document.getElementById('check');
 

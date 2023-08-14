@@ -466,10 +466,17 @@ def crear_consulta(js):
     for i in (js["years"]):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
-
+#   tratamiento() : Inserta la información consultada de la base de datos en el diccionario para mandar al archivo DataMunicipal.js.
+#   - tupla : Datos obtenidos de una consulta.
+#   - diccionario : Diccionario que se manda al archivo datamunicipal.js
+#   - atributo : Identificador asignado a la información dentro del diccionario.
+#   Ejemplo : tratamiento(resultados, diccionario, secciones[0]) 
 def tratamiento(tupla, diccionario, atributo):
+    #conversion a cadena
     cadena = ','.join(str(elem) for elem in tupla)
+    #conversion a lista
     lista = cadena.split(',')
+    #Limpieza de la lista
     for i in range(len(lista)):
         lista[i] = lista[i].replace("(", "").strip()
         lista[i] = lista[i].replace(")", "").strip()
@@ -484,10 +491,21 @@ def tratamiento(tupla, diccionario, atributo):
 
     return 0
 
+#   tratamientoGraficas2() : Permite añadir información adicional a información poreviamente trabajada en  tratamientoGraficas().
+#   - tupla : Datos obtenidos de una consulta.
+#   - diccionario : Diccionario que se manda al archivo datamunicipal.js
+#   - atributo : Identificador asignado a la información dentro del diccionario.
+#   - salto : Número de atributos de la tabla de la base de datos de la que se trae la información en la consulta
+#   - inicio : A partir de cuál atributo se comienza a guardar información
+#   - longitud : Ultimo atributo se comienza a guardar información
+#   Ejemplo : tratamientoGraficas2(resultados, diccionario, secciones[6], 14, 8, 5)
 
 def tratamientoGraficas2(tupla, diccionario, atributo, salto, inicio, longitud):
+    #conversion a cadena
     cadena = ','.join(str(elem) for elem in tupla)
+    #conversion a lista
     lista = cadena.split(',')
+    #Limpieza de la lista
     for i in range(len(lista)):
         lista[i] = lista[i].replace("(", "").strip()
         lista[i] = lista[i].replace(")", "").strip()
@@ -503,10 +521,20 @@ def tratamientoGraficas2(tupla, diccionario, atributo, salto, inicio, longitud):
         diccionario [atributo][year].extend(datos)
     return 0
 
-
+#   tratamientoGraficas() : Inserta infromación estrucutrada en el diccionario,la información se estructura por tema y por año.
+#   - tupla : Datos obtenidos de una consulta.
+#   - diccionario : Diccionario que se manda al archivo datamunicipal.js
+#   - atributo : Identificador asignado a la información dentro del diccionario.
+#   - salto : Número de atributos de la tabla de la base de datos de la que se trae la información en la consulta
+#   - inicio : A partir de cuál atributo se comienza a guardar información
+#   - longitud : Ultimo atributo se comienza a guardar información
+#   Ejemplo : tratamientoGraficas(resultados, diccionario, encabezados[0], 44, 5, 10)
 def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
+    #conversion a cadena
     cadena = ','.join(str(elem) for elem in tupla)
+    #conversion a lista
     lista = cadena.split(',')
+    #Limpieza de la lista
     for i in range(len(lista)):
         lista[i] = lista[i].replace("(", "").strip()
         lista[i] = lista[i].replace(")", "").strip()
