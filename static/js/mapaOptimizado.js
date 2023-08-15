@@ -5,7 +5,7 @@ function wind_pag(ventana){
 
 const btnMenu = document.getElementById('regresar-menu');
 btnMenu.addEventListener('click', function (){
-    wind_pag('/')
+    wind_pag('/Menu')
 });
 
 /* MAIN */
