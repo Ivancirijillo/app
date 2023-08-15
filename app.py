@@ -131,6 +131,12 @@ def mapa():
 def model():
     # Redirigir a la página del Auxi
     return render_template("auxi.html")
+
+@app.route("/pdfModel",methods=["GET", "POST"])
+@login_required
+def model():
+    # Redirigir a la página del Auxi
+    return render_template("auxi.html")
      
 #Creando un Decorador
 @app.route('/Graficas', methods=['GET', 'POST'])
@@ -425,8 +431,10 @@ def impresiones():
 
 @app.route("/pdf")
 @csrf.exempt
+@csrf.exempt
 def abrir_pdf():
     global ruta_pdf
+    print("xd ",ruta_pdf)
     print("xd ",ruta_pdf)
     return send_file(ruta_pdf)
 #Detecta si se interrunpe el programa
@@ -502,6 +510,92 @@ def crear_consulta(js):
     for i in (js["years"]):
         consulta1 += f" yearV={i} or"
     return consulta1[:-2] + ") order by v.ClaveMunicipal"
+#   tratamiento() : Inserta la información consultada de la base de datos en el diccionario para mandar al archivo DataMunicipal.js.
+#   - tupla : Datos obtenidos de una consulta.
+#   - diccionario : Diccionario que se manda al archivo datamunicipal.js
+#   - atributo : Identificador asignado a la información dentro del diccionario.
+#   Ejemplo : tratamiento(resultados, diccionario, secciones[0]) 
+def tratamiento(tupla, diccionario, atributo):
+    #conversion a cadena
+    cadena = ','.join(str(elem) for elem in tupla)
+    #conversion a lista
+    lista = cadena.split(',')
+    #Limpieza de la lista
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    
+    if atributo=="apoYears":
+        #Elimina elementos vacios
+        lista=[elemento for elemento in lista if elemento != '']
+
+    diccionario [atributo]= lista
+
+    return 0
+
+#   tratamientoGraficas2() : Permite añadir información adicional a información poreviamente trabajada en  tratamientoGraficas().
+#   - tupla : Datos obtenidos de una consulta.
+#   - diccionario : Diccionario que se manda al archivo datamunicipal.js
+#   - atributo : Identificador asignado a la información dentro del diccionario.
+#   - salto : Número de atributos de la tabla de la base de datos de la que se trae la información en la consulta
+#   - inicio : A partir de cuál atributo se comienza a guardar información
+#   - longitud : Ultimo atributo se comienza a guardar información
+#   Ejemplo : tratamientoGraficas2(resultados, diccionario, secciones[6], 14, 8, 5)
+
+def tratamientoGraficas2(tupla, diccionario, atributo, salto, inicio, longitud):
+    #conversion a cadena
+    cadena = ','.join(str(elem) for elem in tupla)
+    #conversion a lista
+    lista = cadena.split(',')
+    #Limpieza de la lista
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    for i in range(0, len(lista), salto):
+        datos=[]
+        for j in range (i, (longitud+i), 1):
+            datos.append(lista[j+inicio])
+        year=lista[i+1]
+        if atributo not in diccionario:
+            diccionario[atributo] = {}  # Crear un diccionario anidado
+        diccionario [atributo][year].extend(datos)
+    return 0
+
+#   tratamientoGraficas() : Inserta infromación estrucutrada en el diccionario,la información se estructura por tema y por año.
+#   - tupla : Datos obtenidos de una consulta.
+#   - diccionario : Diccionario que se manda al archivo datamunicipal.js
+#   - atributo : Identificador asignado a la información dentro del diccionario.
+#   - salto : Número de atributos de la tabla de la base de datos de la que se trae la información en la consulta
+#   - inicio : A partir de cuál atributo se comienza a guardar información
+#   - longitud : Ultimo atributo se comienza a guardar información
+#   Ejemplo : tratamientoGraficas(resultados, diccionario, encabezados[0], 44, 5, 10)
+def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
+    #conversion a cadena
+    cadena = ','.join(str(elem) for elem in tupla)
+    #conversion a lista
+    lista = cadena.split(',')
+    #Limpieza de la lista
+    for i in range(len(lista)):
+        lista[i] = lista[i].replace("(", "").strip()
+        lista[i] = lista[i].replace(")", "").strip()
+        lista[i] = lista[i].replace("'", "").strip()
+        lista[i] = lista[i].replace("None", "0").strip()
+    #years=[]
+    for i in range(0, len(lista), salto):
+        datos=[]
+        for j in range (i, (longitud+i), 1):
+            datos.append(lista[j+inicio])
+        year=lista[i+1]
+        #years.append(year)
+        if atributo not in diccionario:
+            diccionario[atributo] = {}  # Crear un diccionario anidado
+        diccionario [atributo][year]= datos
+    #diccionario [atributo]["Years"]= years
+    return 0
 
 def tratamiento(tupla, diccionario, atributo):
     cadena = ','.join(str(elem) for elem in tupla)
@@ -582,6 +676,111 @@ def crear_diccionario(lista, diccionario):
             aux+=1
     return diccionario
 
+# SUBIR DATOS
+
+@app.route('/CargaArchivo')
+@login_required
+def carga():
+    if current_user.role == 'admin':
+        return render_template('cargaArchivo.html')
+    else:
+        return redirect(url_for('menu'))
+
+
+@app.route('/cargar', methods=['POST'])
+@csrf.exempt
+def cargar_archivo():
+    try:
+        archivo = request.files['archivo']
+        tablas = []
+        if archivo:
+            # Establecer la conexión con la base de datos
+            
+            conn = CONEXION(configuracion["database1"]["host"],
+                                configuracion["database1"]["port"],
+                                configuracion["database1"]["user"],
+                                configuracion["database1"]["passwd"],
+                                configuracion["database1"]["db"])
+            #cursor = conn.consultar_db2
+
+            # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
+            datos = pd.read_excel(archivo, sheet_name=None)
+            menssaje=""
+            aux=False
+            # Recorre todas las hojas y guarda los datos en la base de datos
+            for hoja, datos_hoja in datos.items():
+                # Convierte los datos de la hoja a una lista de tuplas
+                filas = [tuple(x) for x in datos_hoja.values]
+
+                # Genera el SQL para insertar los datos en la tabla correspondiente
+                tabla = hoja  # Nombre de la tabla en la base de datos
+                campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
+                marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
+                
+                if (tabla=="municipio"):
+                    # Construye la consulta SQL
+                    insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
+                    # texto de abajo es ejemplo apra mostrar una tabla
+                    #tablas.append(tabla)
+                    # Inserta los datos en la base de datos
+                    conn.consultar_db2(insert, filas)
+                    tablas.append(tabla)
+                    aux=True
+                if (tabla=="usuarios"):
+                    menssaje="No se pueden crear ni modificar usuarios."
+                    tablas.append(menssaje)
+                else:
+                    columnas2 = datos_hoja.columns[2:]
+                    cadena_SQL=""
+                    for i in columnas2:
+                        cadena_SQL += i + " = VALUES(" + i + "),"
+                    cadena_SQL=cadena_SQL[:-1] 
+                    # Construye la consulta SQL
+                    #ON Conflict para postgre
+                    insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores}) ON DUPLICATE KEY UPDATE {cadena_SQL}"
+                    
+                    # texto de abajo es ejemplo apra mostrar una tabla
+                    #tablas.append(tabla)
+                    # Inserta los datos en la base de datos
+                    conn.consultar_db2(insert, filas)
+                    tablas.append(tabla)
+            if menssaje=="":
+                menssaje = "Archivos cargados con exíto."
+            elif menssaje!="" and aux:
+                menssaje += "Los otros archivos fueron cargados con exíto."
+            #agregar se ha subido exitosamente
+            return render_template('cargaArchivo.html', mensaje = menssaje)
+        return render_template('cargaArchivo.html')
+    
+    except (pymysql.IntegrityError, pymysql.ProgrammingError) as error:
+        if isinstance(error, pymysql.IntegrityError):
+            return render_template('integrity_error.html', error=error, carga=tablas), 500
+        elif isinstance(error, pymysql.ProgrammingError):
+            return render_template('programming_error.html', error=error), 500
+
+# error 
+@app.errorhandler(Exception)
+def handle_error(error):
+    return render_template('programming_error.html', error=error), 500
+
+# error para AttributeError
+@app.errorhandler(AttributeError)
+def handle_attribute_error(error):
+    return render_template('attribute_error.html', error=error), 500
+
+@app.route('/archivoPDF')
+@csrf.exempt
+def descargar_archivo():
+    archivo = 'Documentos\Diccionario_de_datos.pdf'
+
+    return send_file(archivo, as_attachment=True)
+
+@app.route('/archivoExcel')
+@csrf.exempt
+def descargar_archivo2():
+    archivo = 'Documentos\Plantilla.xlsx'
+
+    return send_file(archivo, as_attachment=True)
 # SUBIR DATOS
 
 @app.route('/CargaArchivo')
