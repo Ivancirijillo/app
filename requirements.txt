@@ -1,6 +1,0 @@
-flask
-flask_sslify
-pandas
-matplotlib
-pymysql
-reportlab

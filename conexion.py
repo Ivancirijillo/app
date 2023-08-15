@@ -32,3 +32,16 @@ class CONEXION():
         conn.close()
         cursor1.close()
         return resultado
+    
+    def consultar_db2(self, consulta, filas):
+        #creamos conexion
+        conn2 = self.__crear_conexion()
+        cursor2 = conn2.cursor()
+        cursor2.executemany(consulta, filas)
+        # Guarda los cambios en la base de datos
+        conn2.commit()
+        # Cierra la conexión con la base de datos
+        conn2.close()
+        cursor2.close()
+        return 0
+    

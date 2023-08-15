@@ -1,0 +1,81 @@
+body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #00afaa;
+    color: #fff;
+    text-align: center;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5%;
+}
+
+.plantilla {
+    width: 80%;
+    height: 100%;
+    padding: 2%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.categoria{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulos {
+    text-align: center;
+}
+
+#Municipio {
+    font-size: 32px;
+    margin: 0;
+    color: #333;
+}
+
+#Categoria {
+    font-size: 24px;
+    margin: 0;
+    color: #666;
+    padding: 5px;
+}
+
+#Year {
+    font-size: 18px;
+    margin: 0;
+    color: #999;
+}
+
+#texto {
+    text-align: justify;
+    line-height: 1.6;
+}
+
+.r_ilustracion {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 500px;
+}
+
+
+
+
+
+  

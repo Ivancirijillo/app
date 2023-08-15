@@ -36,7 +36,7 @@
                 <br/>
                 <div class="buttons-con">
                     <div class="action-link-wrap">
-                        <a href="/" class="link-button link-back-button">REGRESAR</a>
+                        <a href="/Menu" class="link-button link-back-button">REGRESAR</a>
                     </div>
                     <div class="botonMostar">
                         <button onclick="mostrarocultar()" class="mostrarM">Selección rápida</button>
@@ -198,8 +198,8 @@
             </div>
         </main>        
         <div class="Fondo">
-            <button onclick="scrollPariba('Arribaxd')" class="BSubir">></button>
-            <button onclick="scrollPariba('Abajoxd')" class="BBajar">></button>
+            <button onclick="scrollPariba('Arribaxd')" class="BSubir"><img src="{{ url_for('static', filename ='img_menu/flecha.png') }}" alt=""></button>
+            <button onclick="scrollPariba('Abajoxd')" class="BBajar"><img src="{{ url_for('static', filename ='img_menu/flecha.png') }}" alt=""></button>
             <button onclick="location.reload()" class="recargar">Limpiar</button>
         </div>
         <script src="{{ url_for('static', filename ='js/index.js') }}"> </script>

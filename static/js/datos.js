@@ -190,7 +190,7 @@ function tarjeta_out (nom_municipio, path_n){
             elemento_path = elemento;
         }
     })
-
+    
     document.getElementById('municipio').textContent = "Selección - " + nom_municipio
     des_tarjeta();
     nom_munic = nom_municipio;
@@ -223,48 +223,48 @@ document.getElementById('btn_regresar').addEventListener('click', function(){
 
 var datos_mun;
 const e_path = {
-    'path42': datos_mun = new Array ('Atlacomulco', '15014'),
-    'path16': datos_mun = new Array ('Acambay', '15001'),
-    'path18': datos_mun = new Array ('Acolman', '15002'),
-    'path20': datos_mun = new Array ('Aculco', '15003'),
-    'path22': datos_mun = new Array ('Almoloya de Alquisiras', '15004'),
-    'path24': datos_mun = new Array ('Almoloya de Juárez', '15005'),
-    'path26': datos_mun = new Array ('Almoloya del Río', '15006'),
-    'path28': datos_mun = new Array ('Amanalco', '15007'),
-    'path30': datos_mun = new Array ('Amatepec', '15008'),
-    'path32': datos_mun = new Array ('Amecameca', '15009'),
-    'path34': datos_mun = new Array ('Apaxco', '15010'),
-    'path36': datos_mun = new Array ('Atenco', '15011'),
-    'path38': datos_mun = new Array ('Atizapán', '15012'),
-    'path40': datos_mun = new Array ('Atizapán de Zaragoza', '15013'),
-    'path44': datos_mun = new Array ('Atlautla', '15014'),
-    'path46': datos_mun = new Array ('Axapusco', '15016'),
-    'path48': datos_mun = new Array ('Ayapango', '15017'),
-    'path50': datos_mun = new Array ('Calimaya', '15018'),
-    'path52': datos_mun = new Array ('Capulhuac', '15019'),
-    'path54': datos_mun = new Array ('Chalco', '15025'),
-    'path56': datos_mun = new Array ('Chapa de Mota', '15026'),
-    'path58': datos_mun = new Array ('Chapultepec', '15027'),
-    'path60': datos_mun = new Array ('Chiautla', '15028'),
-    'path62': datos_mun = new Array ('Chicoloapan', '15029'),
-    'path64': datos_mun = new Array ('Chiconcuac', '15030'),
-    'path66': datos_mun = new Array ('Chimalhuacán', '15031'),
-    'path68': datos_mun = new Array ('Coacalco de Berriozábal', '15020'),
-    'path70': datos_mun = new Array ('Coatepec Harinas', '15021'),
-    'path72': datos_mun = new Array ('Cocotitlán', '15022'),
-    'path74': datos_mun = new Array ('Coyotepec', '15023'),
-    'path76': datos_mun = new Array ('Cuautitlán', '15024'),
-    'path78': datos_mun = new Array ('Cuautitlán Izcalli', '15121'),
-    'path80': datos_mun = new Array ('Donato Guerra', '15032'),
-    'path82': datos_mun = new Array ('Ecatepec de Morelos', '15033'),
-    'path84': datos_mun = new Array ('Ecatzingo', '15034'),
-    'path86': datos_mun = new Array ('Huehuetoca', '15035'),
-    'path88': datos_mun = new Array ('Hueypoxtla', '15036'),
-    'path90': datos_mun = new Array ('Huixquilucan', '15037'),
-    'path92': datos_mun = new Array ('Isidro Fabela', '15038'),
-    'path94': datos_mun = new Array ('Ixtapaluca', '15039'),
-    'path96': datos_mun = new Array ('Ixtapan de la Sal', '15040'),
-    'path98': datos_mun = new Array ('Ixtapan del Oro', '15041'),
+    'path42' : datos_mun = new Array ('Atlacomulco', '15014'),
+    'path16' : datos_mun = new Array ('Acambay', '15001'),
+    'path18' : datos_mun = new Array ('Acolman', '15002'),
+    'path20' : datos_mun = new Array ('Aculco', '15003'),
+    'path22' : datos_mun = new Array ('Almoloya de Alquisiras', '15004'),
+    'path24' : datos_mun = new Array ('Almoloya de Juárez', '15005'),
+    'path26' : datos_mun = new Array ('Almoloya del Río', '15006'),
+    'path28' : datos_mun = new Array ('Amanalco', '15007'),
+    'path30' : datos_mun = new Array ('Amatepec', '15008'),
+    'path32' : datos_mun = new Array ('Amecameca', '15009'),
+    'path34' : datos_mun = new Array ('Apaxco', '15010'),
+    'path36' : datos_mun = new Array ('Atenco', '15011'),
+    'path38' : datos_mun = new Array ('Atizapán', '15012'),
+    'path40' : datos_mun = new Array ('Atizapán de Zaragoza', '15013'),
+    'path44' : datos_mun = new Array ('Atlautla', '15015'),
+    'path46' : datos_mun = new Array ('Axapusco', '15016'),
+    'path48' : datos_mun = new Array ('Ayapango', '15017'),
+    'path50' : datos_mun = new Array ('Calimaya', '15018'),
+    'path52' : datos_mun = new Array ('Capulhuac', '15019'),
+    'path54' : datos_mun = new Array ('Chalco', '15025'),
+    'path56' : datos_mun = new Array ('Chapa de Mota', '15026'),
+    'path58' : datos_mun = new Array ('Chapultepec', '15027'),
+    'path60' : datos_mun = new Array ('Chiautla', '15028'),
+    'path62' : datos_mun = new Array ('Chicoloapan', '15029'),
+    'path64' : datos_mun = new Array ('Chiconcuac', '15030'),
+    'path66' : datos_mun = new Array ('Chimalhuacán', '15031'),
+    'path68' : datos_mun = new Array ('Coacalco de Berriozábal', '15020'),
+    'path70' : datos_mun = new Array ('Coatepec Harinas', '15021'),
+    'path72' : datos_mun = new Array ('Cocotitlán', '15022'),
+    'path74' : datos_mun = new Array ('Coyotepec', '15023'),
+    'path76' : datos_mun = new Array ('Cuautitlán', '15024'),
+    'path78' : datos_mun = new Array ('Cuautitlán Izcalli', '15121'),
+    'path80' : datos_mun = new Array ('Donato Guerra', '15032'),
+    'path82' : datos_mun = new Array ('Ecatepec de Morelos', '15033'),
+    'path84' : datos_mun = new Array ('Ecatzingo', '15034'),
+    'path86' : datos_mun = new Array ('Huehuetoca', '15035'),
+    'path88' : datos_mun = new Array ('Hueypoxtla', '15036'),
+    'path90' : datos_mun = new Array ('Huixquilucan', '15037'),
+    'path92' : datos_mun = new Array ('Isidro Fabela', '15038'),
+    'path94' : datos_mun = new Array ('Ixtapaluca', '15039'),
+    'path96' : datos_mun = new Array ('Ixtapan de la Sal', '15040'),
+    'path98' : datos_mun = new Array ('Ixtapan del Oro', '15041'),
     'path100': datos_mun = new Array ('Ixtlahuaca', '15042'),
     'path102': datos_mun = new Array ('Jaltenco', '15044'),
     'path104': datos_mun = new Array ('Tonanitla', '15125'),
@@ -312,7 +312,7 @@ const e_path = {
     'path188': datos_mun = new Array ('Temascaltepec', '15086'),
     'path190': datos_mun = new Array ('Temoaya', '15087'),
     'path192': datos_mun = new Array ('Tenancingo', '15088'),
-    'path194': datos_mun = new Array ('Tenancingo del Aire', '15089'),
+    'path194': datos_mun = new Array ('Tenango del Aire', '15089'),
     'path196': datos_mun = new Array ('Tenango del Valle', '15090'),
     'path198': datos_mun = new Array ('Teoloyucan', '15091'),
     'path200': datos_mun = new Array ('Teotihuacán', '15092'),
@@ -428,3 +428,8 @@ cont_btn_secc.addEventListener('click', (e) => {
         document.querySelector('.cont_btn_secc').style = ' ';
     }
 })
+
+
+function enviarDatos() {
+      window.location.href = '/DatosMunicipio?contenido=' + id_municipio;
+}

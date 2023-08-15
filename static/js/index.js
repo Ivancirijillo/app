@@ -1,26 +1,16 @@
-//pantalla completa
-// const elem = document.documentElement;
-// if (elem.requestFullscreen) {
-//      elem.requestFullscreen();
-//      } else if (elem.webkitRequestFullscreen) { /* Safari */
-//      elem.webkitRequestFullscreen();
-//      } else if (elem.msRequestFullscreen) { /* IE11 */
-//      elem.msRequestFullscreen();
-// }
-
-//tipos de busqiedas
+//Tipos de busqiedas
 const TIPOS = Object.freeze({
     VARIOS:"varios",
     RANGO:"rango",
     NOMBRE:"nombre"
 });
-//expresiones regulares
+//Expresiones regulares
 const EXPRESIONES = Object.freeze({
     ID_MUNICIPIO:/^15(?:0[0-9][0-9]|1[0-2][0-5])(?:,(?!$)15(?:0[0-9][0-9]|1[0-2][0-5]))*(?:-15(?:0[0-9][0-9]|1[0-2][0-5]))?$/,
     NOMBRE_MUNICIPIO:/^[a-zA-Z\s]{6,20}$/,
     SECCION_MUNICIPIO:/^(?:[1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9])(?:,(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9]))*(?:-(?!$)([1-9]|[0-9][0-9]{1,2}|[0-5][0-9]{3}|6[0-5][0-9][0-9]|66[0-3][0-7]|66[0-2][0-9]))?$/
 });
-//arregos
+//Arreglos
 const ARREGLOS = Object.freeze({
     PARTIDOS:["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"],
     COLORES:["#0453A5", "#FF0108","#FFB928", "#FD4146", "#00C65C", "#FF7400",   "#33BDBD", "#BA0005",  "#B632BF", "#FF018C", "#DC3892",    "#72017A", "#FF9945", "#FD4146", "#EF7CBB", "#6BDBDB", "#BB9A00" ],
@@ -122,6 +112,7 @@ buscador.addEventListener("blur",(e)=>{
         boton_buscador.style.borderColor = "#FF0108";
     }
 });
+
 //Eventos de buscador
 boton_buscador.addEventListener("click", (e)=>{
     e.preventDefault();
@@ -129,12 +120,11 @@ boton_buscador.addEventListener("click", (e)=>{
     let pass = Array.from(cbox).some((item)=>{
         return item.checked
     });
-    console.log(pass)
+
     if(pass){
         ventana_carga();
         analizar_datos();
     } else{
-        //alert("Seleccione un año");
         mostrarAlerta();
         setTimeout(function() {
             ocultarAlerta(); 
@@ -151,7 +141,7 @@ function mostrarAlerta() {
     const alerta = document.getElementById("mi-alert");
     alerta.style.display = "flex";
 }
-  
+
 function ocultarAlerta() {
     const alerta = document.getElementById("mi-alert");
     alerta.style.display = "none";
@@ -325,7 +315,7 @@ function encontrar_municipios(years, data_s){
 
         }
     }
-   
+
     return [municipios, seccion, municipios_seccion];
 }
 

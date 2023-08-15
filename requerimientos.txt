@@ -1,0 +1,8 @@
+flask
+flask_sslify
+pandas
+matplotlib
+pymysql
+reportlab
+flask_wtf
+flask_login

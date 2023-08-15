@@ -14,6 +14,7 @@ body{
     position: relative;
     /*background: linear-gradient(to right, #134e5e, #71b280); */
     background-color: #0A9292;
+    display: block;
     /*#00578A*/
     width: 100%;
     height: 100%;
@@ -55,6 +56,44 @@ body{
     padding: 5%;
 }
 
+.boton{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+	transition: .5s ease all;
+    z-index: 2;
+}
+
+.boton button:hover{
+    background-color: #005dff;
+    border-radius: 3px;
+    font-weight: normal;
+}
+
+.boton img{
+    align-self: center;
+    width: 16px;
+    height: 16px; 
+    
+}
+
+.boton button{
+    padding: 0.7%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    font-size: 17px;
+    margin-right: 2%;
+    cursor: pointer;
+    background-color: #0453A5;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+}
+
 .icon{
     position: relative;
     width: 300px;
@@ -78,8 +117,6 @@ body{
 .icon h2{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
-    /*background: white;*/
-    /*background: rgb(252, 252, 252);*/
     padding: 2%;
     border-radius: 10px;
 }

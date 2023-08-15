@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='css/mapaOptimizado.css') }}">
+    <link type="text/css" rel="shortcut icon" href="{{ url_for('static', filename ='img_menu/imapa.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename ='Leaflet/mapa.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   		crossorigin=""/>
+    <title>Mapa</title>
+</head>
+<body>
+    <header>
+        <div id="titulo-prin" class="titulo-prin">
+            <h1>República Mexicana</h1>
+        </div>
+        <div id="menu" class="menu-opciones">
+            <div id="opciones-mun" class="selec-municipios">
+                Municipios
+            </div>
+            <div id="regresar-menu" class="btn-menu">
+                <img src="{{ url_for('static', filename ='img_menu/power.png') }}" alt="">
+            </div>
+        </div>
+    </header>
+    <div id="cortina" class="oscuro"></div>
+    <main id="contenedor" class="contenedor-pricipal">
+        <section id="tarjeta" class="cont-tarjeta">
+            <div id="subtarjeta" class="tarjeta-titulo">
+                <h2>Seleccione el municipio</h2>
+            </div>
+            <div id="subtarjeta" class="tarjeta-listas">
+                <p>Año</p>
+                <div class="lista">
+                    <div id="contenido-anio" class="contenido-lista">
+                        <p>Seleccione un año</p><i>&gt;</i>
+                    </div>
+                    <ul id="opciones-ul-anio" class="ul-prim">
+                        <li>2020</li>
+                        <li>2021</li>
+                        <li>2022</li>
+                    </ul>
+                </div>
+                <p>Categoria</p>
+                <div class="lista">
+                    <div id="contenido-categoria" class="contenido-lista">
+                        <p>Seleccione un categoria</p><i>&gt;</i>
+                    </div>
+                    <ul id="opciones-ul-categoria" class="ul-prim">
+                        <li>Apoyos</li>
+                        <li>Delincuencia</li>
+                        <li>Padrón Electoral</li>
+                        <li>Pobreza</li>
+                        <li>Economía</li>
+                        <li>Empleo</li>
+                        <li>Población</li>
+                        <li>Rezago Social</li>
+                    </ul>
+                </div>
+                <div id="botones" class="btn-cont">
+                    <button id="reporte" class="btn-reporte">Reporte general</button>
+                    <button id="continuar" class="btn-continuar">Continuar</button>
+                </div>
+                <div class="btnMore">
+                    <button id="moreinfo" class="btn_mas_info" onclick="enviarDatos()">Más información</button>
+                </div>
+                <div class="v-emergen" id="v-emergen"><p>Seleccione una opción</p></div>
+            </div>
+            <div id="subtarjeta" class="tarjeta-tabla">
+                <button id="volver" class="btn-volver">&lt;</button>
+                <div id="filtro" class="filtro-info">
+                    <div id="tabla" class="tabla-datos">
+                    </div>
+                </div>
+                <button id="imprimir" class="btn-imprimir" onclick="printDiv('filtro')">Generar documento</button>
+            </div>
+            <div id="subtarjeta" class="tarjeta-titulo2">
+                <h2>Seleccione una sección</h2>
+            </div>
+            <div id="subtarjeta" class="tarjeta-seccion">
+                <p>Año</p>
+                <div class="lista">
+                    <div id="contenido-anio-2" class="contenido-lista">
+                        <p>Seleccione un año</p><i>&gt;</i>
+                    </div>
+                    <ul id="opciones-ul-anio-2" class="ul-prim">
+                        <li>2015</li>
+                        <li>2017</li>
+                        <li>2018</li>
+                        <li>2021</li>
+                    </ul>
+                </div>
+                <p>Categoria</p>
+                <div class="lista">
+                    <div id="contenido-categoria-2" class="contenido-lista">
+                        <p>Seleccione un categoria</p><i>&gt;</i>
+                    </div>
+                    <ul id="opciones-ul-categoria-2" class="ul-prim">
+                        <li>Votos Válidos</li>
+                        <li>Votos Nulos</li>
+                        <li>Votos Totales</li>
+                        <li>Lista Nominal</li>
+                    </ul>
+                </div>
+                <div id="botones" class="btn-cont">
+                    <button id="continuarSeccion" class="btn-continuar">Continuar</button>
+                </div>
+                <div class="v-emergen" id="v-emergen"><p>Seleccione una opción</p></div>
+            </div>
+        </section>
+        <section id="mapa" class="cont-mapa">
+            <div class="cont-fijo">
+                <div id="map"></div>
+                <!-- <iframe src="{{ url_for('static', filename ='Leaflet/mapa.html') }}" frameborder="0" title="myMap"></iframe> -->
+            </div>
+        </section>
+    </main>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   		crossorigin=""></script>
+    <script src="{{ url_for('static', filename ='js/mapaOptimizado.js') }}"></script>
+	<script src="{{ url_for('static', filename ='Leaflet/Mexico_data.js') }}"></script>
+    <script src="{{ url_for('static', filename ='Leaflet/SEC_MEX.js') }}"></script>
+    <script src="{{ url_for('static', filename ='Leaflet/mapa.js') }}"></script>
+</body>
+</html>
