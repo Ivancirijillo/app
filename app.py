@@ -132,12 +132,6 @@ def model():
     # Redirigir a la página del Auxi
     return render_template("auxi.html")
 
-@app.route("/pdfModel",methods=["GET", "POST"])
-@login_required
-def model():
-    # Redirigir a la página del Auxi
-    return render_template("auxi.html")
-     
 #Creando un Decorador
 @app.route('/Graficas', methods=['GET', 'POST'])
 @login_required
@@ -229,7 +223,7 @@ def consultas_pagina():
     consulta = configuracion.get("consulta_pagina",secciones[9]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     tratamiento(resultados, diccionario, secciones[9])
-   
+
     #Empleo
     consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
@@ -239,7 +233,7 @@ def consultas_pagina():
     consulta = configuracion.get("consulta_pagina",secciones[11]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     tratamiento(resultados, diccionario, secciones[11])
-   
+
     #DELINCUENCIA
     consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
@@ -492,6 +486,7 @@ def separar_por_partido(respuesta):
     return diccionario
 
 #Elimina la palabra Decimal los () y ' de la respuesta de la consulta
+# - respuesta: respuesta de la consulta solicitada
 def eliminar_decimal(respuesta):
     #Une los elementos de la respuesta convertidos en una cadena separada por ,
     cadena = ','.join(str(elem) for elem in respuesta)
@@ -676,111 +671,6 @@ def crear_diccionario(lista, diccionario):
             aux+=1
     return diccionario
 
-# SUBIR DATOS
-
-@app.route('/CargaArchivo')
-@login_required
-def carga():
-    if current_user.role == 'admin':
-        return render_template('cargaArchivo.html')
-    else:
-        return redirect(url_for('menu'))
-
-
-@app.route('/cargar', methods=['POST'])
-@csrf.exempt
-def cargar_archivo():
-    try:
-        archivo = request.files['archivo']
-        tablas = []
-        if archivo:
-            # Establecer la conexión con la base de datos
-            
-            conn = CONEXION(configuracion["database1"]["host"],
-                                configuracion["database1"]["port"],
-                                configuracion["database1"]["user"],
-                                configuracion["database1"]["passwd"],
-                                configuracion["database1"]["db"])
-            #cursor = conn.consultar_db2
-
-            # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
-            datos = pd.read_excel(archivo, sheet_name=None)
-            menssaje=""
-            aux=False
-            # Recorre todas las hojas y guarda los datos en la base de datos
-            for hoja, datos_hoja in datos.items():
-                # Convierte los datos de la hoja a una lista de tuplas
-                filas = [tuple(x) for x in datos_hoja.values]
-
-                # Genera el SQL para insertar los datos en la tabla correspondiente
-                tabla = hoja  # Nombre de la tabla en la base de datos
-                campos = ','.join(datos_hoja.columns)  # Nombres de las columnas
-                marcadores = ','.join(['%s'] * len(datos_hoja.columns))  # Marcadores de posición para los valores
-                
-                if (tabla=="municipio"):
-                    # Construye la consulta SQL
-                    insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
-                    # texto de abajo es ejemplo apra mostrar una tabla
-                    #tablas.append(tabla)
-                    # Inserta los datos en la base de datos
-                    conn.consultar_db2(insert, filas)
-                    tablas.append(tabla)
-                    aux=True
-                if (tabla=="usuarios"):
-                    menssaje="No se pueden crear ni modificar usuarios."
-                    tablas.append(menssaje)
-                else:
-                    columnas2 = datos_hoja.columns[2:]
-                    cadena_SQL=""
-                    for i in columnas2:
-                        cadena_SQL += i + " = VALUES(" + i + "),"
-                    cadena_SQL=cadena_SQL[:-1] 
-                    # Construye la consulta SQL
-                    #ON Conflict para postgre
-                    insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores}) ON DUPLICATE KEY UPDATE {cadena_SQL}"
-                    
-                    # texto de abajo es ejemplo apra mostrar una tabla
-                    #tablas.append(tabla)
-                    # Inserta los datos en la base de datos
-                    conn.consultar_db2(insert, filas)
-                    tablas.append(tabla)
-            if menssaje=="":
-                menssaje = "Archivos cargados con exíto."
-            elif menssaje!="" and aux:
-                menssaje += "Los otros archivos fueron cargados con exíto."
-            #agregar se ha subido exitosamente
-            return render_template('cargaArchivo.html', mensaje = menssaje)
-        return render_template('cargaArchivo.html')
-    
-    except (pymysql.IntegrityError, pymysql.ProgrammingError) as error:
-        if isinstance(error, pymysql.IntegrityError):
-            return render_template('integrity_error.html', error=error, carga=tablas), 500
-        elif isinstance(error, pymysql.ProgrammingError):
-            return render_template('programming_error.html', error=error), 500
-
-# error 
-@app.errorhandler(Exception)
-def handle_error(error):
-    return render_template('programming_error.html', error=error), 500
-
-# error para AttributeError
-@app.errorhandler(AttributeError)
-def handle_attribute_error(error):
-    return render_template('attribute_error.html', error=error), 500
-
-@app.route('/archivoPDF')
-@csrf.exempt
-def descargar_archivo():
-    archivo = 'Documentos\Diccionario_de_datos.pdf'
-
-    return send_file(archivo, as_attachment=True)
-
-@app.route('/archivoExcel')
-@csrf.exempt
-def descargar_archivo2():
-    archivo = 'Documentos\Plantilla.xlsx'
-
-    return send_file(archivo, as_attachment=True)
 # SUBIR DATOS
 
 @app.route('/CargaArchivo')

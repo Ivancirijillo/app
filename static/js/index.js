@@ -17,10 +17,6 @@ const ARREGLOS = Object.freeze({
     COLORES2:['#0453A5','#FF7400','#FFB928','#FF0108'],
 });
 
-// const PARTIDOS = ["PAN","PRI", "PRD", "PT", "PVEM", "MC", "NA", "MORENA", "ES", "VR", "PH", "PES", "PFD", "RSP", "FXM", "NAEM", "INDEP"];
-// const COLORES = ["#0453A5", "#FF0108","#FFB928", "#FD4146", "#00C65C", "#FF7400",   "#33BDBD", "#BA0005",  "#B632BF", "#FF018C", "#DC3892",    "#72017A", "#FF9945", "#FD4146", "#EF7CBB", "#6BDBDB", "#BB9A00" ];
-//const COLORES2 = ['#0453A5','#FF7400','#FFB928','#FF0108'];
-
 //let boton = document.querySelector(".buscar")
 let buscador = document.querySelector(".Ibuscar")
 let boton_buscador = document.querySelector(".Bbuscar")
@@ -30,14 +26,15 @@ boton_buscador.disabled = true
 //FUNCION DEL BOTON MOSTRAR Y OCULTAR
 const contenedordiv = document.querySelector('#mostrar')
 let isClicked = true
-
+// Muestra la ventana de opciones rapidas
 let mostrarocultar = function(){
+    //verifica si el boton fue presionado
     if(isClicked){
+        //Cambia el display del contenedor
         contenedordiv.style.display = 'flex';
         isClicked = false;
-        // boton_buscador.disabled = false;
-        // boton_buscador.style.borderColor = "#0453a5";
     }else{
+        //Cambia el display del contenedor para ocultarlo
         contenedordiv.style.display = 'none';
         isClicked = true;
     }
@@ -53,34 +50,27 @@ function ventana_carga(){
         document.getElementById('pop').classList.remove('active');
     }, 1000);
 }
-
-//Eventos para busquedas rapidas
+/**
+ * Eventos para busquedas rapidas
+ * Se agrega a todos los botones de la seleccion rapida la misma funcion
+ */
 botones_rapidos.forEach(element => {
+    //Evento de clcik para todos los elementos
     element.addEventListener("click",(e)=>{
+        //desactiva el evento por defecto
         e.preventDefault();
-
+        //Objeto json para enviar a flask
         json = {
             tipo: TIPOS.NOMBRE,
             datos: element.getAttribute("id"),
             years: ["2015","2017","2018","2021"]
         }
-        //console.log(json);
+        //Envia los datos al backend
         enviar_datos(json)
         .then(data_s => {
-            //console.log(Object.keys(data_s.datos));
             crear_grafica(data_s, TIPOS.NOMBRE);
         });
-
-        // if (buscador.value==""){
-        //     buscador.value = element.getAttribute("id");
-        //     boton_buscador.disabled = false;
-        //     boton_buscador.style.borderColor = "#0453A5";
-        // }
-        // else if (buscador.value!=""){
-        //     buscador.value += ","+element.getAttribute("id");
-        //     boton_buscador.disabled = false;
-        //     boton_buscador.style.borderColor = "#0453A5";
-        // }
+        //metodos para la carga de la grafica
         ventana_carga();
         scrollToSection("Abajoxd");
         mostrarocultar();
@@ -88,10 +78,18 @@ botones_rapidos.forEach(element => {
     });
 });
 
-//Eventos de validacion
+/**
+ * Eventos de validacion de datos de entrada
+*/
 buscador.addEventListener("input",(e)=>{
+    //Desactiva el evento por defecto
     e.preventDefault();
+    //Valor de entrada a buscar
     let dato = buscador.value
+    //Valida si el dato a buscar desactivando el boton de envio si es un
+    // - Nombre
+    // - ID
+    // - Seccion
     if(EXPRESIONES.ID_MUNICIPIO.test(dato) || EXPRESIONES.NOMBRE_MUNICIPIO.test(dato) || EXPRESIONES.SECCION_MUNICIPIO.test(dato)) { 
         boton_buscador.disabled = false;
         boton_buscador.style.borderColor = "#0453A5";
@@ -101,9 +99,18 @@ buscador.addEventListener("input",(e)=>{
     }
 });
 
+/**
+ * Eventos de validacion de datos de salida
+ */
 buscador.addEventListener("blur",(e)=>{
-    e.preventDefault()
+    //Desactiva el evento por defecto
+    e.preventDefault();
+    //Valor de entrada a buscar
     let dato = buscador.value;
+        //Valida si el dato a buscar desactivando el boton de envio si es un
+    // - Nombre
+    // - ID
+    // - Seccion
     if(EXPRESIONES.ID_MUNICIPIO.test(dato) || EXPRESIONES.NOMBRE_MUNICIPIO.test(dato) || EXPRESIONES.SECCION_MUNICIPIO.test(dato)) { 
         boton_buscador.disabled = false;
         boton_buscador.style.borderColor = "#0453A5";
@@ -113,18 +120,25 @@ buscador.addEventListener("blur",(e)=>{
     }
 });
 
-//Eventos de buscador
+/**
+ * Eventos de boton buscador
+ * Campura los datos del input para su analisis 
+ */
 boton_buscador.addEventListener("click", (e)=>{
+    //Desactiva el evento por defecto
     e.preventDefault();
+    //Objeto combobox que contiene los años
     let cbox = document.querySelectorAll(".cbox");
+    //verifica si por minimo hay un elemento seleccionado
     let pass = Array.from(cbox).some((item)=>{
         return item.checked
     });
-
+    //si hay uno elemento seleccionado entonces analiza los datos
     if(pass){
         ventana_carga();
         analizar_datos();
     } else{
+        //de lo contrario muestra un alerta sobre el problema
         mostrarAlerta();
         setTimeout(function() {
             ocultarAlerta(); 
@@ -132,22 +146,37 @@ boton_buscador.addEventListener("click", (e)=>{
     }
 });
 
-//Boton limpiar
+/**
+ * Boton limpiar
+ * Elimina los datos del input 
+*/
 document.getElementById('BLimpiar').addEventListener('click', function() {
     buscador.value= "";
 })
 
+/**
+ * Muestra una ventana de alerta que indica la falta 
+ * de un parametro para realizar una busqueda
+*/
 function mostrarAlerta() {
     const alerta = document.getElementById("mi-alert");
     alerta.style.display = "flex";
 }
-
+/**
+ * Oculta la ventana de alerta
+*/
 function ocultarAlerta() {
     const alerta = document.getElementById("mi-alert");
     alerta.style.display = "none";
 }
+/**
+ * Envia los datos analizados al backend.
+ * @param {object} data Son los datos a enviar, debe de ser un diccionario.
+ * @returns {object} Respuesta del servidor.
+ */
 
 function enviar_datos(data){
+    //Retorna el API fetch
     return fetch('/consultas-buscador', {
     method: 'POST',
     headers: {
@@ -155,116 +184,142 @@ function enviar_datos(data){
     },
     body: JSON.stringify(data)
     })
+    //Retorna la respuesta en formato json
     .then(response =>{
         return response.json()
     });
 }
 
+/**
+ * Analiza los datos del buscador para
+ * determinar el tipo de busqueda a realizar.
+ * Los tipos de busqueda son:
+ * -ID
+ * -Nombre
+ * -Seccion
+*/
 function analizar_datos(){
+    //Variables para guardar los datos del input
     let datos = buscador.value.toUpperCase();
     let datos_analizados = "";
     let tipo = "";
     let json = {};
-
+    //Determina si el input contiene una ",", en se caso es de tipo varios
     if(datos.indexOf(",") != -1){
         tipo = TIPOS.VARIOS;
+        //Separa los datos por la ","
         datos_analizados =  datos.split(",");
+        //Crea el diccionario con los datos analizados
         json = {
             tipo: tipo,
             datos: datos_analizados,
-            years:obtener_years()
+            years:obtener_years()//Obtiene los años a buscar
         }
         enviar_datos(json)
         .then(data_s => {
-            //console.log(data_s.datos);
+            //Crea la grafica
             crear_grafica(data_s);
         });
 
-    } else if(datos.indexOf("-") != -1){
+    }
+    //Determina si los datos estan separados por un "-", en ese caso es de tipo rango
+    else if(datos.indexOf("-") != -1){
         tipo = TIPOS.RANGO;
+        //Separa los datos por "-"
         datos_analizados =  datos.split("-");
+        //Crea el diccionario con los datos analizados
         json = {
             tipo: tipo,
             datos: datos_analizados,
-            years:obtener_years()
+            years:obtener_years()//Obtiene los años a buscar
         }
         enviar_datos(json)
         .then(data_s => {
-            //console.log(data_s.datos);
+            //Crea la grafica
             crear_grafica(data_s);
         });
-    } else { 
+    } 
+    //De lo contrario es de tipo Nombre
+    else { 
         tipo = TIPOS.NOMBRE
+        //Crea el diccionario con los datos analizados
         json = {
             tipo: tipo,
             datos: datos,
-            years:obtener_years()
+            years:obtener_years()//Obtiene los años a buscar
         }
         enviar_datos(json)
         .then(data_s => {
-            //console.log(data_s.datos);
+            //Crea la grafica
             crear_grafica(data_s);
         });
     }
 }
 
+/**
+ * Crea una grafica con los datos ingresados.
+ * @param {Object} data_s Son los datos recibidos del backend, debe de ser un diccionario. 
+ */
 function crear_grafica(data_s){
-
+    //Variables para guardar los datos de los municipios a buscar
     let municipios = [];
     let municipios_seccion = [];
     let seccion = false;
     let years = Object.keys(data_s.datos);
     let partidos = [];
+    //Variable que guarda los datos de las graficas
     let chartData = {};
     
-
+    //Separa la informacion de los municipios
     informacion_municipos = encontrar_municipios(years, data_s);
     municipios = informacion_municipos[0];
     seccion = informacion_municipos[1];
     municipios_seccion = informacion_municipos[2];
-    //let totalDatos = years.length * municipios.length;
-    console.log(municipios);
+    //Ordena los partidos y crea un diccionario con los nuevos datos ordenados
     partidos = ordenar_partidos(municipios, years, data_s);
     chartData = crear_diccionario(municipios, years, partidos);
-
+    //Guarda un conjunto de graficas
     let fragmento = document.createDocumentFragment();
+    //Guarda los municipios buscados
     let municipio = [];
-    let aux = 0;
-        for(let i=0;i<municipios.length;i++){
-            //municipio.splice();
-            // verificar el filtrado, incongruencias al encontrar municipios con nombre parecido.
-            //console.log(municipio);
-            //municipio = chartData.filter(item =>item.label.includes(municipios_seccion[i])); 
-            municipio = chartData.filter(item=> {
-                if(seccion){
-                    let ultimo_pe_espacio = item.label.substring(0,item.label.lastIndexOf(" "));
-                    let ultimo_espacio = ultimo_pe_espacio.lastIndexOf(" ");
-                    //console.log(item.label.substring(0,ultimo_espacio));
-                    return item.label.substring(0,ultimo_espacio).startsWith(municipios[i]) && item.label.substring(0,ultimo_espacio).endsWith(municipios[i])
-                }else{
-                    let longitud = item.label.indexOf("a")-1;
-                    return item.label.substring(0,longitud).startsWith(municipios[i]) && item.label.substring(0,longitud).endsWith(municipios[i])
+    //Recorre n cantidad de veces hasta completar la cantidad de municipios buscados
+    for(let i=0;i<municipios.length;i++){
+        //Filtra todos los municipios buscados(busca los municipios)
+        municipio = chartData.filter(item=> {
+            //Identifica si contiene la palabra seccion
+            if(seccion){
+                //busca el ultimo espacio an
+                let penultimo_espacio = item.label.substring(0,item.label.lastIndexOf(" "));
+                let ultimo_espacio = penultimo_espacio.lastIndexOf(" ");
+                //console.log(item.label.substring(0,ultimo_espacio));
+                return item.label.substring(0,ultimo_espacio).startsWith(municipios[i]) && item.label.substring(0,ultimo_espacio).endsWith(municipios[i])
+            }else{
+                //busca la letra a, debido a que todos los nombres tienen año en ellos
+                //restamos una posicion para eliminar el espacio
+                //ejemplo Acambay an
+                let longitud = item.label.indexOf("a")-1;
+                return item.label.substring(0,longitud).startsWith(municipios[i]) && item.label.substring(0,longitud).endsWith(municipios[i])
+            }
+        }),[];
+        //console.log(municipio);
+        let canvas = document.createElement("canvas");
+        canvas.setAttribute("class", "grafica0");
+        
+        let contexto = canvas.getContext("2d");
+        let char = new Chart(contexto, {
+                type: "bar",
+                data: {
+                labels: ARREGLOS.PARTIDOS,
+                datasets: municipio
                 }
-            }),[];
-            //console.log(municipio);
-            let canvas = document.createElement("canvas");
-            canvas.setAttribute("class", "grafica0");
-            
-            let contexto = canvas.getContext("2d");
-            let char = new Chart(contexto, {
-                    type: "bar",
-                    data: {
-                    labels: ARREGLOS.PARTIDOS,
-                    datasets: municipio
-                    }
-                });
-                canvas.style.position = "relative";
-                canvas.style.width="50px";
-                fragmento.appendChild(canvas)
-            
-            document.querySelector(".graficas").appendChild(fragmento);
-            municipio.splice();
-        }
+            });
+            canvas.style.position = "relative";
+            canvas.style.width="50px";
+            fragmento.appendChild(canvas)
+        
+        document.querySelector(".graficas").appendChild(fragmento);
+        municipio.splice();
+    }
 }
 
 function obtener_years(){
