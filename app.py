@@ -48,10 +48,11 @@ login_manager.init_app(app)
 # Configurar la vista de inicio de sesión
 login_manager.login_view = 'login'
 
+# Cargador de usuarios para la autenticación
 @login_manager.user_loader
 def load_user(user_id):
+    # Carga y devuelve el usuario correspondiente al id
     return TypeUser.load_user(user_id)
-#csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
@@ -68,8 +69,8 @@ def not_found(error):
 @app.route('/', methods=['GET', 'POST'])
 #@csrf.exempt
 def login():
-    global usuarioA
-    form = LoginForm()
+    global usuarioA # Variable para el usuario administrador
+    form = LoginForm() # Instancia del formulario de inicio de sesión
     if form.validate_on_submit():
         # Obtener los datos enviados por el formulario
         usern = form.username.data
@@ -86,10 +87,10 @@ def login():
         
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
-            role = user[0][3] #Obtener el rol del usuario
-            login_user(User(usern, role))
+            role = user[0][3] # Obtener el rol del usuario
+            login_user(User(usern, role)) # Iniciar sesión del usuario
             if role == 'admin':
-                TypeUser.set_usuarioA(True)
+                TypeUser.set_usuarioA(True) 
                 return redirect(url_for('carga'))  # Redirigir a la página de carga para el rol de administrador
             elif role == 'normal':
                 TypeUser.set_usuarioA(False)
@@ -580,11 +581,12 @@ def crear_diccionario(lista, diccionario):
     #print(diccionario)
     return diccionario
 
-# SUBIR DATOS
 
+# SUBIR DATOS
 @app.route('/CargaArchivo')
 @login_required
 def carga():
+    # Verifica el rol del usuaio actual
     if current_user.role == 'admin':
         return render_template('cargaArchivo.html')
     else:
@@ -599,15 +601,13 @@ def cargar_archivo():
         tablas = []
         if archivo:
             # Establecer la conexión con la base de datos
-            
             conn = CONEXION(configuracion["database1"]["host"],
                                 configuracion["database1"]["port"],
                                 configuracion["database1"]["user"],
                                 configuracion["database1"]["passwd"],
                                 configuracion["database1"]["db"])
-            #cursor = conn.consultar_db2
 
-            # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
+            # Lee el archivo Excel
             datos = pd.read_excel(archivo, sheet_name=None)
             menssaje=""
             aux=False
@@ -624,8 +624,7 @@ def cargar_archivo():
                 if (tabla=="municipio"):
                     # Construye la consulta SQL
                     insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
-                    # texto de abajo es ejemplo apra mostrar una tabla
-                    #tablas.append(tabla)
+                    
                     # Inserta los datos en la base de datos
                     conn.consultar_db2(insert, filas)
                     tablas.append(tabla)
@@ -639,12 +638,10 @@ def cargar_archivo():
                     for i in columnas2:
                         cadena_SQL += i + " = VALUES(" + i + "),"
                     cadena_SQL=cadena_SQL[:-1] 
+
                     # Construye la consulta SQL
-                    #ON Conflict para postgre
                     insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores}) ON DUPLICATE KEY UPDATE {cadena_SQL}"
                     
-                    # texto de abajo es ejemplo apra mostrar una tabla
-                    #tablas.append(tabla)
                     # Inserta los datos en la base de datos
                     conn.consultar_db2(insert, filas)
                     tablas.append(tabla)
@@ -656,6 +653,7 @@ def cargar_archivo():
             return render_template('cargaArchivo.html', mensaje = menssaje)
         return render_template('cargaArchivo.html')
     
+    # En caso que se generen excepciones
     except (pymysql.IntegrityError, pymysql.ProgrammingError) as error:
         if isinstance(error, pymysql.IntegrityError):
             return render_template('integrity_error.html', error=error, carga=tablas), 500
