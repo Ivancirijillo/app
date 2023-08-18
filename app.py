@@ -592,62 +592,6 @@ def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
     #diccionario [atributo]["Years"]= years
     return 0
 
-def tratamiento(tupla, diccionario, atributo):
-    cadena = ','.join(str(elem) for elem in tupla)
-    lista = cadena.split(',')
-    for i in range(len(lista)):
-        lista[i] = lista[i].replace("(", "").strip()
-        lista[i] = lista[i].replace(")", "").strip()
-        lista[i] = lista[i].replace("'", "").strip()
-        lista[i] = lista[i].replace("None", "0").strip()
-    
-    if atributo=="apoYears":
-        #Elimina elementos vacios
-        lista=[elemento for elemento in lista if elemento != '']
-
-    diccionario [atributo]= lista
-
-    return 0
-
-def tratamientoGraficas2(tupla, diccionario, atributo, salto, inicio, longitud):
-    cadena = ','.join(str(elem) for elem in tupla)
-    lista = cadena.split(',')
-    for i in range(len(lista)):
-        lista[i] = lista[i].replace("(", "").strip()
-        lista[i] = lista[i].replace(")", "").strip()
-        lista[i] = lista[i].replace("'", "").strip()
-        lista[i] = lista[i].replace("None", "0").strip()
-    for i in range(0, len(lista), salto):
-        datos=[]
-        for j in range (i, (longitud+i), 1):
-            datos.append(lista[j+inicio])
-        year=lista[i+1]
-        if atributo not in diccionario:
-            diccionario[atributo] = {}  # Crear un diccionario anidado
-        diccionario [atributo][year].extend(datos)
-    return 0
-
-def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
-    cadena = ','.join(str(elem) for elem in tupla)
-    lista = cadena.split(',')
-    for i in range(len(lista)):
-        lista[i] = lista[i].replace("(", "").strip()
-        lista[i] = lista[i].replace(")", "").strip()
-        lista[i] = lista[i].replace("'", "").strip()
-        lista[i] = lista[i].replace("None", "0").strip()
-    #years=[]
-    for i in range(0, len(lista), salto):
-        datos=[]
-        for j in range (i, (longitud+i), 1):
-            datos.append(lista[j+inicio])
-        year=lista[i+1]
-        #years.append(year)
-        if atributo not in diccionario:
-            diccionario[atributo] = {}  # Crear un diccionario anidado
-        diccionario [atributo][year]= datos
-    #diccionario [atributo]["Years"]= years
-    return 0
-
 #Crea un diccionario con los municipios
 def crear_diccionario(lista, diccionario):
     #Encuentra cuales son los municipios solicitados
