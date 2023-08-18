@@ -29,9 +29,11 @@
     <div id="cortina" class="oscuro"></div>
     <main id="contenedor" class="contenedor-pricipal">
         <section id="tarjeta" class="cont-tarjeta">
+            <!-- SUBTARJETAS. Apartado Titulo - Subtarjeta pos 0 -->
             <div id="subtarjeta" class="tarjeta-titulo">
                 <h2>Seleccione el municipio</h2>
             </div>
+            <!-- SUBTARJETAS. Apartado Filtro Municipio - Subtarjeta pos 1 -->
             <div id="subtarjeta" class="tarjeta-listas">
                 <p>Año</p>
                 <div class="lista">
@@ -69,6 +71,7 @@
                 </div>
                 <div class="v-emergen" id="v-emergen"><p>Seleccione una opción</p></div>
             </div>
+            <!-- SUBTARJETAS. Apartado Tabla(s) - Subtarjeta pos 2 -->
             <div id="subtarjeta" class="tarjeta-tabla">
                 <button id="volver" class="btn-volver">&lt;</button>
                 <div id="filtro" class="filtro-info">
@@ -77,9 +80,11 @@
                 </div>
                 <button id="imprimir" class="btn-imprimir" onclick="printDiv('filtro')">Generar documento</button>
             </div>
+            <!-- SUBTARJETAS. Apartado Titulo de Seccion - Subtarjeta pos 3 -->
             <div id="subtarjeta" class="tarjeta-titulo2">
                 <h2>Seleccione una sección</h2>
             </div>
+            <!-- SUBTARJETAS. Apartado Filtro Seccion - Subtarjeta pos 4 -->
             <div id="subtarjeta" class="tarjeta-seccion">
                 <p>Año</p>
                 <div class="lista">
@@ -113,6 +118,7 @@
         </section>
         <section id="mapa" class="cont-mapa">
             <div class="cont-fijo">
+                <!-- Integracion de la API Leaflet -->
                 <div id="map"></div>
                 <!-- <iframe src="{{ url_for('static', filename ='Leaflet/mapa.html') }}" frameborder="0" title="myMap"></iframe> -->
             </div>
