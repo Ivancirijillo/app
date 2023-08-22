@@ -1,11 +1,21 @@
+/**
+ * Funciones e interaciones del mapa
+ * @author MedioByte
+ */
+
 /* HEADER */
+
+/**
+ * Cambiar de ventana de acuerdo a una ruta valida
+ * @param {String} ventana Ruta a la que cambiara de ventana
+ */
 function wind_pag(ventana){
     window.location.href = ventana;
 }
 
 const btnMenu = document.getElementById('regresar-menu');
-btnMenu.addEventListener('click', function (){
-    wind_pag('/')
+btnMenu.addEventListener('click', function (){ //Regresa a la ventena
+    wind_pag('/Menu')
 });
 
 /* MAIN */
@@ -18,6 +28,10 @@ const divAnio = document.getElementById('contenido-anio'),
       textListaPAnio = divAnio.querySelector('p').textContent,
       textListaPCategoria = divCategoria.querySelector('p').textContent;
 
+/**
+ * Restaurar la clase secundario por el primario
+ * @param {Object} elem_cont Elemento del contenedor
+ */
 function restausarClases(elem_cont){
     let Aux = elem_cont.querySelectorAll('.li-seg')
     Aux.forEach(element => {
@@ -27,8 +41,25 @@ function restausarClases(elem_cont){
     elem_cont.classList.remove('ul-seg')
 }
 
-var click_divAnio = false, click_divCategoria = false;
+/**
+ * Despliegar elementos UL al que se desea visualizar el contenido de las opciones 
+ * @param {Object} elem_des Elemento a desplegar
+ * @param {Object} elem_remove Elemento a remover
+ */
+function desplegarUl(elem_des, elem_remove){
+    elem_remove.classList.add('ul-prim')
+    elem_remove.classList.remove('ul-seg')
+    elem_des.classList.toggle('ul-prim')
+    elem_des.classList.toggle('ul-seg')
+}
 
+/**
+ * Guadar las opciones seleccionadas del ul activo y remplaza el texto que contenga el div activo 
+ * @param {Object} divActivo Elemento DIV que se esta manipulando 
+ * @param {Object} ulActivo Elemento UL que se esta manipulando
+ * @param {String} textOrigin Texto Original del DIV activo
+ * @returns Opciones seleccionadas que contienen los elementos UL
+ */
 function opcSeleccionado(divActivo, ulActivo, textOrigin){
     var textSelec = ' ',
         contador = 0,
@@ -54,36 +85,38 @@ function opcSeleccionado(divActivo, ulActivo, textOrigin){
     return opciones
 }
 
-divAnio.addEventListener('click', function(){
-    ulCategoria.classList.add('ul-prim')
-    ulCategoria.classList.remove('ul-seg')
-    ulAnio.classList.toggle('ul-prim')
-    ulAnio.classList.toggle('ul-seg')
+divAnio.addEventListener('click', function(){ //Despliega el UL del DIV Año
+    desplegarUl(ulAnio, ulCategoria)
 })
 
-divCategoria.addEventListener('click', function(){
-    ulAnio.classList.add('ul-prim')
-    ulAnio.classList.remove('ul-seg')
-    ulCategoria.classList.toggle('ul-prim')
-    ulCategoria.classList.toggle('ul-seg')
+divCategoria.addEventListener('click', function(){ //Despliega el UL del DIV Categoria
+    desplegarUl(ulCategoria, ulAnio)
 })
 
 var anio = [], categoria = ' ';
 ulAnio.addEventListener('click', (e) => {
     if(e.target && e.target.tagName === 'LI'){
-        e.target.classList.toggle('li-seg');
+        e.target.classList.toggle('li-seg'); //Marca las opciones elegidas del UL
     }
-    anio = opcSeleccionado(divAnio, ulAnio, textListaPAnio)
+    anio = opcSeleccionado(divAnio, ulAnio, textListaPAnio) //Guarda la respuesta de la funcion en una variable especifica del año
 })
 
 ulCategoria.addEventListener('click', (e) => {
     if(e.target && e.target.tagName === 'LI'){
-        e.target.classList.toggle('li-seg');
+        e.target.classList.toggle('li-seg'); //Marca las opciones elegidas del UL
     }
-    categoria = opcSeleccionado(divCategoria, ulCategoria, textListaPCategoria)
+    categoria = opcSeleccionado(divCategoria, ulCategoria, textListaPCategoria) //Guarda la respuesta de la funcion en una variable especifica de la categoria
 })
 
 /* SUBTARJETA TABLA */
+
+/**
+ * Crear una tabla que es guardado en una estructura para que sea leido en html en la varibale "templete", la ultima posicion 
+ * contiene la direccion que tomara la tabla (Vertical u Horizantal)
+ * @param {Array} tablas Contenido de la tabla 
+ * @param {Array} cabecera Cabezales de la tabla
+ * @returns Estrutura completa de la tabla a mostar o un titulo 
+ */
 function tabla_crear(tablas, cabecera){
     var template = '';
     direccion = cabecera[cabecera.length-1];
@@ -119,6 +152,11 @@ function tabla_crear(tablas, cabecera){
     return template;
 }
 
+/**
+ * Enviar informacion en formato JSON a python y que devulva una respuesta, respuesta que es procesado en python
+ * @param {Object} data Datos a enviar al python con json 
+ * @returns Respuesta de python a la solicitud
+ */
 function enviar_json (data){
     return fetch('/impresiones', {
         method: 'POST',
@@ -130,12 +168,21 @@ function enviar_json (data){
     .then(response => {return response.json()})
 }
 
-var comp = 0
-function cambiarTarjeta(){
-    subTarjetas[1].classList.toggle('seg-tarjeta')
-    subTarjetas[2].classList.toggle('seg-tarjeta')
-    if(comp == 1) cambioTarjeta(4)
+/**
+ * Muestrar una ventana de emergencia flotante que el elemento especifica en su contenido un aviso en un tiempo especifico
+ * @param {Object} elem_emerg Elemento emergente a mostrar
+ * @param {Number} tiempo Tiempo de espera
+ */
+function avisoEmergente(elem_emerg, tiempo){
+    elem_emerg.classList.toggle('v-emergen');
+    elem_emerg.classList.toggle('v-emergen_validado_R');
+    setTimeout(() => {
+        elem_emerg.classList.toggle('v-emergen_validado_R');
+        elem_emerg.classList.toggle('v-emergen');
+    }, tiempo);
 }
+
+var comp = 0
 
 const btnContinuar = document.getElementById('continuar'),
       tabla = document.getElementById('tabla'),
@@ -153,7 +200,7 @@ btnContinuar.addEventListener('click', function (){
     var cabecera_consul_Pob = new Array ("Población total", "Edad mediana", "Habla lengua indígena", "Personas con discapacidad", 
                                         "Afiliados al sistema de seguridad social", "No Afiliado", "Hogares", "Con Limitación Alimentaria","Sin Limitación Alimentaria", "V");
     var cabecera_consul_R = new Array ("Coeficiente de Gini", "Índice de Rezago Social", "Grado de Rezago Social", "Lugar Nacional", "V");
-    const fil_cabecera = {
+    const fil_cabecera = { //Filtro de los cabezales, solo se mostraran los seleccionados
         'Apoyos': cabecera_consul_A,
         'Delincuencia': cabecera_consul_D,
         'Padrón Electoral': cabecera_consul_Pa,
@@ -164,12 +211,12 @@ btnContinuar.addEventListener('click', function (){
         'Rezago Social': cabecera_consul_R
     }
 
-    const elementos = new Array(anio.length);
+    const elementos = new Array(anio.length);//Variable de arreglo con tamaño al de los años seleccionados
     
-    if(anio.length != 0 && categoria.length != 0){
+    if(anio.length != 0 && categoria.length != 0){ //Podra ejecutarse solo en caso de haber variables seleccionados
         for (let valorAnio of anio){
 
-            elementos[anio.indexOf(valorAnio)] = new Array(categoria.length+1);
+            elementos[anio.indexOf(valorAnio)] = new Array(categoria.length+1); //Variable de arreglo con tamaño al de las categorias seleccionados
             elementos[anio.indexOf(valorAnio)][0] = '<p class="pAnio">'+valorAnio+'</p>';
 
             for (let valorCategoria of categoria){
@@ -179,10 +226,10 @@ btnContinuar.addEventListener('click', function (){
                     tipo_c: valorCategoria,
                     year: valorAnio,
                     id: id_municipio,
-                    modo: ' ' //if(data.modo != "impresion")
+                    modo: ' ' //if(data.modo != "impresion") //Solo se desea obtener informacion
                 }
                 console.log(data)
-                enviar_json(data)
+                enviar_json(data) //Envia el objeto para tener una respuesta y manipular la informacion recibida
                 .then(dataRespuesta => {
                     let cosultaDB = dataRespuesta["consulta"];
                     console.log(dataRespuesta["consulta"])
@@ -191,8 +238,8 @@ btnContinuar.addEventListener('click', function (){
             }
         }
         
-        setTimeout(() => {
-            tabla.innerHTML = ' '
+        setTimeout(() => { //Hace espera de medio segundo para terminar de cargar la informacion que es enviada de python
+            tabla.innerHTML = ' ' //Vacia la variable en caso de ya haber tenido informacion
             for(let i = 0; i < elementos.length; i++){
                 for(let j = 0; j < elementos[i].length; j++){
                     tabla.innerHTML += elementos[i][j]
@@ -200,26 +247,27 @@ btnContinuar.addEventListener('click', function (){
             }
         }, 500);
 
-        cambiarTarjeta()
-        comp = 0
-    }else{
-        ventanaEmergente.classList.toggle('v-emergen');
-        ventanaEmergente.classList.toggle('v-emergen_validado_R');
-        setTimeout(() => {
-            ventanaEmergente.classList.toggle('v-emergen_validado_R');
-            ventanaEmergente.classList.toggle('v-emergen');
-        }, 3000);
+        cambioTarjeta(2) // Cambia de tarjeta de Filtro al de Tablas
+        comp = 0 // Variable campo que confirma que el filtro fue del Municipio
+    }else{ //En caso de no haber años o categorias selecionadas mostrara un ventana emergente
+        avisoEmergente(ventanaEmergente, 3000)
     }
 });
 
 const btnVolver = document.getElementById('volver')
 btnVolver.addEventListener('click', function (){
-    cambiarTarjeta()
-    restausarClases(ulAnio)
-    restausarClases(ulCategoria)
+    cambioTarjeta(1) //Regresa al filtro de Municipio
+    if(comp == 1) cambioTarjeta(4) //Vuelve al filtro de Seccion solo en caso de que el campo sea 1
+
+    ulAnio.classList.remove('ul-prim')
+    ulAnio.classList.add('ul-seg')
+    desplegarUl(ulAnio, ulCategoria) //Se aplico una forma de mantener las opciones activas del ultimo filtrado para la parte de Municipio
+    ulAnio2.classList.remove('ul-prim')
+    ulAnio2.classList.add('ul-seg')
+    desplegarUl(ulAnio2, ulCategoria2)  //Se aplico una forma de mantener las opciones activas del ultimo filtrado para la parte de Seccion
 });
 
-/* SUBTARJETA lISTAS SECCIONES */
+/* SUBTARJETA SECCIONES */
 const divAnio2 = document.getElementById('contenido-anio-2'),
       divCategoria2 = document.getElementById('contenido-categoria-2'),
       ulAnio2 = document.getElementById('opciones-ul-anio-2'),
@@ -227,34 +275,28 @@ const divAnio2 = document.getElementById('contenido-anio-2'),
       textListaPAnio2 = divAnio2.querySelector('p').textContent,
       textListaPCategoria2 = divCategoria2.querySelector('p').textContent;
 
-divAnio2.addEventListener('click', function(){
-    restausarClases(ulCategoria2)
-    ulAnio2.classList.toggle('ul-prim')
-    ulAnio2.classList.toggle('ul-seg')
+divAnio2.addEventListener('click', function(){  //Despliega el UL del DIV Año
+    desplegarUl(ulAnio2, ulCategoria2)
 })
 
-divCategoria2.addEventListener('click', function(){
-    restausarClases(ulAnio2)
-    ulCategoria2.classList.toggle('ul-prim')
-    ulCategoria2.classList.toggle('ul-seg')
+divCategoria2.addEventListener('click', function(){ //Despliega el UL del DIV Categoria
+    desplegarUl(ulCategoria2, ulAnio2)
 })
 
 var anio2 = [], categoria2 = ' ';
 ulAnio2.addEventListener('click', (e) => {
     if(e.target && e.target.tagName === 'LI'){
-        e.target.classList.toggle('li-seg');
+        e.target.classList.toggle('li-seg'); //Marca las opciones elegidas del UL
     }
-    anio2 = opcSeleccionado(divAnio2, ulAnio2, textListaPAnio2)
+    anio2 = opcSeleccionado(divAnio2, ulAnio2, textListaPAnio2) //Guarda la respuesta de la funcion en una variable especifica del año
 })
 
 ulCategoria2.addEventListener('click', (e) => {
     if(e.target && e.target.tagName === 'LI'){
-        e.target.classList.toggle('li-seg');
+        e.target.classList.toggle('li-seg'); //Marca las opciones elegidas del UL
     }
-    categoria2 = opcSeleccionado(divCategoria2, ulCategoria2, textListaPCategoria2)
+    categoria2 = opcSeleccionado(divCategoria2, ulCategoria2, textListaPCategoria2) //Guarda la respuesta de la funcion en una variable especifica de la categoria
 })
-
-
 
 const continuarSeccion = document.getElementById('continuarSeccion');
 continuarSeccion.addEventListener('click', function (){
@@ -264,9 +306,9 @@ continuarSeccion.addEventListener('click', function (){
         'Votos': cabecera_consul_V
     }
 
-    const elementos = new Array(anio2.length);
+    const elementos = new Array(anio2.length); //Variable de arreglo con tamaño al de los años seleccionados
     
-    if(anio2.length != 0 /*&& categoria.length != 0*/){
+    if(anio2.length != 0 /*&& categoria.length != 0*/){ //Podra ejecutarse solo en caso de haber variables seleccionados
         for (let valorAnio of anio2){
 
             // elementos[anio.indexOf(valorAnio)] = new Array(categoria.length+1);
@@ -281,18 +323,14 @@ continuarSeccion.addEventListener('click', function (){
                     id: id_seccion,
                     modo: ' ' //if(data.modo != "impresion")
                 }
-                console.log(data)
-                enviar_json(data)
+                enviar_json(data)  //Envia el objeto para tener una respuesta y manipular la informacion recibida
                 .then(dataRespuesta => {
                     let cosultaDB = dataRespuesta["consulta"];
-                    console.log(cosultaDB)
                     elementos[anio2.indexOf(valorAnio)]/*[categoria.indexOf(valorCategoria)+1]*/ += '<table>'+tabla_crear(cosultaDB, fil_cabecera['Votos'])+'</table>';
                     
                 });
             // }
         }
-
-        console.log(elementos)
 
         setTimeout(() => {
             tabla.innerHTML = ' '
@@ -301,17 +339,11 @@ continuarSeccion.addEventListener('click', function (){
             }
         }, 500);
 
-        subTarjetas[4].classList.toggle('seg-tarjeta')
-        subTarjetas[2].classList.toggle('seg-tarjeta')
-        comp = 1
-    }else{
-        console.log("entra2")
-        ventanaEmergente.classList.toggle('v-emergen');
-        ventanaEmergente.classList.toggle('v-emergen_validado_R');
-        setTimeout(() => {
-            ventanaEmergente.classList.toggle('v-emergen_validado_R');
-            ventanaEmergente.classList.toggle('v-emergen');
-        }, 3000);
+        cambioTarjeta(2) // Cambia de tarjeta de Filtro al de Tablas
+
+        comp = 1 // Variable campo que confirma que el filtro fue de la Seccion 
+    }else{ //En caso de no haber años o categorias selecionadas mostrara un ventana emergente
+        avisoEmergente(ventanaEmergente2, 3000)
     }
 });
 

@@ -1,14 +1,16 @@
-let map = L.map('map').setView([19.350,-99.574],9)
+let map = L.map('map').setView([19.350,-99.574],9) //Punto incial de visualizacion del mapa
 
 //Agregar tilelAyer mapa base desde openstreetmap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  minZoom: 6,
-  maxZoom: 11,
+  minZoom: 6, //Minimo de zoom
+  maxZoom: 11, //Maximo de zoom
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+//Limitar los rangos de longitud y latitud en el API
 map.on('mousemove', function(e){
   var long = e.latlng.lng, latt = e.latlng.lat
+  //Si sobrepasa los valores regresara al punto central del mapa de estos mismos rangos
   if (latt >= 33.00 || latt <= 13.00 || long <= -118.00 || long >= -85.00) map.flyTo([23.00, -101.00], 6)
 })
 
@@ -42,7 +44,7 @@ btnRegresarM.update = function(props){
   this._button.innerHTML = '<button class="botonvolver" id="botonvolver">Volver</button>' 
 };
 
-// Crear la funcion para mostrar la simbologia de acuerdo al campo TOT_VIVIEN
+// Crear la funcion para mostrar la simbologia de acuerdo al campo
 function style(feature){
   return {
     fillColor: '#1B998B',
@@ -82,22 +84,26 @@ const subTarjetas = document.querySelectorAll('#subtarjeta'),
 function explandirTarjeta(){
   tarjeta.classList.add('tarjeta-seg')
 
-  cambioTarjeta(1)
+  cambioTarjeta(1) //Muestra la primera tarjeta - Filtrado - Municipio
 
-  restausarClases(ulAnio)
-  restausarClases(ulCategoria)
-  divAnio.querySelector('p').textContent = textListaPAnio;
+  restausarClases(ulAnio) //Vuelve a las clases que originalmente fueron colocados
+  restausarClases(ulCategoria) //para no tener opciones marcadas en caso de haber puesto alguno
+
+  divAnio.querySelector('p').textContent = textListaPAnio; //Revierte el texto para dar seleccion de estas opciones en Año
   divAnio.classList.remove('contenido-lista-seg')
-  divCategoria.querySelector('p').textContent = textListaPCategoria;
+  divCategoria.querySelector('p').textContent = textListaPCategoria; //Revierte el texto para dar seleccion de estas opciones en Categoria
   divCategoria.classList.remove('contenido-lista-seg')
 }
 
+/**
+ * Cambiar de tarjeta a vizualizar: 0.Titulo inicial 1.Filtro Municipio 2.Tablas 3. Titulo Seccion 4.Filtro Seccion 
+ * @param {Number} pos Posicion de la tarjeta a mostrar
+ */
 function cambioTarjeta(pos){
   subTarjetas[0].style.display = 'none';
-  subTarjetas[1].classList.remove('seg-tarjeta')
-  subTarjetas[2].classList.remove('seg-tarjeta')
-  subTarjetas[3].classList.remove('seg-tarjeta')
-  subTarjetas[4].classList.remove('seg-tarjeta')
+  subTarjetas.forEach(element => {
+    element.classList.remove('seg-tarjeta')
+  })
 
   subTarjetas[pos].classList.add('seg-tarjeta')
 }
@@ -107,6 +113,11 @@ var id_municipio;
 var num;
 var dbl_clic = false
 
+/**
+ * Marcar el Layer que se esta utilizando para ser manipulado, en este se obtiene la informacion del layer para hacer su correcto
+ * filtrado dependiendo del identificador
+ * @param {Element} e Elemento de la capa seleccionada
+ */
 function selectLayer(e){
   var layer = e.target;
   id_municipio = layer.feature.properties.CVEGEO
@@ -137,6 +148,7 @@ function selectLayer(e){
     botonvolver.addEventListener('click', function (){
       explandirTarjeta()
 
+      //Las capas son rempalazadas por las de municipios
       map.removeControl(btnRegresarM);
       map.removeLayer(Seccionesjs);
       mexicoJS = L.geoJson(mexico,{
@@ -145,8 +157,9 @@ function selectLayer(e){
       }).addTo(map);
     });
 
-    cambioTarjeta(3)
+    cambioTarjeta(3) // Cambia de tarjeta de Titulo al de Seccion
 
+    //Las capas son rempalazadas por las de secciones
     Seccionesjs = L.geoJson(Secciones_MEX,{
       style: styleSec,
       onEachFeature: cadaCaracteristica 
@@ -157,6 +170,11 @@ function selectLayer(e){
   layerX = e.target;
 }
 
+/**
+ * Aplicar un recorrido de las capas de los municipios y tomar en cuenta al que se le haya dado click
+ * @param {*} feature 
+ * @param {*} layer 
+ */
 function onEachFeature(feature, layer){
   layer.on({
     click: selectLayer

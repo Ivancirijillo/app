@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-/* SCROLL */
+/* ESTILOS DEL SCROLL */
 ::-webkit-scrollbar {
 	width: 10px;
 	height: 10px;
@@ -81,7 +81,10 @@ header{
 	width: 45px;
 }
 
-/* CORTINA */
+/* CORTINA 
+	La cortina se encuentra sin utilizar solo hasta resaltar un apartado y colocar
+	el resto detras de este 
+*/
 .oscuro{
 	background: rgba(0, 0, 0, 0.25);
 	position: absolute;
@@ -110,6 +113,7 @@ header{
 	transition: 1s ease .5s all;
 }
 
+/* Recuadros del contenido central */
 .cont-tarjeta{
 	position: relative;
     background: rgba(255, 255, 255, 0.45);
@@ -129,8 +133,7 @@ header{
 }
 
 /* CONTENEDOR - TARJETAS */
-/* #subtarjeta{
-} */
+
 /* TARJETA - TITULO */
 .tarjeta-titulo, .tarjeta-titulo2{
 	font-size: 1rem;
@@ -232,6 +235,7 @@ header{
 	display: flex;
 }
 
+/* BOTONES - Estilo general */
 .btn-cont button,
 .btn-imprimir,
 .btnMore button{
@@ -402,6 +406,7 @@ iframe{
 	to { opacity: 1; }
 }
 
+/* Ajuste del contenido de la ventana */
 @media screen and (max-width: 1000px) {
 	.btn-cont{
 		flex-wrap: wrap-reverse;

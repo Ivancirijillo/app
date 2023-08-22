@@ -534,7 +534,7 @@ function consultaT(dato) {
   });
 }
 
-/// configuracion para el tooltip
+/// Configuracion para el tooltip
 const getOrCreateTooltip = (chart) => {
   let tooltipEl = chart.canvas.parentNode.querySelector('div');
 
@@ -551,36 +551,36 @@ const getOrCreateTooltip = (chart) => {
     tooltipEl.style.transform = 'translate(-50%, 0)';
     tooltipEl.style.transition = 'all .1s ease';
 
+    //Crea una tabla para el contenido del tooltip
     const table = document.createElement('table');
     table.style.margin = '0px';
 
+    // Agrega la tabla al tooltip
     tooltipEl.appendChild(table);
+    // Agrega el tooltip al canvas
     chart.canvas.parentNode.appendChild(tooltipEl);
   }
-
   return tooltipEl;
 };
 
+// Manejo del tooltip personalizado
 const externalTooltipHandler = (context) => {
-  // Tooltip Element
   const {chart, tooltip} = context;
-  const tooltipEl = getOrCreateTooltip(chart);
+  const tooltipEl = getOrCreateTooltip(chart); // Creación del tooltip
 
-  // Hide if no tooltip
+  // Oculta el tooltip si no hay información
   if (tooltip.opacity === 0) {
     tooltipEl.style.opacity = 0;
     return;
   }
 
-  
-
-  // Set Text
+  // Configuración del contenido del tooltip (asignar texto)
   if (tooltip.body) {
     const titleLines = tooltip.title || [];
     const bodyLines = tooltip.body.map(b => b.lines);
 
+    // Crea la cabecera del tooltip
     const tableHead = document.createElement('thead');
-
     titleLines.forEach(title => {
       const tr = document.createElement('tr');
       tr.style.borderWidth = 0;
@@ -595,10 +595,12 @@ const externalTooltipHandler = (context) => {
       tableHead.appendChild(tr);
     });
 
+    // Crea el cuerpo del tooltip
     const tableBody = document.createElement('tbody');
     bodyLines.forEach((body, i) => {
       const colors = tooltip.labelColors[i];
 
+      // Crea los indicadores de color
       const span = document.createElement('span');
       span.style.background = colors.backgroundColor;
       span.style.borderColor = colors.borderColor;
@@ -608,16 +610,20 @@ const externalTooltipHandler = (context) => {
       span.style.width = '10px';
       span.style.display = 'inline-block';
 
+      // Crea las filas
       const tr = document.createElement('tr');
       tr.style.color = "#000";
       tr.style.backgroundColor = '#fff';
       tr.style.borderWidth = 0;
 
+      // Crea las celdas de las filas
       const td = document.createElement('td');
       td.style.borderWidth = 0;
 
+      // Crea el texto del contenido del tooltip
       const text = document.createTextNode(body);
 
+      // Asigna los elementos al tooltip
       td.appendChild(span);
       td.appendChild(text);
       tr.appendChild(td);
@@ -626,19 +632,19 @@ const externalTooltipHandler = (context) => {
 
     const tableRoot = tooltipEl.querySelector('table');
 
-    // Remove old children
+    // Elimina los hijos antiguos
     while (tableRoot.firstChild) {
       tableRoot.firstChild.remove();
     }
 
-    // Add new children
+    // Agrega los hijos nuevos
     tableRoot.appendChild(tableHead);
     tableRoot.appendChild(tableBody);
   }
 
   const {offsetLeft: positionX, offsetTop: positionY} = chart.canvas;
 
-  // Display, position, and set styles for font
+  // Muestra y posiciona el tooltip
   tooltipEl.style.opacity = 1;
   tooltipEl.style.left = positionX + tooltip.caretX + 'px';
   tooltipEl.style.top = positionY + tooltip.caretY + 'px';
@@ -677,7 +683,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkbox.checked = false; // Desmarca el checkbox para ocultar el menú
   }
 
-  // Agregar evento de clic a los elementos <li>
+  // Agrega evento de clic a los elementos <li>
   const liElements = document.querySelectorAll('ul li');
   liElements.forEach(function(li) {
     li.addEventListener('click', function() {
@@ -685,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Agregar evento de clic al label para ocultar el menú
+  // Agrega evento de clic al label para ocultar el menú
   const label = document.querySelector('label[for="check"]');
   label.addEventListener('click', function() {
     ocultarMenu();

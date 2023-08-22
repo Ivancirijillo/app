@@ -87,25 +87,28 @@ function cambiarTabla(indice) {
 }
 
 
-// cargar archivo
+// Cargar archivo
 
 'use strict';
 
 ;(function (document, window, index) {
+    // Selecciona todos los elementos con la clase 'inputfile'
     var inputs = document.querySelectorAll('.inputfile');
     Array.prototype.forEach.call(inputs, function (input) {
-        var label = input.nextElementSibling,
-            labelVal = label.innerHTML;
+        var label = input.nextElementSibling, // Obtiene el elemento hermano siguiente
+            labelVal = label.innerHTML; // Almacena el contenido HTML del hermano
 
+        // Agrega un evento de cambio al input
         input.addEventListener('change', function (e) {
             var fileName = '';
+            // Verifica si se ha seleccionado un archivo
             if (this.files && this.files.length === 1) {
-                fileName = e.target.value.split('\\').pop();
-                label.querySelector('span').innerHTML = fileName;
+                fileName = e.target.value.split('\\').pop(); // Obtiene el nombre del archivo
+                label.querySelector('span').innerHTML = fileName; // Actualiza el contenido del elemento 'span' en el label
             } else {
                 label.innerHTML = labelVal;
             }
-
+            // Obtiene las propiedades CSS del input
             var styles = window.getComputedStyle(input);
             console.log(styles); // Imprime las propiedades CSS en la consola del navegador
         });
@@ -137,9 +140,11 @@ buttons.forEach(button => {
 
 
 //funciones de la ventana flotante
+// Mostrar ventana flotante
 function mostrarVentanaFlotante() {
     document.getElementById("ventanaFlotante").style.display = "flex";
   }
+// Cerrar ventana flotante
 function cerrarVentanaFlotante() {
   document.getElementById("ventanaFlotante").style.display = "none";
 }

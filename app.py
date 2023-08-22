@@ -48,10 +48,11 @@ login_manager.init_app(app)
 # Configurar la vista de inicio de sesión
 login_manager.login_view = 'login'
 
+# Cargador de usuarios para la autenticación
 @login_manager.user_loader
 def load_user(user_id):
+    # Carga y devuelve el usuario correspondiente al id
     return TypeUser.load_user(user_id)
-#csrf = CSRFProtect(app)
 
 #Redireccionando cuando la página no existe
 @app.errorhandler(404)
@@ -68,8 +69,8 @@ def not_found(error):
 @app.route('/', methods=['GET', 'POST'])
 #@csrf.exempt
 def login():
-    global usuarioA
-    form = LoginForm()
+    global usuarioA # Variable para el usuario administrador
+    form = LoginForm() # Instancia del formulario de inicio de sesión
     if form.validate_on_submit():
         # Obtener los datos enviados por el formulario
         usern = form.username.data
@@ -82,14 +83,15 @@ def login():
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
         consulta = configuracion.get("consulta_usuarios","usuario").format(username=usern, password=passw)
+        print(consulta)
         user = conn.consultar_db(consulta)
-        
+        print(user)
         if user:
             # Inicio de sesión exitoso, establecer la sesión del usuario, redirigir a una página de inicio
-            role = user[0][3] #Obtener el rol del usuario
-            login_user(User(usern, role))
+            role = user[0][3] # Obtener el rol del usuario
+            login_user(User(usern, role)) # Iniciar sesión del usuario
             if role == 'admin':
-                TypeUser.set_usuarioA(True)
+                TypeUser.set_usuarioA(True) 
                 return redirect(url_for('carga'))  # Redirigir a la página de carga para el rol de administrador
             elif role == 'normal':
                 TypeUser.set_usuarioA(False)
@@ -130,7 +132,7 @@ def mapa():
 def model():
     # Redirigir a la página del Auxi
     return render_template("auxi.html")
-     
+
 #Creando un Decorador
 @app.route('/Graficas', methods=['GET', 'POST'])
 @login_required
@@ -222,7 +224,7 @@ def consultas_pagina():
     consulta = configuracion.get("consulta_pagina",secciones[9]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     tratamiento(resultados, diccionario, secciones[9])
-   
+
     #Empleo
     consulta = configuracion.get("consulta_pagina",secciones[5]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
@@ -232,7 +234,7 @@ def consultas_pagina():
     consulta = configuracion.get("consulta_pagina",secciones[11]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
     tratamiento(resultados, diccionario, secciones[11])
-   
+
     #DELINCUENCIA
     consulta = configuracion.get("consulta_pagina",secciones[6]).format(clave=clavemun)
     resultados = conn.consultar_db(consulta)
@@ -276,86 +278,105 @@ def consultas_tabla():
     tratamiento(resultados, diccionario, "apoSelec")
     
     return jsonify({'resultado': diccionario})
-   
+
 @app.route("/consultas-buscador", methods=['POST'])
 @csrf.exempt
+#Motor de busqueda para graficas
+    #Clasificacion de busquedas
+    # tipos
+    # -varios: Busquedas separadas por ,
+    # -rango: Busquedas separadas por -
+    # -nombre: Busquedas por nombres de municipios
 def consultas_buscador():
+    #json con los datos solicitados de las graficas
     js = request.get_json()
     lista = []
-    arreglo = []
-    contador = 1
     diccionario = {}
+    #Objeto de conexion a DB
     conn = CONEXION(configuracion["database1"]["host"],
                     configuracion["database1"]["port"],
                     configuracion["database1"]["user"],
                     configuracion["database1"]["passwd"],
                     configuracion["database1"]["db"])
-    
+
     if(js["tipo"] ==  "varios"):
-        #print(js["datos"])
+        #Reconoce si es un digito el primer dato ingresado
         if(js["datos"][0].isdigit()):
+            #Recorre los datos, para encontrar los id o las secciones a buscar
             for id_m in js["datos"]:
+                #Recorre los años a buscar
                 for year in js["years"]:
+                    #Agrega un arrelo a la clave del año actual 
                     diccionario[year] = []
+                    #La consulta es determinada si se desea consultar un id o una seccion
                     consulta = configuracion.get("consultas_buscador", "busca_por_yearv").format(id=id_m, year=year) if(15000 < int(js["datos"][0]) < 15126) else configuracion.get("consultas_buscador", "toma_tu_consulta").format(seccion=id_m, year=year)
+                    #guarda la respuesta de la solicitud
                     respuesta = conn.consultar_db(consulta)
+                    #Agrega al arreglo de lista la respuesta 
                     lista.append(eliminar_decimal(respuesta))
-        
+        #Crea un nuevo diccionario limpiando los datos
         diccionario = crear_diccionario(lista,diccionario)
-        
+
     elif(js["tipo"] ==  "rango"):
-        inicio =int(js["datos"][0])
+        #Convierte el inicio del rango a entero
+        inicio = int(js["datos"][0])
+        #Determina si es un id
         if(15000 < inicio < 15126):
+            #Convierte el fin del rango en entero
             fin = int(js["datos"][1])
+            #Determina si el fin del rango es el ultimo id de la base de datos
             fin  = 15125 if(fin == 15125) else fin
+            #Recorre el rango de ids solicitados
             for id_m in range(inicio, fin+1):
+                #Recorre los años solicitados
                 for year in (js["years"]):
+                    #Agrega un arrelo a la clave del año actual 
                     diccionario[year] = []
                     consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=id_m, year=year)
                     respuesta = conn.consultar_db(consulta)
                     lista.append(eliminar_decimal(respuesta))
-            print(len(lista))
-            #print(encontrar_municipio(lista))
+        #De lo contrario es una seccion
         else:
+            #Convierte el inicio y fin del rango en entero
             inicio =int(js["datos"][0])
             fin = int(js["datos"][1])
+            #Recorre el rango solicitado
             for id_m in range(inicio, fin+1):
+                #Recorre los años solicitados
                 for year in (js["years"]):
+                    #Agrega un arrelo a la clave del año actual 
                     diccionario[year] = []
+                    #Consulta las secciones
                     consulta = configuracion.get("consultas_buscador","toma_tu_consulta").format(seccion=id_m, year=year)
                     respuesta = conn.consultar_db(consulta)
-                    #print(respuesta)
                     lista.append(eliminar_decimal(respuesta))
-            print(len(lista))
+        #Crea un nuevo diccionario limpiando los datos
         diccionario = crear_diccionario(lista,diccionario)
-        #print(diccionario)
-       
+
     elif(js["tipo"] == "nombre"):
-        
+        #La razon de este bloque de codigo es para buscar de manera individual un id,seccion
         if(js["datos"].isdigit()):
             municipio = int(js["datos"])
             for year in js["years"]:
+                #Crea un nuevo diccionario limpiando los datos
                 diccionario[year] = []
                 consulta = configuracion.get("consultas_buscador","busca_por_yearv").format(id=js["datos"], year=year) if(15000< municipio <15126) else configuracion.get("consultas_buscador","varios_seccion").format(seccion=js["datos"], year=year)
                 respuesta = conn.consultar_db(consulta)
-                #print(respuesta)
                 lista.append(eliminar_decimal(respuesta))
-            #print(consulta+consulta1)
-            #respuesta = conn.consultar_db(consulta+consulta1)
-            #print(respuesta)
-            #lista.append(eliminar_decimal(respuesta))
+        #Buscar por nombres
         else:
             for year in js["years"]:
+                #Crea un nuevo diccionario limpiando los datos
                 diccionario[year] = []
+                #Consulta los nombres 
                 consulta = configuracion.get("consultas_buscador","nombreM").format(municipio=js["datos"], year=year)
                 respuesta = conn.consultar_db(consulta)
                 lista.append(eliminar_decimal(respuesta))   
-            #print(lista)
-
+        #Crea un nuevo diccionario limpiando los datos
         diccionario = crear_diccionario(lista,diccionario)
-        #print(diccionario)
-    
+    #Crea un json para responder a la pagina web
     data = {'datos': diccionario}
+    #Envia el json
     return jsonify(data)
 
 @app.route("/impresiones", methods=['POST'])
@@ -399,38 +420,52 @@ def impresiones():
     else:
         respuesta = " "
         if(json["modo"] == "impresion"):
-          ruta_pdf = General.GenerarG(int(json["year"]), int(json["id"]))
+            ruta_pdf = General.GenerarG(int(json["year"]), int(json["id"]))
     data_mapa = {'consulta': respuesta}
     return jsonify(data_mapa)
 
 @app.route("/pdf")
 @csrf.exempt
+@csrf.exempt
 def abrir_pdf():
     global ruta_pdf
     print("xd ",ruta_pdf)
+    print("xd ",ruta_pdf)
     return send_file(ruta_pdf)
-
+#Detecta si se interrunpe el programa
 def interrupcion(sig, frame):
     print("Se ha interrumpido el programa con Ctrl+C")
     sys.exit(0)
 
+#Encuentra los municipios que existen dentro de la respuesta de la consulta
 def encontrar_municipio(respuesta):
+    #Nos posicionamos en la posicion de la respuesta que tiene el primer municipio
     municipio_actual = respuesta[0][0]
+    #variable que guarda los municipios encontrados
     municipios = []
+    #Guarda las secciones del municipio
     secciones = []
+    #Variable que cuenta las secciones del municipio
     contador = 0
+    #Agrega el municipio actual al arreglo municipios
     municipios.append(municipio_actual)
     for i in range(len(respuesta)):
+        #Si el municipio actual aparece en la siguiente fila, es una nueva seccion del mismo municipio
         if(municipio_actual == respuesta[i][0]):
             contador += 1
         else:
+            #Agrega el numero de secciones encontradas al arreglo de secciones
             secciones.append(contador)
+            #Actualizamos el municipio actual al nuevo encontrado
             municipio_actual = respuesta[i][0]
+            #Agrega el nuevo municipio al arreglo de municipios
             municipios.append(municipio_actual)
+            #Inicializamos el contadoe en 1
             contador = 1
     secciones.append(contador) # Agregar la última sección
-    return municipios, secciones
+    return municipios, secciones #Regresa los municipios encontrados ademas de sus secciones
 
+#Viejo metodo de crear diccionario
 def separar_por_partido(respuesta):
     municipios, secciones = encontrar_municipio(respuesta)
     contador = 0
@@ -451,16 +486,21 @@ def separar_por_partido(respuesta):
 
     return diccionario
 
+#Elimina la palabra Decimal los () y ' de la respuesta de la consulta
+# - respuesta: respuesta de la consulta solicitada
 def eliminar_decimal(respuesta):
+    #Une los elementos de la respuesta convertidos en una cadena separada por ,
     cadena = ','.join(str(elem) for elem in respuesta)
+    #Separa la cadena por las , 
     lista = cadena.split(',')
     for i in range(len(lista)):
+        #Reemplaza los (), Decimal y ' por nada
         lista[i] = lista[i].replace("(", "").strip()
         lista[i] = lista[i].replace("Decimal", "").strip()
         lista[i] = lista[i].replace(")", "").strip()
         lista[i] = lista[i].replace("'", "").strip()
     return lista
-
+#Metodo viejo antes de las consultas estaticas
 def crear_consulta(js):
     consulta1 = "("
     for i in (js["years"]):
@@ -553,38 +593,35 @@ def tratamientoGraficas(tupla, diccionario, atributo, salto, inicio, longitud):
     #diccionario [atributo]["Years"]= years
     return 0
 
+#Crea un diccionario con los municipios
 def crear_diccionario(lista, diccionario):
+    #Encuentra cuales son los municipios solicitados
     municipios, secciones = encontrar_municipio(lista)
     aux = 0
-    #print(secciones)
+    #Crea un apartado con cada año del diccionario
     for year in diccionario.keys():
+        #Crea una clave con el año encontrado, su valor es un arreglo vacio
         diccionario[year] = []
+        #Agrega un diccionario del municipio como clave al año en cuestion
         for i in range(len(municipios)):
             diccionario[year].append({municipios[i]:{}})
-    # if(len(municipios)>1):
-    #print("calla fede ",diccionario)
+    #Recorre el diccionario para agregar los votos al municipio correspondiente
     for i in range(len(municipios)):
         for year in diccionario.keys():
+            # j representa el partido
             for j in range(1,len(PARTIDOS)+1):
+                #Accedemos al año, i representan la posicion del municipio, municipio y el partido
                 diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j]
-                #print(aux)
+            #Filas de la lista
             aux+=1
-    # else:
-    #     for year in diccionario.keys():
-    #         for i in range(len(municipios)):
-    #             for j in range(1,17):
-    #                 diccionario[year][i][municipios[i]][PARTIDOS[j-1]] = lista[aux][j] 
-    #             aux+=1
-    #print("dic")
-    #print("pepe ",diccionario)
-    #print(diccionario)
     return diccionario
 
-# SUBIR DATOS
 
+# SUBIR DATOS
 @app.route('/CargaArchivo')
 @login_required
 def carga():
+    # Verifica el rol del usuaio actual
     if current_user.role == 'admin':
         return render_template('cargaArchivo.html')
     else:
@@ -599,15 +636,13 @@ def cargar_archivo():
         tablas = []
         if archivo:
             # Establecer la conexión con la base de datos
-            
             conn = CONEXION(configuracion["database1"]["host"],
                                 configuracion["database1"]["port"],
                                 configuracion["database1"]["user"],
                                 configuracion["database1"]["passwd"],
                                 configuracion["database1"]["db"])
-            #cursor = conn.consultar_db2
 
-            # Lee el archivo Excelconn = CONEXION(configuracion["database1"]["host"],
+            # Lee el archivo Excel
             datos = pd.read_excel(archivo, sheet_name=None)
             menssaje=""
             aux=False
@@ -624,8 +659,7 @@ def cargar_archivo():
                 if (tabla=="municipio"):
                     # Construye la consulta SQL
                     insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores})"
-                    # texto de abajo es ejemplo apra mostrar una tabla
-                    #tablas.append(tabla)
+                    
                     # Inserta los datos en la base de datos
                     conn.consultar_db2(insert, filas)
                     tablas.append(tabla)
@@ -639,12 +673,10 @@ def cargar_archivo():
                     for i in columnas2:
                         cadena_SQL += i + " = VALUES(" + i + "),"
                     cadena_SQL=cadena_SQL[:-1] 
+
                     # Construye la consulta SQL
-                    #ON Conflict para postgre
                     insert = f"INSERT INTO {tabla} ({campos}) VALUES ({marcadores}) ON DUPLICATE KEY UPDATE {cadena_SQL}"
                     
-                    # texto de abajo es ejemplo apra mostrar una tabla
-                    #tablas.append(tabla)
                     # Inserta los datos en la base de datos
                     conn.consultar_db2(insert, filas)
                     tablas.append(tabla)
@@ -656,6 +688,7 @@ def cargar_archivo():
             return render_template('cargaArchivo.html', mensaje = menssaje)
         return render_template('cargaArchivo.html')
     
+    # En caso que se generen excepciones
     except (pymysql.IntegrityError, pymysql.ProgrammingError) as error:
         if isinstance(error, pymysql.IntegrityError):
             return render_template('integrity_error.html', error=error, carga=tablas), 500
